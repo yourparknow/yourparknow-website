@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YourParkNow — Find or Rent Private Parking Spaces in Florida</title>
+  <meta name="description" content="YourParkNow is a peer-to-peer marketplace connecting parking space owners with drivers. Find parking or earn money from your unused space.">
+  <meta property="og:title" content="YourParkNow — Smart Parking Marketplace">
+  <meta property="og:description" content="Find parking or earn money from your unused space. Available in Florida.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourparknow.com">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #ffffff;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 100%);
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .logo { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; }
+    nav ul { list-style: none; display: flex; gap: 30px; flex-wrap: wrap; }
+    nav a { color: white; text-decoration: none; font-weight: 500; transition: opacity 0.2s; }
+    nav a:hover { opacity: 0.8; }
+    .lang-toggle {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 100%);
+      color: white;
+      padding: 80px 40px 100px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 56px; font-weight: 800; margin-bottom: 20px; letter-spacing: -1px; line-height: 1.1; }
+    .hero p.subtitle { font-size: 22px; opacity: 0.95; max-width: 700px; margin: 0 auto 40px; }
+    .hero-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+    .btn {
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 17px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary { background: #ffffff; color: #1F4E79; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .btn-secondary { background: transparent; color: white; border: 2px solid white; }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+    .coming-soon {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    /* Sections */
+    section { padding: 80px 40px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h2 { font-size: 42px; font-weight: 800; margin-bottom: 20px; color: #1F4E79; text-align: center; letter-spacing: -0.5px; }
+    h2 + p.section-subtitle { text-align: center; font-size: 18px; color: #555; margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+    /* Features */
+    .features { background: #f8f9fb; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
+    .feature-card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      transition: transform 0.3s;
+    }
+    .feature-card:hover { transform: translateY(-5px); }
+    .feature-icon {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, #1F4E79, #2E75B6);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 28px;
+      margin-bottom: 20px;
+    }
+    .feature-card h3 { font-size: 22px; margin-bottom: 12px; color: #1a1a1a; }
+    .feature-card p { color: #555; }
+
+    /* How it works */
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+    .step { text-align: center; padding: 20px; }
+    .step-number {
+      width: 60px; height: 60px;
+      background: #2E75B6;
+      color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; font-weight: 800;
+      margin: 0 auto 20px;
+    }
+    .step h3 { font-size: 20px; margin-bottom: 10px; }
+    .step p { color: #555; }
+
+    /* CTA */
+    .cta {
+      background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 100%);
+      color: white;
+      text-align: center;
+    }
+    .cta h2 { color: white; }
+    .cta p { font-size: 20px; margin-bottom: 30px; opacity: 0.95; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .email-form {
+      max-width: 500px; margin: 30px auto 0;
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .email-form input {
+      flex: 1; min-width: 250px;
+      padding: 16px 24px;
+      border-radius: 50px;
+      border: none;
+      font-size: 16px;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-text h2 { text-align: left; }
+    .about-text p { font-size: 17px; color: #444; margin-bottom: 18px; }
+    .about-stats {
+      background: linear-gradient(135deg, #1F4E79, #2E75B6);
+      color: white;
+      padding: 50px 40px;
+      border-radius: 20px;
+    }
+    .stat { margin-bottom: 30px; }
+    .stat:last-child { margin-bottom: 0; }
+    .stat-number { font-size: 42px; font-weight: 800; }
+    .stat-label { opacity: 0.9; font-size: 16px; }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    /* Footer */
+    footer {
+      background: #0f1729;
+      color: #b0b8c5;
+      padding: 60px 40px 30px;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+    @media (max-width: 768px) {
+      .footer-content { grid-template-columns: 1fr 1fr; }
+    }
+    .footer-col h4 { color: white; font-size: 16px; margin-bottom: 18px; font-weight: 700; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col a { color: #b0b8c5; text-decoration: none; transition: color 0.2s; font-size: 14px; }
+    .footer-col a:hover { color: white; }
+    .footer-brand .logo { color: white; margin-bottom: 16px; }
+    .footer-brand p { font-size: 14px; line-height: 1.7; }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 40px auto 0;
+      padding-top: 30px;
+      border-top: 1px solid #1f2937;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 15px;
+      font-size: 13px;
+    }
+
+    /* Spanish toggle */
+    .lang-es { display: none; }
+    body.spanish .lang-en { display: none; }
+    body.spanish .lang-es { display: block; }
+    body.spanish .lang-es-inline { display: inline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">YourParkNow</div>
+  <nav>
+    <ul>
+      <li><a href="#features"><span class="lang-en">Features</span><span class="lang-es">Características</span></a></li>
+      <li><a href="#how"><span class="lang-en">How It Works</span><span class="lang-es">Cómo Funciona</span></a></li>
+      <li><a href="#about"><span class="lang-en">About</span><span class="lang-es">Acerca</span></a></li>
+      <li><a href="#contact"><span class="lang-en">Contact</span><span class="lang-es">Contacto</span></a></li>
+      <li><button class="lang-toggle" onclick="toggleLang()"><span class="lang-en">Español</span><span class="lang-es">English</span></button></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="coming-soon"><span class="lang-en">★ LAUNCHING SOON IN FLORIDA</span><span class="lang-es">★ LANZAMIENTO PRÓXIMO EN FLORIDA</span></div>
+  <h1>
+    <span class="lang-en">Smart Parking,<br>Made Simple</span>
+    <span class="lang-es">Parqueo Inteligente,<br>Hecho Simple</span>
+  </h1>
+  <p class="subtitle">
+    <span class="lang-en">Find parking in seconds. Or earn money from your unused space. The marketplace that connects drivers with parking owners.</span>
+    <span class="lang-es">Encuentra parqueo en segundos. O gana dinero con tu espacio sin usar. El marketplace que conecta a conductores con dueños de parqueos.</span>
+  </p>
+  <div class="hero-buttons">
+    <a href="#cta" class="btn btn-primary">
+      <span class="lang-en">Get Early Access</span>
+      <span class="lang-es">Acceso Anticipado</span>
+    </a>
+    <a href="#how" class="btn btn-secondary">
+      <span class="lang-en">Learn More</span>
+      <span class="lang-es">Conoce Más</span>
+    </a>
+  </div>
+</section>
+
+<section id="features" class="features">
+  <div class="container">
+    <h2><span class="lang-en">Why YourParkNow?</span><span class="lang-es">¿Por Qué YourParkNow?</span></h2>
+    <p class="section-subtitle">
+      <span class="lang-en">A new way to think about parking — built for drivers, hosts, and communities.</span>
+      <span class="lang-es">Una nueva forma de pensar el parqueo — hecho para conductores, anfitriones y comunidades.</span>
+    </p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🚗</div>
+        <h3><span class="lang-en">Find Parking Fast</span><span class="lang-es">Encuentra Parqueo Rápido</span></h3>
+        <p>
+          <span class="lang-en">No more circling blocks. Reserve a guaranteed spot in seconds, near where you actually need to be.</span>
+          <span class="lang-es">No más dar vueltas. Reserva un parqueo garantizado en segundos, cerca de donde realmente necesitas estar.</span>
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3><span class="lang-en">Earn Passive Income</span><span class="lang-es">Gana Ingreso Pasivo</span></h3>
+        <p>
+          <span class="lang-en">Your driveway or unused parking spot can earn $150-$400 per month. List it in minutes, get paid weekly.</span>
+          <span class="lang-es">Tu driveway o parqueo sin usar puede ganar $150-$400 al mes. Publícalo en minutos, cobra semanalmente.</span>
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3><span class="lang-en">Verified & Secure</span><span class="lang-es">Verificado y Seguro</span></h3>
+        <p>
+          <span class="lang-en">All users verified with ID and phone. Mutual ratings ensure quality. Payments protected by Stripe.</span>
+          <span class="lang-es">Todos los usuarios verificados con ID y teléfono. Calificaciones mutuas aseguran calidad. Pagos protegidos por Stripe.</span>
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📍</div>
+        <h3><span class="lang-en">Real-Time Availability</span><span class="lang-es">Disponibilidad en Tiempo Real</span></h3>
+        <p>
+          <span class="lang-en">See what's available right now. Hosts update availability on demand. No surprises when you arrive.</span>
+          <span class="lang-es">Ve lo que está disponible ahora mismo. Los anfitriones actualizan disponibilidad bajo demanda. Sin sorpresas al llegar.</span>
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💵</div>
+        <h3><span class="lang-en">Fair, Transparent Pricing</span><span class="lang-es">Precios Justos y Transparentes</span></h3>
+        <p>
+          <span class="lang-en">Hosts set their own rates. No surge pricing. No hidden fees. See exactly what you'll pay before booking.</span>
+          <span class="lang-es">Los anfitriones fijan sus tarifas. Sin precios elevados. Sin tarifas ocultas. Ve exactamente lo que pagarás antes de reservar.</span>
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌎</div>
+        <h3><span class="lang-en">Bilingual Support</span><span class="lang-es">Soporte Bilingüe</span></h3>
+        <p>
+          <span class="lang-en">Built for our diverse communities. App and support fully in English and Spanish.</span>
+          <span class="lang-es">Hecho para nuestras comunidades diversas. App y soporte completamente en inglés y español.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="container">
+    <h2><span class="lang-en">How It Works</span><span class="lang-es">Cómo Funciona</span></h2>
+    <p class="section-subtitle">
+      <span class="lang-en">For drivers looking for parking</span>
+      <span class="lang-es">Para conductores buscando parqueo</span>
+    </p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3><span class="lang-en">Search</span><span class="lang-es">Busca</span></h3>
+        <p>
+          <span class="lang-en">Open the app, see available spots near you on the map.</span>
+          <span class="lang-es">Abre la app, ve parqueos disponibles cerca de ti en el mapa.</span>
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3><span class="lang-en">Reserve</span><span class="lang-es">Reserva</span></h3>
+        <p>
+          <span class="lang-en">Pick a spot, choose your time window, pay securely.</span>
+          <span class="lang-es">Escoge un parqueo, selecciona tu horario, paga seguro.</span>
+        </p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3><span class="lang-en">Park</span><span class="lang-es">Parquea</span></h3>
+        <p>
+          <span class="lang-en">Get directions, park, and enjoy your day. We handle the rest.</span>
+          <span class="lang-es">Recibe direcciones, parquea y disfruta tu día. Nosotros nos encargamos del resto.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about" style="background: #f8f9fb;">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 style="text-align: left;"><span class="lang-en">Built for Real Communities</span><span class="lang-es">Hecho para Comunidades Reales</span></h2>
+        <p>
+          <span class="lang-en">YourParkNow was born in South Florida, where parking is a daily struggle and unused driveways sit empty 80% of the time. We saw a simple opportunity: connect the people who need parking with the people who have it.</span>
+          <span class="lang-es">YourParkNow nació en el sur de Florida, donde el parqueo es una lucha diaria y los driveways sin usar permanecen vacíos el 80% del tiempo. Vimos una oportunidad simple: conectar a las personas que necesitan parqueo con quienes lo tienen.</span>
+        </p>
+        <p>
+          <span class="lang-en">We're a marketplace platform — like Airbnb for parking. Hosts list their spaces. Guests find and book them. We handle payments, verification, and disputes. Everyone wins.</span>
+          <span class="lang-es">Somos una plataforma de marketplace — como Airbnb para parqueo. Los anfitriones publican sus espacios. Los huéspedes los encuentran y reservan. Nosotros manejamos pagos, verificación y disputas. Todos ganan.</span>
+        </p>
+        <p>
+          <span class="lang-en">Starting in Hialeah and Doral, expanding across Florida, and growing nationally with the help of the communities that need this most.</span>
+          <span class="lang-es">Comenzando en Hialeah y Doral, expandiéndonos por toda Florida, y creciendo a nivel nacional con la ayuda de las comunidades que más lo necesitan.</span>
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-number">2M+</div>
+          <div class="stat-label">
+            <span class="lang-en">Driveways in Florida that sit empty most days</span>
+            <span class="lang-es">Driveways en Florida que quedan vacíos la mayoría de los días</span>
+          </div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">$300</div>
+          <div class="stat-label">
+            <span class="lang-en">Average monthly earnings potential per parking space</span>
+            <span class="lang-es">Potencial de ganancia mensual promedio por espacio de parqueo</span>
+          </div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">17 min</div>
+          <div class="stat-label">
+            <span class="lang-en">Average time U.S. drivers spend searching for parking</span>
+            <span class="lang-es">Tiempo promedio que conductores en EE.UU. buscan parqueo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta" class="cta">
+  <div class="container">
+    <h2><span class="lang-en">Be First to Know</span><span class="lang-es">Sé el Primero en Saber</span></h2>
+    <p>
+      <span class="lang-en">YourParkNow launches in Florida soon. Sign up for early access and get notified the moment we go live.</span>
+      <span class="lang-es">YourParkNow se lanza pronto en Florida. Regístrate para acceso anticipado y recibe notificación al lanzar.</span>
+    </p>
+    <form class="email-form" onsubmit="event.preventDefault(); alert('Thank you! / ¡Gracias!');">
+      <input type="email" placeholder="your@email.com" required>
+      <button type="submit" class="btn btn-primary">
+        <span class="lang-en">Notify Me</span>
+        <span class="lang-es">Notificarme</span>
+      </button>
+    </form>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-content">
+    <div class="footer-col footer-brand">
+      <div class="logo">YourParkNow</div>
+      <p>
+        <span class="lang-en">A peer-to-peer marketplace connecting parking space owners with drivers across Florida and beyond.</span>
+        <span class="lang-es">Un marketplace peer-to-peer que conecta a dueños de parqueos con conductores en Florida y más allá.</span>
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <h4><span class="lang-en">Company</span><span class="lang-es">Compañía</span></h4>
+      <ul>
+        <li><a href="#about"><span class="lang-en">About</span><span class="lang-es">Acerca</span></a></li>
+        <li><a href="#how"><span class="lang-en">How It Works</span><span class="lang-es">Cómo Funciona</span></a></li>
+        <li><a href="#features"><span class="lang-en">Features</span><span class="lang-es">Características</span></a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="/terms"><span class="lang-en">Terms &amp; Conditions</span><span class="lang-es">Términos y Condiciones</span></a></li>
+        <li><a href="/privacy"><span class="lang-en">Privacy Policy</span><span class="lang-es">Política de Privacidad</span></a></li>
+        <li><a href="/refunds"><span class="lang-en">Refund Policy</span><span class="lang-es">Política de Reembolso</span></a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4><span class="lang-en">Contact</span><span class="lang-es">Contacto</span></h4>
+      <ul>
+        <li><a href="mailto:support@yourparknow.com">support@yourparknow.com</a></li>
+        <li><a href="mailto:privacy@yourparknow.com">privacy@yourparknow.com</a></li>
+        <li><a href="mailto:legal@yourparknow.com">legal@yourparknow.com</a></li>
+        <li><span class="lang-en">Miami-Dade, Florida</span><span class="lang-es">Miami-Dade, Florida</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div>© 2026 YourParkNow LLC. <span class="lang-en">All rights reserved.</span><span class="lang-es">Todos los derechos reservados.</span></div>
+    <div><span class="lang-en">A Florida LLC</span><span class="lang-es">Una LLC de Florida</span></div>
+  </div>
+</footer>
+
+<script>
+  function toggleLang() {
+    document.body.classList.toggle('spanish');
+    localStorage.setItem('yourparknow_lang', document.body.classList.contains('spanish') ? 'es' : 'en');
+  }
+  if (localStorage.getItem('yourparknow_lang') === 'es') {
+    document.body.classList.add('spanish');
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Refund & Cancellation Policy — YourParkNow</title>
+  <meta name="description" content="YourParkNow Refund and Cancellation Policy.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.7; color: #1a1a1a; background: #f8f9fb; }
+    header { background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 100%); color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo { font-size: 24px; font-weight: 800; }
+    .logo a { color: white; text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 25px; flex-wrap: wrap; }
+    nav a { color: white; text-decoration: none; font-weight: 500; }
+    .lang-toggle { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 14px; }
+    .page-header { background: linear-gradient(135deg, #1F4E79 0%, #2E75B6 100%); color: white; padding: 60px 40px; text-align: center; }
+    .page-header h1 { font-size: 42px; font-weight: 800; margin-bottom: 10px; }
+    .page-header p { opacity: 0.9; font-size: 17px; }
+    .content { max-width: 900px; margin: -40px auto 60px; background: white; padding: 60px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); position: relative; }
+    @media (max-width: 768px) { .content { padding: 30px 20px; margin: -20px 20px 40px; } }
+    .effective-date { background: #f0f4f8; padding: 14px 20px; border-left: 4px solid #2E75B6; border-radius: 4px; margin-bottom: 40px; font-size: 14px; color: #555; }
+    h2 { font-size: 24px; color: #1F4E79; margin-top: 40px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #e8eef5; }
+    h3 { font-size: 18px; color: #2E75B6; margin-top: 24px; margin-bottom: 10px; }
+    p { margin-bottom: 14px; color: #333; }
+    ul { margin: 12px 0 16px 24px; }
+    li { margin-bottom: 8px; color: #333; }
+    strong { color: #1a1a1a; }
+
+    .refund-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .refund-table th {
+      background: linear-gradient(135deg, #1F4E79, #2E75B6);
+      color: white;
+      padding: 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+    .refund-table td {
+      padding: 14px;
+      border-bottom: 1px solid #e8eef5;
+    }
+    .refund-table tr:last-child td { border-bottom: none; }
+    .refund-table .full { color: #22863a; font-weight: 600; }
+    .refund-table .partial { color: #B58105; font-weight: 600; }
+    .refund-table .none { color: #C00000; font-weight: 600; }
+
+    .lang-section { display: none; }
+    .lang-section.active { display: block; }
+
+    footer { background: #0f1729; color: #b0b8c5; padding: 50px 40px 30px; text-align: center; }
+    .footer-links { max-width: 1200px; margin: 0 auto 25px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+    .footer-links a { color: #b0b8c5; text-decoration: none; font-size: 14px; }
+    .footer-links a:hover { color: white; }
+    .footer-copyright { font-size: 13px; padding-top: 25px; border-top: 1px solid #1f2937; max-width: 1200px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><a href="/">YourParkNow</a></div>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/terms">Terms</a></li>
+      <li><a href="/privacy">Privacy</a></li>
+      <li><a href="/refunds">Refunds</a></li>
+      <li><button class="lang-toggle" onclick="toggleLang()">Español / English</button></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="page-header">
+  <h1 id="page-title">Refund &amp; Cancellation Policy</h1>
+  <p id="page-subtitle">Last updated: May 12, 2026</p>
+</div>
+
+<div class="content">
+  <div class="effective-date">
+    <strong>Effective Date:</strong> May 12, 2026 · <strong>Document:</strong> Bilingual (English / Español)
+  </div>
+
+  <!-- ENGLISH -->
+  <div class="lang-section active" id="lang-en">
+
+    <h2>Overview</h2>
+    <p>YourParkNow LLC operates a peer-to-peer parking marketplace. This Refund and Cancellation Policy explains when refunds are available, how cancellations work, and the responsibilities of both Hosts and Guests.</p>
+
+    <h2>Quick Reference — Cancellation Schedule</h2>
+    <table class="refund-table">
+      <thead>
+        <tr>
+          <th>Time of Cancellation</th>
+          <th>Refund Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>More than 24 hours before reservation start</td>
+          <td class="full">Full refund (100%) minus $1 processing fee</td>
+        </tr>
+        <tr>
+          <td>Between 24 and 2 hours before reservation start</td>
+          <td class="partial">50% refund</td>
+        </tr>
+        <tr>
+          <td>Less than 2 hours before reservation start</td>
+          <td class="none">No refund</td>
+        </tr>
+        <tr>
+          <td>After reservation start time</td>
+          <td class="none">No refund</td>
+        </tr>
+        <tr>
+          <td>Host cancellation (any time)</td>
+          <td class="full">Full refund (100%), including service fees</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Cancellation by Guest</h2>
+    <p>Guests may cancel a reservation through the YourParkNow app at any time before the reservation start. The refund amount is calculated based on the schedule above, measured from the time the cancellation is submitted to the reservation start time.</p>
+
+    <h2>Cancellation by Host</h2>
+    <p>If a Host cancels a confirmed reservation, the Guest receives a 100% refund of all amounts paid, including service fees. Hosts who repeatedly cancel may have their accounts suspended or terminated. YourParkNow may also charge cancellation penalties to repeat-offender Hosts.</p>
+
+    <h2>Guest No-Show</h2>
+    <p>If the Guest does not arrive within 30 minutes of the reservation start time and does not contact the Host through the app, the reservation is forfeited with no refund. The Host may release the spot to other users at that point.</p>
+
+    <h2>Host No-Show or Inaccessible Spot</h2>
+    <p>If the parking spot is unavailable, blocked, occupied by another vehicle, or significantly different from the listing description, the Guest must:</p>
+    <ul>
+      <li>Report the issue through the YourParkNow app within 30 minutes of the reservation start time.</li>
+      <li>Provide photo evidence of the situation.</li>
+      <li>Not leave the location until the report is submitted.</li>
+    </ul>
+    <p>Verified cases receive a 100% refund. The Host may face account penalties.</p>
+
+    <h2>Service Disputes</h2>
+    <p>YourParkNow encourages Hosts and Guests to resolve disputes directly through the app's messaging system. If unresolved, either party may submit a formal dispute. YourParkNow will review evidence (photos, messages, GPS data, timestamps) and issue a decision within 7 business days. <strong>YourParkNow's decision is final and binding.</strong></p>
+
+    <h2>Refund Processing Time</h2>
+    <p>Approved refunds are processed within 3-5 business days back to the original payment method. Your bank may take additional time (typically 5-10 business days total) for the refund to appear in your account.</p>
+
+    <h2>Force Majeure</h2>
+    <p>In cases of force majeure beyond the control of either party (severe weather such as hurricanes, natural disasters, government orders, civil unrest, pandemic-related restrictions, etc.), YourParkNow may issue full refunds at its sole discretion regardless of the standard cancellation policy.</p>
+
+    <h2>Chargebacks</h2>
+    <p><strong>Important:</strong> Guests are strongly encouraged to contact YourParkNow support at <a href="mailto:support@yourparknow.com">support@yourparknow.com</a> before initiating a chargeback with their bank or credit card issuer. Most disputes can be resolved quickly through our support team.</p>
+    <p>Unwarranted chargebacks (where the Guest received the service but disputes the charge anyway) may result in:</p>
+    <ul>
+      <li>Suspension or termination of your YourParkNow account.</li>
+      <li>Recovery of the disputed amount plus reasonable fees through legal means.</li>
+      <li>Reporting to fraud-prevention databases.</li>
+    </ul>
+
+    <h2>Service Fees</h2>
+    <p>YourParkNow's service fee (15% of the reservation total) is <strong>non-refundable</strong> in the following cases:</p>
+    <ul>
+      <li>Guest-initiated cancellation outside of full-refund window.</li>
+      <li>Guest no-show.</li>
+    </ul>
+    <p>The service fee <strong>IS refunded</strong> in the following cases:</p>
+    <ul>
+      <li>Host cancellation.</li>
+      <li>Host no-show or inaccessible spot.</li>
+      <li>Verified service failure.</li>
+      <li>Force majeure.</li>
+    </ul>
+
+    <h2>How to Request a Refund</h2>
+    <p>To request a refund or cancellation:</p>
+    <ol style="margin-left: 24px; margin-top: 12px;">
+      <li>Open the YourParkNow app.</li>
+      <li>Go to "My Reservations" and select the reservation.</li>
+      <li>Tap "Cancel Reservation" or "Report Issue."</li>
+      <li>Provide reason and supporting evidence (photos if applicable).</li>
+      <li>Submit. You will receive confirmation within 24 hours.</li>
+    </ol>
+    <p>For complex issues, contact <a href="mailto:support@yourparknow.com">support@yourparknow.com</a>.</p>
+
+    <h2>Contact</h2>
+    <p><strong>YourParkNow LLC</strong><br>
+    Support: <a href="mailto:support@yourparknow.com">support@yourparknow.com</a><br>
+    Legal: <a href="mailto:legal@yourparknow.com">legal@yourparknow.com</a></p>
+
+  </div>
+
+  <!-- SPANISH -->
+  <div class="lang-section" id="lang-es">
+
+    <h2>Resumen</h2>
+    <p>YourParkNow LLC opera un marketplace de parqueo peer-to-peer. Esta Política explica cuándo están disponibles los reembolsos, cómo funcionan las cancelaciones, y las responsabilidades de Anfitriones y Huéspedes.</p>
+
+    <h2>Referencia Rápida — Esquema de Cancelación</h2>
+    <table class="refund-table">
+      <thead>
+        <tr>
+          <th>Momento de Cancelación</th>
+          <th>Monto de Reembolso</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Más de 24 horas antes del inicio</td>
+          <td class="full">Reembolso completo (100%) menos $1 procesamiento</td>
+        </tr>
+        <tr>
+          <td>Entre 24 y 2 horas antes del inicio</td>
+          <td class="partial">Reembolso del 50%</td>
+        </tr>
+        <tr>
+          <td>Menos de 2 horas antes del inicio</td>
+          <td class="none">Sin reembolso</td>
+        </tr>
+        <tr>
+          <td>Después de la hora de inicio</td>
+          <td class="none">Sin reembolso</td>
+        </tr>
+        <tr>
+          <td>Cancelación del Anfitrión (cualquier momento)</td>
+          <td class="full">Reembolso completo (100%), incluyendo tarifas</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Cancelación por el Huésped</h2>
+    <p>Los Huéspedes pueden cancelar una reservación a través de la app de YourParkNow en cualquier momento antes del inicio. El monto del reembolso se calcula según el esquema anterior.</p>
+
+    <h2>Cancelación por el Anfitrión</h2>
+    <p>Si un Anfitrión cancela una reservación confirmada, el Huésped recibe un reembolso del 100% de todos los montos pagados, incluyendo tarifas de servicio. Los Anfitriones que cancelan repetidamente pueden tener sus cuentas suspendidas o terminadas.</p>
+
+    <h2>Huésped que no se Presenta</h2>
+    <p>Si el Huésped no llega dentro de 30 minutos del inicio de la reservación y no contacta al Anfitrión a través de la app, la reservación se pierde sin reembolso. El Anfitrión puede liberar el espacio.</p>
+
+    <h2>Anfitrión que no se Presenta o Espacio Inaccesible</h2>
+    <p>Si el espacio no está disponible, está bloqueado, ocupado por otro vehículo, o es significativamente diferente a la descripción, el Huésped debe:</p>
+    <ul>
+      <li>Reportar el problema a través de la app dentro de 30 minutos del inicio.</li>
+      <li>Proporcionar evidencia fotográfica.</li>
+      <li>No dejar la ubicación hasta que el reporte sea enviado.</li>
+    </ul>
+    <p>Los casos verificados reciben reembolso del 100%.</p>
+
+    <h2>Disputas de Servicio</h2>
+    <p>YourParkNow alienta a Anfitriones y Huéspedes a resolver disputas directamente a través del sistema de mensajería de la app. Si no se resuelve, cualquiera puede enviar una disputa formal. YourParkNow revisará la evidencia y emitirá decisión dentro de 7 días hábiles. <strong>La decisión de YourParkNow es final y vinculante.</strong></p>
+
+    <h2>Tiempo de Procesamiento</h2>
+    <p>Los reembolsos aprobados se procesan dentro de 3-5 días hábiles al método de pago original. Su banco puede tomar tiempo adicional (típicamente 5-10 días hábiles total).</p>
+
+    <h2>Fuerza Mayor</h2>
+    <p>En casos de fuerza mayor (huracanes, desastres naturales, órdenes gubernamentales, disturbios civiles, restricciones de pandemia, etc.), YourParkNow puede emitir reembolsos completos a su discreción sin importar la política estándar.</p>
+
+    <h2>Contracargos</h2>
+    <p><strong>Importante:</strong> Los Huéspedes deben contactar al soporte de YourParkNow antes de iniciar un contracargo con su banco. La mayoría de disputas se resuelven rápidamente.</p>
+    <p>Los contracargos injustificados pueden resultar en:</p>
+    <ul>
+      <li>Suspensión o terminación de su cuenta.</li>
+      <li>Recuperación del monto disputado más tarifas razonables.</li>
+      <li>Reporte a bases de datos de prevención de fraude.</li>
+    </ul>
+
+    <h2>Tarifas de Servicio</h2>
+    <p>La tarifa de servicio de YourParkNow (15%) <strong>NO es reembolsable</strong> cuando:</p>
+    <ul>
+      <li>Cancelación del Huésped fuera de ventana de reembolso completo.</li>
+      <li>Huésped no se presenta.</li>
+    </ul>
+    <p>La tarifa de servicio <strong>SÍ se reembolsa</strong> cuando:</p>
+    <ul>
+      <li>Cancelación del Anfitrión.</li>
+      <li>Anfitrión no se presenta o espacio inaccesible.</li>
+      <li>Falla de servicio verificada.</li>
+      <li>Fuerza mayor.</li>
+    </ul>
+
+    <h2>Cómo Solicitar un Reembolso</h2>
+    <ol style="margin-left: 24px; margin-top: 12px;">
+      <li>Abra la app de YourParkNow.</li>
+      <li>Vaya a "Mis Reservaciones" y seleccione la reservación.</li>
+      <li>Toque "Cancelar Reservación" o "Reportar Problema."</li>
+      <li>Proporcione razón y evidencia (fotos si aplica).</li>
+      <li>Envíe. Recibirá confirmación dentro de 24 horas.</li>
+    </ol>
+    <p>Para problemas complejos, contacte <a href="mailto:support@yourparknow.com">support@yourparknow.com</a>.</p>
+
+    <h2>Contacto</h2>
+    <p><strong>YourParkNow LLC</strong><br>
+    Soporte: <a href="mailto:support@yourparknow.com">support@yourparknow.com</a><br>
+    Legal: <a href="mailto:legal@yourparknow.com">legal@yourparknow.com</a></p>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/terms">Terms & Conditions</a>
+    <a href="/privacy">Privacy Policy</a>
+    <a href="/refunds">Refund Policy</a>
+    <a href="mailto:support@yourparknow.com">Contact</a>
+  </div>
+  <div class="footer-copyright">© 2026 YourParkNow LLC. All rights reserved. / Todos los derechos reservados.</div>
+</footer>
+
+<script>
+  function toggleLang() {
+    const en = document.getElementById('lang-en');
+    const es = document.getElementById('lang-es');
+    const title = document.getElementById('page-title');
+    const subtitle = document.getElementById('page-subtitle');
+    if (en.classList.contains('active')) {
+      en.classList.remove('active'); es.classList.add('active');
+      title.textContent = 'Política de Reembolso y Cancelación';
+      subtitle.textContent = 'Última actualización: 12 de mayo de 2026';
+      localStorage.setItem('yourparknow_lang', 'es');
+    } else {
+      es.classList.remove('active'); en.classList.add('active');
+      title.textContent = 'Refund & Cancellation Policy';
+      subtitle.textContent = 'Last updated: May 12, 2026';
+      localStorage.setItem('yourparknow_lang', 'en');
+    }
+  }
+  if (localStorage.getItem('yourparknow_lang') === 'es') { toggleLang(); }
+</script>
+
+</body>
+</html>
