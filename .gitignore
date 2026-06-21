@@ -1,0 +1,6 @@
+# HyperFrames agent tooling (installed via `npx skills add`)
+.agents/
+skills-lock.json
+
+# Dependencies / build artifacts
+node_modules/
