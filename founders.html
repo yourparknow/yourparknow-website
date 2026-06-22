@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOUNDERS · A Private Members Club — Miami</title>
+<meta name="description" content="Founders — a private members club in Miami. Shooting championship, executive poker, cigar &amp; spirits sessions, and performance training. The match lasts an afternoon. The ranking lasts all month.">
+<meta property="og:title" content="FOUNDERS — A Private Members Club">
+<meta property="og:description" content="The match lasts an afternoon. The ranking lasts all month.">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0a0a0b;
+    --bg-2:#0f0f11;
+    --surface:#16161a;
+    --surface-2:#1c1c21;
+    --line:rgba(201,162,83,0.18);
+    --text:#f3efe6;
+    --muted:#9a958a;
+    --ember:#e0852a;
+    --ember-soft:#c8741f;
+    --gold:#c9a253;
+    --elite:#b3322b;
+    --green:#2c4a3b;
+    --max:1220px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.65;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--ember);color:#0a0a0b}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%}
+
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+  .eyebrow{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.42em;
+    font-size:12px;
+    font-weight:500;
+    color:var(--ember);
+  }
+  .display{
+    font-family:'Oswald',sans-serif;
+    text-transform:uppercase;
+    font-weight:600;
+    letter-spacing:.01em;
+    line-height:.98;
+  }
+  .serif{font-family:'Cormorant Garamond',serif}
+  .muted{color:var(--muted)}
+
+  /* ---------- LOADER ---------- */
+  #loader{
+    position:fixed;inset:0;z-index:2000;background:var(--bg);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+    transition:opacity .8s ease, visibility .8s;
+  }
+  #loader.done{opacity:0;visibility:hidden}
+  .loader-mark{
+    font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.5em;
+    font-size:clamp(22px,5vw,34px);color:var(--text);padding-left:.5em;
+  }
+  .loader-bar{margin-top:22px;width:160px;height:1px;background:rgba(255,255,255,.12);overflow:hidden}
+  .loader-bar span{display:block;height:100%;width:0;background:var(--ember);animation:load 1.6s ease forwards}
+  @keyframes load{to{width:100%}}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 40px;transition:background .4s, padding .4s, border-color .4s;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(10,10,11,.82);backdrop-filter:blur(14px);
+    padding:14px 40px;border-bottom:1px solid var(--line);
+  }
+  .brand{font-family:'Oswald',sans-serif;font-weight:700;letter-spacing:.46em;font-size:18px;padding-left:.46em}
+  .brand b{color:var(--ember)}
+  nav.links{display:flex;gap:34px;align-items:center}
+  nav.links a{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.16em;
+    font-size:12.5px;font-weight:400;color:var(--muted);transition:color .25s;position:relative;
+  }
+  nav.links a::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:0;background:var(--ember);transition:width .3s}
+  nav.links a:hover{color:var(--text)}
+  nav.links a:hover::after{width:100%}
+  .lang{
+    border:1px solid var(--line);background:transparent;color:var(--text);cursor:pointer;
+    font-family:'Oswald',sans-serif;letter-spacing:.18em;text-transform:uppercase;font-size:11px;
+    padding:7px 14px;border-radius:2px;transition:all .25s;
+  }
+  .lang:hover{border-color:var(--ember);color:var(--ember)}
+  .burger{display:none;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .hero-bg::before{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(120% 90% at 70% 10%, rgba(224,133,42,.16), transparent 55%),
+      radial-gradient(90% 80% at 15% 90%, rgba(179,50,43,.12), transparent 60%),
+      linear-gradient(180deg,#08080a 0%, #101013 60%, #0a0a0b 100%);
+  }
+  #embers{position:absolute;inset:0;z-index:1;pointer-events:none}
+  .hero .wrap{position:relative;z-index:2;width:100%}
+  .hero-tag{display:inline-flex;align-items:center;gap:12px;margin-bottom:30px}
+  .hero-tag .dot{width:7px;height:7px;border-radius:50%;background:var(--ember);box-shadow:0 0 14px var(--ember);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .hero h1{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:700;
+    font-size:clamp(48px,9.5vw,138px);line-height:.92;letter-spacing:.005em;margin-bottom:8px;
+  }
+  .hero h1 .thin{font-weight:300;color:var(--muted)}
+  .hero .lede{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:clamp(20px,3vw,30px);color:#e8e2d4;max-width:620px;margin:26px 0 40px;line-height:1.4;
+  }
+  .hero .lede b{font-style:normal;color:var(--gold)}
+  .btn-row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+  .btn{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:13px;font-weight:500;
+    padding:16px 34px;border-radius:2px;cursor:pointer;transition:all .3s;display:inline-block;border:1px solid transparent;
+  }
+  .btn-gold{background:linear-gradient(135deg,var(--ember),var(--gold));color:#0a0a0b;position:relative;overflow:hidden}
+  .btn-gold::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);transition:left .6s}
+  .btn-gold:hover::after{left:140%}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(224,133,42,.32)}
+  .btn-ghost{border:1px solid var(--line);color:var(--text)}
+  .btn-ghost:hover{border-color:var(--ember);color:var(--ember)}
+  .scroll-hint{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:2;
+    font-family:'Oswald',sans-serif;letter-spacing:.3em;font-size:10px;color:var(--muted);text-transform:uppercase;text-align:center}
+  .scroll-hint .line{width:1px;height:46px;background:linear-gradient(var(--ember),transparent);margin:10px auto 0;animation:drop 2s infinite}
+  @keyframes drop{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.1%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+  /* ---------- SECTIONS ---------- */
+  section.block{padding:120px 0;position:relative}
+  .sec-head{max-width:720px;margin-bottom:64px}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+  .sec-head h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:600;
+    font-size:clamp(32px,5.5vw,62px);line-height:1;margin:16px 0 18px}
+  .sec-head p{font-size:17px;color:var(--muted);max-width:560px}
+  .sec-head.center p{margin-left:auto;margin-right:auto}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+
+  /* ---------- STANDING / LEADERBOARD ---------- */
+  .standing{background:linear-gradient(180deg,#0a0a0b,#101013)}
+  .standing-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+  .quote{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4.4vw,52px);line-height:1.12;font-weight:500}
+  .quote b{color:var(--ember);font-style:italic;font-weight:600}
+  .board{
+    background:linear-gradient(180deg,var(--surface),#101015);border:1px solid var(--line);border-radius:6px;
+    padding:26px 26px 30px;box-shadow:0 30px 80px rgba(0,0,0,.5);
+  }
+  .board-top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:8px}
+  .board-top .t{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px}
+  .live{display:inline-flex;align-items:center;gap:7px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--ember)}
+  .live .b{width:7px;height:7px;border-radius:50%;background:var(--ember);box-shadow:0 0 10px var(--ember);animation:pulse 2s infinite}
+  .row{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:14px;padding:13px 8px;border-radius:4px;transition:background .3s}
+  .row+.row{border-top:1px solid rgba(255,255,255,.04)}
+  .row .rk{font-family:'Oswald',sans-serif;font-size:18px;color:var(--muted)}
+  .row .nm{font-weight:500}
+  .row .nm small{display:block;color:var(--muted);font-weight:400;font-size:12px;letter-spacing:.04em}
+  .row .pts{font-family:'Oswald',sans-serif;font-size:18px;color:var(--text)}
+  .row.lead{background:linear-gradient(90deg,rgba(224,133,42,.14),transparent)}
+  .row.lead .rk{color:var(--gold)}
+  .row.lead .pts{color:var(--gold)}
+  .crown{font-size:13px}
+
+  /* ---------- DIVISIONS ---------- */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  .div-card{position:relative;border:1px solid var(--line);border-radius:6px;padding:42px 36px;overflow:hidden;
+    background:linear-gradient(180deg,var(--surface),#0d0d10);transition:transform .4s, border-color .4s}
+  .div-card:hover{transform:translateY(-6px);border-color:var(--ember)}
+  .div-card .glow{position:absolute;width:240px;height:240px;border-radius:50%;filter:blur(70px);opacity:.5;top:-80px;right:-60px}
+  .div-card.marks .glow{background:rgba(224,133,42,.4)}
+  .div-card.elite .glow{background:rgba(179,50,43,.45)}
+  .div-card .tier{font-family:'Oswald',sans-serif;letter-spacing:.3em;text-transform:uppercase;font-size:12px;color:var(--ember)}
+  .div-card.elite .tier{color:var(--elite)}
+  .div-card h3{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:30px;margin:10px 0 4px}
+  .div-card .tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:#e8e2d4;margin-bottom:22px}
+  .div-card ul{list-style:none;position:relative;z-index:2}
+  .div-card ul li{padding:9px 0 9px 24px;position:relative;color:var(--muted);border-top:1px solid rgba(255,255,255,.05)}
+  .div-card ul li::before{content:"";position:absolute;left:0;top:17px;width:9px;height:1px;background:var(--ember)}
+  .div-card.elite ul li::before{background:var(--elite)}
+
+  /* points + calendar strip */
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px}
+  .pill{border:1px solid var(--line);border-radius:6px;padding:26px 22px;text-align:center;background:var(--surface)}
+  .pill .n{font-family:'Oswald',sans-serif;font-size:38px;color:var(--gold);line-height:1}
+  .pill .l{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:11px;color:var(--muted);margin-top:10px}
+
+  /* ---------- POKER ---------- */
+  .poker{background:radial-gradient(120% 100% at 80% 0%, rgba(44,74,59,.4), transparent 50%), linear-gradient(180deg,#0c0e0d,#0a0a0b)}
+  .feature{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .feature .visual{position:relative;height:380px;border:1px solid var(--line);border-radius:8px;overflow:hidden;
+    background:radial-gradient(circle at 50% 40%, #1c3a2c, #0c1812 70%);display:flex;align-items:center;justify-content:center}
+  .felt{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%, rgba(70,120,90,.5), transparent 55%)}
+  .suits{position:relative;z-index:2;display:flex;gap:18px;font-size:52px}
+  .suits span{filter:drop-shadow(0 6px 20px rgba(0,0,0,.6));animation:floatcard 5s ease-in-out infinite}
+  .suits span:nth-child(2){animation-delay:.6s}.suits span:nth-child(3){animation-delay:1.2s}.suits span:nth-child(4){animation-delay:1.8s}
+  .suits .red{color:#d6453f}.suits .blk{color:#e9e4d8}
+  @keyframes floatcard{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-14px) rotate(3deg)}}
+  .chips{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;gap:-10px;z-index:3}
+  .chip{width:46px;height:46px;border-radius:50%;border:3px dashed rgba(255,255,255,.5);margin-left:-12px;box-shadow:0 8px 18px rgba(0,0,0,.5)}
+  .chip.c1{background:#b3322b}.chip.c2{background:#1c1c21}.chip.c3{background:var(--gold)}.chip.c4{background:#2c4a3b}
+
+  /* ---------- TASTING / MENU ---------- */
+  .tasting{background:linear-gradient(180deg,#0a0a0b,#0e0c0b)}
+  .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .pair{
+    position:relative;border:1px solid var(--line);border-radius:6px;padding:26px 24px;cursor:pointer;
+    background:linear-gradient(180deg,var(--surface),#0e0e11);transition:transform .35s,border-color .35s,background .35s;overflow:hidden;
+  }
+  .pair:hover{transform:translateY(-5px);border-color:var(--ember);background:linear-gradient(180deg,#1d1a16,#0e0e11)}
+  .pair .no{font-family:'Oswald',sans-serif;font-size:13px;color:var(--ember);letter-spacing:.2em}
+  .pair h4{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:19px;margin:8px 0 6px;letter-spacing:.02em}
+  .pair p{font-size:14px;color:var(--muted);min-height:42px}
+  .pair .open{margin-top:14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;display:inline-flex;gap:8px;align-items:center}
+  .pair .open span{transition:transform .3s}
+  .pair:hover .open span{transform:translateX(5px)}
+
+  /* modal */
+  .modal{position:fixed;inset:0;z-index:1500;display:none;align-items:center;justify-content:center;padding:24px}
+  .modal.show{display:flex}
+  .modal-bg{position:absolute;inset:0;background:rgba(5,5,6,.82);backdrop-filter:blur(8px)}
+  .modal-card{position:relative;z-index:2;max-width:760px;width:100%;background:linear-gradient(180deg,var(--surface-2),#0e0e11);
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;display:grid;grid-template-columns:300px 1fr;box-shadow:0 40px 120px rgba(0,0,0,.7);
+    transform:translateY(20px) scale(.98);opacity:0;transition:transform .5s,opacity .5s}
+  .modal.show .modal-card{transform:none;opacity:1}
+  .modal-visual{position:relative;background:radial-gradient(circle at 50% 30%, #211c14, #0c0c0e 75%);display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+  .modal-body{padding:38px 36px}
+  .modal-body .no{font-family:'Oswald',sans-serif;letter-spacing:.25em;color:var(--ember);font-size:12px}
+  .modal-body h3{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:30px;margin:8px 0 14px;line-height:1.05}
+  .modal-body p{color:var(--muted);margin-bottom:18px;font-size:15px}
+  .modal-body .notes{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+  .tagx{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#e8e2d4;
+    border:1px solid var(--line);border-radius:30px;padding:6px 14px}
+  .modal-actions{display:flex;gap:12px;flex-wrap:wrap}
+  .close-x{position:absolute;top:14px;right:18px;z-index:5;background:none;border:none;color:var(--muted);font-size:26px;cursor:pointer;transition:color .2s}
+  .close-x:hover{color:var(--text)}
+
+  /* animated bottle (SVG) */
+  .bottle-wrap{position:relative;width:120px;height:300px;margin-bottom:0}
+  .pour{position:absolute;left:50%;top:54px;width:3px;height:0;background:linear-gradient(var(--ember),rgba(224,133,42,0));transform:translateX(-50%);
+    animation:pour 2.6s ease-in-out infinite;border-radius:2px}
+  @keyframes pour{0%,100%{height:0;opacity:0}30%{height:120px;opacity:.9}70%{height:120px;opacity:.9}}
+  .glass-fill{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:46px;height:54px;
+    border:2px solid rgba(201,162,83,.5);border-top:none;border-radius:0 0 8px 8px;overflow:hidden}
+  .glass-fill .liq{position:absolute;bottom:0;left:0;right:0;height:0;background:linear-gradient(var(--gold),var(--ember-soft));animation:fill 2.6s ease-in-out infinite}
+  @keyframes fill{0%{height:6px}45%{height:34px}100%{height:34px}}
+
+  /* smoke */
+  .smoke{position:absolute;bottom:30%;left:50%;width:10px;height:10px;border-radius:50%;
+    background:radial-gradient(circle,rgba(230,225,215,.5),transparent 70%);filter:blur(6px);transform:translateX(-50%);opacity:0}
+  .smoke.s1{animation:rise 5s ease-in infinite}
+  .smoke.s2{animation:rise 5s ease-in infinite 1.6s;left:46%}
+  .smoke.s3{animation:rise 5s ease-in infinite 3.2s;left:54%}
+  @keyframes rise{0%{transform:translate(-50%,0) scale(.4);opacity:0}15%{opacity:.55}100%{transform:translate(-50%,-180px) scale(2.6);opacity:0}}
+
+  .cigar{position:absolute;bottom:24%;left:50%;transform:translateX(-50%) rotate(-8deg);width:120px;height:14px;
+    background:linear-gradient(90deg,#5a3d24,#7a5430 60%,#3a2716);border-radius:8px}
+  .cigar::after{content:"";position:absolute;right:-2px;top:0;width:14px;height:14px;border-radius:50%;
+    background:radial-gradient(circle,#ff7a1a,#7a2a05);box-shadow:0 0 16px #ff6a1a}
+
+  /* ---------- TRAINING ---------- */
+  .training{background:linear-gradient(180deg,#0a0a0b,#0d0d10)}
+  .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:40px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .phase{padding:32px 26px;border-right:1px solid var(--line);position:relative;transition:background .35s}
+  .phase:last-child{border-right:none}
+  .phase:hover{background:var(--surface)}
+  .phase .min{font-family:'Oswald',sans-serif;color:var(--ember);font-size:13px;letter-spacing:.2em}
+  .phase h4{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:18px;margin:8px 0 10px}
+  .phase p{font-size:14px;color:var(--muted)}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:54px;text-align:center}
+  .metric .n{font-family:'Oswald',sans-serif;font-size:clamp(40px,6vw,68px);line-height:1;
+    background:linear-gradient(180deg,var(--gold),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .metric .l{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--muted);margin-top:10px}
+
+  /* ---------- MEMBERSHIP ---------- */
+  .members{background:linear-gradient(180deg,#0d0d10,#0a0a0b)}
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .tier-card{border:1px solid var(--line);border-radius:8px;padding:38px 30px;background:linear-gradient(180deg,var(--surface),#0d0d10);transition:transform .4s,border-color .4s;position:relative}
+  .tier-card:hover{transform:translateY(-6px);border-color:var(--gold)}
+  .tier-card.feature-tier{border-color:var(--ember)}
+  .tier-card .badge{position:absolute;top:-11px;left:30px;background:linear-gradient(135deg,var(--ember),var(--gold));color:#0a0a0b;
+    font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:5px 12px;border-radius:30px}
+  .tier-card .lvl{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:13px;color:var(--ember)}
+  .tier-card h3{font-family:'Cormorant Garamond',serif;font-size:34px;margin:6px 0 18px}
+  .tier-card ul{list-style:none}
+  .tier-card ul li{padding:8px 0 8px 22px;position:relative;color:var(--muted);font-size:15px}
+  .tier-card ul li::before{content:"✦";position:absolute;left:0;color:var(--gold);font-size:12px}
+
+  /* ---------- CTA ---------- */
+  .final{position:relative;text-align:center;padding:140px 0;overflow:hidden;background:linear-gradient(180deg,#0a0a0b,#0e0b09)}
+  .final::before{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 50% 30%, rgba(224,133,42,.16), transparent 60%)}
+  .final .wrap{position:relative;z-index:2}
+  .final h2{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:clamp(34px,6vw,76px);line-height:1;margin-bottom:18px}
+  .final p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(20px,3vw,28px);color:#e8e2d4;max-width:560px;margin:0 auto 38px}
+  .apply{display:flex;gap:12px;max-width:480px;margin:0 auto;flex-wrap:wrap}
+  .apply input{flex:1;min-width:220px;background:var(--surface);border:1px solid var(--line);border-radius:3px;
+    padding:16px 20px;color:var(--text);font-family:'Inter';font-size:15px}
+  .apply input:focus{outline:none;border-color:var(--ember)}
+
+  /* ---------- FOOTER ---------- */
+  footer.site{border-top:1px solid var(--line);padding:60px 0 36px;background:#08080a}
+  .foot{display:flex;justify-content:space-between;align-items:flex-start;gap:40px;flex-wrap:wrap}
+  .foot .brand{font-size:16px}
+  .foot p{color:var(--muted);font-size:14px;max-width:300px;margin-top:14px}
+  .foot-links{display:flex;gap:50px;flex-wrap:wrap}
+  .foot-links h5{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:12px;margin-bottom:14px;color:var(--text)}
+  .foot-links a{display:block;color:var(--muted);font-size:14px;padding:5px 0;transition:color .2s}
+  .foot-links a:hover{color:var(--ember)}
+  .foot-bottom{margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.06);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:12.5px}
+
+  /* lang */
+  .lang-es{display:none}
+  body.es .lang-en{display:none}
+  body.es .lang-es{display:inline}
+  body.es span.lang-es{display:inline}
+  .lang-es.block,body.es .lang-es.block{}
+  body.es .lang-es{display:revert}
+
+  /* responsive */
+  @media(max-width:980px){
+    .standing-grid,.feature{grid-template-columns:1fr;gap:40px}
+    .menu-grid,.timeline,.metrics,.tiers,.strip{grid-template-columns:1fr 1fr}
+    .timeline{border-radius:8px}.phase{border-right:none;border-bottom:1px solid var(--line)}
+    .modal-card{grid-template-columns:1fr}.modal-visual{height:200px}
+  }
+  @media(max-width:680px){
+    header{padding:16px 20px}nav.links{display:none}
+    .two,.menu-grid,.timeline,.metrics,.tiers,.strip{grid-template-columns:1fr}
+    section.block{padding:80px 0}
+    .wrap{padding:0 20px}
+  }
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-mark">FOUNDERS</div>
+  <div class="loader-bar"><span></span></div>
+</div>
+
+<!-- NAV -->
+<header id="nav">
+  <div class="brand">FOUN<b>DERS</b></div>
+  <nav class="links">
+    <a href="#championship"><span class="lang-en">Championship</span><span class="lang-es">Campeonato</span></a>
+    <a href="#poker">Poker</a>
+    <a href="#tasting"><span class="lang-en">Sip &amp; Smoke</span><span class="lang-es">Cata</span></a>
+    <a href="#training"><span class="lang-en">Training</span><span class="lang-es">Entrenamiento</span></a>
+    <a href="#membership"><span class="lang-en">Membership</span><span class="lang-es">Membresía</span></a>
+  </nav>
+  <button class="lang" onclick="toggleLang()"><span class="lang-en">ES</span><span class="lang-es">EN</span></button>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <canvas id="embers"></canvas>
+  <div class="wrap">
+    <div class="hero-tag">
+      <span class="dot"></span>
+      <span class="eyebrow"><span class="lang-en">Private Members Club · Miami</span><span class="lang-es">Club Privado · Miami</span></span>
+    </div>
+    <h1>FOUN<span class="thin">DERS</span></h1>
+    <p class="lede">
+      <span class="lang-en">The match lasts an afternoon. <b>The ranking lasts all month.</b></span>
+      <span class="lang-es">El duelo dura una tarde. <b>El ranking dura todo el mes.</b></span>
+    </p>
+    <div class="btn-row">
+      <a href="#membership" class="btn btn-gold"><span class="lang-en">Request Membership</span><span class="lang-es">Solicitar Membresía</span></a>
+      <a href="#championship" class="btn btn-ghost"><span class="lang-en">Explore the House</span><span class="lang-es">Conoce el Club</span></a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span class="lang-en">Scroll</span><span class="lang-es">Desliza</span><div class="line"></div></div>
+</section>
+
+<!-- STANDING -->
+<section class="block standing">
+  <div class="wrap standing-grid">
+    <div class="reveal">
+      <div class="eyebrow"><span class="lang-en">The Founders Standing</span><span class="lang-es">El Ranking Founders</span></div>
+      <p class="quote" style="margin-top:18px">
+        <span class="lang-en">We don't sell a competition. We build a <b>system of status.</b></span>
+        <span class="lang-es">No vendemos una competencia. Construimos un <b>sistema de estatus.</b></span>
+      </p>
+      <p class="muted" style="margin-top:24px;max-width:440px">
+        <span class="lang-en">Shooting, poker, and tasting all feed one annual ranking. Your name on the wall. Your rank on the screen. The #1 of the month shows on the club display — and on every member's phone, live.</span>
+        <span class="lang-es">Tiro, poker y cata alimentan un mismo ranking anual. Tu nombre en la pared. Tu posición en pantalla. El #1 del mes aparece en la entrada del club — y en el teléfono de cada miembro, en vivo.</span>
+      </p>
+    </div>
+    <div class="reveal d2">
+      <div class="board">
+        <div class="board-top">
+          <span class="t"><span class="lang-en">Monthly Standing</span><span class="lang-es">Ranking del Mes</span></span>
+          <span class="live"><span class="b"></span> LIVE</span>
+        </div>
+        <div class="row lead"><span class="rk">01</span><span class="nm">A. Rivera <span class="crown">👑</span><small><span class="lang-en">Elite Division</span><span class="lang-es">División Elite</span></small></span><span class="pts" data-count="980">0</span></div>
+        <div class="row"><span class="rk">02</span><span class="nm">M. Delgado<small><span class="lang-en">Elite Division</span><span class="lang-es">División Elite</span></small></span><span class="pts" data-count="940">0</span></div>
+        <div class="row"><span class="rk">03</span><span class="nm">J. Castro<small>Marksman</small></span><span class="pts" data-count="880">0</span></div>
+        <div class="row"><span class="rk">04</span><span class="nm">L. Moreno<small>Marksman</small></span><span class="pts" data-count="820">0</span></div>
+        <div class="row"><span class="rk">05</span><span class="nm">D. Fuentes<small><span class="lang-en">Elite Division</span><span class="lang-es">División Elite</span></small></span><span class="pts" data-count="760">0</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHAMPIONSHIP -->
+<section class="block" id="championship">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow"><span class="lang-en">Founders Championship Series</span><span class="lang-es">Serie de Campeonato Founders</span></div>
+      <h2><span class="lang-en">The Shooting Club</span><span class="lang-es">El Club de Tiro</span></h2>
+      <p><span class="lang-en">Two divisions. One board. A season that rewards the consistent, not just the lucky.</span>
+         <span class="lang-es">Dos divisiones. Un ranking. Una temporada que premia al constante, no solo al afortunado.</span></p>
+    </div>
+
+    <div class="two">
+      <div class="div-card marks reveal d1">
+        <div class="glow"></div>
+        <div class="tier">01 · Marksman Division</div>
+        <h3><span class="lang-en">Marksman</span><span class="lang-es">Marksman</span></h3>
+        <div class="tagline"><span class="lang-en">Where the season begins.</span><span class="lang-es">Donde empieza la temporada.</span></div>
+        <ul>
+          <li><span class="lang-en">Sharpen your fundamentals, climb the board.</span><span class="lang-es">Afina tus fundamentos y sube en el ranking.</span></li>
+          <li><span class="lang-en">3rd week of every month · Thursday evening.</span><span class="lang-es">3ra semana del mes · jueves por la tarde.</span></li>
+          <li><span class="lang-en">Open to all members in good standing.</span><span class="lang-es">Abierto a todos los miembros activos.</span></li>
+          <li><span class="lang-en">Promotion to Elite earned by performance.</span><span class="lang-es">El ascenso a Elite se gana por rendimiento.</span></li>
+        </ul>
+      </div>
+      <div class="div-card elite reveal d2">
+        <div class="glow"></div>
+        <div class="tier">02 · Elite Division</div>
+        <h3><span class="lang-en">Elite</span><span class="lang-es">Elite</span></h3>
+        <div class="tagline"><span class="lang-en">By performance only.</span><span class="lang-es">Solo por rendimiento.</span></div>
+        <ul>
+          <li><span class="lang-en">The top of the house. Fewer shooters, higher stakes.</span><span class="lang-es">La cima del club. Menos tiradores, más en juego.</span></li>
+          <li><span class="lang-en">1st week of every month · Thursday evening.</span><span class="lang-es">1ra semana del mes · jueves por la tarde.</span></li>
+          <li><span class="lang-en">Stricter format, permanent prestige.</span><span class="lang-es">Formato más estricto, prestigio permanente.</span></li>
+          <li><span class="lang-en">Qualifies directly toward the Grand Championship.</span><span class="lang-es">Clasifica directo al Gran Campeonato.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="strip">
+      <div class="pill reveal d1"><div class="n">100</div><div class="l"><span class="lang-en">Pts · 1st Place</span><span class="lang-es">Pts · 1er Lugar</span></div></div>
+      <div class="pill reveal d2"><div class="n">80</div><div class="l"><span class="lang-en">Pts · 2nd Place</span><span class="lang-es">Pts · 2do Lugar</span></div></div>
+      <div class="pill reveal d3"><div class="n">60</div><div class="l"><span class="lang-en">Pts · 3rd Place</span><span class="lang-es">Pts · 3er Lugar</span></div></div>
+      <div class="pill reveal d4"><div class="n">TOP 10</div><div class="l"><span class="lang-en">Grand Championship</span><span class="lang-es">Gran Campeonato</span></div></div>
+    </div>
+
+    <div class="reveal" style="margin-top:46px;border:1px solid var(--line);border-radius:8px;padding:34px 36px;background:linear-gradient(135deg,rgba(224,133,42,.08),transparent)">
+      <div class="eyebrow"><span class="lang-en">The Finale</span><span class="lang-es">La Final</span></div>
+      <h3 class="display" style="font-size:28px;margin:10px 0 8px"><span class="lang-en">Founders Grand Championship</span><span class="lang-es">Gran Campeonato Founders</span></h3>
+      <p class="muted" style="max-width:640px"><span class="lang-en">The Top 10 of the year. Invitation by ranking only. One night, the highest prestige the house can offer — followed by the Founders Tasting &amp; Awards Ceremony.</span>
+      <span class="lang-es">El Top 10 del año. Invitación solo por ranking. Una noche, el mayor prestigio del club — seguida de la Founders Tasting &amp; Awards Ceremony.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- POKER -->
+<section class="block poker" id="poker">
+  <div class="wrap feature">
+    <div class="reveal">
+      <div class="eyebrow">♠ Miami Power Players</div>
+      <h2 class="display" style="font-size:clamp(32px,5vw,58px);margin:14px 0 18px"><span class="lang-en">Executive Poker Night</span><span class="lang-es">Noche de Poker Ejecutiva</span></h2>
+      <p class="serif" style="font-style:italic;font-size:24px;color:#e8e2d4;margin-bottom:22px">
+        <span class="lang-en">Four hours. One table. The people you actually want to know.</span>
+        <span class="lang-es">Cuatro horas. Una mesa. La gente que de verdad quieres conocer.</span></p>
+      <p class="muted" style="margin-bottom:18px">
+        <span class="lang-en">Welcome cocktail, charcuterie, lounge music, and a room of Miami's top professionals — no phones up, no pitch decks, just the table. A sponsor-backed prize model keeps the night about the play, not the pot.</span>
+        <span class="lang-es">Cóctel de bienvenida, charcutería, música lounge y una sala con los mejores profesionales de Miami — sin teléfonos arriba, sin pitch decks, solo la mesa. Un modelo de premio por sponsor mantiene la noche en el juego, no en el bote.</span></p>
+      <div style="display:flex;gap:30px;flex-wrap:wrap;margin-top:24px">
+        <div><div class="display" style="font-size:30px;color:var(--gold)">$150</div><div class="muted" style="font-size:13px"><span class="lang-en">Buy-in / seat</span><span class="lang-es">Entrada / silla</span></div></div>
+        <div><div class="display" style="font-size:30px;color:var(--gold)">4 hrs</div><div class="muted" style="font-size:13px"><span class="lang-en">Pure networking</span><span class="lang-es">Networking puro</span></div></div>
+        <div><div class="display" style="font-size:30px;color:var(--gold)"><span class="lang-en">Sponsor</span><span class="lang-es">Sponsor</span></div><div class="muted" style="font-size:13px"><span class="lang-en">Prize model</span><span class="lang-es">Modelo de premio</span></div></div>
+      </div>
+    </div>
+    <div class="visual reveal d2">
+      <div class="felt"></div>
+      <div class="suits"><span class="blk">♠</span><span class="red">♥</span><span class="blk">♣</span><span class="red">♦</span></div>
+      <div class="chips"><div class="chip c1"></div><div class="chip c2"></div><div class="chip c3"></div><div class="chip c4"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TASTING -->
+<section class="block tasting" id="tasting">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <div class="eyebrow"><span class="lang-en">Sip &amp; Smoke Sessions</span><span class="lang-es">Sesiones Sip &amp; Smoke</span></div>
+      <h2><span class="lang-en">Spirits &amp; Cigars</span><span class="lang-es">Licores y Cigarros</span></h2>
+      <p><span class="lang-en">A guided evening where the right pour and the right cigar teach you something. Tap any pairing to open the menu.</span>
+         <span class="lang-es">Una velada guiada donde el trago correcto y el cigarro correcto te enseñan algo. Toca cualquier maridaje para abrir el menú.</span></p>
+    </div>
+
+    <div class="menu-grid">
+      <!-- cards injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- TRAINING -->
+<section class="block training" id="training">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow"><span class="lang-en">Performance Shooting Training</span><span class="lang-es">Entrenamiento de Tiro de Alto Rendimiento</span></div>
+      <h2><span class="lang-en">Train Like a High-Performance Shooter</span><span class="lang-es">Entrena Como un Tirador de Élite</span></h2>
+      <p><span class="lang-en">Steady hands under pressure aren't born. They're trained. Breath, stability, focus — then you shoot.</span>
+         <span class="lang-es">Las manos firmes bajo presión no nacen. Se entrenan. Respiración, estabilidad, enfoque — y entonces disparas.</span></p>
+    </div>
+
+    <div class="timeline">
+      <div class="phase reveal d1"><div class="min">10 MIN</div><h4><span class="lang-en">Warm-Up &amp; Mobility</span><span class="lang-es">Calentamiento</span></h4><p><span class="lang-en">Shoulders, hips and core. Band work, mobility, breathing.</span><span class="lang-es">Hombros, caderas y core. Bandas, movilidad, respiración.</span></p></div>
+      <div class="phase reveal d2"><div class="min">25 MIN</div><h4><span class="lang-en">Performance Circuit</span><span class="lang-es">Circuito</span></h4><p><span class="lang-en">Farmer carry, row erg, TRX rows, medicine-ball slams.</span><span class="lang-es">Farmer carry, remo, TRX, medicine ball.</span></p></div>
+      <div class="phase reveal d3"><div class="min">25 MIN</div><h4><span class="lang-en">Shooting Block</span><span class="lang-es">Bloque de Tiro</span></h4><p><span class="lang-en">Recover the breath, then execute. Trigger, sight, decision.</span><span class="lang-es">Recupera la respiración y ejecuta. Gatillo, mira, decisión.</span></p></div>
+      <div class="phase reveal d4"><div class="min">30 MIN</div><h4><span class="lang-en">Recovery &amp; Review</span><span class="lang-es">Recuperación</span></h4><p><span class="lang-en">Cool down, breathing, and a read of your session data.</span><span class="lang-es">Enfriamiento, respiración y lectura de tus datos.</span></p></div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric reveal d1"><div class="n" data-count="90" data-suffix="">0</div><div class="l"><span class="lang-en">Minute Sessions</span><span class="lang-es">Min por Sesión</span></div></div>
+      <div class="metric reveal d2"><div class="n" data-count="4" data-suffix="">0</div><div class="l"><span class="lang-en">Performance Stations</span><span class="lang-es">Estaciones</span></div></div>
+      <div class="metric reveal d3"><div class="n" data-count="100" data-suffix="%">0</div><div class="l"><span class="lang-en">Focus Under Pressure</span><span class="lang-es">Enfoque Bajo Presión</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section class="block members" id="membership">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <div class="eyebrow"><span class="lang-en">Membership</span><span class="lang-es">Membresía</span></div>
+      <h2><span class="lang-en">Join the House</span><span class="lang-es">Únete al Club</span></h2>
+      <p><span class="lang-en">Tiers named by standing, not by price. You don't buy your way up — you earn it.</span>
+         <span class="lang-es">Niveles por mérito, no por precio. No subes pagando — lo ganas.</span></p>
+    </div>
+    <div class="tiers">
+      <div class="tier-card reveal d1">
+        <div class="lvl">Tier I</div>
+        <h3>Marksman</h3>
+        <ul>
+          <li><span class="lang-en">Access to all monthly matches</span><span class="lang-es">Acceso a todos los duelos mensuales</span></li>
+          <li><span class="lang-en">Founders Standing profile &amp; badges</span><span class="lang-es">Perfil y badges del Ranking Founders</span></li>
+          <li><span class="lang-en">Sip &amp; Smoke Sessions</span><span class="lang-es">Sesiones Sip &amp; Smoke</span></li>
+          <li><span class="lang-en">Digital membership card</span><span class="lang-es">Tarjeta de membresía digital</span></li>
+        </ul>
+      </div>
+      <div class="tier-card feature-tier reveal d2">
+        <div class="badge"><span class="lang-en">Most Popular</span><span class="lang-es">Más Popular</span></div>
+        <div class="lvl">Tier II</div>
+        <h3>Elite</h3>
+        <ul>
+          <li><span class="lang-en">Everything in Marksman</span><span class="lang-es">Todo lo de Marksman</span></li>
+          <li><span class="lang-en">Elite Division eligibility</span><span class="lang-es">Elegibilidad para División Elite</span></li>
+          <li><span class="lang-en">Power Players poker seat priority</span><span class="lang-es">Prioridad en Power Players</span></li>
+          <li><span class="lang-en">Performance Training programs</span><span class="lang-es">Programas de entrenamiento</span></li>
+          <li><span class="lang-en">Official after-movie of every event</span><span class="lang-es">After-movie oficial de cada evento</span></li>
+        </ul>
+      </div>
+      <div class="tier-card reveal d3">
+        <div class="lvl">Tier III</div>
+        <h3>Founder's Circle</h3>
+        <ul>
+          <li><span class="lang-en">Everything in Elite</span><span class="lang-es">Todo lo de Elite</span></li>
+          <li><span class="lang-en">Grand Championship invitation</span><span class="lang-es">Invitación al Gran Campeonato</span></li>
+          <li><span class="lang-en">Private tastings &amp; partner perks</span><span class="lang-es">Catas privadas y beneficios partner</span></li>
+          <li><span class="lang-en">Name engraved on the Founders Wall</span><span class="lang-es">Nombre grabado en el Founders Wall</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="wrap">
+    <div class="eyebrow reveal"><span class="lang-en">By Invitation &amp; Application</span><span class="lang-es">Por Invitación y Solicitud</span></div>
+    <h2 class="reveal d1"><span class="lang-en">Earn Your Place</span><span class="lang-es">Gana Tu Lugar</span></h2>
+    <p class="reveal d2"><span class="lang-en">Membership is limited. Request yours and we'll be in touch.</span><span class="lang-es">La membresía es limitada. Solicita la tuya y te contactamos.</span></p>
+    <form class="apply reveal d3" onsubmit="event.preventDefault();this.querySelector('input').value='';this.querySelector('button').textContent='✓';">
+      <input type="email" placeholder="your@email.com" required>
+      <button type="submit" class="btn btn-gold"><span class="lang-en">Apply</span><span class="lang-es">Solicitar</span></button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site">
+  <div class="wrap foot">
+    <div>
+      <div class="brand">FOUN<b>DERS</b></div>
+      <p><span class="lang-en">A private members club in Miami. Status, ritual, and the people worth knowing.</span>
+         <span class="lang-es">Un club privado de Miami. Estatus, ritual y la gente que vale la pena conocer.</span></p>
+    </div>
+    <div class="foot-links">
+      <div>
+        <h5><span class="lang-en">The House</span><span class="lang-es">El Club</span></h5>
+        <a href="#championship"><span class="lang-en">Championship</span><span class="lang-es">Campeonato</span></a>
+        <a href="#poker">Poker</a>
+        <a href="#tasting">Sip &amp; Smoke</a>
+        <a href="#training"><span class="lang-en">Training</span><span class="lang-es">Entrenamiento</span></a>
+      </div>
+      <div>
+        <h5><span class="lang-en">Members</span><span class="lang-es">Miembros</span></h5>
+        <a href="#membership"><span class="lang-en">Membership</span><span class="lang-es">Membresía</span></a>
+        <a href="#membership"><span class="lang-en">The Standing</span><span class="lang-es">El Ranking</span></a>
+        <a href="#membership"><span class="lang-en">Apply</span><span class="lang-es">Solicitar</span></a>
+      </div>
+      <div>
+        <h5><span class="lang-en">Contact</span><span class="lang-es">Contacto</span></h5>
+        <a href="#">Miami, FL</a>
+        <a href="mailto:hello@foundersclub.com">hello@foundersclub.com</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <div>© 2026 Founders Club. <span class="lang-en">All rights reserved.</span><span class="lang-es">Todos los derechos reservados.</span></div>
+    <div><span class="lang-en">Concept &amp; design — demo</span><span class="lang-es">Concepto y diseño — demo</span></div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-bg" onclick="closeModal()"></div>
+  <div class="modal-card">
+    <button class="close-x" onclick="closeModal()">×</button>
+    <div class="modal-visual" id="mVisual"></div>
+    <div class="modal-body">
+      <div class="no" id="mNo"></div>
+      <h3 id="mTitle"></h3>
+      <p id="mDesc"></p>
+      <div class="notes" id="mNotes"></div>
+      <div class="modal-actions">
+        <a href="#" class="btn btn-gold" id="mLink"><span class="lang-en">View Full Menu</span><span class="lang-es">Ver Menú Completo</span></a>
+        <a href="#membership" class="btn btn-ghost" onclick="closeModal()"><span class="lang-en">Reserve a Seat</span><span class="lang-es">Reservar Lugar</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- LANGUAGE ---------- */
+function toggleLang(){
+  document.body.classList.toggle('es');
+  try{localStorage.setItem('founders_lang',document.body.classList.contains('es')?'es':'en');}catch(e){}
+}
+try{if(localStorage.getItem('founders_lang')==='es')document.body.classList.add('es');}catch(e){}
+
+/* ---------- LOADER ---------- */
+window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('loader').classList.add('done'),1500);});
+
+/* ---------- NAV SCROLL ---------- */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>40);});
+
+/* ---------- REVEAL ON SCROLL ---------- */
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);
+    if(e.target.querySelector&&e.target.querySelectorAll('[data-count]').length){countUp(e.target);}
+  }});
+},{threshold:.18});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* count standalone metric blocks */
+function countUp(scope){
+  scope.querySelectorAll('[data-count]').forEach(el=>{
+    const end=+el.dataset.count, suf=el.dataset.suffix||'', dur=1400; let t0=null;
+    function step(t){if(!t0)t0=t;const p=Math.min((t-t0)/dur,1);el.textContent=Math.floor(p*end)+suf;if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+  });
+}
+/* board counts when board reveals */
+const boardObs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){countUp(e.target);boardObs.unobserve(e.target);}});},{threshold:.3});
+document.querySelectorAll('.board').forEach(b=>boardObs.observe(b));
+
+/* ---------- EMBERS CANVAS ---------- */
+(function(){
+  const c=document.getElementById('embers'),x=c.getContext('2d');let w,h,parts=[];
+  function size(){w=c.width=innerWidth;h=c.height=innerHeight;}
+  size();addEventListener('resize',size);
+  for(let i=0;i<60;i++)parts.push(newP());
+  function newP(){return{x:Math.random()*w,y:h+Math.random()*h,r:Math.random()*2+.4,s:Math.random()*.7+.2,o:Math.random()*.6+.2,d:Math.random()*.6-.3};}
+  function loop(){x.clearRect(0,0,w,h);
+    parts.forEach(p=>{p.y-=p.s;p.x+=p.d;p.o-=.0018;
+      if(p.y<-10||p.o<=0){Object.assign(p,newP());}
+      x.beginPath();x.arc(p.x,p.y,p.r,0,7);
+      x.fillStyle='rgba(224,133,42,'+p.o+')';x.shadowBlur=8;x.shadowColor='rgba(224,133,42,.8)';x.fill();
+    });requestAnimationFrame(loop);}
+  loop();
+})();
+
+/* ---------- TASTING MENU DATA ---------- */
+const pairings=[
+ {no:'01',en:'Bourbon & Cigars',es:'Bourbon y Cigarros',
+  dEn:'The classic. Learn to read a bourbon and choose the cigar that completes it.',dEs:'El clásico. Aprende a leer un bourbon y elegir el cigarro que lo completa.',
+  notes:['Mild + Connecticut','Full + Maduro','Caramel','Oak'],type:'bottle'},
+ {no:'02',en:'Scotch & Smoke',es:'Scotch y Humo',
+  dEn:'More sophisticated — Highlands, Speyside and Islay, and how peat shapes the pairing.',dEs:'Más sofisticado — Highlands, Speyside e Islay, y cómo la turba define el maridaje.',
+  notes:['Islay','Peat','Smoke','Honey'],type:'bottle'},
+ {no:'03',en:'Rum & Cigars',es:'Ron y Cigarros',
+  dEn:'Caribbean and relaxed. Aged rums, the history of tobacco, a Havana-night mood.',dEs:'Caribeño y relajado. Rones añejos, historia del tabaco, ambiente Havana Night.',
+  notes:['Aged','Caramel','Havana','Spice'],type:'cigar'},
+ {no:'04',en:'Tequila & Tobacco',es:'Tequila y Tabaco',
+  dEn:'Something different. Blanco, reposado, añejo — and the leaf that matches each.',dEs:'Algo distinto. Blanco, reposado, añejo — y la hoja que combina con cada uno.',
+  notes:['Blanco','Reposado','Añejo','Agave'],type:'bottle'},
+ {no:'05',en:'Wine & Cigars',es:'Vino y Cigarros',
+  dEn:'Very premium. Cabernet, Malbec, Pinot Noir — and why some reds simply work.',dEs:'Muy premium. Cabernet, Malbec, Pinot Noir — y por qué ciertos tintos funcionan.',
+  notes:['Cabernet','Malbec','Pinot','Tannin'],type:'bottle'},
+ {no:'06',en:'Port & Cigars',es:'Oporto y Cigarros',
+  dEn:'A luxury experience. Tawny and Ruby Port, a favorite among premium aficionados.',dEs:'Experiencia de lujo. Tawny y Ruby Port, favorito de los aficionados premium.',
+  notes:['Tawny','Ruby','Sweet','Dried fruit'],type:'bottle'},
+ {no:'07',en:'Cognac & Cigars',es:'Cognac y Cigarros',
+  dEn:'Executive level. A guided introduction to cognac, and the most elegant night we offer.',dEs:'Nivel ejecutivo. Introducción guiada al cognac, la velada más elegante que ofrecemos.',
+  notes:['VSOP','XO','Velvet','Networking'],type:'bottle'},
+ {no:'08',en:'Champagne & Cigars',es:'Champagne y Cigarros',
+  dEn:'Breaks the rules. Few have tried it. Made for year-end and VIP celebrations.',dEs:'Rompe las reglas. Pocos lo han probado. Ideal para fin de año y eventos VIP.',
+  notes:['Brut','Bubbles','Celebration','VIP'],type:'bottle'},
+ {no:'09',en:'Blind Pairing Challenge',es:'Reto de Maridaje a Ciegas',
+  dEn:'Interactive. Three pours, three cigars — find the best match. A prize for the winner.',dEs:'Interactivo. Tres tragos, tres cigarros — encuentra la mejor combinación. Premio al ganador.',
+  notes:['3 pours','3 cigars','Compete','Prize'],type:'cigar'},
+ {no:'10',en:'Around the World',es:'La Vuelta al Mundo',
+  dEn:'Each station is a country — Scotland, Dominican Republic, Cuba, France. Educational and fun.',dEs:'Cada estación es un país — Escocia, República Dominicana, Cuba, Francia. Educativo y divertido.',
+  notes:['Scotland','D.R.','Cuba','France'],type:'cigar'},
+];
+
+const bottleHTML=`
+ <div class="bottle-wrap">
+   <svg width="120" height="240" viewBox="0 0 120 240" style="position:absolute;top:0;left:0">
+     <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+       <stop offset="0" stop-color="#2a2a2e"/><stop offset="1" stop-color="#0e0e11"/></linearGradient>
+       <linearGradient id="lq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e0852a"/><stop offset="1" stop-color="#8a4a12"/></linearGradient></defs>
+     <rect x="52" y="6" width="16" height="34" rx="2" fill="#1a1a1d" stroke="#3a3a40"/>
+     <path d="M52 40 Q40 56 40 86 L40 222 Q40 234 52 234 L68 234 Q80 234 80 222 L80 86 Q80 56 68 40 Z" fill="url(#bg)" stroke="#3a3a40" stroke-width="1.5"/>
+     <path d="M44 120 L76 120 L76 220 Q76 230 66 230 L54 230 Q44 230 44 220 Z" fill="url(#lq)" opacity=".9"/>
+     <rect x="46" y="140" width="28" height="48" rx="3" fill="#0e0e11" opacity=".5"/>
+     <rect x="50" y="148" width="20" height="3" rx="1" fill="#e0852a"/>
+     <rect x="50" y="158" width="20" height="2" rx="1" fill="#c9a253" opacity=".7"/>
+     <rect x="50" y="170" width="14" height="2" rx="1" fill="#9a958a" opacity=".6"/>
+   </svg>
+   <div class="pour"></div>
+   <div class="glass-fill"><div class="liq"></div></div>
+ </div>`;
+
+const cigarHTML=`
+ <div style="position:relative;width:160px;height:240px">
+   <div class="cigar"></div>
+   <div class="smoke s1"></div><div class="smoke s2"></div><div class="smoke s3"></div>
+ </div>`;
+
+/* render cards */
+const grid=document.querySelector('.menu-grid');
+pairings.forEach((p,i)=>{
+  const el=document.createElement('div');
+  el.className='pair reveal d'+((i%4)+1);
+  el.innerHTML=`<div class="no">${p.no}</div>
+    <h4><span class="lang-en">${p.en}</span><span class="lang-es">${p.es}</span></h4>
+    <p><span class="lang-en">${p.dEn}</span><span class="lang-es">${p.dEs}</span></p>
+    <div class="open"><span class="lang-en">Open menu</span><span class="lang-es">Abrir menú</span> <span>→</span></div>`;
+  el.addEventListener('click',()=>openModal(p));
+  grid.appendChild(el);
+  io.observe(el);
+});
+
+/* ---------- MODAL ---------- */
+function openModal(p){
+  const m=document.getElementById('modal');
+  document.getElementById('mNo').textContent='Session '+p.no;
+  document.getElementById('mTitle').innerHTML=`<span class="lang-en">${p.en}</span><span class="lang-es">${p.es}</span>`;
+  document.getElementById('mDesc').innerHTML=`<span class="lang-en">${p.dEn}</span><span class="lang-es">${p.dEs}</span>`;
+  document.getElementById('mNotes').innerHTML=p.notes.map(n=>`<span class="tagx">${n}</span>`).join('');
+  document.getElementById('mVisual').innerHTML = p.type==='bottle'?bottleHTML:cigarHTML;
+  document.getElementById('mLink').setAttribute('href','#tasting');
+  m.classList.add('show');document.body.style.overflow='hidden';
+}
+function closeModal(){document.getElementById('modal').classList.remove('show');document.body.style.overflow='';}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+</body>
+</html>
