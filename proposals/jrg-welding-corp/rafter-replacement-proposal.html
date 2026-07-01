@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JRG Welding Corp — Proposal: Aluminum Rafter Replacement</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --navy:#1b2a41; --steel:#4a6076; --accent:#c8571b; --light:#f4f6f8; }
+  body { font-family: 'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; color:#222; line-height:1.5; background:#fff; font-size:13.5px; }
+  .page { max-width: 8.5in; margin: 0 auto; padding: 0.55in 0.65in; }
+  @media print {
+    @page { size: letter; margin: 0.45in 0.5in; }
+    .page { padding:0; max-width:none; }
+    .no-break { break-inside: avoid; }
+    .page-break { break-before: page; }
+  }
+  .no-break { page-break-inside: avoid; }
+  .page-break { page-break-before: always; }
+
+  /* Header */
+  .doc-header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom: 4px solid var(--navy); padding-bottom:14px; margin-bottom:18px; }
+  .brand h1 { font-size:26px; color:var(--navy); letter-spacing:0.5px; }
+  .brand h1 span { color:var(--accent); }
+  .brand p { font-size:12px; color:#555; margin-top:2px; }
+  .doc-meta { text-align:right; font-size:12px; color:#333; }
+  .doc-meta .doc-title { font-size:16px; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:1px; }
+
+  h2 { font-size:15px; color:#fff; background:var(--navy); padding:5px 10px; margin:20px 0 10px; text-transform:uppercase; letter-spacing:0.8px; border-radius:2px; }
+  h3 { font-size:13.5px; color:var(--navy); margin:12px 0 6px; }
+  p { margin-bottom:8px; }
+  ul, ol { margin: 0 0 10px 22px; }
+  li { margin-bottom:5px; }
+
+  .two-col { display:flex; gap:24px; }
+  .two-col > div { flex:1; }
+  .info-box { background:var(--light); border:1px solid #d8dee4; border-radius:4px; padding:10px 12px; font-size:12.5px; }
+  .info-box strong { color:var(--navy); }
+
+  .fill { background:#fff3bf; border-bottom:1px dashed #b8860b; padding:0 4px; font-weight:600; white-space:nowrap; }
+
+  table { width:100%; border-collapse:collapse; margin:8px 0 14px; font-size:12.5px; }
+  th { background:var(--navy); color:#fff; padding:6px 8px; text-align:left; font-weight:600; }
+  td { border:1px solid #cfd6dd; padding:6px 8px; vertical-align:top; }
+  tr:nth-child(even) td { background:#f7f9fa; }
+  .num { text-align:right; white-space:nowrap; }
+  .rec td { background:#e8f3e8 !important; font-weight:600; }
+  .total-row td { background:var(--navy) !important; color:#fff; font-weight:700; font-size:13.5px; }
+
+  .drawing { border:1.5px solid var(--navy); border-radius:4px; margin:12px 0 18px; }
+  .drawing .dwg-title { background:var(--navy); color:#fff; font-size:11.5px; font-weight:600; padding:4px 10px; letter-spacing:0.5px; }
+  .drawing svg { display:block; width:100%; height:auto; background:#fdfdfb; }
+  .dwg-note { font-size:11px; color:#555; padding:5px 10px; border-top:1px solid #d8dee4; font-style:italic; }
+
+  .sig-block { display:flex; gap:40px; margin-top:30px; }
+  .sig-block > div { flex:1; }
+  .sig-line { border-bottom:1.5px solid #333; height:34px; margin-bottom:4px; }
+  .sig-label { font-size:11px; color:#555; }
+  .footer-note { margin-top:24px; font-size:11px; color:#777; text-align:center; border-top:1px solid #ddd; padding-top:8px; }
+  .badge { display:inline-block; background:var(--accent); color:#fff; font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:10px; letter-spacing:0.5px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ============ HEADER ============ -->
+  <div class="doc-header">
+    <div class="brand">
+      <h1>JRG <span>WELDING</span> CORP</h1>
+      <p>Structural &amp; Ornamental Welding · Aluminum · Steel · Stainless</p>
+      <p><span class="fill">[Company Address]</span> · <span class="fill">[Phone]</span> · <span class="fill">[Email]</span> · Lic. <span class="fill">[License #]</span></p>
+    </div>
+    <div class="doc-meta">
+      <div class="doc-title">Work Proposal</div>
+      <p>Proposal No.: <strong>JRG-2026-<span class="fill">[###]</span></strong></p>
+      <p>Date: <strong>July 1, 2026</strong></p>
+      <p>Valid for: <strong>30 days</strong></p>
+    </div>
+  </div>
+
+  <!-- ============ CLIENT / PROJECT ============ -->
+  <div class="two-col">
+    <div class="info-box">
+      <strong>PREPARED FOR</strong><br>
+      Client: <span class="fill">[Client Name]</span><br>
+      Address: <span class="fill">[Project Address]</span><br>
+      Phone / Email: <span class="fill">[Client Contact]</span>
+    </div>
+    <div class="info-box">
+      <strong>PROJECT</strong><br>
+      Replacement of two (2) existing V-configuration wood roof
+      rafter sections with structural aluminum members —
+      like-for-like appearance, equal or greater strength.
+    </div>
+  </div>
+
+  <!-- ============ 1. BACKGROUND ============ -->
+  <h2>1. Existing Conditions</h2>
+  <p>
+    The residence is an A-frame type structure with exposed sloped roof rafters
+    ("V" members) supporting the roof deck at the gable overhangs. The members
+    scheduled for replacement are solid wood timbers with an actual cross-section of
+    <strong>3&frac12;" &times; 5&frac12;" (nominal 4&times;6)</strong>. Two (2) V-sections
+    (two pairs of sloped members meeting at the ridge) show deterioration and are to be
+    removed and replaced.
+  </p>
+
+  <!-- ============ 2. SCOPE ============ -->
+  <h2>2. Scope of Work</h2>
+  <ol>
+    <li><strong>Mobilization &amp; protection:</strong> Set up ladders/scaffolding as required; protect roofing, glazing, decking and landscaping in the work area.</li>
+    <li><strong>Temporary support:</strong> Install temporary shoring to safely carry the roof load while each V-section is out.</li>
+    <li><strong>Demolition:</strong> Carefully cut free and remove the two (2) existing wood V-rafter sections (four sloped members total, approx. length <span class="fill">[L ft]</span> each). Haul away and legally dispose of debris.</li>
+    <li><strong>Materials:</strong> Furnish new <strong>6061-T6 structural aluminum rectangular tube</strong> supplied by <strong>Eastern Metal Supply</strong> (size per Section 3, final stock confirmation with EMS at time of order).</li>
+    <li><strong>Fabrication:</strong> Cut members to exact field-verified lengths and angles; fabricate ridge and seat connections (welded aluminum brackets / plates); TIG/MIG welds per AWS D1.2 aluminum structural welding practice; drill for fasteners.</li>
+    <li><strong>Finish:</strong> Finish aluminum in <span class="fill">[Dark Bronze powder coat / wood-grain finish / paint to match]</span> to visually match the existing dark-stained timbers.</li>
+    <li><strong>Installation:</strong> Set new aluminum members in the exact position of the removed timbers using stainless-steel fasteners; isolate aluminum from dissimilar metals and treated wood with barrier tape/washers to prevent galvanic corrosion; re-attach existing roof connections; seal penetrations.</li>
+    <li><strong>Closeout:</strong> Remove shoring, touch-up finish, final cleanup and walkthrough with owner.</li>
+  </ol>
+
+  <!-- ============ 3. MATERIAL / ENGINEERING ============ -->
+  <div class="page-break"></div>
+  <h2>3. Material Selection — Strength Match</h2>
+  <p>
+    There is no aluminum tube produced in the exact 3&frac12;" &times; 5&frac12;" timber
+    dimension, so the closest standard extrusions stocked by Eastern Metal Supply were
+    evaluated. The table compares each candidate against the existing wood member
+    (Southern Pine No.&nbsp;2, F<sub>b</sub> = 1,000&nbsp;psi, E = 1.4&times;10<sup>6</sup>&nbsp;psi;
+    allowable aluminum bending stress 19.5&nbsp;ksi per Aluminum Design Manual, E = 10.1&times;10<sup>6</sup>&nbsp;psi):
+  </p>
+  <table>
+    <tr>
+      <th>Member</th><th class="num">Weight<br>(lb/ft)</th><th class="num">Stiffness EI<br>(lb-in²)</th>
+      <th class="num">Stiffness<br>vs. wood</th><th class="num">Bending capacity<br>vs. wood</th>
+    </tr>
+    <tr>
+      <td>Existing wood 4&times;6 (3.5"&times;5.5")</td>
+      <td class="num">4.8</td><td class="num">6.79&times;10⁷</td><td class="num">1.00&times;</td><td class="num">1.00&times;</td>
+    </tr>
+    <tr>
+      <td>Aluminum 3"&times;5"&times;1/8" 6061-T6</td>
+      <td class="num">2.3</td><td class="num">6.76&times;10⁷</td><td class="num">0.99&times;</td><td class="num">3.0&times;</td>
+    </tr>
+    <tr>
+      <td>Aluminum 3"&times;5"&times;3/16" 6061-T6</td>
+      <td class="num">3.4</td><td class="num">9.71&times;10⁷</td><td class="num">1.43&times;</td><td class="num">4.2&times;</td>
+    </tr>
+    <tr class="rec">
+      <td>Aluminum 4"&times;6"&times;3/16" 6061-T6 &nbsp;<span class="badge">RECOMMENDED</span></td>
+      <td class="num">4.2</td><td class="num">1.84&times;10⁸</td><td class="num">2.7&times;</td><td class="num">6.7&times;</td>
+    </tr>
+    <tr>
+      <td>Aluminum 4"&times;6"&times;1/8" 6061-T6 (economy option)</td>
+      <td class="num">2.9</td><td class="num">1.27&times;10⁸</td><td class="num">1.9&times;</td><td class="num">4.6&times;</td>
+    </tr>
+  </table>
+  <p>
+    <strong>Recommendation:</strong> <strong>4" &times; 6" &times; 3/16" wall rectangular tube, alloy 6061-T6</strong>
+    (Eastern Metal Supply). It is the closest visual match to the existing timber
+    (&frac12;" larger in each direction), provides <strong>2.7&times; the stiffness and over 6&times;
+    the bending strength</strong> of the wood member it replaces, welds cleanly at 3/16" wall,
+    and still weighs less than the timber. The 3/16" wall also gives comfortable margin even
+    if the existing lumber were a stiffer species (e.g. Douglas Fir).
+  </p>
+
+  <!-- ============ 4. DRAWINGS ============ -->
+  <h2>4. Drawings</h2>
+
+  <!-- DWG 1: Elevation -->
+  <div class="drawing no-break">
+    <div class="dwg-title">DWG-1 · GABLE ELEVATION — LOCATION OF V-SECTIONS TO BE REPLACED (N.T.S.)</div>
+    <svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+        </marker>
+      </defs>
+      <!-- ground -->
+      <line x1="40" y1="360" x2="720" y2="360" stroke="#555" stroke-width="2"/>
+      <path d="M40,360 l-8,10 M80,360 l-8,10 M120,360 l-8,10 M160,360 l-8,10 M200,360 l-8,10 M240,360 l-8,10 M280,360 l-8,10 M320,360 l-8,10 M360,360 l-8,10 M400,360 l-8,10 M440,360 l-8,10 M480,360 l-8,10 M520,360 l-8,10 M560,360 l-8,10 M600,360 l-8,10 M640,360 l-8,10 M680,360 l-8,10 M720,360 l-8,10" stroke="#999" stroke-width="1"/>
+      <!-- A-frame outline -->
+      <polygon points="380,40 90,360 670,360" fill="#f0ebe2" stroke="#6b5844" stroke-width="3"/>
+      <!-- roof overhang lines -->
+      <line x1="380" y1="40" x2="62" y2="360" stroke="#6b5844" stroke-width="6"/>
+      <line x1="380" y1="40" x2="698" y2="360" stroke="#6b5844" stroke-width="6"/>
+      <!-- glazing hint -->
+      <polygon points="380,120 220,320 540,320" fill="#cfe3ee" stroke="#8aa8bb" stroke-width="1.5"/>
+      <line x1="380" y1="120" x2="380" y2="320" stroke="#8aa8bb" stroke-width="1.5"/>
+      <line x1="300" y1="220" x2="460" y2="220" stroke="#8aa8bb" stroke-width="1.5"/>
+      <!-- Existing rafters (keep) -->
+      <g stroke="#8a7360" stroke-width="5">
+        <line x1="380" y1="70" x2="150" y2="352"/>
+        <line x1="380" y1="70" x2="610" y2="352"/>
+      </g>
+      <!-- V sections to replace (highlight) -->
+      <g stroke="#c8571b" stroke-width="8" stroke-linecap="round">
+        <line x1="380" y1="52" x2="100" y2="352"/>
+        <line x1="380" y1="52" x2="660" y2="352"/>
+      </g>
+      <g stroke="#c8571b" stroke-width="8" stroke-linecap="round" stroke-dasharray="14,7">
+        <line x1="380" y1="92" x2="205" y2="352"/>
+        <line x1="380" y1="92" x2="555" y2="352"/>
+      </g>
+      <!-- labels -->
+      <circle cx="380" cy="47" r="5" fill="#1b2a41"/>
+      <text x="392" y="40" font-size="13" fill="#1b2a41" font-weight="bold">RIDGE</text>
+      <text x="120" y="180" font-size="14" fill="#c8571b" font-weight="bold">V-SECTION 1</text>
+      <text x="120" y="197" font-size="12" fill="#c8571b">(REPLACE — solid)</text>
+      <line x1="205" y1="185" x2="248" y2="205" stroke="#c8571b" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="545" y="150" font-size="14" fill="#c8571b" font-weight="bold">V-SECTION 2</text>
+      <text x="545" y="167" font-size="12" fill="#c8571b">(REPLACE — dashed)</text>
+      <line x1="543" y1="155" x2="500" y2="175" stroke="#c8571b" stroke-width="1.5" marker-end="url(#arr)"/>
+      <text x="640" y="240" font-size="12" fill="#6b5844">EXISTING WOOD</text>
+      <text x="640" y="255" font-size="12" fill="#6b5844">RAFTERS TO REMAIN</text>
+      <line x1="638" y1="245" x2="580" y2="270" stroke="#6b5844" stroke-width="1.5" marker-end="url(#arr)"/>
+      <!-- span dim -->
+      <line x1="90" y1="382" x2="670" y2="382" stroke="#333" stroke-width="1" marker-start="url(#arr)" marker-end="url(#arr)"/>
+      <text x="345" y="378" font-size="12" fill="#333">SPAN: [ ft ]</text>
+      <text x="52" y="30" font-size="11" fill="#888">NOTE: Member lengths &amp; pitch to be field-verified before fabrication.</text>
+    </svg>
+    <div class="dwg-note">Each “V-section” = one pair of sloped rafters meeting at the ridge. Exact members to be marked on site with owner prior to demolition.</div>
+  </div>
+
+  <!-- DWG 2: Cross-section comparison -->
+  <div class="drawing no-break page-break">
+    <div class="dwg-title">DWG-2 · CROSS-SECTION — EXISTING WOOD vs. NEW ALUMINUM (SCALE ~1:4)</div>
+    <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+        </marker>
+        <pattern id="woodgrain" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(90)">
+          <rect width="8" height="8" fill="#c69c6d"/>
+          <path d="M0,4 q2,-1.5 4,0 t4,0" stroke="#a87e4f" stroke-width="1" fill="none"/>
+        </pattern>
+      </defs>
+
+      <!-- WOOD SECTION: 3.5 x 5.5 at 40 px/in -->
+      <g transform="translate(150,55)">
+        <rect x="0" y="0" width="140" height="220" fill="url(#woodgrain)" stroke="#6b5844" stroke-width="3"/>
+        <!-- dims -->
+        <line x1="0" y1="-18" x2="140" y2="-18" stroke="#333" stroke-width="1" marker-start="url(#arr2)" marker-end="url(#arr2)"/>
+        <text x="42" y="-24" font-size="13" fill="#333">3 1/2"</text>
+        <line x1="-18" y1="0" x2="-18" y2="220" stroke="#333" stroke-width="1" marker-start="url(#arr2)" marker-end="url(#arr2)"/>
+        <text x="-58" y="115" font-size="13" fill="#333">5 1/2"</text>
+        <text x="70" y="250" font-size="13.5" fill="#6b5844" font-weight="bold" text-anchor="middle">EXISTING WOOD 4×6</text>
+        <text x="70" y="266" font-size="11.5" fill="#555" text-anchor="middle">solid timber · 4.8 lb/ft</text>
+      </g>
+
+      <!-- ARROW between -->
+      <g transform="translate(380,160)">
+        <line x1="-35" y1="0" x2="35" y2="0" stroke="#c8571b" stroke-width="4" marker-end="url(#arr)"/>
+        <text x="0" y="-12" font-size="12" fill="#c8571b" font-weight="bold" text-anchor="middle">REPLACE</text>
+      </g>
+
+      <!-- ALUMINUM SECTION: 4 x 6 at 40 px/in -->
+      <g transform="translate(470,35)">
+        <rect x="0" y="0" width="160" height="240" fill="#dfe4e8" stroke="#4a6076" stroke-width="3"/>
+        <rect x="7.5" y="7.5" width="145" height="225" fill="#fdfdfb" stroke="#4a6076" stroke-width="2"/>
+        <!-- wall thickness callout -->
+        <line x1="176" y1="60" x2="156" y2="60" stroke="#333" stroke-width="1" marker-end="url(#arr2)"/>
+        <text x="180" y="64" font-size="12" fill="#333">3/16" wall</text>
+        <!-- dims -->
+        <line x1="0" y1="-16" x2="160" y2="-16" stroke="#333" stroke-width="1" marker-start="url(#arr2)" marker-end="url(#arr2)"/>
+        <text x="66" y="-22" font-size="13" fill="#333">4"</text>
+        <line x1="-18" y1="0" x2="-18" y2="240" stroke="#333" stroke-width="1" marker-start="url(#arr2)" marker-end="url(#arr2)"/>
+        <text x="-40" y="125" font-size="13" fill="#333">6"</text>
+        <text x="80" y="268" font-size="13.5" fill="#1b2a41" font-weight="bold" text-anchor="middle">NEW ALUMINUM 4"×6"×3/16"</text>
+        <text x="80" y="284" font-size="11.5" fill="#555" text-anchor="middle">6061-T6 tube (EMS) · 4.2 lb/ft · finish to match wood</text>
+      </g>
+      <text x="380" y="348" font-size="11" fill="#888" text-anchor="middle">Strength: 6.7× bending capacity, 2.7× stiffness of existing timber.</text>
+    </svg>
+    <div class="dwg-note">Alternate size available: 3"×5"×3/16" 6061-T6 (slightly slimmer profile, still 4.2× wood bending strength, 1.4× stiffness).</div>
+  </div>
+
+  <!-- DWG 3: Connection detail -->
+  <div class="drawing no-break">
+    <div class="dwg-title">DWG-3 · TYPICAL REPLACEMENT MEMBER — CONNECTION DETAIL (N.T.S.)</div>
+    <svg viewBox="0 0 760 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+        </marker>
+      </defs>
+      <!-- ridge beam -->
+      <rect x="40" y="50" width="70" height="110" fill="#c69c6d" stroke="#6b5844" stroke-width="2.5"/>
+      <text x="75" y="40" font-size="12" fill="#6b5844" font-weight="bold" text-anchor="middle">RIDGE BEAM</text>
+      <!-- sloped aluminum member -->
+      <g transform="rotate(14 110 105)">
+        <rect x="110" y="80" width="440" height="52" fill="#dfe4e8" stroke="#4a6076" stroke-width="2.5"/>
+        <rect x="118" y="86" width="424" height="40" fill="#fdfdfb" stroke="#4a6076" stroke-width="1.5"/>
+        <text x="330" y="108" font-size="13" fill="#1b2a41" font-weight="bold" text-anchor="middle">ALUM. RT 4"×6"×3/16" 6061-T6</text>
+      </g>
+      <!-- welded end plate at ridge -->
+      <rect x="104" y="70" width="12" height="80" fill="#9aa7b2" stroke="#4a6076" stroke-width="2"/>
+      <text x="150" y="52" font-size="11.5" fill="#1b2a41">WELDED 1/4" ALUM. END PLATE,</text>
+      <text x="150" y="66" font-size="11.5" fill="#1b2a41">(4) 3/8" SS THRU-BOLTS TO RIDGE</text>
+      <line x1="148" y1="60" x2="118" y2="85" stroke="#333" stroke-width="1.2" marker-end="url(#arr3)"/>
+      <!-- wall/beam seat -->
+      <rect x="530" y="185" width="120" height="70" fill="#c69c6d" stroke="#6b5844" stroke-width="2.5"/>
+      <text x="590" y="272" font-size="12" fill="#6b5844" font-weight="bold" text-anchor="middle">WALL TOP PLATE / BEAM</text>
+      <!-- seat bracket -->
+      <path d="M540,185 h80 v-12 h-80 z" fill="#9aa7b2" stroke="#4a6076" stroke-width="2"/>
+      <path d="M540,173 v-25 h10 v25 z M610,173 v-25 h10 v25 z" fill="#9aa7b2" stroke="#4a6076" stroke-width="2"/>
+      <text x="420" y="240" font-size="11.5" fill="#1b2a41">WELDED ALUM. SEAT BRACKET,</text>
+      <text x="420" y="254" font-size="11.5" fill="#1b2a41">SS LAG SCREWS + ISOLATION BARRIER</text>
+      <line x1="500" y1="235" x2="555" y2="200" stroke="#333" stroke-width="1.2" marker-end="url(#arr3)"/>
+      <!-- notes -->
+      <text x="40" y="290" font-size="11" fill="#888">All welds per AWS D1.2. Stainless hardware. Aluminum isolated from treated lumber (bituminous tape / neoprene) to prevent galvanic corrosion.</text>
+    </svg>
+    <div class="dwg-note">Final connection design to match existing geometry; brackets shop-welded, finish-coated after fabrication.</div>
+  </div>
+
+  <!-- ============ 5. PRICING ============ -->
+  <div class="page-break"></div>
+  <h2>5. Pricing</h2>
+  <table>
+    <tr><th style="width:58%">Item</th><th>Description</th><th class="num" style="width:16%">Amount</th></tr>
+    <tr><td>1. Mobilization, protection &amp; temporary shoring</td><td>Ladders/scaffold, floor &amp; glazing protection, shoring</td><td class="num"><span class="fill">$ [____]</span></td></tr>
+    <tr><td>2. Demolition &amp; disposal</td><td>Remove (2) wood V-sections, haul &amp; dispose</td><td class="num"><span class="fill">$ [____]</span></td></tr>
+    <tr><td>3. Aluminum material — Eastern Metal Supply</td><td>RT 4"×6"×3/16" 6061-T6, plates, hardware</td><td class="num"><span class="fill">$ [____]</span></td></tr>
+    <tr><td>4. Finish</td><td>Powder coat / finish to match existing timber color</td><td class="num"><span class="fill">$ [____]</span></td></tr>
+    <tr><td>5. Fabrication &amp; welding</td><td>Cut, weld brackets &amp; plates, drill (AWS D1.2)</td><td class="num"><span class="fill">$ [____]</span></td></tr>
+    <tr><td>6. Installation</td><td>Set members, SS fasteners, isolation, sealants, cleanup</td><td class="num"><span class="fill">$ [____]</span></td></tr>
+    <tr><td colspan="2" style="text-align:right"><strong>Subtotal</strong></td><td class="num"><span class="fill">$ [____]</span></td></tr>
+    <tr><td colspan="2" style="text-align:right">Sales tax (<span class="fill">[%]</span>)</td><td class="num"><span class="fill">$ [____]</span></td></tr>
+    <tr class="total-row"><td colspan="2" style="text-align:right">TOTAL</td><td class="num"><span class="fill">$ [____]</span></td></tr>
+  </table>
+
+  <!-- ============ 6. TERMS ============ -->
+  <h2>6. Terms &amp; Conditions</h2>
+  <ul>
+    <li><strong>Payment:</strong> <span class="fill">[50%]</span> deposit to schedule and order material; balance due upon completion and owner walkthrough.</li>
+    <li><strong>Schedule:</strong> Approx. <span class="fill">[X]</span> weeks material lead time + <span class="fill">[X]</span> days on site, weather permitting.</li>
+    <li><strong>Field verification:</strong> All lengths, pitches and connection geometry will be field-measured before fabrication.</li>
+    <li><strong>Warranty:</strong> One (1) year on workmanship. Material per manufacturer/supplier warranty.</li>
+    <li><strong>Exclusions:</strong> Building permit &amp; engineering letter (available as add-on if required by the county), repair of concealed rot/damage in members not listed, roofing repairs beyond the work area, painting of existing wood, electrical work.</li>
+    <li>Any additional work will be quoted and approved in writing before proceeding (change order).</li>
+  </ul>
+
+  <!-- ============ SIGNATURES ============ -->
+  <div class="sig-block no-break">
+    <div>
+      <div class="sig-line"></div>
+      <div class="sig-label">JRG Welding Corp — Authorized Signature / Date</div>
+    </div>
+    <div>
+      <div class="sig-line"></div>
+      <div class="sig-label">Client Acceptance — Signature / Date</div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    JRG Welding Corp · Proposal JRG-2026-<span class="fill">[###]</span> · Page&nbsp;— · Thank you for the opportunity to earn your business.
+  </div>
+</div>
+</body>
+</html>
