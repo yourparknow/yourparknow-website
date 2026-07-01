@@ -83,7 +83,7 @@
     <div class="info-box">
       <strong>PREPARED FOR</strong><br>
       Client: <span class="fill">[Client Name]</span><br>
-      Address: <span class="fill">[Project Address]</span><br>
+      Project Address: <strong>18398 131st Trail N, Jupiter Farms, FL</strong><br>
       Phone / Email: <span class="fill">[Client Contact]</span>
     </div>
     <div class="info-box">
@@ -112,12 +112,13 @@
   </p>
   <h3>B — Floor Structure</h3>
   <p>
-    The floor framing shows <strong>severe, active termite damage</strong>. The system consists of
-    two (2) parallel main beams ("girders") of <strong>3" &times; 11&frac12;" &times; 13'-0"</strong> running
-    side by side, and seven (7) floor joists of <strong>2" &times; 11&frac12;" &times; 12'-0"</strong> hung from
-    sheet-metal hangers, carrying the wood plank floor above. Several members are structurally
-    compromised and must be replaced. Aluminum replacement permanently eliminates the
-    termite and rot problem in these members.
+    The floor framing shows <strong>severe, active termite damage</strong> concentrated on one side
+    of the system. The members to be replaced are: the two (2) parallel main beams ("girders") of
+    <strong>3" &times; 11&frac12;" &times; 13'-0"</strong> running side by side, and the seven (7) floor joists of
+    <strong>2" &times; 11&frac12;" &times; 12'-0"</strong> on the damaged side, hung from sheet-metal hangers.
+    <strong>The joists on the opposite side are in good condition and remain as-is</strong>, and the
+    existing wood beam at the far end of the damaged bay also remains. Aluminum replacement
+    permanently eliminates the termite and rot problem in the replaced members.
   </p>
 
   <!-- ============ 2. SCOPE A ============ -->
@@ -139,10 +140,10 @@
   <ol>
     <li><strong>Temporary shoring (critical):</strong> Install temporary shoring posts and beams under the floor structure on both sides of the work area to fully carry the floor above while the beams and joists are out — nothing settles, nothing moves. Shoring remains in place until every new member is installed and fastened.</li>
     <li><strong>Demolition — main beams:</strong> Carefully cut free and remove the two (2) termite-damaged 3&times;12 main beams (13'-0" each), working in controlled sections and protecting the finished floor above and all adjacent framing.</li>
-    <li><strong>Demolition — joists:</strong> Remove the seven (7) termite-damaged 2&times;12 floor joists (12'-0" each) together with the old sheet-metal joist hangers. Haul away and legally dispose of all infested debris.</li>
+    <li><strong>Demolition — joists (damaged side only):</strong> Remove the seven (7) termite-damaged 2&times;12 floor joists (12'-0" each) on the affected side together with the old sheet-metal joist hangers. <strong>The joists on the opposite side are sound and are not disturbed.</strong> Haul away and legally dispose of all infested debris.</li>
     <li><strong>Materials:</strong> Furnish new 6061-T6 aluminum from Eastern Metal Supply: two (2) girders RT 3"&times;12"&times;3/16" cut to length, seven (7) joists RT 2"&times;12"&times;1/8" (joists cut two per 24' bar — no waste), aluminum angle for seats, and stainless hardware.</li>
     <li><strong>Fabrication:</strong> Weld and drill aluminum angle seats and top clips (3"&times;3"&times;1/4") for every joist-to-girder connection — far stronger than the sheet-metal hangers being removed, and nothing for termites to eat. Welds per AWS D1.2.</li>
-    <li><strong>Installation:</strong> Set the new aluminum girders on the existing supports with bearing plates as required; set each new joist <strong>in the exact location of the existing one it replaces — spacing and layout match the existing floor exactly</strong>; shim to existing floor elevation; isolation barriers at all wood contact points.</li>
+    <li><strong>Installation:</strong> Set the new aluminum girders on the existing supports with bearing plates as required. Set each new aluminum joist <strong>in the exact location of the existing one it replaces — spacing and layout match the existing floor exactly</strong>: one end seated on the new aluminum girders, the other end seated on the <strong>existing wood beam (which remains)</strong> with aluminum seats, stainless lag screws and isolation barrier. The sound wood joists on the opposite side are re-supported on the new aluminum girder with new aluminum angle seats. Shim to existing floor elevation; isolation barriers at all wood contact points.</li>
     <li><strong>Re-fasten the floor:</strong> Re-screw all existing floor planks to the new aluminum joists with #14 winged self-drilling wood-to-metal screws (410 SS / ceramic-coated), pulling the floor back tight and flat.</li>
     <li><strong>Closeout:</strong> Remove shoring, final cleanup, and walkthrough with owner.</li>
   </ol>
@@ -521,35 +522,55 @@
           <rect width="7" height="7" fill="#e8dccb"/>
           <line x1="0" y1="0" x2="0" y2="7" stroke="#a8916d" stroke-width="1.4"/>
         </pattern>
+        <pattern id="wood5" width="10" height="10" patternUnits="userSpaceOnUse">
+          <rect width="10" height="10" fill="#d9b380"/>
+          <line x1="0" y1="5" x2="10" y2="5" stroke="#b98f5a" stroke-width="1"/>
+        </pattern>
       </defs>
       <!-- ===== PLAN VIEW ===== -->
       <text x="230" y="28" font-size="13" font-weight="bold" fill="#1b2a41" text-anchor="middle">PLAN VIEW</text>
       <!-- floor outline -->
       <rect x="55" y="55" width="350" height="300" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="8,5"/>
+      <!-- existing wood beam at far end of damaged bay (top edge) — REMAINS -->
+      <rect x="55" y="55" width="350" height="14" fill="url(#wood5)" stroke="#8a6a42" stroke-width="1.8"/>
       <!-- supports at girder ends -->
       <rect x="35" y="185" width="20" height="42" fill="url(#sup5)" stroke="#a8916d" stroke-width="1.5"/>
       <rect x="405" y="185" width="20" height="42" fill="url(#sup5)" stroke="#a8916d" stroke-width="1.5"/>
-      <!-- double girder horizontal center -->
+      <!-- double girder horizontal center: NEW ALUMINUM -->
       <rect x="55" y="192" width="350" height="12" fill="#c9d2d9" stroke="#4a6076" stroke-width="1.8"/>
       <rect x="55" y="208" width="350" height="12" fill="#c9d2d9" stroke="#4a6076" stroke-width="1.8"/>
-      <!-- joists vertical, both sides -->
+      <!-- NEW aluminum joists: damaged side only (top bay, girder to wood beam) -->
       <g fill="#dfe4e8" stroke="#4a6076" stroke-width="1.4">
-        <rect x="85" y="60" width="7" height="290"/>
-        <rect x="135" y="60" width="7" height="290"/>
-        <rect x="185" y="60" width="7" height="290"/>
-        <rect x="235" y="60" width="7" height="290"/>
-        <rect x="285" y="60" width="7" height="290"/>
-        <rect x="335" y="60" width="7" height="290"/>
-        <rect x="385" y="60" width="7" height="290"/>
+        <rect x="85" y="69" width="7" height="123"/>
+        <rect x="135" y="69" width="7" height="123"/>
+        <rect x="185" y="69" width="7" height="123"/>
+        <rect x="235" y="69" width="7" height="123"/>
+        <rect x="285" y="69" width="7" height="123"/>
+        <rect x="335" y="69" width="7" height="123"/>
+        <rect x="385" y="69" width="7" height="123"/>
+      </g>
+      <!-- EXISTING wood joists: opposite side — REMAIN -->
+      <g fill="url(#wood5)" stroke="#8a6a42" stroke-width="1.2">
+        <rect x="85" y="220" width="7" height="130"/>
+        <rect x="135" y="220" width="7" height="130"/>
+        <rect x="185" y="220" width="7" height="130"/>
+        <rect x="235" y="220" width="7" height="130"/>
+        <rect x="285" y="220" width="7" height="130"/>
+        <rect x="335" y="220" width="7" height="130"/>
+        <rect x="385" y="220" width="7" height="130"/>
       </g>
       <!-- labels -->
-      <text x="230" y="180" font-size="11.5" fill="#1b2a41" font-weight="bold" text-anchor="middle">(2) GIRDERS RT 3"×12"×3/16" — 13'-0"</text>
-      <text x="230" y="378" font-size="11.5" fill="#1b2a41" font-weight="bold" text-anchor="middle">(7) JOISTS RT 2"×12"×1/8" — 12'-0"</text>
-      <text x="230" y="394" font-size="11" fill="#c8571b" font-weight="bold" text-anchor="middle">EACH NEW JOIST GOES IN THE EXACT LOCATION OF THE EXISTING ONE —</text>
-      <text x="230" y="408" font-size="11" fill="#c8571b" font-weight="bold" text-anchor="middle">SPACING &amp; LAYOUT MATCH EXISTING</text>
-      <text x="38" y="175" font-size="10.5" fill="#a8916d" font-weight="bold">EXISTING SUPPORT</text>
-      <text x="38" y="245" font-size="10.5" fill="#a8916d">(field verify, bearing</text>
-      <text x="38" y="258" font-size="10.5" fill="#a8916d">plate as required)</text>
+      <text x="230" y="50" font-size="10.5" fill="#8a6a42" font-weight="bold" text-anchor="middle">EXISTING WOOD BEAM — REMAINS (new joists seat on it w/ isolation)</text>
+      <text x="230" y="130" font-size="11.5" fill="#1b2a41" font-weight="bold" text-anchor="middle">(7) NEW ALUM. JOISTS</text>
+      <text x="230" y="144" font-size="11.5" fill="#1b2a41" font-weight="bold" text-anchor="middle">RT 2"×12"×1/8" — 12'-0" (DAMAGED SIDE)</text>
+      <text x="230" y="186" font-size="11" fill="#1b2a41" font-weight="bold" text-anchor="middle">(2) NEW ALUM. GIRDERS RT 3"×12"×3/16" — 13'-0"</text>
+      <text x="230" y="285" font-size="11" fill="#8a6a42" font-weight="bold" text-anchor="middle">EXISTING WOOD JOISTS — GOOD CONDITION,</text>
+      <text x="230" y="299" font-size="11" fill="#8a6a42" font-weight="bold" text-anchor="middle">REMAIN AS-IS (re-seated on new alum. girder)</text>
+      <text x="230" y="378" font-size="11" fill="#c8571b" font-weight="bold" text-anchor="middle">EACH NEW JOIST GOES IN THE EXACT LOCATION OF THE EXISTING ONE —</text>
+      <text x="230" y="392" font-size="11" fill="#c8571b" font-weight="bold" text-anchor="middle">SPACING &amp; LAYOUT MATCH EXISTING</text>
+      <text x="20" y="168" font-size="10.5" fill="#a8916d" font-weight="bold">EXISTING SUPPORT</text>
+      <text x="20" y="245" font-size="10.5" fill="#a8916d">(field verify, bearing</text>
+      <text x="20" y="258" font-size="10.5" fill="#a8916d">plate as required)</text>
       <!-- ===== SEAT DETAIL ===== -->
       <g transform="translate(490,40)">
         <text x="115" y="0" font-size="13" font-weight="bold" fill="#1b2a41" text-anchor="middle">JOIST SEAT AT GIRDER (section)</text>
