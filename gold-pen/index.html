@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gleidys Blanco — Realtor | Gold Pen Realty Group, Miami FL</title>
+<meta name="description" content="Gleidys Blanco, Realtor en Gold Pen Realty Group. Compra, venta y renta de propiedades en Miami, Florida. Atención personalizada en español e inglés.">
+<meta property="og:title" content="Gleidys Blanco — Realtor en Miami">
+<meta property="og:description" content="Tu asesora de confianza en bienes raíces en Miami, FL. Compra, venta e inversión.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#C9A24B;
+    --gold-light:#E4C878;
+    --gold-deep:#A67C1F;
+    --ink:#141414;
+    --ink-soft:#2a2a2a;
+    --cream:#F7F3EC;
+    --paper:#ffffff;
+    --muted:#6b6b6b;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Montserrat',-apple-system,BlinkMacSystemFont,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond',Georgia,serif}
+  a{text-decoration:none;color:inherit}
+  img{max-width:100%;display:block}
+  .container{max-width:1180px;margin:0 auto;padding:0 24px}
+  .gold{color:var(--gold)}
+  section{position:relative}
+
+  /* ---------- Logo ---------- */
+  .logo{display:flex;align-items:flex-end;gap:2px;line-height:1}
+  .logo .word{font-family:'Montserrat';font-weight:800;letter-spacing:1px}
+  .logo-main{font-size:26px;display:flex;align-items:center}
+  .logo-gold{font-size:26px;font-weight:800;color:var(--ink)}
+  .logo-o{width:26px;height:34px;position:relative;top:-2px;margin:0 -1px}
+  .logo-pen{font-size:20px;font-weight:800;color:var(--gold);letter-spacing:3px;margin-left:2px}
+  .logo-sub{display:block;font-size:9px;letter-spacing:6px;color:var(--muted);font-weight:600;margin-top:3px}
+  .logo-stack{display:flex;flex-direction:column}
+  .logo-row{display:flex;align-items:baseline}
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(0,0,0,.06);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;max-width:1180px;margin:0 auto}
+  nav.links{display:flex;gap:30px;align-items:center}
+  nav.links a{font-size:13px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-soft);transition:color .2s}
+  nav.links a:hover{color:var(--gold)}
+  .nav-actions{display:flex;align-items:center;gap:14px}
+  .lang{
+    background:transparent;border:1px solid var(--gold);color:var(--gold-deep);
+    padding:6px 14px;border-radius:40px;cursor:pointer;font-size:12px;font-weight:700;
+    letter-spacing:1px;transition:.2s;font-family:inherit;
+  }
+  .lang:hover{background:var(--gold);color:#fff}
+  .btn{
+    display:inline-block;padding:13px 30px;border-radius:44px;font-weight:600;
+    font-size:14px;letter-spacing:.5px;cursor:pointer;border:none;transition:.25s;font-family:inherit;
+  }
+  .btn-gold{background:linear-gradient(135deg,var(--gold-light),var(--gold-deep));color:#fff;box-shadow:0 8px 22px rgba(166,124,31,.28)}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(166,124,31,.4)}
+  .btn-ghost{background:transparent;border:1.5px solid var(--gold);color:var(--gold-deep)}
+  .btn-ghost:hover{background:var(--gold);color:#fff}
+  .btn-dark{background:var(--ink);color:#fff}
+  .btn-dark:hover{background:var(--gold-deep)}
+  .menu-toggle{display:none;background:none;border:none;cursor:pointer;font-size:26px;color:var(--ink)}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:
+      radial-gradient(1200px 500px at 80% -10%, rgba(201,162,75,.18), transparent 60%),
+      linear-gradient(180deg,#fff 0%, var(--cream) 100%);
+    padding:70px 0 0;overflow:hidden;
+  }
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;
+    letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-deep);margin-bottom:18px;
+  }
+  .hero-eyebrow::before{content:"";width:34px;height:1.5px;background:var(--gold)}
+  .hero h1{font-size:66px;font-weight:700;line-height:1.02;letter-spacing:-1px;margin-bottom:20px}
+  .hero h1 em{font-style:italic;color:var(--gold-deep)}
+  .hero p.lead{font-size:18px;color:var(--muted);max-width:520px;margin-bottom:32px}
+  .hero-cta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:34px}
+  .hero-stats{display:flex;gap:38px;flex-wrap:wrap}
+  .hero-stats .stat b{font-family:'Cormorant Garamond';font-size:40px;font-weight:700;color:var(--ink);display:block;line-height:1}
+  .hero-stats .stat span{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+
+  .hero-photo{position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:520px}
+  .photo-frame{
+    position:relative;width:100%;max-width:420px;aspect-ratio:4/5;border-radius:20px 20px 20px 90px;
+    background:linear-gradient(160deg,#2b2b2b,#0d0d0d);overflow:hidden;
+    box-shadow:0 30px 60px rgba(0,0,0,.28);border:1px solid rgba(201,162,75,.4);
+    display:flex;align-items:flex-end;justify-content:center;
+  }
+  .photo-frame::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(400px 300px at 50% 0%, rgba(201,162,75,.25), transparent 70%);
+  }
+  .photo-initials{
+    font-family:'Cormorant Garamond';font-size:150px;font-weight:700;color:rgba(201,162,75,.25);
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-55%);letter-spacing:-6px;
+  }
+  .photo-tag{
+    position:relative;z-index:2;width:100%;text-align:center;padding:24px;
+    background:linear-gradient(0deg,rgba(0,0,0,.85),transparent);color:#fff;
+  }
+  .photo-tag .name{font-family:'Cormorant Garamond';font-size:30px;font-weight:700;letter-spacing:.5px}
+  .photo-tag .role{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-light)}
+  .photo-note{font-size:11px;color:var(--muted);margin-top:10px;text-align:center}
+  .badge-float{
+    position:absolute;left:-18px;bottom:130px;z-index:3;background:#fff;border-radius:14px;
+    padding:14px 18px;box-shadow:0 16px 40px rgba(0,0,0,.16);display:flex;gap:12px;align-items:center;
+    border:1px solid rgba(201,162,75,.3);
+  }
+  .badge-float .ico{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--gold-light),var(--gold-deep));display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px}
+  .badge-float .t{font-weight:700;font-size:14px}
+  .badge-float .s{font-size:11px;color:var(--muted)}
+
+  .hero-wave{margin-top:40px;line-height:0}
+  .hero-wave svg{width:100%;height:70px;display:block}
+
+  /* ---------- Section headers ---------- */
+  .sec-head{text-align:center;max-width:640px;margin:0 auto 56px}
+  .sec-eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold-deep);margin-bottom:12px}
+  .sec-head h2{font-size:46px;font-weight:700;line-height:1.08;margin-bottom:14px}
+  .sec-head p{color:var(--muted);font-size:16px}
+  .pad{padding:90px 0}
+  .pad-sm{padding:70px 0}
+
+  /* ---------- About ---------- */
+  .about{background:var(--paper)}
+  .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+  .about-card{
+    background:linear-gradient(160deg,#1b1b1b,#0b0b0b);border-radius:20px;padding:38px;color:#fff;
+    border:1px solid rgba(201,162,75,.35);position:relative;overflow:hidden;
+  }
+  .about-card::after{content:"";position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,75,.35),transparent 70%)}
+  .about-card h3{font-size:28px;margin-bottom:6px}
+  .about-card .r{color:var(--gold-light);letter-spacing:3px;text-transform:uppercase;font-size:12px;margin-bottom:22px}
+  .about-card ul{list-style:none;display:flex;flex-direction:column;gap:14px}
+  .about-card li{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:#e8e8e8}
+  .about-card li .chk{color:var(--gold);font-weight:800}
+  .about-text h2{font-size:44px;font-weight:700;line-height:1.1;margin-bottom:20px}
+  .about-text p{color:var(--muted);margin-bottom:16px}
+  .sign{font-family:'Cormorant Garamond';font-style:italic;font-size:26px;color:var(--gold-deep);margin-top:8px}
+
+  /* ---------- Services ---------- */
+  .services{background:linear-gradient(180deg,var(--cream),#fff)}
+  .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+  .svc{
+    background:#fff;border-radius:16px;padding:32px 26px;border:1px solid rgba(0,0,0,.06);
+    transition:.3s;position:relative;overflow:hidden;
+  }
+  .svc::before{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--gold-light),var(--gold-deep));transform:scaleX(0);transform-origin:left;transition:.3s}
+  .svc:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.08)}
+  .svc:hover::before{transform:scaleX(1)}
+  .svc .ico{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,rgba(201,162,75,.15),rgba(166,124,31,.1));display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px}
+  .svc h3{font-size:23px;margin-bottom:10px}
+  .svc p{font-size:14px;color:var(--muted)}
+
+  /* ---------- Process ---------- */
+  .process{background:var(--ink);color:#fff}
+  .process .sec-head h2{color:#fff}
+  .process .sec-head p{color:#b9b9b9}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+  .step{text-align:center;position:relative}
+  .step .num{
+    width:64px;height:64px;margin:0 auto 18px;border-radius:50%;
+    border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;
+    font-family:'Cormorant Garamond';font-size:28px;font-weight:700;color:var(--gold-light);
+    background:rgba(201,162,75,.08);
+  }
+  .step h4{font-size:18px;margin-bottom:8px;font-weight:600}
+  .step p{font-size:13px;color:#aeaeae}
+
+  /* ---------- Listings ---------- */
+  .listings{background:var(--cream)}
+  .list-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+  .prop{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.06);transition:.3s}
+  .prop:hover{transform:translateY(-6px);box-shadow:0 22px 44px rgba(0,0,0,.12)}
+  .prop .img{height:210px;position:relative;display:flex;align-items:flex-end;padding:16px}
+  .prop .img.p1{background:linear-gradient(135deg,#3a4a5a,#1e2a36)}
+  .prop .img.p2{background:linear-gradient(135deg,#5a4a3a,#2e2318)}
+  .prop .img.p3{background:linear-gradient(135deg,#4a5a4a,#1e2e22)}
+  .prop .tagp{background:var(--gold);color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:30px}
+  .prop .status{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.92);color:var(--ink);font-size:11px;font-weight:700;padding:5px 12px;border-radius:30px}
+  .prop .body{padding:22px}
+  .prop .price{font-family:'Cormorant Garamond';font-size:28px;font-weight:700;color:var(--ink)}
+  .prop h4{font-size:17px;margin:6px 0 4px;font-weight:600}
+  .prop .addr{font-size:13px;color:var(--muted);margin-bottom:16px}
+  .prop .meta{display:flex;gap:18px;border-top:1px solid rgba(0,0,0,.07);padding-top:14px;font-size:13px;color:var(--ink-soft)}
+  .prop .meta span{display:flex;align-items:center;gap:6px}
+  .disclaimer{text-align:center;color:var(--muted);font-size:13px;margin-top:34px;font-style:italic}
+
+  /* ---------- Testimonials ---------- */
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .testi{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:30px}
+  .testi .stars{color:var(--gold);font-size:16px;letter-spacing:2px;margin-bottom:14px}
+  .testi p{font-size:14px;color:var(--ink-soft);font-style:italic;margin-bottom:18px}
+  .testi .who{display:flex;align-items:center;gap:12px}
+  .testi .av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold-light),var(--gold-deep));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+  .testi .who b{font-size:14px;display:block}
+  .testi .who span{font-size:12px;color:var(--muted)}
+
+  /* ---------- CTA / QR ---------- */
+  .cta{background:linear-gradient(135deg,#1b1b1b,#000);color:#fff}
+  .cta-grid{display:grid;grid-template-columns:1.4fr .6fr;gap:50px;align-items:center}
+  .cta h2{font-size:44px;font-weight:700;line-height:1.1;margin-bottom:16px}
+  .cta h2 em{font-style:italic;color:var(--gold-light)}
+  .cta p{color:#c7c7c7;margin-bottom:26px;max-width:480px}
+  .cta-actions{display:flex;gap:16px;flex-wrap:wrap}
+  .qr-box{background:#fff;border-radius:18px;padding:22px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+  .qr-box img{width:170px;height:170px;margin:0 auto}
+  .qr-box .lbl{font-size:12px;color:var(--muted);margin-top:12px;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+
+  /* ---------- Contact ---------- */
+  .contact{background:var(--cream)}
+  .contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:50px}
+  .contact-info .item{display:flex;gap:16px;align-items:flex-start;margin-bottom:26px}
+  .contact-info .ico{width:48px;height:48px;flex:none;border-radius:12px;background:linear-gradient(135deg,var(--gold-light),var(--gold-deep));display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px}
+  .contact-info .item b{display:block;font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--ink)}
+  .contact-info .item a,.contact-info .item span{color:var(--muted);font-size:15px}
+  .contact-info .item a:hover{color:var(--gold-deep)}
+  form{background:#fff;border-radius:18px;padding:34px;box-shadow:0 14px 40px rgba(0,0,0,.07)}
+  .field{margin-bottom:18px}
+  .field label{display:block;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-soft);margin-bottom:7px}
+  .field input,.field select,.field textarea{
+    width:100%;padding:13px 16px;border:1px solid #dcdcdc;border-radius:10px;font-family:inherit;
+    font-size:15px;transition:.2s;background:#fafafa;
+  }
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(201,162,75,.12)}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .form-note{font-size:12px;color:var(--muted);margin-top:12px;text-align:center}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--ink);color:#cfcfcf;padding:56px 0 26px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:36px}
+  .foot-logo .logo-gold,.foot-logo .logo-o+.logo-pen{color:#fff}
+  footer .logo-gold{color:#fff}
+  footer .logo-sub{color:#8a8a8a}
+  .foot-col h5{color:#fff;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+  .foot-col a{display:block;color:#a9a9a9;font-size:14px;margin-bottom:10px;transition:.2s}
+  .foot-col a:hover{color:var(--gold-light)}
+  .foot-about{font-size:14px;color:#a9a9a9;max-width:320px;margin-top:16px}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:#8a8a8a}
+  .eho{display:flex;align-items:center;gap:8px}
+
+  /* ---------- Reveal ---------- */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease, transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:960px){
+    .hero-grid,.about-grid,.cta-grid,.contact-grid{grid-template-columns:1fr}
+    .svc-grid,.steps{grid-template-columns:repeat(2,1fr)}
+    .list-grid,.testi-grid{grid-template-columns:1fr 1fr}
+    .hero h1{font-size:52px}
+    .hero-photo{min-height:auto;margin-top:10px}
+    nav.links{display:none}
+    .menu-toggle{display:block}
+    nav.links.open{display:flex;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:#fff;padding:20px 24px;gap:16px;box-shadow:0 14px 30px rgba(0,0,0,.1)}
+  }
+  @media(max-width:600px){
+    .svc-grid,.steps,.list-grid,.testi-grid,.row2{grid-template-columns:1fr}
+    .hero h1{font-size:42px}
+    .sec-head h2{font-size:34px}
+    .about-text h2,.cta h2{font-size:32px}
+    .hero-stats{gap:24px}
+    .pad{padding:64px 0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="nav">
+    <a href="#top" class="logo" aria-label="Gold Pen Realty Group">
+      <div class="logo-stack">
+        <div class="logo-row">
+          <span class="logo-gold">G</span>
+          <svg class="logo-o" viewBox="0 0 40 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="20" cy="30" r="17" stroke="#141414" stroke-width="4"/>
+            <path d="M27 8 C20 14, 15 22, 14 34 C22 30, 29 22, 32 12 C31 10, 29 8, 27 8 Z" fill="#C9A24B"/>
+            <path d="M14 34 L11 44" stroke="#A67C1F" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M22 18 C19 22, 17 27, 16.5 32" stroke="#fff" stroke-width="1" opacity=".55" stroke-linecap="round"/>
+          </svg>
+          <span class="logo-gold">LD</span>
+          <span class="logo-pen">PEN</span>
+        </div>
+        <span class="logo-sub">REALTY&nbsp;&nbsp;GROUP</span>
+      </div>
+    </a>
+
+    <nav class="links" id="navlinks">
+      <a href="#about" data-i="nav_about">Sobre mí</a>
+      <a href="#services" data-i="nav_services">Servicios</a>
+      <a href="#listings" data-i="nav_listings">Propiedades</a>
+      <a href="#contact" data-i="nav_contact">Contacto</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="lang" id="langBtn">EN</button>
+      <a href="#contact" class="btn btn-gold" data-i="nav_cta">Contáctame</a>
+      <button class="menu-toggle" id="menuBtn" aria-label="Menú">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="reveal in">
+        <span class="hero-eyebrow" data-i="hero_eyebrow">Bienes Raíces en Miami, FL</span>
+        <h1 data-i="hero_title">Tu próxima propiedad, con <em>manos expertas</em>.</h1>
+        <p class="lead" data-i="hero_lead">Soy Gleidys Blanco, Realtor en Gold Pen Realty Group. Te acompaño en la compra, venta y renta de propiedades en Miami con atención personalizada, en español e inglés.</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-gold" data-i="hero_cta1">Agenda una consulta</a>
+          <a href="#listings" class="btn btn-ghost" data-i="hero_cta2">Ver propiedades</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><b>100%</b><span data-i="stat1">Compromiso</span></div>
+          <div class="stat"><b>2</b><span data-i="stat2">Idiomas</span></div>
+          <div class="stat"><b>Miami</b><span data-i="stat3">& alrededores</span></div>
+        </div>
+      </div>
+
+      <div class="hero-photo reveal in">
+        <div class="photo-frame">
+          <div class="photo-initials">GB</div>
+          <div class="photo-tag">
+            <div class="name">Gleidys Blanco</div>
+            <div class="role">Realtor</div>
+          </div>
+        </div>
+        <div class="badge-float">
+          <div class="ico">★</div>
+          <div>
+            <div class="t" data-i="badge_t">Atención dedicada</div>
+            <div class="s" data-i="badge_s">Español &amp; English</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 40 C 240 5, 480 5, 720 35 C 960 65, 1200 65, 1440 30 L1440 70 L0 70 Z" fill="#141414"/>
+      <path d="M0 36 C 240 1, 480 1, 720 31 C 960 61, 1200 61, 1440 26" fill="none" stroke="#C9A24B" stroke-width="3"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about pad" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-card reveal">
+        <h3>Gleidys Blanco</h3>
+        <div class="r">Realtor · Gold Pen Realty Group</div>
+        <ul>
+          <li><span class="chk">✦</span><span data-i="ab1">Asesoría personalizada de principio a fin</span></li>
+          <li><span class="chk">✦</span><span data-i="ab2">Comunicación clara en español e inglés</span></li>
+          <li><span class="chk">✦</span><span data-i="ab3">Negociación enfocada en tus objetivos</span></li>
+          <li><span class="chk">✦</span><span data-i="ab4">Red de contactos en el sur de la Florida</span></li>
+          <li><span class="chk">✦</span><span data-i="ab5">Acompañamiento en financiamiento y cierre</span></li>
+        </ul>
+      </div>
+      <div class="about-text reveal">
+        <span class="sec-eyebrow" data-i="ab_eyebrow">Sobre mí</span>
+        <h2 data-i="ab_title">Bienes raíces con cercanía y confianza</h2>
+        <p data-i="ab_p1">Mi objetivo es hacer que comprar, vender o rentar una propiedad sea una experiencia sencilla y transparente. Escucho lo que necesitas y trabajo para conseguirlo, cuidando cada detalle del proceso.</p>
+        <p data-i="ab_p2">Ya sea tu primera casa, una inversión o la venta de tu propiedad actual, tendrás una asesora comprometida contigo en cada paso, en el idioma con el que te sientas cómodo.</p>
+        <div class="sign">Gleidys Blanco</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="services pad" id="services">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow" data-i="sv_eyebrow">Servicios</div>
+      <h2 data-i="sv_title">Cómo puedo ayudarte</h2>
+      <p data-i="sv_sub">Soluciones completas de bienes raíces adaptadas a tus metas.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc reveal"><div class="ico">🏡</div><h3 data-i="sv1_t">Comprar</h3><p data-i="sv1_p">Encuentra la propiedad ideal con una búsqueda guiada y negociación experta.</p></div>
+      <div class="svc reveal"><div class="ico">💰</div><h3 data-i="sv2_t">Vender</h3><p data-i="sv2_p">Vende al mejor precio con estrategia de mercado y marketing efectivo.</p></div>
+      <div class="svc reveal"><div class="ico">🔑</div><h3 data-i="sv3_t">Rentar</h3><p data-i="sv3_p">Renta o alquila tu propiedad con inquilinos calificados y trámites claros.</p></div>
+      <div class="svc reveal"><div class="ico">📈</div><h3 data-i="sv4_t">Invertir</h3><p data-i="sv4_p">Haz crecer tu patrimonio con oportunidades de inversión en Miami.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="process pad" id="process">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow" data-i="pr_eyebrow">El Proceso</div>
+      <h2 data-i="pr_title">Simple, claro y a tu ritmo</h2>
+      <p data-i="pr_sub">Cuatro pasos para llegar a tu meta sin complicaciones.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="num">1</div><h4 data-i="pr1_t">Conversamos</h4><p data-i="pr1_p">Entiendo tus necesidades, presupuesto y objetivos.</p></div>
+      <div class="step reveal"><div class="num">2</div><h4 data-i="pr2_t">Estrategia</h4><p data-i="pr2_p">Diseñamos un plan a la medida de tu situación.</p></div>
+      <div class="step reveal"><div class="num">3</div><h4 data-i="pr3_t">Acción</h4><p data-i="pr3_p">Buscamos, mostramos, negociamos y avanzamos.</p></div>
+      <div class="step reveal"><div class="num">4</div><h4 data-i="pr4_t">Cierre</h4><p data-i="pr4_p">Te acompaño hasta la firma y la entrega de llaves.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LISTINGS ============ -->
+<section class="listings pad" id="listings">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow" data-i="ls_eyebrow">Propiedades</div>
+      <h2 data-i="ls_title">Selección destacada</h2>
+      <p data-i="ls_sub">Ejemplos de propiedades. Contáctame para ver disponibilidad actualizada.</p>
+    </div>
+    <div class="list-grid">
+      <div class="prop reveal">
+        <div class="img p1"><span class="tagp" data-i="ls_forsale">En venta</span><span class="status" data-i="ls_new">Nuevo</span></div>
+        <div class="body">
+          <div class="price">$685,000</div>
+          <h4 data-i="p1_t">Condo moderno frente al mar</h4>
+          <div class="addr">Brickell, Miami, FL</div>
+          <div class="meta"><span>🛏 2 <span data-i="beds">hab</span></span><span>🛁 2 <span data-i="baths">baños</span></span><span>📐 1,150 ft²</span></div>
+        </div>
+      </div>
+      <div class="prop reveal">
+        <div class="img p2"><span class="tagp" data-i="ls_forsale2">En venta</span></div>
+        <div class="body">
+          <div class="price">$925,000</div>
+          <h4 data-i="p2_t">Casa familiar con piscina</h4>
+          <div class="addr">Kendall, Miami, FL</div>
+          <div class="meta"><span>🛏 4 <span data-i="beds2">hab</span></span><span>🛁 3 <span data-i="baths2">baños</span></span><span>📐 2,400 ft²</span></div>
+        </div>
+      </div>
+      <div class="prop reveal">
+        <div class="img p3"><span class="tagp" data-i="ls_forrent">En renta</span><span class="status" data-i="ls_hot">Popular</span></div>
+        <div class="body">
+          <div class="price">$3,200<span style="font-size:14px;color:var(--muted)">/mes</span></div>
+          <h4 data-i="p3_t">Apartamento luminoso</h4>
+          <div class="addr">Doral, Miami, FL</div>
+          <div class="meta"><span>🛏 3 <span data-i="beds3">hab</span></span><span>🛁 2 <span data-i="baths3">baños</span></span><span>📐 1,320 ft²</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="disclaimer" data-i="ls_disc">* Propiedades de ejemplo con fines de demostración. La disponibilidad y los precios reales se actualizarán próximamente.</p>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="pad-sm" id="testimonials">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow" data-i="te_eyebrow">Testimonios</div>
+      <h2 data-i="te_title">Clientes satisfechos</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi reveal">
+        <div class="stars">★★★★★</div>
+        <p data-i="te1_p">"Gleidys nos ayudó a encontrar nuestra primera casa. Siempre atenta y clara en cada paso. ¡La recomendamos totalmente!"</p>
+        <div class="who"><div class="av">MR</div><div><b>María R.</b><span data-i="te1_w">Compradora · Kendall</span></div></div>
+      </div>
+      <div class="testi reveal">
+        <div class="stars">★★★★★</div>
+        <p data-i="te2_p">"Vendió nuestra propiedad más rápido de lo esperado y a muy buen precio. Profesional y muy dedicada."</p>
+        <div class="who"><div class="av">JC</div><div><b>Jorge C.</b><span data-i="te2_w">Vendedor · Doral</span></div></div>
+      </div>
+      <div class="testi reveal">
+        <div class="stars">★★★★★</div>
+        <p data-i="te3_p">"Excelente asesoría para mi inversión en Miami. Confianza total y comunicación en español. Gracias, Gleidys."</p>
+        <div class="who"><div class="av">AL</div><div><b>Ana L.</b><span data-i="te3_w">Inversionista · Brickell</span></div></div>
+      </div>
+    </div>
+    <p class="disclaimer" data-i="te_disc">* Testimonios ilustrativos para la versión de muestra del sitio.</p>
+  </div>
+</section>
+
+<!-- ============ CTA + QR ============ -->
+<section class="cta pad">
+  <div class="container">
+    <div class="cta-grid">
+      <div class="reveal">
+        <h2 data-i="cta_title">¿List@ para dar el <em>siguiente paso</em>?</h2>
+        <p data-i="cta_p">Hablemos hoy. Ya sea comprar, vender o rentar, estoy aquí para ayudarte a lograrlo. Escanea el código o contáctame directamente.</p>
+        <div class="cta-actions">
+          <a href="tel:+13053994818" class="btn btn-gold" data-i="cta_call">📱 Llamar ahora</a>
+          <a href="#contact" class="btn btn-ghost" style="border-color:var(--gold-light);color:var(--gold-light)" data-i="cta_msg">Enviar mensaje</a>
+        </div>
+      </div>
+      <div class="qr-box reveal">
+        <img src="assets/qr-dark.svg" alt="Código QR al sitio de Gleidys Blanco">
+        <div class="lbl" data-i="qr_lbl">Escanea para visitar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact pad" id="contact">
+  <div class="container">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow" data-i="co_eyebrow">Contacto</div>
+      <h2 data-i="co_title">Conversemos</h2>
+      <p data-i="co_sub">Cuéntame lo que buscas y te responderé lo antes posible.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="item">
+          <div class="ico">📱</div>
+          <div><b data-i="co_mobile">Celular</b><a href="tel:+13053994818">305 399-4818</a></div>
+        </div>
+        <div class="item">
+          <div class="ico">☎️</div>
+          <div><b data-i="co_office">Oficina</b><a href="tel:+13053995144">305 399-5144</a></div>
+        </div>
+        <div class="item">
+          <div class="ico">✉️</div>
+          <div><b>Email</b><a href="mailto:gleidys.blanco84@gmail.com">gleidys.blanco84@gmail.com</a></div>
+        </div>
+        <div class="item">
+          <div class="ico">📠</div>
+          <div><b>Fax</b><span>888 316-9694</span></div>
+        </div>
+        <div class="item">
+          <div class="ico">📍</div>
+          <div><b data-i="co_office_addr">Oficina</b><span>9835 SW 72nd Street, Suite 211<br>Miami, FL 33173</span></div>
+        </div>
+      </div>
+
+      <form id="contactForm" onsubmit="return sendForm(event)">
+        <div class="row2">
+          <div class="field"><label data-i="f_name">Nombre</label><input type="text" name="name" required></div>
+          <div class="field"><label data-i="f_phone">Teléfono</label><input type="tel" name="phone"></div>
+        </div>
+        <div class="field"><label>Email</label><input type="email" name="email" required></div>
+        <div class="field">
+          <label data-i="f_interest">Estoy interesad@ en</label>
+          <select name="interest">
+            <option data-i="f_opt1">Comprar una propiedad</option>
+            <option data-i="f_opt2">Vender una propiedad</option>
+            <option data-i="f_opt3">Rentar / Alquilar</option>
+            <option data-i="f_opt4">Inversión</option>
+            <option data-i="f_opt5">Otro</option>
+          </select>
+        </div>
+        <div class="field"><label data-i="f_msg">Mensaje</label><textarea name="message" rows="4" data-i-ph="f_msg_ph" placeholder="Cuéntame qué necesitas..."></textarea></div>
+        <button type="submit" class="btn btn-gold" style="width:100%" data-i="f_send">Enviar mensaje</button>
+        <p class="form-note" data-i="f_note">Al enviar se abrirá tu correo con el mensaje listo para Gleidys.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-logo">
+        <div class="logo" style="margin-bottom:6px">
+          <div class="logo-stack">
+            <div class="logo-row">
+              <span class="logo-gold" style="color:#fff">G</span>
+              <svg class="logo-o" viewBox="0 0 40 52" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="20" cy="30" r="17" stroke="#fff" stroke-width="4"/>
+                <path d="M27 8 C20 14, 15 22, 14 34 C22 30, 29 22, 32 12 C31 10, 29 8, 27 8 Z" fill="#C9A24B"/>
+                <path d="M14 34 L11 44" stroke="#A67C1F" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+              <span class="logo-gold" style="color:#fff">LD</span>
+              <span class="logo-pen">PEN</span>
+            </div>
+            <span class="logo-sub">REALTY&nbsp;&nbsp;GROUP</span>
+          </div>
+        </div>
+        <p class="foot-about" data-i="ft_about">Gleidys Blanco, Realtor en Gold Pen Realty Group. Compra, venta y renta de propiedades en Miami, Florida.</p>
+      </div>
+      <div class="foot-col">
+        <h5 data-i="ft_nav">Navegación</h5>
+        <a href="#about" data-i="nav_about">Sobre mí</a>
+        <a href="#services" data-i="nav_services">Servicios</a>
+        <a href="#listings" data-i="nav_listings">Propiedades</a>
+        <a href="#contact" data-i="nav_contact">Contacto</a>
+      </div>
+      <div class="foot-col">
+        <h5 data-i="ft_contact">Contacto</h5>
+        <a href="tel:+13053994818">📱 305 399-4818</a>
+        <a href="tel:+13053995144">☎️ 305 399-5144</a>
+        <a href="mailto:gleidys.blanco84@gmail.com">✉️ gleidys.blanco84@gmail.com</a>
+        <a href="https://maps.google.com/?q=9835+SW+72nd+Street+Suite+211+Miami+FL+33173" target="_blank" rel="noopener">📍 9835 SW 72nd St, Suite 211</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Gold Pen Realty Group · Gleidys Blanco</span>
+      <span class="eho">⌂ <span data-i="ft_eho">Igualdad de Oportunidad de Vivienda</span></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- Year ---------- */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---------- Mobile menu ---------- */
+document.getElementById('menuBtn').addEventListener('click',()=>{
+  document.getElementById('navlinks').classList.toggle('open');
+});
+document.querySelectorAll('#navlinks a').forEach(a=>a.addEventListener('click',()=>{
+  document.getElementById('navlinks').classList.remove('open');
+}));
+
+/* ---------- Reveal on scroll ---------- */
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ---------- Contact form -> mailto ---------- */
+function sendForm(e){
+  e.preventDefault();
+  const f=e.target;
+  const subject=encodeURIComponent('Consulta web - '+(f.interest.value||'Bienes raíces'));
+  const body=encodeURIComponent(
+    'Nombre: '+f.name.value+'\n'+
+    'Email: '+f.email.value+'\n'+
+    'Teléfono: '+(f.phone.value||'-')+'\n'+
+    'Interés: '+f.interest.value+'\n\n'+
+    'Mensaje:\n'+f.message.value
+  );
+  window.location.href='mailto:gleidys.blanco84@gmail.com?subject='+subject+'&body='+body;
+  return false;
+}
+
+/* ---------- Bilingual EN/ES ---------- */
+const EN={
+  nav_about:"About",nav_services:"Services",nav_listings:"Listings",nav_contact:"Contact",nav_cta:"Contact Me",
+  hero_eyebrow:"Real Estate in Miami, FL",
+  hero_title:"Your next property, in <em>expert hands</em>.",
+  hero_lead:"I'm Gleidys Blanco, Realtor at Gold Pen Realty Group. I guide you through buying, selling and renting property in Miami with personalized service, in English and Spanish.",
+  hero_cta1:"Schedule a consultation",hero_cta2:"View listings",
+  stat1:"Commitment",stat2:"Languages",stat3:"& surroundings",
+  badge_t:"Dedicated service",badge_s:"Español & English",
+  ab_eyebrow:"About me",ab_title:"Real estate built on trust and care",
+  ab_p1:"My goal is to make buying, selling or renting a property a simple and transparent experience. I listen to what you need and work to achieve it, caring for every detail of the process.",
+  ab_p2:"Whether it's your first home, an investment or selling your current property, you'll have an advisor committed to you every step of the way, in the language you're most comfortable with.",
+  ab1:"Personalized guidance from start to finish",ab2:"Clear communication in English and Spanish",
+  ab3:"Negotiation focused on your goals",ab4:"A strong network across South Florida",ab5:"Support with financing and closing",
+  sv_eyebrow:"Services",sv_title:"How I can help you",sv_sub:"Complete real estate solutions tailored to your goals.",
+  sv1_t:"Buy",sv1_p:"Find the ideal property with a guided search and expert negotiation.",
+  sv2_t:"Sell",sv2_p:"Sell at the best price with market strategy and effective marketing.",
+  sv3_t:"Rent",sv3_p:"Rent your property with qualified tenants and a clear process.",
+  sv4_t:"Invest",sv4_p:"Grow your wealth with investment opportunities in Miami.",
+  pr_eyebrow:"The Process",pr_title:"Simple, clear and at your pace",pr_sub:"Four steps to reach your goal without complications.",
+  pr1_t:"We talk",pr1_p:"I understand your needs, budget and goals.",
+  pr2_t:"Strategy",pr2_p:"We design a plan tailored to your situation.",
+  pr3_t:"Action",pr3_p:"We search, show, negotiate and move forward.",
+  pr4_t:"Closing",pr4_p:"I'm with you through signing and the handover of keys.",
+  ls_eyebrow:"Listings",ls_title:"Featured selection",ls_sub:"Sample properties. Contact me for up-to-date availability.",
+  ls_forsale:"For sale",ls_forsale2:"For sale",ls_forrent:"For rent",ls_new:"New",ls_hot:"Popular",
+  p1_t:"Modern oceanfront condo",p2_t:"Family home with pool",p3_t:"Bright apartment",
+  beds:"bd",baths:"ba",beds2:"bd",baths2:"ba",beds3:"bd",baths3:"ba",
+  ls_disc:"* Sample properties for demonstration. Real availability and pricing coming soon.",
+  te_eyebrow:"Testimonials",te_title:"Happy clients",
+  te1_p:"\"Gleidys helped us find our first home. Always attentive and clear at every step. Highly recommended!\"",
+  te1_w:"Buyer · Kendall",
+  te2_p:"\"She sold our property faster than expected and at a great price. Professional and very dedicated.\"",
+  te2_w:"Seller · Doral",
+  te3_p:"\"Excellent guidance for my Miami investment. Total trust and communication in Spanish. Thank you, Gleidys.\"",
+  te3_w:"Investor · Brickell",
+  te_disc:"* Illustrative testimonials for the sample version of the site.",
+  cta_title:"Ready to take the <em>next step</em>?",
+  cta_p:"Let's talk today. Whether buying, selling or renting, I'm here to help you make it happen. Scan the code or contact me directly.",
+  cta_call:"📱 Call now",cta_msg:"Send a message",qr_lbl:"Scan to visit",
+  co_eyebrow:"Contact",co_title:"Let's talk",co_sub:"Tell me what you're looking for and I'll get back to you as soon as possible.",
+  co_mobile:"Mobile",co_office:"Office",co_office_addr:"Office",
+  f_name:"Name",f_phone:"Phone",f_interest:"I'm interested in",
+  f_opt1:"Buying a property",f_opt2:"Selling a property",f_opt3:"Renting",f_opt4:"Investment",f_opt5:"Other",
+  f_msg:"Message",f_msg_ph:"Tell me what you need...",f_send:"Send message",
+  f_note:"Submitting opens your email with the message ready for Gleidys.",
+  ft_about:"Gleidys Blanco, Realtor at Gold Pen Realty Group. Buying, selling and renting property in Miami, Florida.",
+  ft_nav:"Navigation",ft_contact:"Contact",ft_eho:"Equal Housing Opportunity"
+};
+const ES={
+  nav_about:"Sobre mí",nav_services:"Servicios",nav_listings:"Propiedades",nav_contact:"Contacto",nav_cta:"Contáctame",
+  hero_eyebrow:"Bienes Raíces en Miami, FL",
+  hero_title:"Tu próxima propiedad, con <em>manos expertas</em>.",
+  hero_lead:"Soy Gleidys Blanco, Realtor en Gold Pen Realty Group. Te acompaño en la compra, venta y renta de propiedades en Miami con atención personalizada, en español e inglés.",
+  hero_cta1:"Agenda una consulta",hero_cta2:"Ver propiedades",
+  stat1:"Compromiso",stat2:"Idiomas",stat3:"& alrededores",
+  badge_t:"Atención dedicada",badge_s:"Español & English",
+  ab_eyebrow:"Sobre mí",ab_title:"Bienes raíces con cercanía y confianza",
+  ab_p1:"Mi objetivo es hacer que comprar, vender o rentar una propiedad sea una experiencia sencilla y transparente. Escucho lo que necesitas y trabajo para conseguirlo, cuidando cada detalle del proceso.",
+  ab_p2:"Ya sea tu primera casa, una inversión o la venta de tu propiedad actual, tendrás una asesora comprometida contigo en cada paso, en el idioma con el que te sientas cómodo.",
+  ab1:"Asesoría personalizada de principio a fin",ab2:"Comunicación clara en español e inglés",
+  ab3:"Negociación enfocada en tus objetivos",ab4:"Red de contactos en el sur de la Florida",ab5:"Acompañamiento en financiamiento y cierre",
+  sv_eyebrow:"Servicios",sv_title:"Cómo puedo ayudarte",sv_sub:"Soluciones completas de bienes raíces adaptadas a tus metas.",
+  sv1_t:"Comprar",sv1_p:"Encuentra la propiedad ideal con una búsqueda guiada y negociación experta.",
+  sv2_t:"Vender",sv2_p:"Vende al mejor precio con estrategia de mercado y marketing efectivo.",
+  sv3_t:"Rentar",sv3_p:"Renta o alquila tu propiedad con inquilinos calificados y trámites claros.",
+  sv4_t:"Invertir",sv4_p:"Haz crecer tu patrimonio con oportunidades de inversión en Miami.",
+  pr_eyebrow:"El Proceso",pr_title:"Simple, claro y a tu ritmo",pr_sub:"Cuatro pasos para llegar a tu meta sin complicaciones.",
+  pr1_t:"Conversamos",pr1_p:"Entiendo tus necesidades, presupuesto y objetivos.",
+  pr2_t:"Estrategia",pr2_p:"Diseñamos un plan a la medida de tu situación.",
+  pr3_t:"Acción",pr3_p:"Buscamos, mostramos, negociamos y avanzamos.",
+  pr4_t:"Cierre",pr4_p:"Te acompaño hasta la firma y la entrega de llaves.",
+  ls_eyebrow:"Propiedades",ls_title:"Selección destacada",ls_sub:"Ejemplos de propiedades. Contáctame para ver disponibilidad actualizada.",
+  ls_forsale:"En venta",ls_forsale2:"En venta",ls_forrent:"En renta",ls_new:"Nuevo",ls_hot:"Popular",
+  p1_t:"Condo moderno frente al mar",p2_t:"Casa familiar con piscina",p3_t:"Apartamento luminoso",
+  beds:"hab",baths:"baños",beds2:"hab",baths2:"baños",beds3:"hab",baths3:"baños",
+  ls_disc:"* Propiedades de ejemplo con fines de demostración. La disponibilidad y los precios reales se actualizarán próximamente.",
+  te_eyebrow:"Testimonios",te_title:"Clientes satisfechos",
+  te1_p:"\"Gleidys nos ayudó a encontrar nuestra primera casa. Siempre atenta y clara en cada paso. ¡La recomendamos totalmente!\"",
+  te1_w:"Compradora · Kendall",
+  te2_p:"\"Vendió nuestra propiedad más rápido de lo esperado y a muy buen precio. Profesional y muy dedicada.\"",
+  te2_w:"Vendedor · Doral",
+  te3_p:"\"Excelente asesoría para mi inversión en Miami. Confianza total y comunicación en español. Gracias, Gleidys.\"",
+  te3_w:"Inversionista · Brickell",
+  te_disc:"* Testimonios ilustrativos para la versión de muestra del sitio.",
+  cta_title:"¿List@ para dar el <em>siguiente paso</em>?",
+  cta_p:"Hablemos hoy. Ya sea comprar, vender o rentar, estoy aquí para ayudarte a lograrlo. Escanea el código o contáctame directamente.",
+  cta_call:"📱 Llamar ahora",cta_msg:"Enviar mensaje",qr_lbl:"Escanea para visitar",
+  co_eyebrow:"Contacto",co_title:"Conversemos",co_sub:"Cuéntame lo que buscas y te responderé lo antes posible.",
+  co_mobile:"Celular",co_office:"Oficina",co_office_addr:"Oficina",
+  f_name:"Nombre",f_phone:"Teléfono",f_interest:"Estoy interesad@ en",
+  f_opt1:"Comprar una propiedad",f_opt2:"Vender una propiedad",f_opt3:"Rentar / Alquilar",f_opt4:"Inversión",f_opt5:"Otro",
+  f_msg:"Mensaje",f_msg_ph:"Cuéntame qué necesitas...",f_send:"Enviar mensaje",
+  f_note:"Al enviar se abrirá tu correo con el mensaje listo para Gleidys.",
+  ft_about:"Gleidys Blanco, Realtor en Gold Pen Realty Group. Compra, venta y renta de propiedades en Miami, Florida.",
+  ft_nav:"Navegación",ft_contact:"Contacto",ft_eho:"Igualdad de Oportunidad de Vivienda"
+};
+let lang='es';
+function applyLang(){
+  const dict=lang==='es'?ES:EN;
+  document.documentElement.lang=lang;
+  document.querySelectorAll('[data-i]').forEach(el=>{
+    const k=el.getAttribute('data-i');
+    if(dict[k]!==undefined) el.innerHTML=dict[k];
+  });
+  document.querySelectorAll('[data-i-ph]').forEach(el=>{
+    const k=el.getAttribute('data-i-ph');
+    if(dict[k]!==undefined) el.setAttribute('placeholder',dict[k]);
+  });
+  document.getElementById('langBtn').textContent = lang==='es'?'EN':'ES';
+}
+document.getElementById('langBtn').addEventListener('click',()=>{
+  lang = lang==='es'?'en':'es';
+  applyLang();
+});
+applyLang();
+</script>
+</body>
+</html>

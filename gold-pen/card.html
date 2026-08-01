@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarjeta de Presentación — Gleidys Blanco | Gold Pen Realty Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#C9A24B;--gold-deep:#A67C1F;--ink:#0e0e0e}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'Montserrat',sans-serif;
+    background:#3a3a3a;
+    background-image:radial-gradient(circle at 50% 0%,#4a4a4a,#262626);
+    min-height:100vh;padding:40px 16px;color:#fff;
+  }
+  .page{max-width:1120px;margin:0 auto}
+  .head{text-align:center;margin-bottom:34px}
+  .head h1{font-size:22px;font-weight:700;letter-spacing:.5px}
+  .head p{color:#bdbdbd;font-size:14px;margin-top:6px}
+
+  .toolbar{display:flex;gap:12px;justify-content:center;margin:22px 0 40px;flex-wrap:wrap}
+  .tbtn{background:linear-gradient(135deg,#E4C878,#A67C1F);color:#fff;border:none;padding:11px 24px;border-radius:40px;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit;transition:.2s}
+  .tbtn.alt{background:transparent;border:1.5px solid var(--gold);color:var(--gold)}
+  .tbtn:hover{transform:translateY(-2px)}
+
+  .cards{display:flex;gap:40px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+  .card-wrap{text-align:center}
+  .card-label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9a9a9a;margin-bottom:14px}
+
+  /* ---- Business card: 3.5 x 2 in @ 300dpi = 1050 x 600, scaled ---- */
+  .card{
+    width:525px;height:300px;background:#fff;border-radius:14px;overflow:hidden;position:relative;
+    box-shadow:0 24px 60px rgba(0,0,0,.5);
+  }
+
+  /* FRONT */
+  .front .top{position:absolute;inset:0 0 42% 0;background:linear-gradient(120deg,#fdfbf6 0%,#f3ede0 60%,#ece3d2 100%);}
+  .front .sheen{position:absolute;top:0;left:0;width:55%;height:58%;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,255,255,0));transform:skewX(-18deg) translateX(-30%);opacity:.6}
+  .logo-block{position:absolute;top:38px;left:34px}
+  .logo-row{display:flex;align-items:center}
+  .logo-gold{font-size:40px;font-weight:800;color:#141414;letter-spacing:1px;line-height:1}
+  .logo-o{width:38px;height:50px;position:relative;top:-4px;margin:0 -2px}
+  .logo-pen{font-size:26px;font-weight:800;color:var(--gold);letter-spacing:5px;margin-left:6px;position:relative;top:6px}
+  .logo-sub{display:block;font-size:11px;letter-spacing:9px;color:#7a7a7a;font-weight:600;margin-top:6px;margin-left:4px}
+
+  .agent{position:absolute;left:34px;top:150px}
+  .agent .name{font-size:22px;font-weight:700;color:#141414;letter-spacing:1px}
+  .agent .role{font-size:15px;color:#333;font-weight:500;margin-top:2px}
+
+  .portrait{
+    position:absolute;right:26px;top:34px;width:150px;height:150px;border-radius:12px;overflow:hidden;
+    background:linear-gradient(160deg,#2c2c2c,#0a0a0a);display:flex;align-items:flex-end;justify-content:center;
+    border:2px solid rgba(201,162,75,.55);box-shadow:0 8px 20px rgba(0,0,0,.25);
+  }
+  .portrait::before{content:"";position:absolute;inset:0;background:radial-gradient(120px 90px at 50% 10%,rgba(201,162,75,.3),transparent 70%)}
+  .portrait .init{font-size:70px;font-weight:800;color:rgba(201,162,75,.35);position:absolute;top:50%;left:50%;transform:translate(-50%,-52%)}
+  .portrait .cap{position:relative;z-index:2;width:100%;text-align:center;padding:8px 4px;background:linear-gradient(0deg,rgba(0,0,0,.8),transparent);font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:600}
+
+  /* wave */
+  .wave{position:absolute;left:0;right:0;bottom:38%;height:70px;z-index:2;pointer-events:none}
+  .wave svg{width:100%;height:100%;display:block}
+
+  .bottom{position:absolute;left:0;right:0;bottom:0;height:42%;background:#0e0e0e}
+  .addr{position:absolute;left:34px;bottom:26px;font-size:12.5px;line-height:1.7;color:#eaeaea}
+  .contact{position:absolute;right:26px;bottom:24px;display:flex;flex-direction:column;gap:7px}
+  .contact .c{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#eaeaea}
+  .contact .ci{width:17px;height:17px;flex:none;color:var(--gold);display:flex;align-items:center;justify-content:center}
+  .contact .ci svg{width:15px;height:15px;fill:var(--gold)}
+
+  /* BACK */
+  .back{background:#0e0e0e;display:flex;align-items:center;justify-content:center}
+  .back .bwave{position:absolute;top:0;left:0;right:0;height:60px}
+  .back .bwave svg{width:100%;height:100%}
+  .back-inner{display:flex;align-items:center;gap:26px;padding:0 34px;position:relative;z-index:2}
+  .qr-panel{background:#fff;border-radius:12px;padding:12px;flex:none;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+  .qr-panel img{width:130px;height:130px;display:block}
+  .back-txt .blogo{display:flex;align-items:center;margin-bottom:12px}
+  .back-txt .blogo .logo-gold{font-size:26px;color:#fff}
+  .back-txt .blogo .logo-o{width:24px;height:32px;top:-2px}
+  .back-txt .blogo .logo-pen{font-size:17px;top:4px;letter-spacing:3px}
+  .back-txt h3{font-size:16px;color:#fff;font-weight:700;margin-bottom:6px;letter-spacing:.5px}
+  .back-txt p{font-size:12.5px;color:#c9a24b;font-weight:600;letter-spacing:1px}
+  .back-txt .scan{font-size:11.5px;color:#bdbdbd;margin-top:10px;letter-spacing:1px;text-transform:uppercase}
+  .back-txt .url{font-size:12px;color:#eaeaea;margin-top:4px;word-break:break-all}
+
+  .note{max-width:640px;margin:44px auto 0;background:rgba(255,255,255,.06);border:1px solid rgba(201,162,75,.3);border-radius:14px;padding:20px 24px;font-size:13.5px;color:#d6d6d6;line-height:1.7}
+  .note b{color:var(--gold)}
+  a.plain{color:var(--gold);text-decoration:underline}
+
+  @media print{
+    body{background:#fff;padding:0}
+    .head,.toolbar,.note,.card-label{display:none}
+    .cards{gap:20px}
+    .card{box-shadow:none;border:1px solid #ddd}
+  }
+  @media(max-width:560px){.card{transform:scale(.86);transform-origin:top center}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="head">
+    <h1>Tarjeta de Presentación · Gleidys Blanco</h1>
+    <p>Diseño digital con código QR que dirige al sitio web. Frente y reverso.</p>
+  </div>
+
+  <div class="toolbar">
+    <button class="tbtn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+    <a class="tbtn alt" href="index.html">← Ver el sitio web</a>
+  </div>
+
+  <div class="cards">
+    <!-- ===== FRONT ===== -->
+    <div class="card-wrap">
+      <div class="card-label">Frente</div>
+      <div class="card front">
+        <div class="top"><div class="sheen"></div></div>
+
+        <div class="logo-block">
+          <div class="logo-row">
+            <span class="logo-gold">G</span>
+            <svg class="logo-o" viewBox="0 0 40 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="20" cy="30" r="17" stroke="#141414" stroke-width="4"/>
+              <path d="M27 8 C20 14, 15 22, 14 34 C22 30, 29 22, 32 12 C31 10, 29 8, 27 8 Z" fill="#C9A24B"/>
+              <path d="M14 34 L10 45" stroke="#A67C1F" stroke-width="2.6" stroke-linecap="round"/>
+              <path d="M22 18 C19 22, 17 27, 16.5 32" stroke="#fff" stroke-width="1" opacity=".55" stroke-linecap="round"/>
+            </svg>
+            <span class="logo-gold">LD</span>
+            <span class="logo-pen">PEN</span>
+          </div>
+          <span class="logo-sub">REALTY&nbsp;&nbsp;GROUP</span>
+        </div>
+
+        <div class="portrait">
+          <div class="init">GB</div>
+          <div class="cap">Gleidys Blanco</div>
+        </div>
+
+        <div class="agent">
+          <div class="name">GLEIDYS BLANCO</div>
+          <div class="role">Realtor</div>
+        </div>
+
+        <div class="wave">
+          <svg viewBox="0 0 525 70" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 44 C 130 6, 300 6, 525 40 L525 70 L0 70 Z" fill="#0e0e0e"/>
+            <path d="M0 40 C 130 2, 300 2, 525 36" fill="none" stroke="#C9A24B" stroke-width="3.4"/>
+          </svg>
+        </div>
+
+        <div class="bottom">
+          <div class="addr">
+            9835 SW 72nd Street, Suite 211<br>Miami, FL 33173
+          </div>
+          <div class="contact">
+            <div class="c"><span class="ci"><svg viewBox="0 0 24 24"><path d="M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm5 17a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg></span>305 399-4818</div>
+            <div class="c"><span class="ci"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11 11 0 0 0 3.5.56 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .56 3.5 1 1 0 0 1-.25 1z"/></svg></span>305 399-5144</div>
+            <div class="c"><span class="ci"><svg viewBox="0 0 24 24"><path d="M19 8h-1V3H6v5H5a3 3 0 0 0-3 3v6h4v3h12v-3h4v-6a3 3 0 0 0-3-3zM8 5h8v3H8zm8 14H8v-4h8zm3-6a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg></span>888 316-9694</div>
+            <div class="c"><span class="ci"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 7L4 6.5V8l8 4.5L20 8V6.5z"/></svg></span>gleidys.blanco84@gmail.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== BACK ===== -->
+    <div class="card-wrap">
+      <div class="card-label">Reverso · con QR</div>
+      <div class="card back">
+        <div class="bwave">
+          <svg viewBox="0 0 525 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 18 C 130 50, 300 50, 525 20 L525 0 L0 0 Z" fill="#141414"/>
+            <path d="M0 22 C 130 54, 300 54, 525 24" fill="none" stroke="#C9A24B" stroke-width="3"/>
+          </svg>
+        </div>
+        <div class="back-inner">
+          <div class="qr-panel">
+            <img src="assets/qr-dark.svg" alt="Código QR al sitio web de Gleidys Blanco">
+          </div>
+          <div class="back-txt">
+            <div class="blogo logo-row">
+              <span class="logo-gold">G</span>
+              <svg class="logo-o" viewBox="0 0 40 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="30" r="17" stroke="#fff" stroke-width="4"/>
+                <path d="M27 8 C20 14, 15 22, 14 34 C22 30, 29 22, 32 12 C31 10, 29 8, 27 8 Z" fill="#C9A24B"/>
+              </svg>
+              <span class="logo-gold">LD</span>
+              <span class="logo-pen">PEN</span>
+            </div>
+            <h3>Visita mi sitio web</h3>
+            <p>Compra · Venta · Renta</p>
+            <div class="scan">Escanea el código</div>
+            <div class="url" id="cardUrl">gleidysblanco.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Nota sobre el QR:</b> el código apunta de forma provisional a
+    <a class="plain" href="https://gleidysblanco.com" target="_blank" rel="noopener">gleidysblanco.com</a>.
+    Cuando definamos el dominio real (o publiquemos el sitio), regenero el QR en 1 minuto para que
+    apunte a la dirección definitiva. El diseño y el archivo del QR están en
+    <b>gold-pen/assets/</b> (versiones para fondo claro y oscuro, y PNG para imprimir).
+  </div>
+</div>
+</body>
+</html>
