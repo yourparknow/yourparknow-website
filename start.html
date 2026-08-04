@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>YourParkNow — Quick Tour / Tour Rápido</title>
+  <meta name="description" content="A 30-second tour of how YourParkNow works, then open the app.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#1F4E79">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --brand: #1F4E79;
+      --brand-light: #2E75B6;
+      --ink: #1a1a1a;
+      --muted: #5b6472;
+    }
+    html, body { height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(160deg, #1F4E79 0%, #2E75B6 55%, #3a86c9 100%);
+      -webkit-font-smoothing: antialiased;
+      overflow: hidden;
+    }
+
+    /* Language switch (same mechanism as the main site) */
+    .lang-es { display: none; }
+    body.spanish .lang-en { display: none; }
+    body.spanish .lang-es { display: block; }
+    .lang-en-inline, .lang-es-inline { display: inline; }
+    body.spanish .lang-en-inline { display: none; }
+    .lang-es-inline { display: none; }
+    body.spanish .lang-es-inline { display: inline; }
+
+    .app {
+      height: 100dvh;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+    }
+
+    /* Top bar */
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px 8px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .logo { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; }
+    .top-actions { display: flex; align-items: center; gap: 8px; }
+    .pill {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .pill:hover, .pill:active { background: rgba(255,255,255,0.28); }
+
+    /* Stage / slides */
+    .stage { flex: 1; overflow: hidden; position: relative; }
+    .track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+    .slide {
+      min-width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px 32px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 28px;
+      padding: 40px 28px 36px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+    .icon {
+      width: 92px; height: 92px;
+      margin: 0 auto 24px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 46px;
+      box-shadow: 0 10px 24px rgba(31,78,121,0.35);
+    }
+    .slide h2 {
+      font-size: 27px;
+      font-weight: 800;
+      color: var(--brand);
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    .slide p {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.55;
+      max-width: 340px;
+      margin: 0 auto;
+    }
+    .slide p .hl { color: var(--brand-light); font-weight: 700; }
+
+    /* Final slide CTAs */
+    .cta-group { margin-top: 26px; display: flex; flex-direction: column; gap: 12px; }
+    .btn-app {
+      background: linear-gradient(135deg, var(--brand), var(--brand-light));
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 17px 28px;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 10px 24px rgba(31,78,121,0.35);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-app:active { transform: scale(0.98); }
+    .support {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .support a { color: var(--brand-light); text-decoration: none; font-weight: 600; }
+
+    /* Bottom controls */
+    .controls {
+      flex-shrink: 0;
+      padding: 14px 24px calc(18px + env(safe-area-inset-bottom));
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .dots { display: flex; gap: 8px; justify-content: center; }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      transition: width 0.3s, background 0.3s;
+    }
+    .dot.active { width: 24px; background: #fff; border-radius: 4px; }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .nav button {
+      flex: 1;
+      padding: 15px 20px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s, transform 0.15s, background 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav button:active { transform: scale(0.98); }
+    .btn-back {
+      background: rgba(255,255,255,0.16);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.35) !important;
+    }
+    .btn-back[disabled] { opacity: 0; pointer-events: none; }
+    .btn-next { background: #fff; color: var(--brand); }
+  </style>
+</head>
+<body>
+<script>
+  /* Set language before the slides render to avoid a flash.
+     Reuse the same preference key as the main site; if none is stored,
+     default to Spanish when the phone's language is Spanish. */
+  (function () {
+    try {
+      var stored = localStorage.getItem('yourparknow_lang');
+      var lang = stored || (((navigator.language || navigator.userLanguage || '').toLowerCase().indexOf('es') === 0) ? 'es' : 'en');
+      if (lang === 'es') document.body.classList.add('spanish');
+    } catch (e) {}
+  })();
+</script>
+
+<div class="app">
+  <header class="top">
+    <div class="logo">YourParkNow</div>
+    <div class="top-actions">
+      <button class="pill" onclick="toggleLang()">
+        <span class="lang-en">Español</span><span class="lang-es">English</span>
+      </button>
+      <a class="pill" href="#" onclick="openApp(event)">
+        <span class="lang-en">Skip ›</span><span class="lang-es">Saltar ›</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="stage">
+    <div class="track" id="track">
+
+      <!-- 1 · Welcome -->
+      <section class="slide">
+        <div class="card">
+          <div class="icon">👋</div>
+          <h2><span class="lang-en">Welcome to YourParkNow</span><span class="lang-es">Bienvenido a YourParkNow</span></h2>
+          <p>
+            <span class="lang-en">The easiest way to <span class="hl">find parking</span> — or <span class="hl">earn money</span> renting out your space. Here's how it works in 30 seconds.</span>
+            <span class="lang-es">La forma más fácil de <span class="hl">encontrar parqueo</span> — o <span class="hl">ganar dinero</span> rentando tu espacio. Así funciona en 30 segundos.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- 2 · Find -->
+      <section class="slide">
+        <div class="card">
+          <div class="icon">🗺️</div>
+          <h2><span class="lang-en">Find parking fast</span><span class="lang-es">Encuentra parqueo rápido</span></h2>
+          <p>
+            <span class="lang-en">Open the map and see real spots available <span class="hl">near you</span>. No more circling the block looking for a space.</span>
+            <span class="lang-es">Abre el mapa y ve parqueos reales disponibles <span class="hl">cerca de ti</span>. No más dar vueltas buscando dónde estacionar.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- 3 · Reserve -->
+      <section class="slide">
+        <div class="card">
+          <div class="icon">✅</div>
+          <h2><span class="lang-en">Reserve &amp; go</span><span class="lang-es">Reserva y listo</span></h2>
+          <p>
+            <span class="lang-en">Pick a spot, choose your time, and <span class="hl">pay securely</span> in the app. Get directions, park, and enjoy your day.</span>
+            <span class="lang-es">Escoge un parqueo, elige tu horario y <span class="hl">paga seguro</span> en la app. Recibe direcciones, parquea y disfruta tu día.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- 4 · Earn -->
+      <section class="slide">
+        <div class="card">
+          <div class="icon">💰</div>
+          <h2><span class="lang-en">Or earn money</span><span class="lang-es">O gana dinero</span></h2>
+          <p>
+            <span class="lang-en">Have a driveway or spot you don't use? List it in minutes and earn <span class="hl">$150–$400 a month</span>. Get paid weekly.</span>
+            <span class="lang-es">¿Tienes un driveway o parqueo que no usas? Publícalo en minutos y gana <span class="hl">$150–$400 al mes</span>. Cobra cada semana.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- 5 · Safe -->
+      <section class="slide">
+        <div class="card">
+          <div class="icon">🔒</div>
+          <h2><span class="lang-en">Safe &amp; simple</span><span class="lang-es">Seguro y simple</span></h2>
+          <p>
+            <span class="lang-en">Every user is <span class="hl">verified</span> with ID and phone. Payments are protected by Stripe. Full support in English and Spanish.</span>
+            <span class="lang-es">Cada usuario está <span class="hl">verificado</span> con ID y teléfono. Los pagos están protegidos por Stripe. Soporte completo en inglés y español.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- 6 · Ready / CTA -->
+      <section class="slide">
+        <div class="card">
+          <div class="icon">🚀</div>
+          <h2><span class="lang-en">You're ready!</span><span class="lang-es">¡Estás listo!</span></h2>
+          <p>
+            <span class="lang-en">Open the app to find your first spot or list your space.</span>
+            <span class="lang-es">Abre la app para encontrar tu primer parqueo o publicar tu espacio.</span>
+          </p>
+          <div class="cta-group">
+            <a class="btn-app" href="#" onclick="openApp(event)">
+              <span class="lang-en">Open the App</span><span class="lang-es">Abrir la App</span>
+            </a>
+            <div class="support">
+              <span class="lang-en">Questions?</span><span class="lang-es">¿Preguntas?</span>
+              <a href="mailto:support@yourparknow.com">support@yourparknow.com</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="controls">
+    <div class="dots" id="dots"></div>
+    <div class="nav">
+      <button class="btn-back" id="backBtn" onclick="go(-1)" disabled>
+        <span class="lang-en">Back</span><span class="lang-es">Atrás</span>
+      </button>
+      <button class="btn-next" id="nextBtn" onclick="go(1)">
+        <span class="lang-en">Next</span><span class="lang-es">Siguiente</span>
+      </button>
+    </div>
+  </footer>
+</div>
+
+<script>
+  /* =========================================================================
+     APP LINKS — TODO: replace these with the real destinations.
+     Put here whatever the card's QR is meant to open (App Store link,
+     Google Play link, and/or the web app URL). The button auto-picks the
+     right one based on the visitor's phone.
+     ========================================================================= */
+  var LINKS = {
+    ios:     "",   // e.g. "https://apps.apple.com/app/idXXXXXXXXX"
+    android: "",   // e.g. "https://play.google.com/store/apps/details?id=com.yourparknow.app"
+    web:     ""    // e.g. "https://app.yourparknow.com"  (fallback / web app)
+  };
+
+  function appUrl() {
+    var ua = (navigator.userAgent || navigator.vendor || "").toLowerCase();
+    if (/iphone|ipad|ipod/.test(ua) && LINKS.ios) return LINKS.ios;
+    if (/android/.test(ua) && LINKS.android) return LINKS.android;
+    return LINKS.web || LINKS.ios || LINKS.android || "/";
+  }
+
+  function openApp(e) {
+    if (e) e.preventDefault();
+    try { localStorage.setItem('yourparknow_tutorial_done', '1'); } catch (err) {}
+    window.location.href = appUrl();
+  }
+
+  function toggleLang() {
+    document.body.classList.toggle('spanish');
+    try {
+      localStorage.setItem('yourparknow_lang', document.body.classList.contains('spanish') ? 'es' : 'en');
+    } catch (e) {}
+  }
+
+  /* ---- Carousel ---- */
+  var track = document.getElementById('track');
+  var slides = track.children;
+  var total = slides.length;
+  var dotsWrap = document.getElementById('dots');
+  var backBtn = document.getElementById('backBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var i = 0;
+
+  for (var d = 0; d < total; d++) {
+    var dot = document.createElement('div');
+    dot.className = 'dot';
+    dotsWrap.appendChild(dot);
+  }
+  var dots = dotsWrap.children;
+
+  function render() {
+    track.style.transform = 'translateX(' + (-100 * i) + '%)';
+    for (var k = 0; k < total; k++) {
+      dots[k].className = 'dot' + (k === i ? ' active' : '');
+    }
+    backBtn.disabled = (i === 0);
+    // On the last slide, the in-card "Open the App" button is the action,
+    // so relabel Next to point people there.
+    var isLast = (i === total - 1);
+    nextBtn.querySelector('.lang-en').textContent = isLast ? 'Open the App' : 'Next';
+    nextBtn.querySelector('.lang-es').textContent = isLast ? 'Abrir la App' : 'Siguiente';
+  }
+
+  function go(dir) {
+    if (i === total - 1 && dir === 1) { openApp(); return; }
+    i = Math.max(0, Math.min(total - 1, i + dir));
+    render();
+  }
+
+  /* Swipe support */
+  var startX = null;
+  track.addEventListener('touchstart', function (ev) { startX = ev.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', function (ev) {
+    if (startX === null) return;
+    var dx = ev.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 45) go(dx < 0 ? 1 : -1);
+    startX = null;
+  }, { passive: true });
+
+  render();
+</script>
+
+</body>
+</html>
