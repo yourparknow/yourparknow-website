@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>JRG Welding — Shop Sheet: Railing Jig & Assembly</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --navy:#1b2a41; --accent:#c8571b; --light:#f4f6f8; }
+  body { font-family:'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; color:#222; line-height:1.45; background:#fff; font-size:12.5px; }
+  .page { max-width:8.5in; margin:0 auto; padding:0.45in 0.55in; }
+  @media print { @page { size:letter; margin:0.4in 0.45in; } .page { padding:0; max-width:none; } .blk { break-inside:avoid; } }
+  .blk { page-break-inside:avoid; }
+  .doc-header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:4px solid var(--navy); padding-bottom:10px; margin-bottom:12px; }
+  .brand p { font-size:11px; color:#555; }
+  .doc-meta { text-align:right; font-size:11.5px; }
+  .doc-meta .t { font-size:14px; font-weight:800; color:var(--navy); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:13px; color:#fff; background:var(--navy); padding:4px 10px; margin:14px 0 8px; text-transform:uppercase; letter-spacing:0.6px; border-radius:2px; }
+  table { width:100%; border-collapse:collapse; margin:6px 0 10px; font-size:11.5px; }
+  th { background:var(--navy); color:#fff; padding:4px 7px; text-align:left; }
+  td { border:1px solid #cfd6dd; padding:4px 7px; }
+  .num { text-align:right; white-space:nowrap; }
+  .drawing { border:1.5px solid var(--navy); border-radius:4px; margin:8px 0 12px; }
+  .drawing .dt { background:var(--navy); color:#fff; font-size:10.5px; font-weight:600; padding:3px 8px; }
+  .drawing svg { display:block; width:100%; height:auto; background:#fdfdfb; }
+  .note { font-size:10.5px; color:#555; font-style:italic; }
+  .warn { background:#fff3bf; border:1px solid #e0c060; border-radius:4px; padding:6px 10px; font-size:11.5px; margin:8px 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-header">
+    <div class="brand">
+      <img src="logo-jrg.png" alt="JRG Welding" style="height:42px; display:block; margin-bottom:4px;">
+      <p>SHOP SHEET — uso interno de taller · Proyecto: Railing Jupiter Farms (Prop. JRG-2026-007)</p>
+    </div>
+    <div class="doc-meta">
+      <div class="t">Jig &amp; Assembly</div>
+      <p>Sistema: post-and-panel con insertos</p>
+      <p><strong>PRELIMINAR — confirmar con medidas de campo</strong></p>
+    </div>
+  </div>
+
+  <h2>1. El juego de medidas — módulo estándar</h2>
+  <table>
+    <tr><th>Parámetro</th><th>Medida</th><th>Nota</th></tr>
+    <tr><td>Bahía estándar (poste a poste, centros)</td><td class="num"><strong>46"</strong></td><td>Cumple "menos de 4 pies"</td></tr>
+    <tr><td><strong>PAÑO ESTÁNDAR (el jig)</strong></td><td class="num"><strong>43-1/2" ancho</strong></td><td>46 − 2 (poste) − 1/2 (juego de insertos)</td></tr>
+    <tr><td>Campo del paño (alto libre del patrón)</td><td class="num">~30"</td><td>42" guard − cap − doble riel − riel inferior</td></tr>
+    <tr><td>Corrida de 50': 13 bahías</td><td class="num">12 estándar + 1 ajuste</td><td>el paño de ajuste absorbe las pulgadas sobrantes</td></tr>
+    <tr><td>Corrida de 26': 7 bahías</td><td class="num">6 estándar + 1 ajuste</td><td>ídem</td></tr>
+    <tr><td><strong>Total aproximado (2 decks + forros escalera)</strong></td><td class="num"><strong>~48 estándar + ~8 ajuste + 4 inclinados</strong></td><td>paños inclinados de escalera: jig aparte, solo piques</td></tr>
+  </table>
+  <div class="warn"><strong>REGLA DE ORO:</strong> el jig no se fija hasta tener el pietaje real de campo. Se mide TODO primero, se reparte el módulo por corrida (ajustando la bahía estándar ±1/2" si hace falta para que caiga parejo), y AHÍ se clava el jig. Un día de medición ahorra una semana de retrabajos.</div>
+
+  <h2>2. Lista de cortes por paño estándar (topes del jig)</h2>
+  <table>
+    <tr><th>Pieza</th><th>Perfil</th><th class="num">Corte</th><th class="num">Cant./paño</th><th>Tope</th></tr>
+    <tr><td>Riel superior e inferior del paño</td><td>1×1</td><td class="num">43-1/2"</td><td class="num">2</td><td>TOPE A</td></tr>
+    <tr><td>Verticales de marco + piques + lados del cuadro</td><td>1×1</td><td class="num">30"</td><td class="num">2 + 4-6 + 2</td><td><strong>TOPE B (todo el mismo)</strong></td></tr>
+    <tr><td>Diagonales de la X</td><td>1×1</td><td class="num">~36" (inglete ~41°)</td><td class="num">2</td><td>TOPE C</td></tr>
+    <tr><td>Lados del rombo</td><td>1×1</td><td class="num">~18" (inglete 45°)</td><td class="num">4</td><td>TOPE D</td></tr>
+  </table>
+  <p class="note">La gracia: verticales, piques y lados de cuadro comparten el TOPE B — se pican por cientos de una sola sentada. Paños solo-piques (los que alternan sin cuadro): mismo jig quitando la pieza central.</p>
+
+  <h2>3. Detalle de ensamble</h2>
+  <div class="drawing blk">
+    <div class="dt">DWG-A · POSTE CON INSERTOS + PAÑO DESLIZABLE + CAP CON MANGA Y CLIP (N.T.S.)</div>
+    <svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="sa2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#333"/>
+        </marker>
+      </defs>
+      <!-- post center -->
+      <rect x="360" y="60" width="40" height="290" fill="#8a97a2" stroke="#4a5560" stroke-width="2.5"/>
+      <rect x="330" y="345" width="100" height="10" fill="#8a97a2" stroke="#4a5560" stroke-width="2"/>
+      <text x="380" y="382" font-size="11" fill="#333" text-anchor="middle">PLACA BASE 5×5×1/4 + ANCLAJES INOX</text>
+      <!-- inserts on both faces (receivers) -->
+      <g fill="#c8571b" stroke="#8a3d12" stroke-width="1.5">
+        <rect x="336" y="120" width="24" height="18"/>
+        <rect x="336" y="280" width="24" height="18"/>
+        <rect x="400" y="120" width="24" height="18"/>
+        <rect x="400" y="280" width="24" height="18"/>
+      </g>
+      <!-- panel left sliding in -->
+      <g stroke="#5a6570" stroke-width="6" fill="none">
+        <line x1="100" y1="129" x2="332" y2="129"/>
+        <line x1="100" y1="289" x2="332" y2="289"/>
+        <line x1="112" y1="129" x2="112" y2="289"/>
+        <line x1="150" y1="129" x2="150" y2="289"/>
+        <line x1="188" y1="129" x2="188" y2="289"/>
+      </g>
+      <line x1="270" y1="209" x2="330" y2="209" stroke="#c8571b" stroke-width="2.5" marker-end="url(#sa2)"/>
+      <text x="212" y="200" font-size="11.5" fill="#c8571b" font-weight="bold">EL PAÑO DESLIZA →</text>
+      <text x="212" y="214" font-size="10.5" fill="#c8571b">rieles entran en los insertos</text>
+      <!-- panel right already seated -->
+      <g stroke="#5a6570" stroke-width="6" fill="none">
+        <line x1="404" y1="129" x2="700" y2="129"/>
+        <line x1="404" y1="289" x2="700" y2="289"/>
+        <line x1="648" y1="129" x2="648" y2="289"/>
+        <line x1="610" y1="129" x2="610" y2="289"/>
+        <line x1="572" y1="129" x2="572" y2="289"/>
+      </g>
+      <!-- cap continuous over post with internal sleeve + clip -->
+      <rect x="60" y="42" width="640" height="14" rx="3" fill="#4a5560"/>
+      <rect x="352" y="44" width="56" height="10" rx="2" fill="none" stroke="#c8571b" stroke-width="2" stroke-dasharray="5,3"/>
+      <text x="380" y="30" font-size="10.5" fill="#c8571b" font-weight="bold" text-anchor="middle">EMPATE DEL CAP: MANGA INTERNA SOBRE POSTE (junta hairline)</text>
+      <path d="M370,60 h20 v-4 h-14 z" fill="#c8571b"/>
+      <text x="470" y="76" font-size="10.5" fill="#333">ANGULARCITO soldado al poste —</text>
+      <text x="470" y="89" font-size="10.5" fill="#333">tornillo inox al cap DESDE ABAJO (nada visible)</text>
+      <line x1="466" y1="72" x2="394" y2="59" stroke="#333" stroke-width="1.2" marker-end="url(#sa2)"/>
+      <!-- set screw note -->
+      <line x1="270" y1="320" x2="342" y2="292" stroke="#333" stroke-width="1.2" marker-end="url(#sa2)"/>
+      <text x="80" y="326" font-size="10.5" fill="#333">Prisionero inox por debajo de cada inserto (no traquetea, pero desarma)</text>
+      <text x="380" y="110" font-size="10.5" fill="#555" text-anchor="middle">INSERTOS: bolsillo 1/16" mayor que el riel · fondo 1-1/2" a 2"</text>
+    </svg>
+  </div>
+
+  <h2>4. Secuencia de producción</h2>
+  <table>
+    <tr><th style="width:6%">#</th><th>Paso</th></tr>
+    <tr><td>1</td><td><strong>Medición de campo</strong> (1 día): cada corrida, esquinas, huecos de escalera. Repartir bahías y clavar la medida del jig.</td></tr>
+    <tr><td>2</td><td><strong>Corte en serie</strong>: todos los 1×1 con topes A–D; postes de 2×2 a 3'-6"; caps con esquinas a inglete.</td></tr>
+    <tr><td>3</td><td><strong>Jig</strong>: soldar paños estándar en serie (marco → piques → cuadro X/rombo). Numerar P1, P2… según plano de vanos.</td></tr>
+    <tr><td>4</td><td><strong>Postes</strong>: soldar placas base, insertos (alineados con plantilla propia) y angularcitos del cap.</td></tr>
+    <tr><td>5</td><td><strong>Powder coat</strong> por piezas sueltas (paños, postes, caps).</td></tr>
+    <tr><td>6</td><td><strong>Instalación 2 días</strong>: anclar postes y plomear → deslizar paños → prisioneros → cap con mangas y clips → walkthrough.</td></tr>
+  </table>
+
+  <p class="note">JRG Welding Corp · Shop Sheet interno · Las medidas finales del jig salen de la medición de campo — este reparto es preliminar sobre corridas estimadas de 50' y 26'.</p>
+</div>
+</body>
+</html>
