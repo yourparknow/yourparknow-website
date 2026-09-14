@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JRG Welding — Carport A Design View</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --navy:#1b2a41; --accent:#c8571b; --muted:#8895a3; }
+  body { font-family:'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; color:#222; background:#fff; }
+  .page { width:8.5in; height:11in; margin:0 auto; padding:0.55in 0.6in; display:flex; flex-direction:column; }
+  @media print { @page { size:letter; margin:0; } .page { margin:0; } }
+  .top { display:flex; justify-content:space-between; align-items:flex-start; }
+  .top h1 { font-size:26px; color:var(--navy); letter-spacing:0.5px; font-weight:800; }
+  .top .sub { font-size:13.5px; color:var(--accent); font-weight:700; text-transform:uppercase; letter-spacing:2px; margin-top:4px; }
+  .top .meta { font-size:11px; color:#666; margin-top:8px; line-height:1.5; }
+  .rule { height:4px; background:var(--navy); margin:14px 0 6px; border-radius:2px; }
+  .hero { flex:1; display:flex; align-items:center; justify-content:center; }
+  .hero svg { width:100%; max-height:6.1in; }
+  .dimbar { display:flex; border:1.5px solid var(--navy); border-radius:6px; overflow:hidden; margin:6px 0 12px; }
+  .dimbar > div { flex:1; text-align:center; padding:9px 6px; border-right:1px solid #d8dee4; }
+  .dimbar > div:last-child { border-right:none; }
+  .dimbar .v { font-size:19px; font-weight:800; color:var(--navy); }
+  .dimbar .l { font-size:9.5px; color:#777; text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+  .feats { display:flex; gap:10px; }
+  .feat { flex:1; background:#f4f6f8; border-radius:6px; padding:10px 12px; font-size:11px; line-height:1.45; color:#333; border-top:3px solid var(--accent); }
+  .feat b { color:var(--navy); display:block; margin-bottom:2px; font-size:11.5px; }
+  .foot { display:flex; justify-content:space-between; align-items:center; margin-top:14px; border-top:1px solid #ddd; padding-top:10px; font-size:10.5px; color:#777; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="top">
+    <div>
+      <div class="sub">Design View · Carport A</div>
+      <h1>Two-Vehicle Aluminum Carport</h1>
+      <div class="meta">Prepared for <strong>Raul</strong> · 18398 131st Trail N, Jupiter Farms, FL<br>Ref. Proposal JRG-2026-008 · September 2026</div>
+    </div>
+    <img src="logo-jrg.png" alt="JRG Welding" style="height:52px;">
+  </div>
+  <div class="rule"></div>
+
+  <div class="hero">
+    <svg viewBox="0 0 600 470" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(60,30)">
+        <!-- ground plane -->
+        <polygon points="280,150 487.8,270 271.3,395 63.5,275" fill="#f2f4f6"/>
+        <!-- footing pads -->
+        <g fill="#dde3e8">
+          <ellipse cx="280" cy="152" rx="14" ry="7"/><ellipse cx="207.9" cy="193" rx="14" ry="7"/><ellipse cx="135.7" cy="235" rx="14" ry="7"/><ellipse cx="63.5" cy="277" rx="14" ry="7"/>
+          <ellipse cx="487.8" cy="272" rx="14" ry="7"/><ellipse cx="415.7" cy="313" rx="14" ry="7"/><ellipse cx="343.5" cy="355" rx="14" ry="7"/><ellipse cx="271.3" cy="397" rx="14" ry="7"/>
+        </g>
+        <!-- rear posts (drawn first, behind) -->
+        <g stroke="#31435c" stroke-width="7" stroke-linecap="round">
+          <line x1="63.5" y1="275" x2="63.5" y2="205"/>
+          <line x1="135.7" y1="233.4" x2="135.7" y2="156.7"/>
+          <line x1="207.9" y1="191.7" x2="207.9" y2="108.4"/>
+        </g>
+        <g stroke="#31435c" stroke-width="7" stroke-linecap="round">
+          <line x1="271.3" y1="395" x2="271.3" y2="325"/>
+          <line x1="343.5" y1="353.4" x2="343.5" y2="270.1"/>
+          <line x1="415.7" y1="311.7" x2="415.7" y2="228.4"/>
+        </g>
+        <!-- interior girders under roof -->
+        <g stroke="#31435c" stroke-width="5" opacity="0.85">
+          <line x1="207.9" y1="108.4" x2="415.7" y2="228.4"/>
+          <line x1="135.7" y1="156.7" x2="343.5" y2="270.1"/>
+          <line x1="63.5" y1="205" x2="271.3" y2="325"/>
+        </g>
+        <!-- left side beam -->
+        <line x1="280" y1="60" x2="63.5" y2="205" stroke="#c8571b" stroke-width="5"/>
+        <!-- right side beam -->
+        <line x1="487.8" y1="180" x2="271.3" y2="325" stroke="#c8571b" stroke-width="5" opacity="0.9"/>
+        <!-- front posts -->
+        <g stroke="#1b2a41" stroke-width="8" stroke-linecap="round">
+          <line x1="280" y1="150" x2="280" y2="62"/>
+          <line x1="487.8" y1="270" x2="487.8" y2="182"/>
+        </g>
+        <!-- front girder band (3x12) -->
+        <polygon points="280,60 487.8,180 487.8,196 280,76" fill="#1b2a41"/>
+        <!-- roof deck slab -->
+        <polygon points="280,56 487.8,176 271.3,321 63.5,201" fill="#e9edf1" stroke="#9aa7b3" stroke-width="1.5"/>
+        <!-- deck ribs (run with slope, front to rear) -->
+        <g stroke="#b9c3cc" stroke-width="2">
+          <line x1="297.3" y1="66" x2="80.8" y2="211"/>
+          <line x1="314.6" y1="76" x2="98.1" y2="221"/>
+          <line x1="332" y1="86" x2="115.4" y2="231"/>
+          <line x1="349.3" y1="96" x2="132.8" y2="241"/>
+          <line x1="366.6" y1="106" x2="150.1" y2="251"/>
+          <line x1="383.9" y1="116" x2="167.4" y2="261"/>
+          <line x1="401.2" y1="126" x2="184.7" y2="271"/>
+          <line x1="418.6" y1="136" x2="202.1" y2="281"/>
+          <line x1="435.9" y1="146" x2="219.4" y2="291"/>
+          <line x1="453.2" y1="156" x2="236.7" y2="301"/>
+          <line x1="470.5" y1="166" x2="254" y2="311"/>
+        </g>
+        <!-- roof edge highlight front -->
+        <line x1="280" y1="56" x2="487.8" y2="176" stroke="#5b6b7c" stroke-width="3"/>
+        <!-- dimension callouts -->
+        <g font-family="Segoe UI, Arial" >
+          <line x1="292" y1="46" x2="499.8" y2="166" stroke="#c8571b" stroke-width="1.2"/>
+          <text x="386" y="72" font-size="13" fill="#c8571b" font-weight="bold" transform="rotate(30 386 72)">24'-0" · CLEAR SPAN</text>
+          <line x1="52" y1="193" x2="268.5" y2="48" stroke="#c8571b" stroke-width="1.2"/>
+          <text x="118" y="106" font-size="13" fill="#c8571b" font-weight="bold" transform="rotate(-33.7 118 106)">25'-0"</text>
+          <text x="252" y="120" font-size="11.5" fill="#5b6b7c" font-weight="600" text-anchor="end">CLEAR 9'-0"</text>
+          <line x1="258" y1="124" x2="276" y2="124" stroke="#5b6b7c" stroke-width="1"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="dimbar">
+    <div><div class="v">24' × 25'</div><div class="l">Footprint</div></div>
+    <div><div class="v">2 Bays</div><div class="l">Fully open — no center posts</div></div>
+    <div><div class="v">9'-0"</div><div class="l">Clear height at entry</div></div>
+    <div><div class="v">1 : 12</div><div class="l">Roof slope · positive drainage</div></div>
+  </div>
+
+  <div class="feats">
+    <div class="feat"><b>Welded Aluminum Structure</b>Never rusts, never rots, never needs paint — clean mill finish for life.</div>
+    <div class="feat"><b>Clear-Span Design</b>Deep 12" aluminum girders span the full 24 ft — nothing between your vehicles.</div>
+    <div class="feat"><b>Galvanized Steel Roof</b>Heavy-gauge structural roof deck, mechanically fastened, built for Florida weather.</div>
+    <div class="feat"><b>Anchored in Concrete</b>Every column embedded 3 ft in a 2'×2' concrete footing with stainless anchors.</div>
+  </div>
+
+  <div class="foot">
+    <span><strong>JRG Welding Corp</strong> · Structural &amp; Ornamental Welding</span>
+    <span>(786) 590-8986 · Miami, FL</span>
+  </div>
+</div>
+</body>
+</html>
