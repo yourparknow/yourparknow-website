@@ -146,7 +146,10 @@
           <rect x="-14" y="200" width="30" height="44"/><rect x="119" y="200" width="30" height="44"/><rect x="252" y="200" width="30" height="44"/><rect x="385" y="200" width="30" height="44"/>
         </g>
         <g stroke="#1b2a41" stroke-width="6">
-          <line x1="1" y1="66" x2="1" y2="240"/><line x1="134" y1="77" x2="134" y2="240"/><line x1="267" y1="87" x2="267" y2="240"/><line x1="400" y1="98" x2="400" y2="240"/>
+          <line x1="1" y1="66" x2="1" y2="198"/><line x1="134" y1="77" x2="134" y2="198"/><line x1="267" y1="87" x2="267" y2="198"/><line x1="400" y1="98" x2="400" y2="198"/>
+        </g>
+        <g fill="#c8571b">
+          <rect x="-9" y="196" width="20" height="5"/><rect x="124" y="196" width="20" height="5"/><rect x="257" y="196" width="20" height="5"/><rect x="390" y="196" width="20" height="5"/>
         </g>
         <g fill="#1b2a41">
           <rect x="-9" y="50" width="20" height="16"/><rect x="124" y="61" width="20" height="16"/><rect x="257" y="71" width="20" height="16"/><rect x="390" y="82" width="20" height="16"/>
@@ -158,7 +161,7 @@
         <text x="326" y="136" font-size="9.5" fill="#1b2a41" font-weight="bold">CLEAR 7'-0"&#177;</text>
         <text x="150" y="97" font-size="9" fill="#c8571b" font-weight="bold">SB 3&#215;6 CONT.</text>
         <text x="288" y="66" font-size="9" fill="#1b2a41">G3 3&#215;12 (END)</text>
-        <text x="184" y="228" font-size="9" fill="#555">EMBED 3'-0" TYP.</text>
+        <text x="150" y="232" font-size="9" fill="#555">BASE PLATES ON FOOTINGS FLUSH W/ GRADE &#8212; DETAIL 4</text>
         <!-- dims spacing -->
         <g stroke="#c8571b" stroke-width="1">
           <line x1="1" y1="262" x2="400" y2="262"/>
@@ -294,38 +297,47 @@
       <div class="dwg-note">Perimeter zone: fastener in EVERY flute. Field: every flute at supports per HVHZ practice.</div>
     </div>
     <div class="drawing">
-      <div class="dwg-title">DETAIL 4 · FOOTING &amp; COLUMN EMBEDMENT</div>
+      <div class="dwg-title">DETAIL 4 · FOOTING &amp; BASE PLATE ANCHORAGE</div>
       <svg viewBox="0 0 445 300" xmlns="http://www.w3.org/2000/svg">
         <g transform="translate(90,20)">
-          <line x1="-70" y1="80" x2="250" y2="80" stroke="#7a6a4f" stroke-width="2"/>
-          <text x="-68" y="94" font-size="9" fill="#7a6a4f">GRADE</text>
-          <rect x="20" y="80" width="140" height="168" fill="#e8e4dc" stroke="#555" stroke-width="2"/>
-          <path d="M20,80 Q90,68 160,80" fill="#e8e4dc" stroke="#555" stroke-width="2"/>
-          <rect x="76" y="0" width="28" height="240" fill="#fff" stroke="#1b2a41" stroke-width="2.5"/>
+          <line x1="-70" y1="96" x2="260" y2="96" stroke="#7a6a4f" stroke-width="2"/>
+          <text x="-68" y="110" font-size="9" fill="#7a6a4f">GRADE</text>
+          <!-- footing flush with grade -->
+          <rect x="20" y="96" width="140" height="150" fill="#e8e4dc" stroke="#555" stroke-width="2"/>
+          <!-- post ends at plate -->
+          <rect x="76" y="0" width="28" height="86" fill="#fff" stroke="#1b2a41" stroke-width="2.5"/>
           <text x="90" y="-6" font-size="9" fill="#1b2a41" font-weight="bold" text-anchor="middle">POST 4&#215;4&#215;1/4</text>
-          <!-- pins -->
-          <line x1="48" y1="140" x2="132" y2="140" stroke="#c8571b" stroke-width="4"/>
-          <circle cx="90" cy="196" r="5" fill="#c8571b"/>
-          <line x1="76" y1="196" x2="104" y2="196" stroke="#c8571b" stroke-width="2" stroke-dasharray="3 2"/>
-          <line x1="132" y1="140" x2="196" y2="120" stroke="#888" stroke-width="0.8"/>
-          <text x="200" y="112" font-size="8.5" fill="#c8571b" font-weight="bold">(2) 1/2" &#215; 6" SS RODS</text>
-          <text x="200" y="123" font-size="8.5" fill="#c8571b">THRU POST @ 90&#176;,</text>
-          <text x="200" y="134" font-size="8.5" fill="#c8571b">6" &amp; 18" FROM BOTTOM</text>
-          <!-- bituminous -->
-          <rect x="76" y="74" width="28" height="166" fill="none" stroke="#333" stroke-width="1" stroke-dasharray="2 2"/>
-          <line x1="104" y1="170" x2="196" y2="170" stroke="#888" stroke-width="0.8"/>
-          <text x="200" y="166" font-size="8.5" fill="#333" font-weight="bold">BITUMINOUS COATING</text>
-          <text x="200" y="177" font-size="8.5" fill="#333">ALL EMBEDDED ALUMINUM</text>
-          <text x="200" y="188" font-size="8.5" fill="#333">TO 2" ABOVE CONCRETE</text>
+          <!-- base plate -->
+          <rect x="55" y="86" width="70" height="10" fill="#c8571b"/>
+          <!-- gussets -->
+          <path d="M76,86 L76,66 L62,86 Z" fill="#c8571b" opacity="0.85"/>
+          <path d="M104,86 L104,66 L118,86 Z" fill="#c8571b" opacity="0.85"/>
+          <!-- anchors -->
+          <g stroke="#333" stroke-width="3.5">
+            <line x1="62" y1="88" x2="62" y2="142"/>
+            <line x1="118" y1="88" x2="118" y2="142"/>
+          </g>
+          <rect x="57" y="80" width="10" height="6" fill="#333"/>
+          <rect x="113" y="80" width="10" height="6" fill="#333"/>
+          <!-- callouts -->
+          <line x1="125" y1="91" x2="196" y2="70" stroke="#888" stroke-width="0.8"/>
+          <text x="200" y="60" font-size="8.5" fill="#c8571b" font-weight="bold">BASE PLATE 10"&#215;10"&#215;1/2"</text>
+          <text x="200" y="71" font-size="8.5" fill="#c8571b">6061-T6, SHOP-WELDED ALL</text>
+          <text x="200" y="82" font-size="8.5" fill="#c8571b">AROUND + (4) 3/8" GUSSETS</text>
+          <line x1="118" y1="130" x2="196" y2="130" stroke="#888" stroke-width="0.8"/>
+          <text x="200" y="124" font-size="8.5" fill="#333" font-weight="bold">(4) HILTI KWIK HUS-EZ</text>
+          <text x="200" y="135" font-size="8.5" fill="#333" font-weight="bold">SS316 &#8212; 1/2" &#215; 6"</text>
+          <text x="200" y="146" font-size="8.5" fill="#333">SCREW-IN CONCRETE ANCHOR</text>
+          <text x="200" y="157" font-size="8.5" fill="#333">4" MIN EMBED &#183; NO EXPANSION</text>
           <!-- dims -->
-          <g stroke="#555" stroke-width="1"><line x1="4" y1="80" x2="4" y2="248"/><line x1="0" y1="80" x2="8" y2="80"/><line x1="0" y1="248" x2="8" y2="248"/></g>
-          <text x="-4" y="168" font-size="9" fill="#555" text-anchor="end">3'-0"</text>
+          <g stroke="#555" stroke-width="1"><line x1="4" y1="96" x2="4" y2="246"/><line x1="0" y1="96" x2="8" y2="96"/><line x1="0" y1="246" x2="8" y2="246"/></g>
+          <text x="-4" y="175" font-size="9" fill="#555" text-anchor="end">3'-0"</text>
           <g stroke="#555" stroke-width="1"><line x1="20" y1="262" x2="160" y2="262"/><line x1="20" y1="256" x2="20" y2="268"/><line x1="160" y1="256" x2="160" y2="268"/></g>
           <text x="90" y="258" font-size="9" fill="#555" text-anchor="middle">2'-0" &#215; 2'-0"</text>
-          <text x="90" y="234" font-size="8.5" fill="#555" text-anchor="middle">3" MIN COVER</text>
+          <text x="90" y="236" font-size="8.5" fill="#555" text-anchor="middle">TOP FLUSH, SMOOTH &amp; LEVEL</text>
         </g>
       </svg>
-      <div class="dwg-note">3,000 psi concrete, top crowned to shed water. Post set plumb &amp; braced before pour. Typ. 8.</div>
+      <div class="dwg-note">3,000 psi footing poured flush with grade; anchors installed after cure (min 7 days). Typ. 8.</div>
     </div>
   </div>
 
@@ -347,7 +359,7 @@
     <tr><td>Side beam to post (Detail 2)</td><td>1/2"-13 SS316 thru-bolt, nylock nut, fender washers</td><td>2 per post &middot; 16 total</td></tr>
     <tr><td>Deck to girders (Detail 3)</td><td>1/4"-14 &times; 1-1/4" self-drilling HWH, bonded EPDM washer</td><td>Every low flute at every support</td></tr>
     <tr><td>Deck side laps</td><td>#10-16 &times; 3/4" stitch screw</td><td>36" o.c. between supports</td></tr>
-    <tr><td>Footing anchors (Detail 4)</td><td>1/2" &times; 6" SS rod thru post, 2 per post @ 90&deg;</td><td>16 rods total</td></tr>
+    <tr><td>Base plate anchors (Detail 4)</td><td>Hilti KWIK HUS-EZ SS316, 1/2" &times; 6" screw-in concrete anchor (no expansion), 4" min embed</td><td>4 per plate &middot; 32 total</td></tr>
   </table>
 
   <h2>General Notes</h2>
@@ -355,7 +367,7 @@
     <li>All aluminum welding with 5356 filler by certified aluminum welder; 1/4" fillet welds unless noted.</li>
     <li>All bolts, nuts, washers and anchor rods stainless steel Type 316. Bolt holes 1/16" oversize, deburred.</li>
     <li>Galvanized deck bearing directly on aluminum is a compatible (zinc) contact; all deck cut edges touched up with cold-galvanizing compound.</li>
-    <li>Embedded aluminum protected with bituminous coating per FBC — no aluminum in direct contact with concrete or soil.</li>
+    <li>Footing tops poured flush with grade, smooth and level. Anchors installed into cured concrete (3,000 psi, min 7 days) with Hilti-specified bit and torque — screw-in anchors only, no expansion anchors. Isolation barrier (bituminous paint or membrane pad) between aluminum plate and concrete.</li>
     <li>Layout, post locations and final grades field-verified with owner before excavation. Roof deck overhangs the frame 1'-0" on all four sides. Deck sheet lengths confirmed against as-built frame before ordering.</li>
     <li>Structure designed as open (no walls). Do not enclose sides without review — wind loads change.</li>
   </ul>
