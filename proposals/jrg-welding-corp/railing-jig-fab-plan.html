@@ -37,8 +37,8 @@
     </div>
     <div class="doc-meta">
       <div class="t">Jig — Paño Decorativo "A"</div>
-      <p>Cuadro completo + X corrida + cuadrito concéntrico</p>
-      <p>Fecha: <strong>Sept 16, 2026</strong> · <strong>Rev. 2</strong> (según shop drawing aprobado)</p>
+      <p>Modelo "Freeport": cuadros concéntricos + X corrida</p>
+      <p>Fecha: <strong>Sept 16, 2026</strong> · <strong>Rev. 3</strong> (proporciones tomadas del panel Freeport — fotos del cliente)</p>
     </div>
   </div>
 
@@ -46,7 +46,7 @@
 
   <h2>1. DWG-1 · Paño decorativo "A" — el modelo aprobado</h2>
   <div class="drawing blk">
-    <div class="dt">ELEVACIÓN — TODO EN TUBO 1"×1"×1/8" · LA X VA CORRIDA ESQUINA A ESQUINA (PASA POR DENTRO DEL CUADRITO) · ESCALA 1 CUADRO = 1"</div>
+    <div class="dt">ELEVACIÓN — TODO EN TUBO 1"×1"×1/8" · CUADROS CONCÉNTRICOS EN ESCALONES IGUALES + X CORRIDA ESQUINA A ESQUINA · ESCALA 1 CUADRO = 1"</div>
     <svg viewBox="0 0 760 560" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -73,13 +73,16 @@
           <line x1="60" y1="20" x2="395" y2="355"/>
           <line x1="60" y1="355" x2="395" y2="20"/>
         </g>
-        <!-- small square OPEN (X visible through): x195-260, y155-220 -->
+        <!-- Q2 25-3/4 and Q3 16, corners on the diagonals -->
+        <rect x="98.75" y="58.75" width="257.5" height="257.5" fill="none" stroke="#6b7280" stroke-width="10"/>
+        <rect x="147.5" y="107.5" width="160" height="160" fill="none" stroke="#6b7280" stroke-width="10"/>
+        <!-- small square Q4 -->
         <rect x="195" y="155" width="65" height="65" fill="none" stroke="#374151" stroke-width="10"/>
         <!-- ================= DIMS ================= -->
         <line x1="0" y1="-46" x2="455" y2="-46" stroke="#b91c1c" stroke-width="1.4" marker-start="url(#dm)" marker-end="url(#dm)"/>
         <text x="227" y="-52" font-size="14" fill="#b91c1c" font-weight="bold" text-anchor="middle">45-1/2" (RIELES — PIEZA A)</text>
         <line x1="50" y1="-20" x2="405" y2="-20" stroke="#c8571b" stroke-width="1.2" marker-start="url(#dm)" marker-end="url(#dm)"/>
-        <text x="227" y="-26" font-size="11.5" fill="#c8571b" font-weight="bold" text-anchor="middle">CUADRO GRANDE 35-1/2" × 35-1/2" — MARCO PROPIO DE 4 LADOS (PIEZA C)</text>
+        <text x="227" y="-26" font-size="11.5" fill="#c8571b" font-weight="bold" text-anchor="middle">Q1 = 35-1/2" &#183; Q2 = 25-3/4" &#183; Q3 = 16" &#183; CUADRITO = 6-1/2" — ANILLOS PAREJOS DE 3-7/8"</text>
         <!-- left zone dims -->
         <g font-size="9.5" fill="#b91c1c" font-weight="bold" text-anchor="middle">
           <text x="10" y="398">2"</text><text x="25" y="398">1"</text><text x="40" y="398">2"</text>
@@ -89,45 +92,44 @@
           <line x1="0" y1="388" x2="0" y2="402"/><line x1="20" y1="388" x2="20" y2="402"/><line x1="30" y1="388" x2="30" y2="402"/><line x1="50" y1="388" x2="50" y2="402"/>
           <line x1="405" y1="388" x2="405" y2="402"/><line x1="425" y1="388" x2="425" y2="402"/><line x1="435" y1="388" x2="435" y2="402"/><line x1="455" y1="388" x2="455" y2="402"/>
         </g>
-        <text x="227" y="398" font-size="9.5" fill="#555" text-anchor="middle">LUZ INTERIOR DEL CUADRO: 33-1/2" × 33-1/2" (CUADRADA → X A 45° EXACTOS)</text>
+        <text x="227" y="418" font-size="9.5" fill="#555" text-anchor="middle">LUZ Q1: 33-1/2" CUADRADA → X A 45° · LAS ESQUINAS DE Q2, Q3 Y EL CUADRITO ASIENTAN SOBRE LAS DIAGONALES</text>
         <!-- height dims -->
         <line x1="-28" y1="0" x2="-28" y2="375" stroke="#b91c1c" stroke-width="1.4" marker-start="url(#dm)" marker-end="url(#dm)"/>
         <text x="-36" y="192" font-size="13" fill="#b91c1c" font-weight="bold" text-anchor="middle" transform="rotate(-90 -36 192)">PAÑO 37-1/2" TOTAL</text>
         <line x1="-8" y1="10" x2="-8" y2="365" stroke="#c8571b" stroke-width="1.2" marker-start="url(#dm)" marker-end="url(#dm)"/>
         <text x="-14" y="192" font-size="10.5" fill="#c8571b" font-weight="bold" text-anchor="middle" transform="rotate(-90 -14 192)">CUADRO 35-1/2" = CAMPO</text>
         <!-- small square dims -->
-        <line x1="195" y1="140" x2="260" y2="140" stroke="#b91c1c" stroke-width="1" marker-start="url(#dm)" marker-end="url(#dm)"/>
-        <text x="227" y="134" font-size="10.5" fill="#b91c1c" font-weight="bold" text-anchor="middle">6-1/2"</text>
-        <text x="227" y="252" font-size="9.5" fill="#555" text-anchor="middle">CUADRITO CENTRADO — SUS 4 ESQUINAS</text>
-        <text x="227" y="264" font-size="9.5" fill="#555" text-anchor="middle">ASIENTAN SOBRE LAS DIAGONALES</text>
+        <text x="227" y="150" font-size="9" fill="#b91c1c" font-weight="bold" text-anchor="middle">6-1/2"</text>
+        
         <!-- X labels -->
-        <text x="105" y="95" font-size="10" fill="#374151" font-weight="bold" transform="rotate(45 105 95)">D1 — DIAGONAL COMPLETA 47-3/8"</text>
+        <text x="88" y="66" font-size="10" fill="#374151" font-weight="bold" transform="rotate(45 88 66)">D1 — DIAGONAL COMPLETA 47-3/8"</text>
         <text x="322" y="300" font-size="10" fill="#374151" font-weight="bold" transform="rotate(45 322 300)">45&#176; EXACTOS</text>
-        <text x="120" y="322" font-size="10" fill="#374151" font-weight="bold" transform="rotate(-45 120 322)">D2 — MEDIA DIAGONAL 23-3/16"</text>
+        <text x="96" y="340" font-size="10" fill="#374151" font-weight="bold" transform="rotate(-45 96 340)">D2 — MEDIA DIAGONAL 23-3/16"</text>
         <!-- piece tags -->
         <g font-size="10" font-weight="bold" fill="#1b2a41">
           <text x="470" y="6">A — RIEL (2)</text>
-          <text x="470" y="50">C — LADO CUADRO (4)</text>
-          <text x="470" y="62">MISMO TOPE QUE B</text>
-          <text x="470" y="104">B — PIQUE FLANCO (2)</text>
-          <text x="470" y="150">D1 — DIAGONAL</text>
-          <text x="470" y="162">COMPLETA (1)</text>
-          <text x="470" y="200">D2 — MEDIA</text>
-          <text x="470" y="212">DIAGONAL (2)</text>
-          <text x="470" y="252">E — LADO</text>
-          <text x="470" y="264">CUADRITO (4)</text>
+          <text x="470" y="44">C1 — LADO Q1 (4)</text>
+          <text x="470" y="56">MISMO TOPE QUE B</text>
+          <text x="470" y="92">B — PIQUE FLANCO (2)</text>
+          <text x="470" y="128">C2 — LADO Q2 (4)</text>
+          <text x="470" y="164">C3 — LADO Q3 (4)</text>
+          <text x="470" y="200">E — CUADRITO (4)</text>
+          <text x="470" y="236">D1 — DIAGONAL (1)</text>
+          <text x="470" y="272">D2 — MEDIA DIAG. (2)</text>
         </g>
         <g stroke="#8895a3" stroke-width="1">
           <line x1="466" y1="2" x2="440" y2="2"/>
-          <line x1="466" y1="52" x2="402" y2="60"/>
-          <line x1="466" y1="106" x2="435" y2="112"/>
-          <line x1="466" y1="152" x2="330" y2="290"/>
-          <line x1="466" y1="204" x2="350" y2="80"/>
-          <line x1="466" y1="254" x2="262" y2="210"/>
+          <line x1="466" y1="46" x2="402" y2="56"/>
+          <line x1="466" y1="94" x2="435" y2="104"/>
+          <line x1="466" y1="130" x2="356" y2="140"/>
+          <line x1="466" y1="166" x2="307" y2="176"/>
+          <line x1="466" y1="202" x2="262" y2="204"/>
+          <line x1="466" y1="238" x2="352" y2="316"/>
+          <line x1="466" y1="274" x2="330" y2="86"/>
         </g>
       </g>
     </svg>
-    <p class="note" style="padding:4px 10px;">El cuadro grande es un marco COMPLETO de 4 lados (no usa los rieles del paño): su luz interior queda cuadrada 33-1/2 × 33-1/2 y por eso la X cae a 45° exactos. La X va corrida de esquina a esquina — el cuadrito se monta encima, con sus 4 esquinas asentadas sobre las diagonales.</p>
+    <p class="note" style="padding:4px 10px;">Modelo Freeport medido de las fotos del cliente: cuadros concéntricos con anillos PAREJOS (aquí 3-7/8" — todos &lt; 4" por la regla de la esfera con tubo de 1") y la X corrida de esquina a esquina. Como todos los cuadros son concéntricos y la X va a 45°, las esquinas de Q2, Q3 y el cuadrito caen EXACTAMENTE sobre las diagonales — ahí se asientan y se sueldan.</p>
   </div>
 
   <h2>2. Lista de cortes — con descuentos (medidas FINALES de pieza)</h2>
@@ -135,17 +137,20 @@
     <tr><th>ID</th><th>Pieza</th><th class="num">Corte final</th><th>Ángulos</th><th class="num">Cant.</th><th>De dónde sale la medida (el descuento)</th></tr>
     <tr><td><strong>A</strong></td><td>Riel superior / inferior del paño</td><td class="num"><strong>45-1/2"</strong></td><td>90° / 90°</td><td class="num">2</td><td>46" luz libre − 1/2" juego de insertos</td></tr>
     <tr><td><strong>B</strong></td><td>Pique de flanco</td><td class="num"><strong>35-1/2"</strong></td><td>90° / 90°</td><td class="num">2</td><td>37-1/2" paño − 1" riel arriba − 1" riel abajo</td></tr>
-    <tr><td><strong>C</strong></td><td>Lado del cuadro grande</td><td class="num"><strong>35-1/2"</strong> (punta larga)</td><td>Inglete 45° / 45°</td><td class="num">4</td><td>Cuadro 35-1/2" afuera-afuera — <strong>misma longitud que B: tope compartido, solo gira la sierra</strong></td></tr>
+    <tr><td><strong>C1</strong></td><td>Lado del cuadro grande Q1</td><td class="num"><strong>35-1/2"</strong> (punta larga)</td><td>Inglete 45° / 45°</td><td class="num">4</td><td>Q1 35-1/2" afuera-afuera — <strong>misma longitud que B: tope compartido, solo gira la sierra</strong></td></tr>
+    <tr><td><strong>C2</strong></td><td>Lado del cuadro medio Q2</td><td class="num"><strong>25-3/4"</strong> (punta larga)</td><td>Inglete 45° / 45° + despuntar 1/2"</td><td class="num">4</td><td>Q1 luz 33-1/2 − 2 anillos de 3-7/8 = 25-3/4 afuera-afuera</td></tr>
+    <tr><td><strong>C3</strong></td><td>Lado del cuadro interior Q3</td><td class="num"><strong>16"</strong> (punta larga)</td><td>Inglete 45° / 45° + despuntar 1/2"</td><td class="num">4</td><td>Q2 luz 23-3/4 − 2 anillos de 3-7/8 = 16 afuera-afuera</td></tr>
     <tr><td><strong>D1</strong></td><td>Diagonal completa de la X</td><td class="num"><strong>47-3/8"</strong> (punta a punta)</td><td>Inglete 45° / 45° (puntas en el mismo plano)</td><td class="num">1</td><td>Luz del cuadro 33-1/2" × √2 = 47.38"</td></tr>
     <tr><td><strong>D2</strong></td><td>Media diagonal de la X</td><td class="num"><strong>23-3/16"</strong></td><td>Punta exterior: inglete 45° · punta interior: recta 90°</td><td class="num">2</td><td>47-3/8 ÷ 2 = 23-11/16 − <strong>1/2" (medio tubo de D1)</strong> = 23-3/16 — la punta recta asienta perpendicular contra el costado de D1 (las diagonales se cruzan a 90°)</td></tr>
     <tr><td><strong>E</strong></td><td>Lado del cuadrito</td><td class="num"><strong>6-1/2"</strong> (punta larga)</td><td>Inglete 45° / 45° + <strong>despuntar 1/2"</strong> en cada punta</td><td class="num">4</td><td>Cuadrito 6-1/2" afuera-afuera; el despunte hace que la esquina asiente plana sobre el tubo de la diagonal que pasa por debajo</td></tr>
   </table>
   <table>
     <tr><th>Chequeos de la geometría (antes de soldar nada)</th></tr>
-    <tr><td>Cuadro grande a escuadra: diagonales interiores iguales = <strong>47-3/8"</strong> por los dos lados (±1/16").</td></tr>
+    <tr><td>Cuadro Q1 a escuadra: diagonales interiores iguales = <strong>47-3/8"</strong> por los dos lados (±1/16").</td></tr>
+    <tr><td><strong>REGLA PATRÓN (story stick) para ubicar los cuadros sobre las diagonales</strong> — midiendo desde el CENTRO del cruce hacia cada esquina: cuadrito @ <strong>4-9/16"</strong> · Q3 @ <strong>11-5/16"</strong> · Q2 @ <strong>18-3/16"</strong>. Una sola regla marca los 4 brazos.</td></tr>
     <tr><td>Marco del paño a escuadra: esquina a esquina = <strong>58-15/16"</strong> por los dos lados (±1/16").</td></tr>
     <tr><td>Toda la sierra trabaja a <strong>45° o 90°</strong> — no hay ángulos raros en este modelo.</td></tr>
-    <tr><td>Aberturas de flanco: 2" + pique + 2" — todas &lt; 4" ✓ regla de la esfera.</td></tr>
+    <tr><td>Aberturas: flancos 2" ✓ · anillo Q1–Q2 = 3-7/8" ✓ · anillo Q2–Q3 = 3-7/8" ✓ · interior de Q3 subdividido por la X y el cuadrito ✓ — todas &lt; 4", regla de la esfera.</td></tr>
     <tr><td>Las medidas son FINALES — el tope del jig absorbe el kerf (1/8"). Nunca marcar pieza por pieza.</td></tr>
   </table>
 
@@ -220,7 +225,8 @@
     <li><strong>Cuadro (sub-armado):</strong> las 4 piezas C en el sub-jig, ingletes cerrados. Verificar diagonales <strong>47-3/8" iguales</strong>. Puntear esquinas.</li>
     <li><strong>D1 completa:</strong> entra de esquina a esquina. Debe caer sin forzar — si fuerza, el cuadro no está a escuadra.</li>
     <li><strong>D2 + D2:</strong> punta recta contra el costado de D1 (el cruce queda a 90°), punta de inglete en su esquina. Las dos medias deben quedar EN LÍNEA — verificar con regla larga sobre las dos.</li>
-    <li><strong>Cuadrito E:</strong> las 4 piezas alrededor del cruce, esquinas despuntadas asentando sobre las diagonales, centrado con la plantilla de 6-1/2". Puntear a las diagonales y entre sí.</li>
+    <li><strong>Regla patrón:</strong> marcar sobre las 4 medias-diagonales las posiciones de esquina: cuadrito @ 4-9/16, Q3 @ 11-5/16, Q2 @ 18-3/16 desde el centro del cruce.</li>
+    <li><strong>Cuadros de adentro hacia afuera:</strong> cuadrito E alrededor del cruce → Q3 (C3) → Q2 (C2), cada uno con sus 4 esquinas despuntadas asentadas en las marcas sobre las diagonales. Puntear cada cuadro a las diagonales y entre sí antes de pasar al siguiente.</li>
     <li><strong>Paño:</strong> rieles contra guía y separadores, piques B contra los bloques 2", y el cuadro terminado cae al centro. Verificar marco <strong>58-15/16" iguales</strong>. Puntear todo.</li>
     <li><strong>Soldadura final:</strong> cordones cortos de 1", brincando y alternando lados y esquinas opuestas — el aluminio se tuerce con calor corrido.</li>
     <li><strong>Prueba de campo:</strong> el primer paño debe deslizar en los insertos de los postes de muestra con juego parejo. Si pasa → jig CLAVADO y producción en serie. Si no → se corrige el jig, no las piezas.</li>
@@ -231,15 +237,17 @@
     <tr><th>Perfil 1×1×1/8</th><th>Piezas</th><th class="num">Pulgadas</th><th class="num">Pies</th></tr>
     <tr><td>Rieles (A)</td><td>2 × 45-1/2"</td><td class="num">91"</td><td class="num">7.6</td></tr>
     <tr><td>Piques flanco (B)</td><td>2 × 35-1/2"</td><td class="num">71"</td><td class="num">5.9</td></tr>
-    <tr><td>Lados del cuadro (C)</td><td>4 × 35-1/2"</td><td class="num">142"</td><td class="num">11.8</td></tr>
+    <tr><td>Lados Q1 (C1)</td><td>4 × 35-1/2"</td><td class="num">142"</td><td class="num">11.8</td></tr>
+    <tr><td>Lados Q2 (C2)</td><td>4 × 25-3/4"</td><td class="num">103"</td><td class="num">8.6</td></tr>
+    <tr><td>Lados Q3 (C3)</td><td>4 × 16"</td><td class="num">64"</td><td class="num">5.3</td></tr>
     <tr><td>Diagonal completa (D1)</td><td>1 × 47-3/8"</td><td class="num">47-3/8"</td><td class="num">3.9</td></tr>
     <tr><td>Medias diagonales (D2)</td><td>2 × 23-3/16"</td><td class="num">46-3/8"</td><td class="num">3.9</td></tr>
     <tr><td>Cuadrito (E)</td><td>4 × 6-1/2"</td><td class="num">26"</td><td class="num">2.2</td></tr>
-    <tr><td colspan="2"><strong>TOTAL POR PAÑO (+ kerf y puntas)</strong></td><td class="num"><strong>~424"</strong></td><td class="num"><strong>~35.3 LF</strong></td></tr>
+    <tr><td colspan="2"><strong>TOTAL POR PAÑO (+ kerf y puntas)</strong></td><td class="num"><strong>~591"</strong></td><td class="num"><strong>~49.3 LF</strong></td></tr>
   </table>
-  <p class="note"><strong>Aprovechamiento de barra de 24' (288"):</strong> BARRA TIPO 1: 2 rieles A + 4 lados C + cuadrito E = 259" ✓ · BARRA TIPO 2: 2 piques B + D1 + 2 D2 = 165" (el sobrante de 123" alimenta el paño siguiente). En la práctica: <strong>3 barras de 24' rinden 2 paños decorativos</strong>. El paño de solo-piques (tipo "B" del patrón): 2 rieles + 11 piques de 35-1/2" ≈ 481" ≈ 1.7 barras — mismo jig de paño, sin el cuadro.</p>
+  <p class="note"><strong>Aprovechamiento de barra de 24' (288"):</strong> BARRA TIPO 1: 2 rieles A + 4 lados C1 + cuadrito E = 259" ✓ · BARRA TIPO 2: 4 C2 + 4 C3 + 2 D2 y algo del D1 siguiente + piques ≈ 260-280". En la práctica: <strong>~2 barras de 24' por paño decorativo (13 barras rinden 6 paños)</strong>. El paño de solo-piques (tipo "B" del patrón): 2 rieles + 11 piques de 35-1/2" ≈ 481" ≈ 1.7 barras — mismo jig de paño, sin el cuadro.</p>
 
-  <p class="note">JRG Welding Corp · Plan de fabricación interno · Rev. 2 — geometría según shop drawing aprobado (cuadro propio + X corrida a 45°); confirmar luz libre real de postes antes del corte en serie.</p>
+  <p class="note">JRG Welding Corp · Plan de fabricación interno · Rev. 3 — proporciones del panel Freeport (fotos del cliente) adaptadas a tubo 1" con anillos parejos de 3-7/8" &lt; 4" código; confirmar luz libre real de postes antes del corte en serie.</p>
 </div>
 </body>
 </html>
