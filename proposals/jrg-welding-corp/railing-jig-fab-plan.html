@@ -37,16 +37,16 @@
     </div>
     <div class="doc-meta">
       <div class="t">Jig — Paño Decorativo "A"</div>
-      <p>Modelo "Freeport": marco + DOS cuadros + X corrida</p>
-      <p>Fecha: <strong>Sept 16, 2026</strong> · <strong>Rev. 6</strong></p>
+      <p>Marco + DOS cuadros + X — motivo en tubo de 1-1/2" (proporción de la foto)</p>
+      <p>Fecha: <strong>Sept 16, 2026</strong> · <strong>Rev. 7</strong></p>
     </div>
   </div>
 
-  <div class="warn"><strong>LA MATEMÁTICA VERTICAL (42" DEL PISO AL TOPE):</strong> 2" luz del piso + 1" riel inferior (2×1 acostado) + <strong>34" de campo — EL CUADRO, cuadrado de verdad</strong> + 1" riel intermedio (2×1) + <strong>3" de banda abierta</strong> + 1" riel superior (2×1) = <strong>42" exactos</strong>. La doble línea de arriba cierra el cuadro a su proporción. El cuadro NO tiene que llenar la bahía: mide 34" de ancho también, y el sobrante a los lados se llena con <strong>piques rectos independientes del dibujo</strong>. Ancho: bahía 4'-0" c-c, poste 2" → luz 46" − 1/2" juego = paño <strong>45-1/2"</strong>. <u>Verificar medidas reales de campo antes del corte en serie</u>.</div>
+  <div class="warn"><strong>LO QUE CAMBIA EN ESTA REV:</strong> el motivo (verticales, X y los dos cuadros) pasa de tubo 1×1 a <strong>tubo 1-1/2"×1"×1/8" con la cara de 1-1/2" al frente</strong> — igual de ancho que el modelo PVC de la foto. Con miembro de 1-1/2" los dos cuadros caen EXACTOS en la proporción de la foto (68% y 36% del marco) y todas las aberturas pasan el código con holgura. <strong>NO hay cuadrito central</strong> — el centro es solo el cruce de la X. VERTICAL: 2" piso + 1" riel inferior + <strong>34" campo</strong> + 1" riel intermedio + 3" banda + 1" riel superior = <strong>42"</strong>. Paño <strong>45-1/2"</strong> (46 de luz − 1/2 de juego).</div>
 
-  <h2>1. DWG-1 · Paño decorativo "A" — Rev. 6</h2>
+  <h2>1. DWG-1 · Paño decorativo "A" — Rev. 7</h2>
   <div class="drawing blk">
-    <div class="dt">ELEVACIÓN · RIELES 2"×1"×1/8" ACOSTADOS (3 POR PAÑO) — TODO LO DEMÁS TUBO 1"×1"×1/8" · ESCALA 1 CUADRO = 1"</div>
+    <div class="dt">ELEVACIÓN · RIELES 2×1×1/8 (3) · MOTIVO Y PIQUES EN 1-1/2"×1"×1/8" CARA ANCHA AL FRENTE · ESCALA 1 CUADRO = 1"</div>
     <svg viewBox="0 0 760 590" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -58,61 +58,60 @@
         <rect x="0" y="0" width="455" height="10" fill="#cbd5dd" stroke="#374151" stroke-width="1.8"/>
         <rect x="0" y="40" width="455" height="10" fill="#cbd5dd" stroke="#374151" stroke-width="1.8"/>
         <rect x="0" y="390" width="455" height="10" fill="#cbd5dd" stroke="#374151" stroke-width="1.8"/>
-        <!-- tacos in the 3" band: ends + over square verticals -->
+        <!-- tacos band: ends + over verticals -->
         <g fill="#e5e7eb" stroke="#374151" stroke-width="1.5">
-          <rect x="2" y="10" width="10" height="30"/>
-          <rect x="443" y="10" width="10" height="30"/>
-          <rect x="57.75" y="10" width="10" height="30"/>
-          <rect x="387.75" y="10" width="10" height="30"/>
+          <rect x="2" y="10" width="12" height="30"/>
+          <rect x="441" y="10" width="12" height="30"/>
+          <rect x="57.5" y="10" width="15" height="30"/>
+          <rect x="382.5" y="10" width="15" height="30"/>
         </g>
-        <!-- flank pickets (independent, stop at mid rail): flank 5.75 => picket centered c=28.9 / 426.6 -->
-        <rect x="23.9" y="50" width="10" height="340" fill="#e5e7eb" stroke="#374151" stroke-width="1.8"/>
-        <rect x="421.1" y="50" width="10" height="340" fill="#e5e7eb" stroke="#374151" stroke-width="1.8"/>
-        <!-- square verticals 34 o-o: x 57.75..67.75 / 387.75..397.75 -->
+        <!-- flank pickets 1.5 wide, centered in 5.75 flank -->
+        <rect x="21.25" y="50" width="15" height="340" fill="#e5e7eb" stroke="#374151" stroke-width="1.8"/>
+        <rect x="418.75" y="50" width="15" height="340" fill="#e5e7eb" stroke="#374151" stroke-width="1.8"/>
+        <!-- marco verticals 1.5 wide: 34 o-o -->
         <g fill="#6b7280" stroke="#374151" stroke-width="1.5">
-          <rect x="57.75" y="50" width="10" height="340"/>
-          <rect x="387.75" y="50" width="10" height="340"/>
+          <rect x="57.5" y="50" width="15" height="340"/>
+          <rect x="382.5" y="50" width="15" height="340"/>
         </g>
-        <!-- X: luz corners (67.75,50)-(387.75,390) / (67.75,390)-(387.75,50) -->
-        <g stroke="#6b7280" stroke-width="10" stroke-linecap="butt">
-          <line x1="67.75" y1="50" x2="387.75" y2="390"/>
-          <line x1="67.75" y1="390" x2="387.75" y2="50"/>
+        <!-- X: luz corners (72.5,50)-(382.5,390) / (72.5,390)-(382.5,50), 1.5 wide -->
+        <g stroke="#6b7280" stroke-width="15" stroke-linecap="butt">
+          <line x1="72.5" y1="50" x2="382.5" y2="390"/>
+          <line x1="72.5" y1="390" x2="382.5" y2="50"/>
         </g>
-        <!-- Q2 24-1/4 x 26-1/4 / Q3 16-1/2 x 18-1/2 -->
-        <rect x="107.1" y="89.4" width="241.25" height="261.25" fill="none" stroke="#6b7280" stroke-width="10"/>
-        <rect x="156.5" y="138.75" width="142.5" height="162.5" fill="none" stroke="#6b7280" stroke-width="10"/>
+        <!-- Q2 23-1/8 x 26-1/8 · Q3 12-1/4 x 15-1/4 (o-o), 1.5 wide members -->
+        <rect x="119.6" y="96.9" width="216.25" height="246.25" fill="none" stroke="#6b7280" stroke-width="15"/>
+        <rect x="174" y="151.25" width="107.5" height="137.5" fill="none" stroke="#6b7280" stroke-width="15"/>
         <!-- ============ DIMS ============ -->
         <line x1="0" y1="-34" x2="455" y2="-34" stroke="#b91c1c" stroke-width="1.4" marker-start="url(#dm)" marker-end="url(#dm)"/>
         <text x="227" y="-40" font-size="13.5" fill="#b91c1c" font-weight="bold" text-anchor="middle">45-1/2" (RIELES 2×1 — 3 POR PAÑO)</text>
-        <line x1="57.75" y1="-12" x2="397.75" y2="-12" stroke="#c8571b" stroke-width="1.2" marker-start="url(#dm)" marker-end="url(#dm)"/>
-        <text x="227" y="-18" font-size="11" fill="#c8571b" font-weight="bold" text-anchor="middle">MARCO DEL MOTIVO 34" × 34" — ADENTRO: DOS CUADROS + X, NADA MÁS</text>
-        <!-- band dim right -->
+        <line x1="57.5" y1="-12" x2="397.5" y2="-12" stroke="#c8571b" stroke-width="1.2" marker-start="url(#dm)" marker-end="url(#dm)"/>
+        <text x="227" y="-18" font-size="11" fill="#c8571b" font-weight="bold" text-anchor="middle">MARCO 34" × 34" — ADENTRO SOLO DOS CUADROS + LA X</text>
         <line x1="465" y1="10" x2="465" y2="40" stroke="#b91c1c" stroke-width="1" marker-start="url(#dm)" marker-end="url(#dm)"/>
         <text x="474" y="30" font-size="10" fill="#b91c1c" font-weight="bold">3" BANDA</text>
         <!-- flank dims -->
         <g font-size="9" fill="#b91c1c" font-weight="bold" text-anchor="middle">
-          <text x="12" y="416">2-3/8</text><text x="29" y="428">1"</text><text x="46" y="416">2-3/8</text>
-          <text x="443" y="416">2-3/8</text><text x="426" y="428">1"</text><text x="409" y="416">2-3/8</text>
+          <text x="10" y="416">2-1/8</text><text x="28.75" y="428">1-1/2</text><text x="47" y="416">2-1/8</text>
+          <text x="445" y="416">2-1/8</text><text x="426.25" y="428">1-1/2</text><text x="408" y="416">2-1/8</text>
         </g>
         <g stroke="#b91c1c" stroke-width="0.8">
-          <line x1="0" y1="404" x2="0" y2="420"/><line x1="23.9" y1="404" x2="23.9" y2="432"/><line x1="33.9" y1="404" x2="33.9" y2="432"/><line x1="57.75" y1="404" x2="57.75" y2="420"/>
-          <line x1="397.75" y1="404" x2="397.75" y2="420"/><line x1="421.1" y1="404" x2="421.1" y2="432"/><line x1="431.1" y1="404" x2="431.1" y2="432"/><line x1="455" y1="404" x2="455" y2="420"/>
+          <line x1="0" y1="404" x2="0" y2="420"/><line x1="21.25" y1="404" x2="21.25" y2="432"/><line x1="36.25" y1="404" x2="36.25" y2="432"/><line x1="57.5" y1="404" x2="57.5" y2="420"/>
+          <line x1="397.5" y1="404" x2="397.5" y2="420"/><line x1="418.75" y1="404" x2="418.75" y2="432"/><line x1="433.75" y1="404" x2="433.75" y2="432"/><line x1="455" y1="404" x2="455" y2="420"/>
         </g>
-        <text x="227" y="420" font-size="9.5" fill="#555" text-anchor="middle">PIQUES RECTOS DE RELLENO EN LOS FLANCOS — INDEPENDIENTES DEL DIBUJO</text>
-        <text x="227" y="444" font-size="9.5" fill="#555" text-anchor="middle">LUZ DEL MARCO: 32" × 34" · ANILLOS PAREJOS 3-15/16" · LAS ESQUINAS DE LOS DOS CUADROS CAEN SOBRE LAS DIAGONALES</text>
+        <text x="227" y="420" font-size="9.5" fill="#555" text-anchor="middle">PIQUES RECTOS DE RELLENO — INDEPENDIENTES DEL DIBUJO</text>
+        <text x="227" y="444" font-size="9.5" fill="#555" text-anchor="middle">PROPORCIONES DE LA FOTO: MARCO 34 · Q2 23-1/8 (68%) · Q3 12-1/4 (36%) — ANILLOS PAREJOS 3-15/16"</text>
         <!-- height dims -->
         <line x1="-28" y1="0" x2="-28" y2="400" stroke="#b91c1c" stroke-width="1.4" marker-start="url(#dm)" marker-end="url(#dm)"/>
         <text x="-36" y="200" font-size="11.5" fill="#b91c1c" font-weight="bold" text-anchor="middle" transform="rotate(-90 -36 200)">PAÑO 40" (1+3+1+34+1)</text>
         <line x1="-8" y1="50" x2="-8" y2="390" stroke="#c8571b" stroke-width="1.2" marker-start="url(#dm)" marker-end="url(#dm)"/>
         <text x="-14" y="220" font-size="10.5" fill="#c8571b" font-weight="bold" text-anchor="middle" transform="rotate(-90 -14 220)">CAMPO 34"</text>
         <!-- X labels -->
-        <text x="100" y="98" font-size="10" fill="#374151" font-weight="bold" transform="rotate(46.7 100 98)">D1 — DIAGONAL 46-11/16"</text>
-        <text x="106" y="356" font-size="10" fill="#374151" font-weight="bold" transform="rotate(-46.7 106 356)">D2 — MEDIA 22-13/16"</text>
+        <text x="104" y="104" font-size="10" fill="#374151" font-weight="bold" transform="rotate(47.6 104 104)">D1 — DIAGONAL 46"</text>
+        <text x="108" y="352" font-size="10" fill="#374151" font-weight="bold" transform="rotate(-47.6 108 352)">D2 — MEDIA 22-1/4"</text>
         <!-- piece tags -->
         <g font-size="10" font-weight="bold" fill="#1b2a41">
           <text x="482" y="52">A — RIEL 2×1 (3)</text>
           <text x="482" y="86">T — TACO BANDA 3" (4)</text>
-          <text x="482" y="120">V — VERTICAL Q1 (2)</text>
+          <text x="482" y="120">V — VERTICAL MARCO (2)</text>
           <text x="482" y="132">MISMO TOPE QUE B</text>
           <text x="482" y="166">B — PIQUE FLANCO (2)</text>
           <text x="482" y="200">C2 — LADO Q2 (2+2)</text>
@@ -123,36 +122,36 @@
         <g stroke="#8895a3" stroke-width="1">
           <line x1="478" y1="48" x2="450" y2="44"/>
           <line x1="478" y1="82" x2="450" y2="28"/>
-          <line x1="478" y1="116" x2="396" y2="120"/>
-          <line x1="478" y1="162" x2="431" y2="166"/>
-          <line x1="478" y1="196" x2="349" y2="206"/>
-          <line x1="478" y1="230" x2="310" y2="240"/>
-          <line x1="478" y1="264" x2="360" y2="366"/>
-          <line x1="478" y1="298" x2="352" y2="94"/>
+          <line x1="478" y1="116" x2="392" y2="120"/>
+          <line x1="478" y1="162" x2="430" y2="166"/>
+          <line x1="478" y1="196" x2="336" y2="206"/>
+          <line x1="478" y1="230" x2="281" y2="240"/>
+          <line x1="478" y1="264" x2="355" y2="360"/>
+          <line x1="478" y1="298" x2="345" y2="98"/>
         </g>
       </g>
     </svg>
-    <p class="note" style="padding:4px 10px;">El motivo son el MARCO (rieles + verticales, 34×34) y adentro <strong>DOS cuadros nada más</strong> con la X cruzando limpia en el centro — sin cuadrito. Anillos parejos de 3-15/16". El sobrante de los flancos (5-3/4" por lado) se llena con un pique recto que no toca el dibujo.</p>
+    <p class="note" style="padding:4px 10px;">Con el miembro de 1-1/2" el dibujo queda "lleno" como el PVC de la foto y los dos cuadros caen en su proporción real: Q2 al 68% y Q3 al 36% del marco. El centro es SOLO el cruce de la X — sin cuadrito. Los anillos entre cuadros quedan parejos (3-15/16") y todas las aberturas pasan la regla de la esfera con holgura.</p>
   </div>
 
   <h2>2. Lista de cortes — con descuentos (medidas FINALES de pieza)</h2>
   <table>
     <tr><th>ID</th><th>Pieza</th><th>Perfil</th><th class="num">Corte final</th><th>Ángulos</th><th class="num">Cant.</th><th>De dónde sale la medida</th></tr>
-    <tr><td><strong>A</strong></td><td>Rieles (inferior, intermedio y superior), acostados</td><td>2×1×1/8</td><td class="num"><strong>45-1/2"</strong></td><td>90° / 90°</td><td class="num">3</td><td>46" luz libre − 1/2" juego de insertos</td></tr>
-    <tr><td><strong>T</strong></td><td>Taco de la banda</td><td>1×1×1/8</td><td class="num"><strong>3"</strong></td><td>90° / 90°</td><td class="num">4</td><td>Banda abierta entre los dos rieles de arriba</td></tr>
-    <tr><td><strong>V</strong></td><td>Vertical del cuadro</td><td>1×1×1/8</td><td class="num"><strong>34"</strong></td><td>90° / 90°</td><td class="num">2</td><td>Campo = 42 − 2 − 1 − 1 − 3 − 1</td></tr>
-    <tr><td><strong>B</strong></td><td>Pique recto de flanco (independiente del dibujo)</td><td>1×1×1/8</td><td class="num"><strong>34"</strong></td><td>90° / 90°</td><td class="num">2</td><td>Mismo tope que V — flanco 5-3/4: gap 2-3/8 + pique + 2-3/8</td></tr>
-    <tr><td><strong>C2</strong></td><td>Lados del cuadro medio Q2</td><td>1×1×1/8</td><td class="num"><strong>24-1/8"</strong> (horiz.) y <strong>26-1/8"</strong> (vert.), punta larga</td><td>Inglete 45°/45° + despuntar 1/2"</td><td class="num">2 + 2</td><td>Luz del marco (32 × 34) − 2 anillos de 3-15/16</td></tr>
-    <tr><td><strong>C3</strong></td><td>Lados del cuadro interior Q3</td><td>1×1×1/8</td><td class="num"><strong>14-1/4"</strong> (horiz.) y <strong>16-1/4"</strong> (vert.), punta larga</td><td>Inglete 45°/45° + despuntar 1/2"</td><td class="num">2 + 2</td><td>Luz Q2 − 2 anillos de 3-15/16</td></tr>
-    <tr><td><strong>D1</strong></td><td>Diagonal completa de la X</td><td>1×1×1/8</td><td class="num"><strong>46-11/16"</strong> (punta a punta)</td><td>Puntas a 43.3° (la diagonal sube a 46.7°)</td><td class="num">1</td><td>√(32² + 34²) = 46.69"</td></tr>
-    <tr><td><strong>D2</strong></td><td>Media diagonal de la X</td><td>1×1×1/8</td><td class="num"><strong>22-13/16"</strong></td><td>Punta exterior 43.3° · punta interior recta</td><td class="num">2</td><td>46-11/16 ÷ 2 = 23-5/16 − 1/2" (medio tubo de D1)</td></tr>
+    <tr><td><strong>A</strong></td><td>Rieles (inferior, intermedio, superior), acostados</td><td>2×1×1/8</td><td class="num"><strong>45-1/2"</strong></td><td>90° / 90°</td><td class="num">3</td><td>46" luz libre − 1/2" juego de insertos</td></tr>
+    <tr><td><strong>T</strong></td><td>Taco de la banda</td><td>1-1/2×1×1/8</td><td class="num"><strong>3"</strong></td><td>90° / 90°</td><td class="num">4</td><td>Banda abierta entre los dos rieles de arriba</td></tr>
+    <tr><td><strong>V</strong></td><td>Vertical del marco</td><td>1-1/2×1×1/8</td><td class="num"><strong>34"</strong></td><td>90° / 90°</td><td class="num">2</td><td>Campo = 42 − 2 − 1 − 1 − 3 − 1 · marco 34" afuera-afuera</td></tr>
+    <tr><td><strong>B</strong></td><td>Pique recto de flanco</td><td>1-1/2×1×1/8</td><td class="num"><strong>34"</strong></td><td>90° / 90°</td><td class="num">2</td><td>Mismo tope que V — flanco 5-3/4: gap 2-1/8 + pique + 2-1/8</td></tr>
+    <tr><td><strong>C2</strong></td><td>Lados del cuadro grande Q2</td><td>1-1/2×1×1/8</td><td class="num"><strong>23-1/8"</strong> (horiz.) y <strong>26-1/8"</strong> (vert.), punta larga</td><td>Inglete 45°/45° + despuntar 3/4"</td><td class="num">2 + 2</td><td>Luz del marco (31 × 34) − 2 anillos de 3-15/16</td></tr>
+    <tr><td><strong>C3</strong></td><td>Lados del cuadro chico Q3</td><td>1-1/2×1×1/8</td><td class="num"><strong>12-1/4"</strong> (horiz.) y <strong>15-1/4"</strong> (vert.), punta larga</td><td>Inglete 45°/45° + despuntar 3/4"</td><td class="num">2 + 2</td><td>Luz Q2 − 2 anillos de 3-15/16</td></tr>
+    <tr><td><strong>D1</strong></td><td>Diagonal completa de la X</td><td>1-1/2×1×1/8</td><td class="num"><strong>46"</strong> (punta a punta)</td><td>Puntas a 42.5° (la diagonal sube a 47.6°)</td><td class="num">1</td><td>√(31² + 34²) = 46.0"</td></tr>
+    <tr><td><strong>D2</strong></td><td>Media diagonal de la X</td><td>1-1/2×1×1/8</td><td class="num"><strong>22-1/4"</strong></td><td>Punta exterior 42.5° · punta interior recta</td><td class="num">2</td><td>46 ÷ 2 = 23 − 3/4" (medio tubo de D1)</td></tr>
   </table>
   <table>
     <tr><th>Chequeos de la geometría (antes de soldar nada)</th></tr>
-    <tr><td>Zona del cuadro a escuadra (riel inferior a riel intermedio, 45-1/2 × 36): esquina a esquina = <strong>58" parejos</strong> por los dos lados (±1/16").</td></tr>
-    <tr><td><strong>REGLA PATRÓN</strong> — desde el CENTRO del cruce, sobre las diagonales: Q3 @ <strong>10-13/16"</strong> · Q2 @ <strong>17-3/4"</strong>. Una sola regla marca los 4 brazos.</td></tr>
-    <tr><td>Aberturas: flancos 2-3/8" ✓ · banda superior 3" ✓ · anillos 3-15/16" parejos ✓ · triángulos del centro (Q3 + X) 3-7/8" ✓ — todas &lt; 4", regla de la esfera.</td></tr>
-    <tr><td>La sierra: rectos, 45° (cuadros) y 43.3° (puntas de la X). Medidas FINALES — el tope del jig absorbe el kerf. Nunca marcar pieza por pieza.</td></tr>
+    <tr><td>Zona del cuadro a escuadra (riel inferior a riel intermedio): esquina a esquina = <strong>58" parejos</strong> por los dos lados (±1/16").</td></tr>
+    <tr><td><strong>REGLA PATRÓN</strong> — desde el CENTRO del cruce, sobre las diagonales: Q3 @ <strong>9-3/4"</strong> · Q2 @ <strong>17-7/16"</strong>. Una sola regla marca los 4 brazos.</td></tr>
+    <tr><td>Aberturas: flancos 2-1/8" ✓ · banda 3" ✓ · anillos 3-15/16" ✓ · triángulos del centro 3-1/8" ✓ — todas &lt; 4", regla de la esfera, con holgura.</td></tr>
+    <tr><td>La sierra: rectos, 45° (cuadros) y 42.5° (puntas de la X). Medidas FINALES — el tope del jig absorbe el kerf. Nunca marcar pieza por pieza.</td></tr>
   </table>
 
   <h2>3. DWG-2 · El jig — un solo armado</h2>
@@ -165,68 +164,62 @@
         <text x="228" y="346" font-size="10.5" fill="#4a5560" font-weight="bold" text-anchor="middle">GUÍA MAESTRA (riel inferior contra ella)</text>
         <rect x="-24" y="-24" width="12" height="340" stroke="#4a5560" fill="#8a97a2" stroke-width="2"/>
         <text x="-34" y="150" font-size="10.5" fill="#4a5560" font-weight="bold" transform="rotate(-90 -34 150)" text-anchor="middle">TOPE DE ARRANQUE</text>
-        <!-- rails: bottom (fence), mid, top -->
         <rect x="0" y="298" width="455" height="9" fill="#cbd5dd" stroke="#374151" stroke-width="1.5"/>
         <rect x="0" y="24" width="455" height="9" fill="#cbd5dd" stroke="#374151" stroke-width="1.5"/>
         <rect x="0" y="-14" width="455" height="9" fill="#cbd5dd" stroke="#374151" stroke-width="1.5"/>
-        <!-- spacers field 34 between mid rail and bottom rail -->
         <g fill="#c8571b" opacity="0.9">
-          <rect x="70" y="33" width="14" height="265"/>
-          <rect x="374" y="33" width="14" height="265"/>
+          <rect x="74" y="33" width="14" height="265"/>
+          <rect x="370" y="33" width="14" height="265"/>
         </g>
-        <text x="77" y="170" font-size="9.5" fill="#fff" font-weight="bold" transform="rotate(-90 77 170)" text-anchor="middle">SEPARADOR 34"</text>
-        <text x="381" y="170" font-size="9.5" fill="#fff" font-weight="bold" transform="rotate(-90 381 170)" text-anchor="middle">SEPARADOR 34"</text>
-        <!-- 3" band spacers -->
+        <text x="81" y="170" font-size="9.5" fill="#fff" font-weight="bold" transform="rotate(-90 81 170)" text-anchor="middle">SEPARADOR 34"</text>
+        <text x="377" y="170" font-size="9.5" fill="#fff" font-weight="bold" transform="rotate(-90 377 170)" text-anchor="middle">SEPARADOR 34"</text>
         <g fill="#1b6b3a">
           <rect x="6" y="-5" width="10" height="29"/>
           <rect x="439" y="-5" width="10" height="29"/>
         </g>
         <text x="60" y="6" font-size="8.5" fill="#1b6b3a" font-weight="bold">TACOS 3" (BANDA)</text>
-        <!-- blocks flank -->
         <g fill="#1b6b3a">
-          <rect x="0" y="272" width="22" height="16"/>
-          <rect x="32" y="272" width="22" height="16"/>
-          <rect x="401" y="272" width="22" height="16"/>
-          <rect x="433" y="272" width="22" height="16"/>
+          <rect x="0" y="272" width="20" height="16"/>
+          <rect x="34" y="272" width="20" height="16"/>
+          <rect x="401" y="272" width="20" height="16"/>
+          <rect x="435" y="272" width="20" height="16"/>
         </g>
-        <text x="11" y="266" font-size="8" fill="#1b6b3a" font-weight="bold" text-anchor="middle">2-3/8</text>
-        <text x="43" y="266" font-size="8" fill="#1b6b3a" font-weight="bold" text-anchor="middle">2-3/8</text>
-        <text x="412" y="266" font-size="8" fill="#1b6b3a" font-weight="bold" text-anchor="middle">2-3/8</text>
-        <text x="444" y="266" font-size="8" fill="#1b6b3a" font-weight="bold" text-anchor="middle">2-3/8</text>
-        <!-- pickets + verticals -->
+        <text x="10" y="266" font-size="8" fill="#1b6b3a" font-weight="bold" text-anchor="middle">2-1/8</text>
+        <text x="44" y="266" font-size="8" fill="#1b6b3a" font-weight="bold" text-anchor="middle">2-1/8</text>
+        <text x="411" y="266" font-size="8" fill="#1b6b3a" font-weight="bold" text-anchor="middle">2-1/8</text>
+        <text x="445" y="266" font-size="8" fill="#1b6b3a" font-weight="bold" text-anchor="middle">2-1/8</text>
         <g fill="#e5e7eb" stroke="#374151" stroke-width="1.2">
-          <rect x="22" y="33" width="8" height="265"/>
-          <rect x="424" y="33" width="8" height="265"/>
+          <rect x="20" y="33" width="12" height="265"/>
+          <rect x="423" y="33" width="12" height="265"/>
         </g>
         <g fill="#9aa7b3" stroke="#374151" stroke-width="1.2">
-          <rect x="56" y="33" width="8" height="265"/>
-          <rect x="390" y="33" width="8" height="265"/>
+          <rect x="54" y="33" width="12" height="265"/>
+          <rect x="389" y="33" width="12" height="265"/>
         </g>
-        <!-- motif ghost -->
         <g opacity="0.7">
-          <line x1="64" y1="33" x2="390" y2="298" stroke="#9aa7b3" stroke-width="5"/>
-          <line x1="64" y1="298" x2="390" y2="33" stroke="#9aa7b3" stroke-width="5"/>
-          <rect x="102" y="70" width="248" height="192" fill="none" stroke="#9aa7b3" stroke-width="5"/>
-          <rect x="152" y="112" width="148" height="108" fill="none" stroke="#9aa7b3" stroke-width="5"/>
+          <line x1="66" y1="33" x2="389" y2="298" stroke="#9aa7b3" stroke-width="7"/>
+          <line x1="66" y1="298" x2="389" y2="33" stroke="#9aa7b3" stroke-width="7"/>
+          <rect x="116" y="76" width="222" height="180" fill="none" stroke="#9aa7b3" stroke-width="7"/>
+          <rect x="172" y="122" width="112" height="88" fill="none" stroke="#9aa7b3" stroke-width="7"/>
         </g>
         <text x="520" y="40" font-size="9.5" fill="#555">CLAMPS EN LAS 4</text>
         <text x="520" y="52" font-size="9.5" fill="#555">ESQUINAS + CENTRO</text>
         <text x="520" y="76" font-size="9.5" fill="#555">REGLA PATRÓN:</text>
-        <text x="520" y="88" font-size="9.5" fill="#555">Q3 @ 10-13/16 ·</text>
-        <text x="520" y="100" font-size="9.5" fill="#555">Q2 @ 17-3/4 DESDE</text>
-        <text x="520" y="112" font-size="9.5" fill="#555">EL CENTRO</text>
+        <text x="520" y="88" font-size="9.5" fill="#555">Q3 @ 9-3/4 ·</text>
+        <text x="520" y="100" font-size="9.5" fill="#555">Q2 @ 17-7/16</text>
+        <text x="520" y="112" font-size="9.5" fill="#555">DESDE EL CENTRO</text>
       </g>
     </svg>
-    <p class="note" style="padding:4px 10px;">Un solo jig: riel inferior contra la guía, riel intermedio contra los separadores de 34", riel superior contra los tacos de 3". Verticales y piques contra los bloques de 2-3/8". El motivo se arma adentro con la regla patrón sobre las diagonales. Bloques atornillados por si el campo cambia la medida.</p>
+    <p class="note" style="padding:4px 10px;">Un solo jig: riel inferior contra la guía, riel intermedio contra los separadores de 34", riel superior contra los tacos de 3". Verticales y piques contra los bloques de 2-1/8". El motivo se arma adentro con la regla patrón sobre las diagonales. Bloques atornillados por si el campo cambia la medida.</p>
   </div>
 
   <h2>4. Secuencia de armado del primer paño</h2>
   <ol>
-    <li><strong>Marco:</strong> riel inferior contra la guía, riel intermedio contra los separadores de 34", riel superior contra los tacos de 3", tope de arranque a la izquierda. Clampear. Verificar diagonales de la zona del cuadro: <strong>58" iguales</strong>.</li>
-    <li><strong>Verticales, piques y tacos:</strong> las 2 V y los 2 B contra sus bloques; los 4 tacos T en la banda (puntas + sobre las verticales). Puntear — NO soldar corrido.</li>
+    <li><strong>Marco:</strong> riel inferior contra la guía, riel intermedio contra los separadores de 34", riel superior contra los tacos de 3", tope de arranque a la izquierda. Clampear. Verificar diagonales: <strong>58" iguales</strong>.</li>
+    <li><strong>Verticales, piques y tacos:</strong> las 2 V y los 2 B contra sus bloques; los 4 tacos T en la banda. Puntear — NO soldar corrido.</li>
     <li><strong>D1 completa:</strong> de esquina a esquina de la luz. Debe caer sin forzar.</li>
     <li><strong>D2 + D2:</strong> punta recta contra el costado de D1, inglete en su esquina. Verificar que quedan EN LÍNEA con regla larga.</li>
-    <li><strong>Regla patrón:</strong> marcar los 4 brazos: Q3 @ 10-13/16 · Q2 @ 17-3/4 desde el centro del cruce.</li>
+    <li><strong>Regla patrón:</strong> marcar los 4 brazos: Q3 @ 9-3/4 · Q2 @ 17-7/16 desde el centro del cruce.</li>
     <li><strong>Cuadros de adentro hacia afuera:</strong> Q3 primero, después Q2 — esquinas despuntadas asentadas en las marcas sobre las diagonales. Puntear cada uno antes de seguir.</li>
     <li><strong>Soldadura final:</strong> cordones cortos de 1", brincando y alternando lados y esquinas opuestas — el aluminio se tuerce con calor corrido.</li>
     <li><strong>Prueba de campo:</strong> el primer paño debe deslizar en los insertos con juego parejo. Si pasa → jig CLAVADO y producción en serie. Si no → se corrige el jig, no las piezas.</li>
@@ -236,16 +229,16 @@
   <table>
     <tr><th>Perfil</th><th>Piezas</th><th class="num">Pulgadas</th><th class="num">Pies</th></tr>
     <tr><td>2×1×1/8 — rieles (A)</td><td>3 × 45-1/2"</td><td class="num">136-1/2"</td><td class="num">11.4</td></tr>
-    <tr><td>1×1×1/8 — verticales + piques (V, B)</td><td>4 × 34"</td><td class="num">136"</td><td class="num">11.3</td></tr>
-    <tr><td>1×1×1/8 — tacos banda (T)</td><td>4 × 3"</td><td class="num">12"</td><td class="num">1.0</td></tr>
-    <tr><td>1×1×1/8 — Q2 (C2)</td><td>2 × 24-1/8" + 2 × 26-1/8"</td><td class="num">100-1/2"</td><td class="num">8.4</td></tr>
-    <tr><td>1×1×1/8 — Q3 (C3)</td><td>2 × 14-1/4" + 2 × 16-1/4"</td><td class="num">61"</td><td class="num">5.1</td></tr>
-    <tr><td>1×1×1/8 — X (D1 + D2)</td><td>46-11/16" + 2 × 22-13/16"</td><td class="num">~92"</td><td class="num">7.7</td></tr>
-    <tr><td colspan="2"><strong>TOTAL POR PAÑO (+ kerf y puntas)</strong></td><td class="num"><strong>~402" de 1×1 + 136-1/2" de 2×1</strong></td><td class="num"><strong>~33.5 + 11.4 LF</strong></td></tr>
+    <tr><td>1-1/2×1×1/8 — verticales + piques (V, B)</td><td>4 × 34"</td><td class="num">136"</td><td class="num">11.3</td></tr>
+    <tr><td>1-1/2×1×1/8 — tacos (T)</td><td>4 × 3"</td><td class="num">12"</td><td class="num">1.0</td></tr>
+    <tr><td>1-1/2×1×1/8 — Q2 (C2)</td><td>2 × 23-1/8" + 2 × 26-1/8"</td><td class="num">98-1/2"</td><td class="num">8.2</td></tr>
+    <tr><td>1-1/2×1×1/8 — Q3 (C3)</td><td>2 × 12-1/4" + 2 × 15-1/4"</td><td class="num">55"</td><td class="num">4.6</td></tr>
+    <tr><td>1-1/2×1×1/8 — X (D1 + D2)</td><td>46" + 2 × 22-1/4"</td><td class="num">90-1/2"</td><td class="num">7.5</td></tr>
+    <tr><td colspan="2"><strong>TOTAL POR PAÑO (+ kerf y puntas)</strong></td><td class="num"><strong>~392" de 1-1/2×1 + 136-1/2" de 2×1</strong></td><td class="num"><strong>~32.7 + 11.4 LF</strong></td></tr>
   </table>
-  <p class="note"><strong>Aprovechamiento de barra de 24' (288"):</strong> 1×1: BARRA 1: 4×34 + 2×26-1/8 + 2×24-1/8 = 237" + tacos ✓ · BARRA 2: Q3 + X = 153" (el sobrante alimenta el siguiente) → <strong>~1.5 barras de 1×1 por paño</strong>. 2×1: una barra de 24' rinde 6 rieles = 2 paños. El paño de solo-piques (tipo "B"): 3 rieles 2×1 + tacos + piques de 34" @ 4" o.c. — mismo jig sin el motivo.</p>
+  <p class="note"><strong>Aprovechamiento de barra de 24' (288"):</strong> 1-1/2×1: BARRA 1: 4×34 + 2×26-1/8 + 2×23-1/8 = 234-1/2" + tacos ✓ · BARRA 2: Q3 + X = 145-1/2" (el sobrante alimenta el siguiente) → <strong>~1.4 barras de 1-1/2×1 por paño</strong>. 2×1: una barra de 24' rinde 6 rieles = 2 paños. El paño de solo-piques (tipo "B"): 3 rieles 2×1 + tacos + piques de 34" — mismo jig sin el motivo. <strong>OJO en el pedido a EMS/FAS/VC: agregar el perfil 1-1/2"×1"×1/8" (o 1-1/2×1-1/2×1/8 si no hay rectangular).</strong></p>
 
-  <p class="note">JRG Welding Corp · Plan de fabricación interno · Rev. 6 — marco 34×34 + DOS cuadros + X (sin cuadrito central); doble línea 2×1 arriba con banda de 3"; piques rectos de relleno en flancos; confirmar medidas de campo antes del corte en serie.</p>
+  <p class="note">JRG Welding Corp · Plan de fabricación interno · Rev. 7 — motivo en tubo de 1-1/2" (proporción de la foto: Q2 68%, Q3 36%); dos cuadros + X, sin cuadrito central; confirmar medidas de campo antes del corte en serie.</p>
 </div>
 </body>
 </html>
