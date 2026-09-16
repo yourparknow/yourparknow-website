@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>JRG Welding — Croquis de Fabricación: Sample Baranda</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --navy:#1b2a41; --accent:#c8571b; }
+  body { font-family:'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; color:#222; line-height:1.45; background:#fff; font-size:12.5px; }
+  .page { max-width:8.5in; margin:0 auto; padding:0.45in 0.55in; }
+  @media print { @page { size:letter; margin:0.4in 0.45in; } .page { padding:0; max-width:none; } .blk { break-inside:avoid; } }
+  .blk { page-break-inside:avoid; }
+  .doc-header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:4px solid var(--navy); padding-bottom:10px; margin-bottom:12px; }
+  .brand p { font-size:11px; color:#555; }
+  .doc-meta { text-align:right; font-size:11.5px; }
+  .doc-meta .t { font-size:14px; font-weight:800; color:var(--navy); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:13px; color:#fff; background:var(--navy); padding:4px 10px; margin:14px 0 8px; text-transform:uppercase; letter-spacing:0.6px; border-radius:2px; }
+  table { width:100%; border-collapse:collapse; margin:6px 0 10px; font-size:11.5px; }
+  th { background:var(--navy); color:#fff; padding:4px 7px; text-align:left; }
+  td { border:1px solid #cfd6dd; padding:4px 7px; vertical-align:top; }
+  .num { text-align:right; white-space:nowrap; }
+  .drawing { border:1.5px solid var(--navy); border-radius:4px; margin:8px 0 12px; }
+  .drawing .dt { background:var(--navy); color:#fff; font-size:10.5px; font-weight:600; padding:3px 8px; }
+  .drawing svg { display:block; width:100%; height:auto; background:#fdfdfb; }
+  .note { font-size:10.5px; color:#555; font-style:italic; }
+  .warn { background:#fff3bf; border:1px solid #e0c060; border-radius:4px; padding:6px 10px; font-size:11.5px; margin:8px 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-header">
+    <div class="brand">
+      <img src="logo-jrg.png" alt="JRG Welding" style="height:42px; display:block; margin-bottom:4px;">
+      <p>CROQUIS DE FABRICACIÓN — SAMPLE (1 bahía completa) · Railing Jupiter Farms (Prop. JRG-2026-007)</p>
+    </div>
+    <div class="doc-meta">
+      <div class="t">Sample — Bahía Tipo "A"</div>
+      <p>Postes 4'-0" c-c · guard 42" · X a 45° exactos</p>
+      <p>Fecha: <strong>Sept 16, 2026</strong></p>
+    </div>
+  </div>
+
+  <div class="warn"><strong>MATERIAL:</strong> postes <strong>2×2×1/8</strong> (los postes SÍ en 1/8 — cargan la baranda) · rieles y cap <strong>2×1×.090</strong> · todo lo del medio <strong>1×1×.090</strong>. Aleación 6061-T6 o 6063-T6, powder coat color por definir. El sample es 1 bahía completa: 2 postes con placas, 1 paño decorativo y su pedazo de cap.</div>
+
+  <h2>1. Elevación de la bahía — con postes a 4'-0" centro a centro</h2>
+  <div class="drawing blk">
+    <div class="dt">ELEVACIÓN COMPLETA · ESCALA 1 CUADRO = 1" · TODAS LAS MEDIDAS FINALES</div>
+    <svg viewBox="0 0 800 580" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/>
+        </marker>
+      </defs>
+      <g transform="translate(120,60)">
+        <!-- scale 10px = 1". Posts 2" wide: left 0..20, luz 20..480, right 480..500. Deck y=420. Cap 0..10 continuous. -->
+        <!-- deck -->
+        <rect x="-40" y="420" width="580" height="16" fill="#d6cfc2" stroke="#8a6a42" stroke-width="2"/>
+        <text x="250" y="452" font-size="10" fill="#8a6a42" text-anchor="middle">DECK</text>
+        <!-- posts -->
+        <rect x="0" y="10" width="20" height="410" fill="#cbd5dd" stroke="#374151" stroke-width="2.2"/>
+        <rect x="480" y="10" width="20" height="410" fill="#cbd5dd" stroke="#374151" stroke-width="2.2"/>
+        <!-- base plates -->
+        <rect x="-5" y="415" width="30" height="5" fill="#8a97a2" stroke="#4a5560" stroke-width="1.5"/>
+        <rect x="475" y="415" width="30" height="5" fill="#8a97a2" stroke="#4a5560" stroke-width="1.5"/>
+        <!-- cap continuous -->
+        <rect x="-30" y="0" width="560" height="10" fill="#8a97a2" stroke="#374151" stroke-width="2.2"/>
+        <!-- panel: x 22.5..477.5 (45.5). Stack: gap 400-420, rail 390-400, band 360-390, rail 350-360, campo 50-350, subrail 40-50, open band 10-40 (under cap) -->
+        <g fill="#cbd5dd" stroke="#374151" stroke-width="1.8">
+          <rect x="22.5" y="390" width="455" height="10"/>
+          <rect x="22.5" y="350" width="455" height="10"/>
+          <rect x="22.5" y="40" width="455" height="10"/>
+        </g>
+        <!-- tacos bottom band: ends + over verticals -->
+        <g fill="#e5e7eb" stroke="#374151" stroke-width="1.5">
+          <rect x="24.5" y="360" width="10" height="30"/>
+          <rect x="465.5" y="360" width="10" height="30"/>
+          <rect x="120" y="360" width="10" height="30"/>
+          <rect x="370" y="360" width="10" height="30"/>
+        </g>
+        <!-- campo 50..350: marco 30x30 centered: x 100..400 o-o, verticals 100-110 / 390-400 -->
+        <g fill="#6b7280" stroke="#374151" stroke-width="1.5">
+          <rect x="100" y="50" width="10" height="300"/>
+          <rect x="390" y="50" width="10" height="300"/>
+        </g>
+        <!-- flank piques: flank 7.75 => 2 per side: gaps 1.9375: x: 22.5+19.4=41.9-51.9 and 71.3-81.3 ; right mirrored -->
+        <g fill="#e5e7eb" stroke="#374151" stroke-width="1.8">
+          <rect x="41.9" y="50" width="10" height="300"/>
+          <rect x="71.3" y="50" width="10" height="300"/>
+          <rect x="418.7" y="50" width="10" height="300"/>
+          <rect x="448.1" y="50" width="10" height="300"/>
+        </g>
+        <!-- X: luz 28x28: (110,50)-(390,350) -->
+        <g stroke="#6b7280" stroke-width="10" stroke-linecap="butt">
+          <line x1="110" y1="50" x2="390" y2="350"/>
+          <line x1="110" y1="350" x2="390" y2="50"/>
+        </g>
+        <!-- Q2 20-3/8 o-o centered (250,200): 101.9..? half 101.875 => x 148.1..351.9, y 98.1..301.9 -->
+        <rect x="148.1" y="98.1" width="203.75" height="203.75" fill="none" stroke="#6b7280" stroke-width="10"/>
+        <!-- Q3 10-3/4: half 53.75: x196.25..303.75 y146.25..253.75 -->
+        <rect x="196.25" y="146.25" width="107.5" height="107.5" fill="none" stroke="#374151" stroke-width="10"/>
+        <!-- ============ DIMS ============ -->
+        <line x1="10" y1="-38" x2="490" y2="-38" stroke="#b91c1c" stroke-width="1.4" marker-start="url(#dm)" marker-end="url(#dm)"/>
+        <text x="250" y="-44" font-size="13.5" fill="#b91c1c" font-weight="bold" text-anchor="middle">4'-0" CENTRO A CENTRO DE POSTES</text>
+        <line x1="20" y1="-16" x2="480" y2="-16" stroke="#c8571b" stroke-width="1.2" marker-start="url(#dm)" marker-end="url(#dm)"/>
+        <text x="250" y="-22" font-size="10.5" fill="#c8571b" font-weight="bold" text-anchor="middle">LUZ 46" · PAÑO 45-1/2" (− 1/2" DE JUEGO)</text>
+        <!-- height chain right -->
+        <g stroke="#b91c1c" stroke-width="1">
+          <line x1="530" y1="0" x2="530" y2="420" marker-start="url(#dm)" marker-end="url(#dm)"/>
+        </g>
+        <text x="541" y="214" font-size="12" fill="#b91c1c" font-weight="bold" transform="rotate(-90 541 214)" text-anchor="middle">42" GUARD (PISO A TOPE DEL CAP)</text>
+        <g font-size="9.5" fill="#374151" font-weight="bold">
+          <text x="556" y="9">1" CAP 2×1</text>
+          <text x="556" y="28">3" ABIERTO</text>
+          <text x="556" y="49">1" SUBRIEL</text>
+          <text x="556" y="204">30" CAMPO</text>
+          <text x="556" y="359">1" RIEL</text>
+          <text x="556" y="378">3" BANDA</text>
+          <text x="556" y="399">1" RIEL</text>
+          <text x="556" y="414">2" DEL PISO</text>
+        </g>
+        <!-- motif dims -->
+        <text x="250" y="76" font-size="9.5" fill="#b91c1c" font-weight="bold" text-anchor="middle">MARCO 30" × 30" — X A 45° EXACTOS</text>
+        <text x="250" y="130" font-size="9" fill="#b91c1c" font-weight="bold" text-anchor="middle">Q2 = 20-3/8"</text>
+        <text x="250" y="200" font-size="9" fill="#fff" font-weight="bold" text-anchor="middle">Q3 = 10-3/4"</text>
+        <!-- flank labels -->
+        <text x="62" y="336" font-size="8.5" fill="#555" text-anchor="middle">2 PIQUES</text>
+        <text x="62" y="346" font-size="8.5" fill="#555" text-anchor="middle">GAP 1-15/16</text>
+        <!-- post labels -->
+        <text x="10" y="440" font-size="8.5" fill="#4a5560" text-anchor="middle">PLACA 5×5×1/4</text>
+        <text x="-58" y="200" font-size="9.5" fill="#374151" font-weight="bold" transform="rotate(-90 -58 200)" text-anchor="middle">POSTE 2×2×1/8 × 41"</text>
+        <line x1="-50" y1="204" x2="4" y2="204" stroke="#8895a3" stroke-width="1"/>
+      </g>
+    </svg>
+    <p class="note" style="padding:4px 10px;">Dos líneas arriba (cap continuo + subriel, con 3" abierto entre ellas) y dos líneas abajo (riel + riel, con banda de 3" y taquitos). El campo queda de 30" → el marco del motivo es 30×30 CUADRADO y la X va a 45° exactos. Dos piques rectos por flanco, independientes del dibujo.</p>
+  </div>
+
+  <h2>2. Lista de cortes del SAMPLE (1 bahía) — medidas finales</h2>
+  <table>
+    <tr><th>ID</th><th>Pieza</th><th>Perfil</th><th class="num">Corte final</th><th>Ángulos</th><th class="num">Cant.</th><th>Nota / descuento</th></tr>
+    <tr><td>P</td><td>Poste (con placa 5×5×1/4 soldada)</td><td>2×2×1/8</td><td class="num"><strong>40-3/4"</strong></td><td>90°/90°</td><td class="num">2</td><td>41" con placa; + cap 1" = 42" del piso</td></tr>
+    <tr><td>CAP</td><td>Top cap del sample (acostado)</td><td>2×1×.090</td><td class="num"><strong>50"</strong></td><td>90°/90°</td><td class="num">1</td><td>corrido sobre los 2 postes con sobrante</td></tr>
+    <tr><td>A</td><td>Rieles del paño: inferior, medio y subriel (acostados)</td><td>2×1×.090</td><td class="num"><strong>45-1/2"</strong></td><td>90°/90°</td><td class="num">3</td><td>46" luz − 1/2" juego de insertos</td></tr>
+    <tr><td>T</td><td>Taco de la banda inferior</td><td>1×1×.090</td><td class="num"><strong>3"</strong></td><td>90°/90°</td><td class="num">4</td><td>puntas + sobre las verticales del marco</td></tr>
+    <tr><td>V</td><td>Vertical del marco</td><td>1×1×.090</td><td class="num"><strong>30"</strong></td><td>90°/90°</td><td class="num">2</td><td>campo = 42 − 2 − 1 − 3 − 1 − 1 − 3 − 1 · marco 30" o-o</td></tr>
+    <tr><td>B</td><td>Pique recto de flanco</td><td>1×1×.090</td><td class="num"><strong>30"</strong></td><td>90°/90°</td><td class="num">4</td><td>mismo tope que V · 2 por flanco, gaps 1-15/16</td></tr>
+    <tr><td>C2</td><td>Lado del cuadro grande Q2</td><td>1×1×.090</td><td class="num"><strong>20-3/8"</strong> punta larga</td><td>45°/45° + despuntar 1/2"</td><td class="num">4</td><td>luz del marco 28 − 2 anillos de 3-13/16</td></tr>
+    <tr><td>C3</td><td>Lado del cuadro chico Q3</td><td>1×1×.090</td><td class="num"><strong>10-3/4"</strong> punta larga</td><td>45°/45° + despuntar 1/2"</td><td class="num">4</td><td>luz Q2 − 2 anillos de 3-13/16</td></tr>
+    <tr><td>D1</td><td>Diagonal completa de la X</td><td>1×1×.090</td><td class="num"><strong>39-5/8"</strong> punta a punta</td><td>45°/45°</td><td class="num">1</td><td>28 × √2 = 39.6"</td></tr>
+    <tr><td>D2</td><td>Media diagonal de la X</td><td>1×1×.090</td><td class="num"><strong>19-5/16"</strong></td><td>45° afuera · recta adentro</td><td class="num">2</td><td>39-5/8 ÷ 2 = 19-13/16 − 1/2" (medio tubo de D1)</td></tr>
+  </table>
+
+  <h2>3. Chequeos y armado</h2>
+  <table>
+    <tr><th>Chequeo</th><th>Valor</th></tr>
+    <tr><td>Marco del motivo a escuadra (diagonales de la luz 28×28 iguales)</td><td class="num"><strong>39-5/8" ambas</strong> (±1/16)</td></tr>
+    <tr><td>Regla patrón desde el centro del cruce (sobre las diagonales)</td><td class="num">Q3 @ <strong>7-5/8"</strong> · Q2 @ <strong>14-7/16"</strong></td></tr>
+    <tr><td>Aberturas (regla de la esfera de 4")</td><td>flancos 1-15/16 ✓ · bandas 3" ✓ · anillos <strong>3-13/16 parejos</strong> ✓ · centro 2-9/16 ✓ · piso 2" ✓</td></tr>
+    <tr><td>Toda la sierra</td><td><strong>solo 90° y 45°</strong> — cero ángulos raros</td></tr>
+  </table>
+  <p class="note">Secuencia: rieles y subriel al jig → verticales, piques y tacos → D1 completa → D2+D2 en línea → Q3 y Q2 con la regla patrón (de adentro hacia afuera) → soldar brincado alternando esquinas → postes con placas e insertos → presentar el sample armado con su pedazo de cap. Aberturas y proporciones = modelo Freeport aprobado por el cliente.</p>
+
+  <h2>4. Material total del sample</h2>
+  <table>
+    <tr><th>Perfil</th><th class="num">Total</th><th>Nota</th></tr>
+    <tr><td>2×2×1/8 (postes)</td><td class="num">~7 LF</td><td>2 × 40-3/4 + recortes</td></tr>
+    <tr><td>2×1×.090 (cap + 3 rieles)</td><td class="num">~15.5 LF</td><td>50 + 3×45-1/2</td></tr>
+    <tr><td>1×1×.090 (todo el medio)</td><td class="num">~26 LF</td><td>verticales, piques, tacos, cuadros y X</td></tr>
+    <tr><td>Placas 5×5×1/4 + insertos + prisioneros inox</td><td class="num">2 + 6 + 6</td><td>sistema post-and-panel deslizable</td></tr>
+  </table>
+
+  <p class="note">JRG Welding Corp · Croquis de sample para aprobación del cliente · Las medidas de producción se clavan tras la medición de campo — este sample valida el modelo, el sistema de insertos y el acabado.</p>
+</div>
+</body>
+</html>
