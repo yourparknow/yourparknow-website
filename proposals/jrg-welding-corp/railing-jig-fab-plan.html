@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>JRG Welding — Plan de Fabricación: Jig Paño Decorativo</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --navy:#1b2a41; --accent:#c8571b; --light:#f4f6f8; }
+  body { font-family:'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; color:#222; line-height:1.45; background:#fff; font-size:12.5px; }
+  .page { max-width:8.5in; margin:0 auto; padding:0.45in 0.55in; }
+  @media print { @page { size:letter; margin:0.4in 0.45in; } .page { padding:0; max-width:none; } .blk { break-inside:avoid; } }
+  .blk { page-break-inside:avoid; }
+  .doc-header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:4px solid var(--navy); padding-bottom:10px; margin-bottom:12px; }
+  .brand p { font-size:11px; color:#555; }
+  .doc-meta { text-align:right; font-size:11.5px; }
+  .doc-meta .t { font-size:14px; font-weight:800; color:var(--navy); text-transform:uppercase; letter-spacing:1px; }
+  h2 { font-size:13px; color:#fff; background:var(--navy); padding:4px 10px; margin:14px 0 8px; text-transform:uppercase; letter-spacing:0.6px; border-radius:2px; }
+  table { width:100%; border-collapse:collapse; margin:6px 0 10px; font-size:11.5px; }
+  th { background:var(--navy); color:#fff; padding:4px 7px; text-align:left; }
+  td { border:1px solid #cfd6dd; padding:4px 7px; vertical-align:top; }
+  .num { text-align:right; white-space:nowrap; }
+  .drawing { border:1.5px solid var(--navy); border-radius:4px; margin:8px 0 12px; }
+  .drawing .dt { background:var(--navy); color:#fff; font-size:10.5px; font-weight:600; padding:3px 8px; }
+  .drawing svg { display:block; width:100%; height:auto; background:#fdfdfb; }
+  .note { font-size:10.5px; color:#555; font-style:italic; }
+  .warn { background:#fff3bf; border:1px solid #e0c060; border-radius:4px; padding:6px 10px; font-size:11.5px; margin:8px 0; }
+  ol { margin:0 0 8px 20px; } li { margin-bottom:3px; font-size:11.5px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-header">
+    <div class="brand">
+      <img src="logo-jrg.png" alt="JRG Welding" style="height:42px; display:block; margin-bottom:4px;">
+      <p>PLAN DE FABRICACIÓN — uso interno de taller · Railing Jupiter Farms (Prop. JRG-2026-007)</p>
+    </div>
+    <div class="doc-meta">
+      <div class="t">Jig — Paño Decorativo "A"</div>
+      <p>Cuadro + X + cuadrito concéntrico</p>
+      <p>Fecha: <strong>Sept 16, 2026</strong> · Rev. 1</p>
+    </div>
+  </div>
+
+  <div class="warn"><strong>BASE DEL CÁLCULO:</strong> bahía 4'-0" entre centros de poste · poste 2"×2" → luz libre <strong>46"</strong> · paño = 46 − 1/2" de juego para deslizar en los insertos = <strong>45-1/2"</strong>. Alto: guard 42" = cap 1" + paño 37-1/2" + luz inferior 3-1/2". <u>Verificar la luz libre real entre postes ANTES de cortar en serie</u> — el primer paño (este plan) sirve de patrón.</div>
+
+  <h2>1. DWG-1 · Paño decorativo "A" — dimensiones de fabricación</h2>
+  <div class="drawing blk">
+    <div class="dt">ELEVACIÓN DEL PAÑO — TODO EN TUBO 1"×1"×1/8" · ESCALA GRÁFICA (1 CUADRO = 1")</div>
+    <svg viewBox="0 0 760 540" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="dm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/>
+        </marker>
+      </defs>
+      <g transform="translate(150,70)">
+        <!-- scale: 10px = 1" ; panel 455 x 375 -->
+        <!-- rails -->
+        <rect x="0" y="0" width="455" height="10" fill="#cbd5dd" stroke="#374151" stroke-width="2"/>
+        <rect x="0" y="365" width="455" height="10" fill="#cbd5dd" stroke="#374151" stroke-width="2"/>
+        <!-- flanking pickets P: x 20-30 and 425-435 -->
+        <rect x="20" y="10" width="10" height="355" fill="#e5e7eb" stroke="#374151" stroke-width="2"/>
+        <rect x="425" y="10" width="10" height="355" fill="#e5e7eb" stroke="#374151" stroke-width="2"/>
+        <!-- big square verticals V: x 50-60 and 395-405 (outer 35.5" apart: 50..405) -->
+        <rect x="50" y="10" width="10" height="355" fill="#e5e7eb" stroke="#374151" stroke-width="2.5"/>
+        <rect x="395" y="10" width="10" height="355" fill="#e5e7eb" stroke="#374151" stroke-width="2.5"/>
+        <!-- X legs: opening corners (60,365)/(395,10) and (60,10)/(395,365); small square center (227.5,187.5), 6.5" => x195-260, y155-220 -->
+        <g stroke="#6b7280" stroke-width="9" stroke-linecap="butt">
+          <line x1="60" y1="10" x2="195" y2="155"/>
+          <line x1="395" y1="365" x2="260" y2="220"/>
+          <line x1="60" y1="365" x2="195" y2="220"/>
+          <line x1="395" y1="10" x2="260" y2="155"/>
+        </g>
+        <!-- small square -->
+        <g stroke="#374151" stroke-width="9" fill="none">
+          <rect x="195" y="155" width="65" height="65"/>
+        </g>
+        <!-- ================= DIMS ================= -->
+        <!-- overall width -->
+        <line x1="0" y1="-38" x2="455" y2="-38" stroke="#b91c1c" stroke-width="1.4" marker-start="url(#dm)" marker-end="url(#dm)"/>
+        <text x="227" y="-44" font-size="14" fill="#b91c1c" font-weight="bold" text-anchor="middle">45-1/2" (RIELES — TOPE A)</text>
+        <!-- square outer -->
+        <line x1="50" y1="-14" x2="405" y2="-14" stroke="#c8571b" stroke-width="1.2" marker-start="url(#dm)" marker-end="url(#dm)"/>
+        <text x="227" y="-19" font-size="11.5" fill="#c8571b" font-weight="bold" text-anchor="middle">CUADRO GRANDE 35-1/2" AFUERA-AFUERA</text>
+        <!-- left zone dims: 2 / 1 / 2 / 1 -->
+        <g font-size="9.5" fill="#b91c1c" font-weight="bold" text-anchor="middle">
+          <text x="10" y="398">2"</text>
+          <text x="25" y="398">1"</text>
+          <text x="40" y="398">2"</text>
+          <text x="55" y="398">1"</text>
+          <text x="445" y="398">2"</text>
+          <text x="430" y="398">1"</text>
+          <text x="415" y="398">2"</text>
+          <text x="400" y="398">1"</text>
+        </g>
+        <g stroke="#b91c1c" stroke-width="0.8">
+          <line x1="0" y1="388" x2="0" y2="402"/><line x1="20" y1="388" x2="20" y2="402"/><line x1="30" y1="388" x2="30" y2="402"/><line x1="50" y1="388" x2="50" y2="402"/><line x1="60" y1="388" x2="60" y2="402"/>
+          <line x1="395" y1="388" x2="395" y2="402"/><line x1="405" y1="388" x2="405" y2="402"/><line x1="425" y1="388" x2="425" y2="402"/><line x1="435" y1="388" x2="435" y2="402"/><line x1="455" y1="388" x2="455" y2="402"/>
+        </g>
+        <text x="227" y="398" font-size="9.5" fill="#555" text-anchor="middle">LUZ INTERIOR DEL CUADRO: 33-1/2"</text>
+        <!-- height dims -->
+        <line x1="-26" y1="0" x2="-26" y2="375" stroke="#b91c1c" stroke-width="1.4" marker-start="url(#dm)" marker-end="url(#dm)"/>
+        <text x="-34" y="192" font-size="13" fill="#b91c1c" font-weight="bold" text-anchor="middle" transform="rotate(-90 -34 192)">PAÑO 37-1/2" TOTAL</text>
+        <line x1="-6" y1="10" x2="-6" y2="365" stroke="#c8571b" stroke-width="1.2" marker-start="url(#dm)" marker-end="url(#dm)"/>
+        <text x="-12" y="192" font-size="11" fill="#c8571b" font-weight="bold" text-anchor="middle" transform="rotate(-90 -12 192)">CAMPO 35-1/2" (TOPE B)</text>
+        <!-- small square dims -->
+        <line x1="195" y1="140" x2="260" y2="140" stroke="#b91c1c" stroke-width="1" marker-start="url(#dm)" marker-end="url(#dm)"/>
+        <text x="227" y="134" font-size="10.5" fill="#b91c1c" font-weight="bold" text-anchor="middle">6-1/2"</text>
+        <text x="227" y="250" font-size="9.5" fill="#555" text-anchor="middle">CUADRITO CENTRADO EN EL PAÑO</text>
+        <text x="227" y="262" font-size="9.5" fill="#555" text-anchor="middle">CENTRO: 22-3/4" DEL BORDE · 18-3/4" DEL RIEL</text>
+        <!-- X angle -->
+        <text x="118" y="80" font-size="10" fill="#374151" font-weight="bold" transform="rotate(46.7 118 80)">PATA DE LA X — 19-3/4"</text>
+        <text x="330" y="308" font-size="10" fill="#374151" font-weight="bold" transform="rotate(46.7 330 308)">46.7&#176; DE LA HORIZONTAL</text>
+        <!-- piece tags -->
+        <g font-size="10" font-weight="bold" fill="#1b2a41">
+          <text x="470" y="8" >A — RIEL (2)</text>
+          <text x="470" y="60">B — VERTICAL</text>
+          <text x="470" y="72">DEL CUADRO (2)</text>
+          <text x="470" y="110">B — PIQUE</text>
+          <text x="470" y="122">FLANCO (2)</text>
+          <text x="470" y="165">C — PATA X (4)</text>
+          <text x="470" y="205">D — LADO DEL</text>
+          <text x="470" y="217">CUADRITO (4)</text>
+        </g>
+        <g stroke="#8895a3" stroke-width="1">
+          <line x1="466" y1="4" x2="440" y2="4"/>
+          <line x1="466" y1="62" x2="405" y2="80"/>
+          <line x1="466" y1="112" x2="435" y2="120"/>
+          <line x1="466" y1="161" x2="330" y2="260"/>
+          <line x1="466" y1="207" x2="262" y2="200"/>
+        </g>
+      </g>
+    </svg>
+    <p class="note" style="padding:4px 10px;">Los rieles (A) son las únicas piezas que tocan los postes: entran en los insertos. El cuadro grande usa los rieles del paño como su lado superior e inferior — por eso sus verticales miden lo mismo que los piques (un solo tope para todo).</p>
+  </div>
+
+  <h2>2. Lista de cortes — con descuentos (medidas FINALES de pieza)</h2>
+  <table>
+    <tr><th>ID</th><th>Pieza</th><th>Perfil</th><th class="num">Corte final</th><th>Ángulos</th><th class="num">Cant.</th><th>De dónde sale la medida (el descuento)</th></tr>
+    <tr><td><strong>A</strong></td><td>Riel superior / inferior</td><td>1×1×1/8</td><td class="num"><strong>45-1/2"</strong></td><td>90° / 90°</td><td class="num">2</td><td>46" luz libre − 1/2" juego de insertos</td></tr>
+    <tr><td><strong>B</strong></td><td>Verticales del cuadro <u>y</u> piques de flanco</td><td>1×1×1/8</td><td class="num"><strong>35-1/2"</strong></td><td>90° / 90°</td><td class="num">2 + 2</td><td>37-1/2" paño − 1" riel arriba − 1" riel abajo</td></tr>
+    <tr><td><strong>C</strong></td><td>Pata de la X</td><td>1×1×1/8</td><td class="num"><strong>19-3/4"</strong> (punta a punta larga)</td><td>Punta exterior: inglete <strong>43.3°</strong> · punta interior: recta 90°</td><td class="num">4</td><td>Diagonal de la luz (33-1/2 × 35-1/2) = 48-13/16" − diagonal del cuadrito (6-1/2 × √2 = 9-3/16") = 39-5/8" ÷ 2 = 19-13/16 − 1/16 holgura de ajuste</td></tr>
+    <tr><td><strong>D</strong></td><td>Lado del cuadrito</td><td>1×1×1/8</td><td class="num"><strong>6-1/2"</strong> (punta larga)</td><td>Inglete 45° / 45°</td><td class="num">4</td><td>Cuadrito 6-1/2" afuera-afuera, esquinas a inglete</td></tr>
+  </table>
+  <table>
+    <tr><th>Chequeos de la geometría (antes de soldar nada)</th></tr>
+    <tr><td>Diagonales del MARCO iguales: esquina a esquina del paño = <strong>58-15/16"</strong> por los dos lados (±1/16") — si no son iguales, el paño está torcido.</td></tr>
+    <tr><td>La X sube a <strong>46.7°</strong> de la horizontal (no es 45° exacto porque la luz es 33-1/2 ancho × 35-1/2 alto). En la sierra: gira el cabezal a <strong>43.3°</strong> para la punta exterior de las patas.</td></tr>
+    <tr><td>Aberturas de flanco: 2" + pique + 2" — todas &lt; 4" ✓ regla de la esfera.</td></tr>
+    <tr><td>Las medidas de corte son FINALES — el tope del jig ya absorbe el kerf de la sierra (1/8"). Nunca marcar pieza por pieza.</td></tr>
+  </table>
+
+  <h2>3. DWG-2 · El jig (la mesa) — posiciones de topes y bloques</h2>
+  <div class="drawing blk">
+    <div class="dt">VISTA EN PLANTA DE LA MESA DE ARMADO — BLOQUES ATORNILLADOS, NO SOLDADOS (SE REACOMODAN SI CAMBIA EL CAMPO)</div>
+    <svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(120,50)">
+        <!-- table -->
+        <rect x="-50" y="-30" width="600" height="380" fill="#f6f1e7" stroke="#b8a888" stroke-width="2.5"/>
+        <!-- fence bottom + left end stop -->
+        <rect x="-20" y="310" width="530" height="14" fill="#8a97a2" stroke="#4a5560" stroke-width="2"/>
+        <text x="245" y="345" font-size="11" fill="#4a5560" font-weight="bold" text-anchor="middle">GUÍA MAESTRA (recta y fija — todo se aprieta contra ella)</text>
+        <rect x="-20" y="-16" width="14" height="326" fill="#8a97a2" stroke="#4a5560" stroke-width="2"/>
+        <text x="-30" y="150" font-size="11" fill="#4a5560" font-weight="bold" transform="rotate(-90 -30 150)" text-anchor="middle">TOPE DE ARRANQUE</text>
+        <!-- panel pieces on jig: rails at top area and against fence -->
+        <rect x="0" y="290" width="455" height="10" fill="#cbd5dd" stroke="#374151" stroke-width="2"/>
+        <rect x="0" y="-6" width="455" height="10" fill="#cbd5dd" stroke="#374151" stroke-width="2"/>
+        <text x="228" y="285" font-size="9.5" fill="#374151" text-anchor="middle">RIEL INFERIOR (contra la guía)</text>
+        <!-- spacer blocks between fence and top rail: two vertical spacer bars 35.5 -->
+        <g fill="#c8571b" opacity="0.9">
+          <rect x="95" y="4" width="16" height="286"/>
+          <rect x="345" y="4" width="16" height="286"/>
+        </g>
+        <text x="103" y="150" font-size="10" fill="#fff" font-weight="bold" transform="rotate(-90 103 150)" text-anchor="middle">SEPARADOR 35-1/2"</text>
+        <text x="353" y="150" font-size="10" fill="#fff" font-weight="bold" transform="rotate(-90 353 150)" text-anchor="middle">SEPARADOR 35-1/2"</text>
+        <!-- position blocks along fence: widths 2,1(pieza),2,1(pieza) -->
+        <g fill="#1b6b3a">
+          <rect x="0" y="262" width="20" height="18"/>
+          <rect x="30" y="262" width="20" height="18"/>
+          <rect x="405" y="262" width="20" height="18"/>
+          <rect x="435" y="262" width="20" height="18"/>
+        </g>
+        <text x="10" y="256" font-size="9" fill="#1b6b3a" font-weight="bold" text-anchor="middle">BLQ 2"</text>
+        <text x="40" y="256" font-size="9" fill="#1b6b3a" font-weight="bold" text-anchor="middle">BLQ 2"</text>
+        <text x="415" y="256" font-size="9" fill="#1b6b3a" font-weight="bold" text-anchor="middle">BLQ 2"</text>
+        <text x="445" y="256" font-size="9" fill="#1b6b3a" font-weight="bold" text-anchor="middle">BLQ 2"</text>
+        <!-- pickets/verticals seated between blocks -->
+        <g fill="#e5e7eb" stroke="#374151" stroke-width="1.5">
+          <rect x="20" y="4" width="10" height="286"/>
+          <rect x="50" y="4" width="10" height="286"/>
+          <rect x="395" y="4" width="10" height="286"/>
+          <rect x="425" y="4" width="10" height="286"/>
+        </g>
+        <!-- center template -->
+        <rect x="195" y="112" width="65" height="65" fill="none" stroke="#b91c1c" stroke-width="2.5" stroke-dasharray="6 4"/>
+        <line x1="60" y1="4" x2="195" y2="112" stroke="#9aa7b3" stroke-width="5" opacity="0.7"/>
+        <line x1="60" y1="290" x2="195" y2="177" stroke="#9aa7b3" stroke-width="5" opacity="0.7"/>
+        <line x1="395" y1="4" x2="260" y2="112" stroke="#9aa7b3" stroke-width="5" opacity="0.7"/>
+        <line x1="395" y1="290" x2="260" y2="177" stroke="#9aa7b3" stroke-width="5" opacity="0.7"/>
+        <text x="227" y="148" font-size="9.5" fill="#b91c1c" font-weight="bold" text-anchor="middle">PLANTILLA</text>
+        <text x="227" y="160" font-size="9.5" fill="#b91c1c" font-weight="bold" text-anchor="middle">CENTRAL 6-1/2"</text>
+        <text x="510" y="20" font-size="9.5" fill="#555">CLAMPS EN LAS</text>
+        <text x="510" y="32" font-size="9.5" fill="#555">4 ESQUINAS +</text>
+        <text x="510" y="44" font-size="9.5" fill="#555">CENTRO DE RIELES</text>
+      </g>
+    </svg>
+    <p class="note" style="padding:4px 10px;">La plantilla central es un bloque de madera/aluminio de 6-1/2" × 6-1/2" clavado en el centro exacto de la mesa (22-3/4" del tope de arranque, 18-3/4" de la guía): el cuadrito se arma APRETADO alrededor de ella y las patas de la X llegan hasta sus esquinas — el centro queda perfecto en todos los paños sin medir.</p>
+  </div>
+
+  <h2>4. Secuencia de armado del primer paño</h2>
+  <ol>
+    <li><strong>Marco:</strong> riel inferior contra la guía, riel superior contra los separadores de 35-1/2", tope de arranque al lado izquierdo. Clampear. Verificar diagonales <strong>58-15/16" iguales</strong>.</li>
+    <li><strong>Verticales y piques:</strong> asentar las 4 piezas B contra los bloques verdes (2"-pieza-2"-pieza). Puntear todo — todavía NO soldar corrido.</li>
+    <li><strong>Cuadrito:</strong> armar las 4 piezas D apretadas alrededor de la plantilla central; puntear las esquinas entre sí (no a la plantilla 😄).</li>
+    <li><strong>Patas de la X:</strong> asentar las 4 piezas C — punta a inglete en la esquina de la luz, punta recta contra la esquina del cuadrito. Puntear.</li>
+    <li><strong>Verificación:</strong> re-medir diagonales del marco y escuadra del cuadrito. Si todo cuadra, <strong>soldar corrido alternando lados y esquinas opuestas</strong> (el aluminio se tuerce con el calor — nunca soldar todo un lado de corrido). Cordones cortos de 1", brincando.</li>
+    <li><strong>Prueba de campo:</strong> llevar este primer paño a los postes de muestra: debe deslizar en los insertos con juego parejo. Si pasa → el jig queda CLAVADO y se produce en serie. Si no → se corrige el jig, no las piezas.</li>
+  </ol>
+
+  <h2>5. Material por paño decorativo</h2>
+  <table>
+    <tr><th>Perfil</th><th>Piezas</th><th class="num">Pulgadas</th><th class="num">Pies</th></tr>
+    <tr><td>1×1×1/8 — rieles (A)</td><td>2 × 45-1/2"</td><td class="num">91"</td><td class="num">7.6</td></tr>
+    <tr><td>1×1×1/8 — verticales + piques (B)</td><td>4 × 35-1/2"</td><td class="num">142"</td><td class="num">11.8</td></tr>
+    <tr><td>1×1×1/8 — patas X (C)</td><td>4 × 19-3/4"</td><td class="num">79"</td><td class="num">6.6</td></tr>
+    <tr><td>1×1×1/8 — cuadrito (D)</td><td>4 × 6-1/2"</td><td class="num">26"</td><td class="num">2.2</td></tr>
+    <tr><td colspan="2"><strong>TOTAL POR PAÑO (+ kerf y puntas)</strong></td><td class="num"><strong>338"</strong></td><td class="num"><strong>~28.5 LF</strong></td></tr>
+  </table>
+  <p class="note"><strong>Aprovechamiento de barra de 24' (288"):</strong> BARRA TIPO 1: 2 rieles A + 4 piezas B = 233" (sobran 55" → 2 patas C + 1 cuadrito D con retazo). En la práctica: <strong>~6 barras de 24' rinden 5 paños decorativos</strong>. El paño de solo-piques (tipo "B" del patrón) usa el mismo jig quitando la plantilla central: 2 rieles + 11 piques de 35-1/2" = 481" ≈ 1.7 barras.</p>
+
+  <p class="note">JRG Welding Corp · Plan de fabricación interno · Rev. 1 — medidas sobre bahía teórica de 4'-0"; confirmar luz libre real de postes antes del corte en serie.</p>
+</div>
+</body>
+</html>
