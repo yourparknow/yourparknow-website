@@ -162,10 +162,17 @@ def svg(b):
                      f'fill="{NAR}" text-anchor="middle"{rot}>se fabrica {fr(CORRIDA[letra][0])}"</text>')
 
     # remates y escalera
-    for p, t in ((tr[0][1], b['ini']), (tr[-1][2], b['fin'])):
-        o.append(f'<rect x="{X(p[0])-12:.1f}" y="{Y(p[1])-12:.1f}" width="24" height="24" fill="#8a6a42"/>')
-        der = X(p[0]) > VW/2
-        o.append(f'<text x="{X(p[0]) + (-17 if der else 17):.1f}" y="{Y(p[1])+4:.1f}" font-size="12" '
+    for idx, (p, t) in enumerate(((tr[0][1], b['ini']), (tr[-1][2], b['fin']))):
+        # la pared se corre hacia afuera: el poste del remate tiene que verse,
+        # y entre poste y pared queda el hueco (ahi no hay anclaje)
+        q0, q1 = (tr[0][1], tr[0][2]) if idx == 0 else (tr[-1][1], tr[-1][2])
+        vx, vy = q1[0]-q0[0], q1[1]-q0[1]
+        n = math.hypot(vx, vy) or 1
+        sgn = -1 if idx == 0 else 1
+        px = p[0] + sgn*vx/n*16/sc; py = p[1] + sgn*vy/n*16/sc
+        o.append(f'<rect x="{X(px)-11:.1f}" y="{Y(py)-11:.1f}" width="22" height="22" fill="#8a6a42"/>')
+        der = X(px) > VW/2
+        o.append(f'<text x="{X(px) + (-15 if der else 15):.1f}" y="{Y(py)+4:.1f}" font-size="12" '
                  f'font-weight="800" fill="#8a6a42" text-anchor="{"end" if der else "start"}">{t}</text>')
     if b.get('esc'):
         p = tr[-1][2]
@@ -220,7 +227,7 @@ LEY = ('<div class="key">'
        f'<span><i class="sw" style="background:{NAR};border-color:#a8531f"></i> <b>PAÑO CON DIBUJO</b></span>'
        '<span><i class="sw" style="background:#fff"></i> <b>PAÑO DE PIQUES RECTOS</b></span>'
        f'<span><i style="display:inline-block;width:13px;height:13px;background:{NEG}"></i> <b>POSTE</b></span>'
-       '<span><i style="display:inline-block;width:15px;height:15px;background:#8a6a42"></i> <b>PARED</b></span>'
+       '<span><i style="display:inline-block;width:15px;height:15px;background:#8a6a42"></i> <b>PARED</b> (la baranda NO se ancla a ella: muere en su poste)</span>'
        '</div>')
 
 pag = ""
