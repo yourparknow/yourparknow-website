@@ -355,7 +355,7 @@ PH_B2 = [
  S("F-1", [('L',45.25),('P',),('D',D),('P',),('L',45.25),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de D-1)", "EMPATE RECTO  (junta al centro del poste)"),
  S("F-2", [('D',D),('P',),('L',45.25),('P',)],
-   "EMPATE RECTO  (arranca en paño)", "REMATE CONTRA LA CASA  (placa 4×4×1/4)"),
+   "EMPATE RECTO  (arranca en paño)", "ARRANQUE DE ESCALERA  (198\" a 33°)"),
 ]
 
 # ================================ CABALLERIZA ===============================
