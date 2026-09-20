@@ -4,7 +4,7 @@
    una seccion por bloque, con cadena de cotas completa."""
 from fractions import Fraction
 
-OUT = "/home/user/yourparknow-website/proposals/jrg-welding-corp/railing-secciones-frente.html"
+OUT = "/home/user/yourparknow-website/proposals/jrg-welding-corp/railing-secciones-pool-house.html"
 
 # ---------------------------------------------------------------- fracciones
 def fr(x, den=32):
@@ -304,7 +304,7 @@ def bloque(sec):
     return f"""
   <div class="drawing">
     <div class="dt"><span class="sn">SECCIÓN {sec['name']}</span>
-      BALCÓN {sec['balcon']} &nbsp;·&nbsp; {fr(sec['largo'])}" ({feet(sec['largo'])}) &nbsp;·&nbsp;
+      POOL HOUSE · BALCÓN {sec['balcon']} &nbsp;·&nbsp; {fr(sec['largo'])}" ({feet(sec['largo'])}) &nbsp;·&nbsp;
       {npz} postes &nbsp;·&nbsp; {nd} dibujo{'s' if nd!=1 else ''} &nbsp;·&nbsp;
       {nl} paño{'s' if nl!=1 else ''} de piques ({npq} piques){nota}
     </div>
@@ -360,7 +360,7 @@ HTML = f"""<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Secciones de Baranda — Vista de Frente</title>
+<title>Pool House — Secciones de Baranda</title>
 <style>
   * {{ margin:0; padding:0; box-sizing:border-box; }}
   body {{ font-family:'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; color:#222; background:#fff; font-size:12px; }}
@@ -397,8 +397,8 @@ HTML = f"""<!DOCTYPE html>
 <div class="page">
 
   <div class="doc-header">
-    <h1>BARANDA — PLANOS DE SECCIONES · VISTA DE FRENTE</h1>
-    <div class="doc-meta">BALCÓN 1 + BALCÓN 2 · REV. 1 · SEPT 20, 2026<br>
+    <h1>POOL HOUSE — BARANDA · SECCIONES DE FRENTE</h1>
+    <div class="doc-meta">BALCÓN 1 + BALCÓN 2 · REV. 2 · SEPT 20, 2026<br>
     TODAS LAS SECCIONES A LA MISMA ESCALA</div>
   </div>
 
@@ -410,7 +410,7 @@ HTML = f"""<!DOCTYPE html>
     <div><b>{len(SECCIONES)}</b><span>secciones soldadas</span></div>
   </div>
 
-  <div class="warn"><b>OJO — falta la escalera.</b> Estos {tot_dib} dibujitos son los de los dos balcones planos.
+  <div class="warn"><b>OJO — esta hoja es SOLO del Pool House, y falta la escalera.</b> Estos {tot_dib} dibujitos son los de los dos balcones planos del Pool House. La caballeriza va en hoja aparte, con las letras G, H, J y K (no se repite ninguna letra entre edificios).
   Los rombos de la escalera van aparte (otro ángulo, otras medidas) y no están contados aquí.
   El balcón largo de la derecha ya trae descontadas las <b>2"</b> de la esquina: corrida D = {fr(387.25)}".</div>
 
@@ -436,14 +436,14 @@ HTML = f"""<!DOCTYPE html>
 
   <div class="pb"></div>
   <div class="doc-header">
-    <h1>SECCIONES — BALCÓN 1 (el de la escalera)</h1>
+    <h1>POOL HOUSE — BALCÓN 1 (el de la escalera)</h1>
     <div class="doc-meta">VISTA DE FRENTE · COTAS EN PULGADAS</div>
   </div>
 {bloques_b1}
 
   <div class="pb"></div>
   <div class="doc-header">
-    <h1>SECCIONES — BALCÓN 2 (el largo de la derecha)</h1>
+    <h1>POOL HOUSE — BALCÓN 2 (el largo de la derecha)</h1>
     <div class="doc-meta">VISTA DE FRENTE · COTAS EN PULGADAS · CORRIDA D CON LAS 2" DESCONTADAS</div>
   </div>
 {bloques_b2}
