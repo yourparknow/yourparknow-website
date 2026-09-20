@@ -335,7 +335,7 @@ PH_B1 = [
    "ESQUINA ①  (arranca en el poste de esquina con C-1)", "EMPATE RECTO ③  (junta al centro del poste)"),
  S("A-2", [('D',D),('P',),('L',45.4375),('P',),('D',D),('P',),('L',45.375),('P',)],
    "EMPATE RECTO ③  (arranca en paño, apoya en el poste de A-1)", "ESQUINA ②  (lleva el poste de esquina con B-1)"),
- S("B-1", [('L',28.5),('P',),('D',D),('P',),('D',D),('P',),('L',28.5),('P',)],
+ S("B-1", [('L',15.5),('P',),('D',D),('P',),('L',24.0),('P',),('D',D),('P',),('L',15.5),('P',)],
    "ESQUINA ②  (arranca en paño, apoya en el poste de A-2)", "REMATE CONTRA LA CASA ⑥  (placa 4×4×1/4)"),
  S("C-1", [('L',44.5),('P',),('D',D),('P',),('L',44.625),('P',)],
    "ESQUINA ①  (arranca en paño, apoya en el poste de A-1)", "EMPATE RECTO ④  (junta al centro del poste)"),
