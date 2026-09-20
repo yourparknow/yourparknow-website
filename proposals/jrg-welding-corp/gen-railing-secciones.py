@@ -384,7 +384,7 @@ CB = [
 
 # ============================== CABALLERIZA 2 ==============================
 # letras N, P, Q, R -- me salto la O y la I: en plano impreso se leen como 0 y 1
-n1, n2, n3 = 31.125, 31.375, 30.0
+n1, n2, n3 = 31.1875, 31.4375, 29.125   # del croquis 1: corridas 441-3/8 y 191-3/8
 CB2 = [
  S("N-1", [('P',),('L',n1),('P',),('D',D),('P',),('L',n1),('P',),('D',D),('P',)],
    "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)",
@@ -395,7 +395,7 @@ CB2 = [
    "EMPATE RECTO  (arranca en paño)", "ESQUINA con P-1  (lleva el poste de esquina)"),
  S("P-1", [('L',n3),('P',),('D',D),('P',),('L',n3),('P',),('D',D),('P',),('L',n3),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de N-3)", "ESQUINA con Q-1  (lleva el poste de esquina)",
-   "Mide 16'-0\" justos: confirma que entra en el horno."),
+   "193-3/8 menos las 2\" que pediste = 191-3/8."),
  S("Q-1", [('L',22.5),('P',),('D',D),('P',),('L',22.5),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de P-1)", "ESQUINA con R-1  (lleva el poste de esquina)"),
  S("R-1", [('L',44.0),('P',)],
@@ -430,11 +430,11 @@ EDIFICIOS = [
             "dos secciones. La corrida G ya trae descontadas las <b>2\"</b> (195 − 2 = 193). "
             "<b>Falta confirmar el orden en que se encadenan las corridas</b> alrededor del edificio: "
             "los largos y el despiece no cambian, pero sí cambia cuál sección lleva cada poste de esquina."),
- dict(slug="caballeriza-2", titulo="CABALLERIZA 2 — BARANDA · SECCIONES DE FRENTE",
-      meta="EL CUARTO BALCÓN · REV. 1 · SEPT 20, 2026",
-      grupos=[("CABALLERIZA 2 — SECCIONES N a R", CB2)],
-      corridas=[("Caballeriza 2","N",441.0,["N-1","N-2","N-3"]),
-                ("Caballeriza 2","P",194.0,["P-1"]),
+ dict(slug="caballeriza-2", titulo="CABALLERIZA — LADO 2 · BARANDA · SECCIONES DE FRENTE",
+      meta="LADO CON EL PAÑO SIN MEDIR · REV. 2 · SEPT 20, 2026",
+      grupos=[("CABALLERIZA LADO 2 — SECCIONES N a R", CB2)],
+      corridas=[("Caballeriza 2","N",441.375,["N-1","N-2","N-3"]),
+                ("Caballeriza 2","P",191.375,["P-1"]),
                 ("Caballeriza 2","Q", 99.0,["Q-1"]),
                 ("Caballeriza 2","R", 48.0,["R-1"])],
       aviso="<b>OJO — esta hoja es SOLO de la caballeriza 2, el cuarto balcón.</b> "
