@@ -25,9 +25,10 @@ BAL = [
       pasos=[("G","E"), ("H","N"), ("J","O"), ("K","S"), ("L","O"), ("M","N")]),
  dict(t="BALCÓN 4  ·  CABALLERIZA LADO 2", esc=None, girar=True,
       ini="PARED DE LA CABALLERIZA", fin="PARED DE LA CABALLERIZA",
-      pasos=[("P","O"), ("N","S"), ("?","E"), ("Q","N"), ("R","E")]),
+      pasos=[("P","O"), ("N","S"), ("?","E"), ("Q","N"), ("ESC","E"), ("R","E")]),
 ]
 INCOGNITA = 108.0
+HUECO_ESC = 48.0      # ancho del hueco de la escalera de la caballeriza: POR CONFIRMAR
 # Lo que MIDIO en obra.  El taller fabrica 2" menos en los panos que mueren contra
 # la casa: ahi el ultimo poste queda suelto, separado de la pared, sin anclaje.
 MEDIDO = {"B": 161.0, "E": 151.625}
@@ -58,7 +59,8 @@ GIRO = {"N":"E", "E":"S", "S":"O", "O":"N"}
 def recorrido(b):
     x = y = 0.0; out = []
     for letra, rumbo in b['pasos']:
-        L = INCOGNITA if letra == "?" else MEDIDO.get(letra, CORRIDA[letra][0])
+        L = (HUECO_ESC if letra == "ESC" else
+             INCOGNITA if letra == "?" else MEDIDO.get(letra, CORRIDA[letra][0]))
         dx, dy = DX[GIRO[rumbo] if b.get('girar') else rumbo]
         p0 = (x, y); x += dx*L; y += dy*L
         out.append((letra, p0, (x, y), L))
@@ -67,6 +69,7 @@ def recorrido(b):
 def cuenta(b):
     d = q = 0
     for letra, *_ in recorrido(b):
+        if letra == "ESC": continue                  # el hueco no lleva baranda
         if letra == "?": d += 1; q += 2; continue    # 1 dibujo entre 2 panos de piques
         for e in elems(letra):
             if e[0] == 'D': d += 1
@@ -109,6 +112,18 @@ def svg(b):
             d = " ".join(f"{X(px):.1f},{Y(py):.1f}" for px, py in pts)
             o.append(f'<polygon points="{d}" fill="{fill}" stroke="{stroke}" stroke-width="{sw}"/>')
 
+        if letra == "ESC":
+            # hueco de la escalera: pelda\u00f1os, sin baranda
+            for k in range(7):
+                tt = L*(k+0.5)/7
+                a2=(p0[0]+ux*tt+nx*26/sc, p0[1]+uy*tt+ny*26/sc)
+                c2=(p0[0]+ux*tt-nx*26/sc, p0[1]+uy*tt-ny*26/sc)
+                o.append(f'<line x1="{X(a2[0]):.1f}" y1="{Y(a2[1]):.1f}" x2="{X(c2[0]):.1f}" '
+                         f'y2="{Y(c2[1]):.1f}" stroke="#8a6a42" stroke-width="2"/>')
+            mE=(p0[0]+ux*L/2, p0[1]+uy*L/2)
+            o.append(f'<text x="{X(mE[0]):.1f}" y="{Y(mE[1])-34:.1f}" font-size="13" font-weight="800" '
+                     f'fill="#8a6a42" text-anchor="middle">ESCALERA BAJA</text>')
+            continue
         if letra == "?":
             barra(0, L, "#fdf0e4", NAR, 2, 13)
         else:
@@ -157,6 +172,10 @@ def svg(b):
 def tabla(b):
     f = []
     for letra, _, _, L in recorrido(b):
+        if letra == "ESC":
+            f.append('<tr><td><b>Escalera</b></td><td class="n"><i>hueco, sin baranda</i></td>'
+                     '<td class="n">\u2014</td><td class="n">\u2014</td></tr>')
+            continue
         if letra == "?":
             f.append(f'<tr><td><b>Lateral ?</b></td><td class="n"><i>sin medir</i></td>'
                      f'<td class="n">—</td><td class="n">—</td></tr>')
