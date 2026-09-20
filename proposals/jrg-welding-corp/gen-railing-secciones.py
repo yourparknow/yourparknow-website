@@ -331,10 +331,12 @@ ESQ, EMP, PARED = "ESQUINA", "EMPATE RECTO", "REMATE CONTRA LA PARED"
 
 # ================================ POOL HOUSE ================================
 PH_B1 = [
- S("A-1", [('P',),('L',45.375),('P',),('D',D),('P',),('L',45.4375),('P',),('D',D),('P',)],
+ S("A-1", [('P',),('L',30.5625),('P',),('D',D),('P',),('L',39.5),('P',)],
    "ESQUINA ①  (arranca en el poste de esquina con C-1)", "EMPATE RECTO ③  (junta al centro del poste)"),
- S("A-2", [('D',D),('P',),('L',45.4375),('P',),('D',D),('P',),('L',45.375),('P',)],
-   "EMPATE RECTO ③  (arranca en paño, apoya en el poste de A-1)", "ESQUINA ②  (lleva el poste de esquina con B-1)"),
+ S("A-2", [('D',D),('P',),('L',39.5),('P',),('D',D),('P',)],
+   "EMPATE RECTO ③  (arranca en paño, apoya en el poste de A-1)", "EMPATE RECTO ⑦  (junta al centro del poste)"),
+ S("A-3", [('L',39.5),('P',),('D',D),('P',),('L',30.5625),('P',)],
+   "EMPATE RECTO ⑦  (arranca en paño)", "ESQUINA ②  (lleva el poste de esquina con B-1)"),
  S("B-1", [('L',15.5),('P',),('D',D),('P',),('L',24.0),('P',),('D',D),('P',),('L',15.5),('P',)],
    "ESQUINA ②  (arranca en paño, apoya en el poste de A-2)", "REMATE CONTRA LA CASA ⑥  (placa 4×4×1/4)"),
  S("C-1", [('L',44.5),('P',),('D',D),('P',),('L',44.625),('P',)],
@@ -410,7 +412,7 @@ EDIFICIOS = [
       meta="BALCÓN 1 + BALCÓN 2 · REV. 3 · SEPT 20, 2026",
       grupos=[("POOL HOUSE — BALCÓN 1 (el de la escalera)", PH_B1),
               ("POOL HOUSE — BALCÓN 2 (el largo de la derecha)", PH_B2)],
-      corridas=[("Balcón 1","A",383.625,["A-1","A-2"]), ("Balcón 1","B",159.0,["B-1"]),
+      corridas=[("Balcón 1","A",383.625,["A-1","A-2","A-3"]), ("Balcón 1","B",159.0,["B-1"]),
                 ("Balcón 1","C",237.625,["C-1","C-2"]), ("Balcón 2","D",389.25,["D-1","D-2","D-3"]),
                 ("Balcón 2","E",149.625,["E-1"]), ("Balcón 2","F",239.75,["F-1","F-2"])],
       aviso="<b>OJO — esta hoja es SOLO del Pool House, y falta la escalera.</b> "
