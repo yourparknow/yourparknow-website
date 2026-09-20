@@ -49,80 +49,116 @@ def piques_de(luz):
         if g + GAP_PANEL < 4.0:       # luz libre real contra el poste
             return n, g
         n += 1
+# ---------------------------------------------------------------- plantilla
+def PLANTILLA(titulo, meta, aviso, tot_dib, tot_lis, tot_piq, tot_pos,
+              nsec, res, tabla_corte, tabla_piques, pies, tiras, cuerpo):
+    return f"""<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>{titulo}</title>
+<style>
+  * {{ margin:0; padding:0; box-sizing:border-box; }}
+  body {{ font-family:'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; color:#222; background:#fff; font-size:12px; }}
+  .page {{ max-width:10.2in; margin:0 auto; padding:0.3in 0.35in; }}
+  @media print {{ @page {{ size:letter landscape; margin:0.3in 0.35in; }} .page {{ padding:0; max-width:none; }}
+                 .pb {{ page-break-before:always; }} .drawing {{ page-break-inside:avoid; }} }}
+  .doc-header {{ display:flex; justify-content:space-between; align-items:center;
+                border-bottom:3px solid #1b2a41; padding-bottom:6px; margin-bottom:8px; }}
+  .doc-meta {{ text-align:right; font-size:11.5px; font-weight:700; color:#1b2a41; }}
+  h1 {{ font-size:15px; color:#1b2a41; letter-spacing:.5px; }}
+  .drawing {{ border:1.4px solid #1b2a41; border-radius:4px; margin:0 0 9px; }}
+  .drawing .dt {{ background:#1b2a41; color:#fff; font-size:10px; padding:3px 9px; }}
+  .drawing .dt .sn {{ font-size:13px; font-weight:800; letter-spacing:1px; margin-right:10px; }}
+  .drawing svg {{ display:block; width:100%; height:auto; background:#fdfdfb; }}
+  .ends {{ display:flex; gap:14px; font-size:9px; color:#333; padding:3px 9px;
+           border-top:1px solid #dfe4ea; background:#f7f9fb; }}
+  .ends span {{ flex:1; }} .ends span:last-child {{ flex:0 0 auto; color:#b91c1c; }}
+  table {{ width:100%; border-collapse:collapse; margin:5px 0 10px; font-size:11px; }}
+  th {{ background:#1b2a41; color:#fff; padding:4px 7px; text-align:left; }}
+  td {{ border:1px solid #cfd6dd; padding:3.5px 7px; vertical-align:top; }}
+  td.n {{ text-align:right; white-space:nowrap; }}
+  td.mk {{ font-family:'Consolas','Courier New',monospace; font-size:10px; letter-spacing:-.2px; }}
+  h2 {{ font-size:12px; color:#fff; background:#1b2a41; padding:3px 9px; margin:10px 0 5px;
+        text-transform:uppercase; letter-spacing:.6px; border-radius:2px; }}
+  .big {{ display:flex; gap:10px; margin:8px 0 4px; }}
+  .big div {{ flex:1; border:2px solid #1b2a41; border-radius:5px; padding:7px 10px; text-align:center; }}
+  .big b {{ display:block; font-size:26px; color:#b91c1c; line-height:1.1; }}
+  .big span {{ font-size:10px; text-transform:uppercase; letter-spacing:.7px; color:#1b2a41; font-weight:700; }}
+  .warn {{ border-left:4px solid #b91c1c; background:#fff5f5; padding:7px 11px; font-size:11px; margin:7px 0; }}
+  ul {{ margin:4px 0 4px 18px; font-size:11px; }} li {{ margin:2px 0; }}
+</style>
+</head>
+<body>
+<div class="page">
 
-# ---------------------------------------------------------------- secciones
-# elemento: ('P',) poste  |  ('D',luz) dibujo  |  ('L',luz) liso
-D = 46.0
-def S(name, balcon, elems, izq, der, nota=""):
-    return dict(name=name, balcon=balcon, elems=elems, izq=izq, der=der, nota=nota)
+  <div class="doc-header">
+    <h1>{titulo}</h1>
+    <div class="doc-meta">{meta}<br>TODAS LAS SECCIONES A LA MISMA ESCALA</div>
+  </div>
 
-SECCIONES = [
- S("A-1", 1, [('P',),('L',45.375),('P',),('D',D),('P',),('L',45.4375),('P',),('D',D),('P',)],
-   "ESQUINA ①  (arranca en el poste de esquina con C-1)", "EMPATE RECTO ③  (junta al centro del poste)"),
- S("A-2", 1, [('D',D),('P',),('L',45.4375),('P',),('D',D),('P',),('L',45.375),('P',)],
-   "EMPATE RECTO ③  (arranca en paño, apoya en el poste de A-1)", "ESQUINA ②  (lleva el poste de esquina con B-1)"),
- S("B-1", 1, [('L',29.5),('P',),('D',D),('P',),('D',D),('P',),('L',29.5),('P',)],
-   "ESQUINA ②  (arranca en paño, apoya en el poste de A-2)", "REMATE CONTRA LA CASA ⑥  (placa 4×4×1/4)"),
- S("C-1", 1, [('L',44.5),('P',),('D',D),('P',),('L',44.625),('P',)],
-   "ESQUINA ①  (arranca en paño, apoya en el poste de A-1)", "EMPATE RECTO ④  (junta al centro del poste)"),
- S("C-2", 1, [('D',D),('P',),('L',44.5),('P',)],
-   "EMPATE RECTO ④  (arranca en paño)", "ARRANQUE DE ESCALERA ⑤"),
- S("D-1", 2, [('P',),('L',36.625),('P',),('D',D),('P',),('L',36.625),('P',)],
-   "ESQUINA con F-1  (lleva el poste de esquina)", "EMPATE RECTO  (junta al centro del poste)",
-   "Esta corrida ya trae descontadas las 2\" en la esquina."),
- S("D-2", 2, [('D',D),('P',),('L',36.75),('P',),('D',D),('P',)],
-   "EMPATE RECTO  (arranca en paño)", "EMPATE RECTO  (junta al centro del poste)"),
- S("D-3", 2, [('L',36.625),('P',),('D',D),('P',),('L',36.625),('P',)],
-   "EMPATE RECTO  (arranca en paño)", "ESQUINA con E-1  (lleva el poste de esquina)"),
- S("E-1", 2, [('L',24.8125),('P',),('D',D),('P',),('D',D),('P',),('L',24.8125),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de D-3)", "REMATE CONTRA LA CASA  (placa 4×4×1/4)"),
- S("F-1", 2, [('L',45.25),('P',),('D',D),('P',),('L',45.25),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de D-1)", "EMPATE RECTO  (junta al centro del poste)"),
- S("F-2", 2, [('D',D),('P',),('L',45.25),('P',)],
-   "EMPATE RECTO  (arranca en paño)", "REMATE CONTRA LA CASA  (placa 4×4×1/4)"),
-]
+  <div class="big">
+    <div><b>{tot_dib}</b><span>dibujitos a cortar</span></div>
+    <div><b>{tot_lis}</b><span>pa&#241;os de piques</span></div>
+    <div><b>{tot_piq}</b><span>piques de 38"</span></div>
+    <div><b>{tot_pos}</b><span>postes de 48"</span></div>
+    <div><b>{nsec}</b><span>secciones soldadas</span></div>
+  </div>
 
-CORRIDAS = {
- 1: [("A", 383.625, ["A-1","A-2"]), ("B", 161.0, ["B-1"]), ("C", 237.625, ["C-1","C-2"])],
- 2: [("D", 387.25, ["D-1","D-2","D-3"]), ("E", 151.625, ["E-1"]), ("F", 239.75, ["F-1","F-2"])],
-}
+  <div class="warn">{aviso}</div>
 
-# ---------------------------------------------------------------- verificacion
-def largo(sec):
-    t = 0.0
-    for e in sec['elems']:
-        t += POST if e[0] == 'P' else e[1]
-    return t
+  <h2>Reparto de las corridas</h2>
+  <table>
+    <tr><th style="width:12%">Balc&#243;n</th><th style="width:14%">Corrida</th>
+        <th style="width:22%">Largo total</th><th>Secciones soldadas</th></tr>
+    {res}
+  </table>
 
-for s in SECCIONES:
-    s['largo'] = largo(s)
+  <h2>Corte de los {tot_dib} dibujitos &#8212; lista completa</h2>
+  <table>
+    <tr><th style="width:7%">Pieza</th><th style="width:13%">Secci&#243;n</th><th style="width:13%">Largo de corte</th>
+        <th style="width:10%">Por dibujo</th><th style="width:11%">Total {tot_dib}</th><th>Nota</th></tr>
+    {tabla_corte}
+  </table>
+  <p style="font-size:11px"><b>Material 1&#215;1&#215;1/16 para los dibujitos: {pies} pies lineales &#8776; {tiras} tiras de 20'</b>
+  (sin contar desperdicio de corte ni los piques de los pa&#241;os lisos).</p>
 
-BY = {s['name']: s for s in SECCIONES}
+  <div class="warn"><b>Los largos C2 y C3 ya llevan descontado el material de la X.</b>
+  C2 = 19-1/16 punta larga / 17-1/16 cara corta. C3 = 9-5/16 punta larga / 7-5/16 cara corta.
+  <b>No le quites despunte</b>: asientan a ras contra la diagonal.</div>
+{cuerpo}
 
-def chk(bal):
-    for run, total, secs in CORRIDAS[bal]:
-        suma = sum(BY[n]['largo'] for n in secs)
-        # la seccion que arranca en pano no trae el poste de esquina de la corrida vecina
-        got = suma + (2.0 if BY[secs[0]]['elems'][0][0] != 'P' else 0.0)
-        assert abs(got - total) < 1e-9, (run, got, total)
-        print(f"  corrida {run}: secciones {suma:8.4f} + esquina = {got:8.4f}  vs medido {total:8.4f}  OK")
-print("VERIFICACION DE CORRIDAS")
-chk(1); chk(2)
+  <div class="pb"></div>
+  <div class="doc-header">
+    <h1>TABLA DE PIQUES &#8212; MARCAS SOBRE EL RIEL</h1>
+    <div class="doc-meta">MEDIR SIEMPRE DESDE LA PUNTA IZQUIERDA DEL RIEL &#183; NO ENCADENAR</div>
+  </div>
+  <table>
+    <tr><th style="width:9%">Luz</th><th style="width:9%">Panel</th><th style="width:7%">Veces</th>
+        <th style="width:7%">Piques</th><th style="width:9%">Luz entre piques</th>
+        <th>Marcas al CENTRO de cada pique, desde la punta izquierda del riel</th></tr>
+    {tabla_piques}
+  </table>
+  <p style="font-size:11px; margin-bottom:6px">Las marcas est&#225;n redondeadas al <b>1/16</b> m&#225;s cercano y cada una se
+  mide <b>desde la punta izquierda del riel</b>, no de pique en pique &#8212; as&#237; el error no se acumula.
+  La "luz entre piques" es solo de referencia: <b>manda la marca</b>.</p>
 
-tot_dib = sum(1 for s in SECCIONES for e in s['elems'] if e[0] == 'D')
-tot_lis = sum(1 for s in SECCIONES for e in s['elems'] if e[0] == 'L')
-tot_pos = sum(1 for s in SECCIONES for e in s['elems'] if e[0] == 'P')
-tot_piq = 0
-anchos = {}
-for s in SECCIONES:
-    for e in s['elems']:
-        if e[0] == 'L':
-            n, g = piques_de(e[1])
-            tot_piq += n
-            anchos.setdefault(e[1], [0, n, g])
-            anchos[e[1]][0] += 1
-print(f"TOTALES: {tot_dib} dibujitos · {tot_lis} paños de piques ({tot_piq} piques) · {tot_pos} postes")
+  <h2>Reglas que no se rompen</h2>
+  <ul>
+    <li><b>Todo pa&#241;o decorado es id&#233;ntico: luz 46", panel 45-1/2".</b> Todos los dibujitos son intercambiables
+        entre s&#237; y entre los dos edificios.</li>
+    <li><b>Ninguna esquina ni remate lleva dibujo.</b> Siempre pa&#241;o de piques, para poder ajustar en obra.</li>
+    <li><b>Marcar los piques con el flex&#243;metro corrido</b> desde la punta izquierda del riel usando la tabla de arriba.
+        No medir de pique en pique: se acumula el error.</li>
+    <li><b>La secci&#243;n se suelda completa con sus postes</b> y los rieles se cortan a la luz exacta.</li>
+    <li><b>Los empates se hacen en el poste, nunca a media bah&#237;a</b> &#8212; ver hoja de detalles D-1 a D-4.</li>
+    <li><b>Tapar el interior de los tubos antes del horno de power coating</b> o los insets no entran despu&#233;s.</li>
+    <li><b>En obra no se suelda nada.</b> Todo empate es mec&#225;nico (tornillos SS316).</li>
+  </ul>
 
+</div>
+</body>
+</html>"""
 # ---------------------------------------------------------------- dibujo SVG
 SC = 3.55                      # px por pulgada
 OX, OY = 74, 44                # origen del dibujo dentro del svg
@@ -285,199 +321,201 @@ def svg_seccion(sec):
              f'de cada poste desde la punta izquierda &#160;·&#160; '
              f'<tspan fill="#8a6a42" font-weight="bold">POSTE 2×2×.090 × 48"</tspan> (42 arriba + 6 abajo)</text>')
     return "\n".join(o), MK
+# ---------------------------------------------------------------- datos
+# elemento: ('P',) poste  |  ('D',luz) dibujo  |  ('L',luz) pano de piques
+D = 46.0
+def S(name, elems, izq, der, nota=""):
+    return dict(name=name, elems=elems, izq=izq, der=der, nota=nota)
 
-# ---------------------------------------------------------------- HTML
-def bloque(sec):
+ESQ, EMP, PARED = "ESQUINA", "EMPATE RECTO", "REMATE CONTRA LA PARED"
+
+# ================================ POOL HOUSE ================================
+PH_B1 = [
+ S("A-1", [('P',),('L',45.375),('P',),('D',D),('P',),('L',45.4375),('P',),('D',D),('P',)],
+   "ESQUINA ①  (arranca en el poste de esquina con C-1)", "EMPATE RECTO ③  (junta al centro del poste)"),
+ S("A-2", [('D',D),('P',),('L',45.4375),('P',),('D',D),('P',),('L',45.375),('P',)],
+   "EMPATE RECTO ③  (arranca en paño, apoya en el poste de A-1)", "ESQUINA ②  (lleva el poste de esquina con B-1)"),
+ S("B-1", [('L',29.5),('P',),('D',D),('P',),('D',D),('P',),('L',29.5),('P',)],
+   "ESQUINA ②  (arranca en paño, apoya en el poste de A-2)", "REMATE CONTRA LA CASA ⑥  (placa 4×4×1/4)"),
+ S("C-1", [('L',44.5),('P',),('D',D),('P',),('L',44.625),('P',)],
+   "ESQUINA ①  (arranca en paño, apoya en el poste de A-1)", "EMPATE RECTO ④  (junta al centro del poste)"),
+ S("C-2", [('D',D),('P',),('L',44.5),('P',)],
+   "EMPATE RECTO ④  (arranca en paño)", "ARRANQUE DE ESCALERA ⑤"),
+]
+PH_B2 = [
+ S("D-1", [('P',),('L',36.625),('P',),('D',D),('P',),('L',36.625),('P',)],
+   "ESQUINA con F-1  (lleva el poste de esquina)", "EMPATE RECTO  (junta al centro del poste)",
+   "Esta corrida ya trae descontadas las 2\" en la esquina."),
+ S("D-2", [('D',D),('P',),('L',36.75),('P',),('D',D),('P',)],
+   "EMPATE RECTO  (arranca en paño)", "EMPATE RECTO  (junta al centro del poste)"),
+ S("D-3", [('L',36.625),('P',),('D',D),('P',),('L',36.625),('P',)],
+   "EMPATE RECTO  (arranca en paño)", "ESQUINA con E-1  (lleva el poste de esquina)"),
+ S("E-1", [('L',24.8125),('P',),('D',D),('P',),('D',D),('P',),('L',24.8125),('P',)],
+   "ESQUINA  (arranca en paño, apoya en el poste de D-3)", "REMATE CONTRA LA CASA  (placa 4×4×1/4)"),
+ S("F-1", [('L',45.25),('P',),('D',D),('P',),('L',45.25),('P',)],
+   "ESQUINA  (arranca en paño, apoya en el poste de D-1)", "EMPATE RECTO  (junta al centro del poste)"),
+ S("F-2", [('D',D),('P',),('L',45.25),('P',)],
+   "EMPATE RECTO  (arranca en paño)", "REMATE CONTRA LA CASA  (placa 4×4×1/4)"),
+]
+
+# ================================ CABALLERIZA ===============================
+c1, c2, c3 = 29.625, 29.75, 31.3125
+c4 = 31.4375
+CB = [
+ S("G-1", [('P',),('L',c1),('P',),('D',D),('P',),('L',c2),('P',),('D',D),('P',),('L',c1),('P',)],
+   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)", "ESQUINA con H-1  (lleva el poste de esquina)",
+   "195\" menos las 2\" = 193\". Mide 16'-1\": confirma que entra en el horno."),
+ S("H-1", [('L',c3),('P',),('D',D),('P',),('L',c3),('P',),('D',D),('P',)],
+   "ESQUINA  (arranca en paño, apoya en el poste de G-1)", "EMPATE RECTO  (junta al centro del poste)"),
+ S("H-2", [('L',c3),('P',),('D',D),('P',),('L',c4),('P',)],
+   "EMPATE RECTO  (arranca en paño)", "EMPATE RECTO  (junta al centro del poste)"),
+ S("H-3", [('D',D),('P',),('L',c3),('P',),('D',D),('P',),('L',c3),('P',)],
+   "EMPATE RECTO  (arranca en paño)", "ESQUINA con J-1  (lleva el poste de esquina)"),
+ S("J-1", [('L',25.0),('P',),('D',D),('P',),('L',25.0),('P',)],
+   "ESQUINA  (arranca en paño, apoya en el poste de H-3)", "ESQUINA con K-1  (lleva el poste de esquina)"),
+ S("K-1", [('L',22.375),('P',),('D',D),('P',),('L',22.375),('P',)],
+   "ESQUINA  (arranca en paño, apoya en el poste de J-1)", "ESQUINA con L-1  (lleva el poste de esquina)"),
+ S("L-1", [('L',43.0),('P',)],
+   "ESQUINA  (arranca en paño, apoya en el poste de K-1)", "ESQUINA con M-1  (lleva el poste de esquina)",
+   "Sección corta: si prefieres, L-1 y M-1 se pueden soldar en una sola pieza en L con su esquina."),
+ S("M-1", [('L',25.0),('P',)],
+   "ESQUINA  (arranca en paño, apoya en el poste de L-1)", "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)"),
+]
+
+def largo(sec):
+    return sum(POST if e[0] == 'P' else e[1] for e in sec['elems'])
+
+EDIFICIOS = [
+ dict(slug="pool-house", titulo="POOL HOUSE — BARANDA · SECCIONES DE FRENTE",
+      meta="BALCÓN 1 + BALCÓN 2 · REV. 3 · SEPT 20, 2026",
+      grupos=[("POOL HOUSE — BALCÓN 1 (el de la escalera)", PH_B1),
+              ("POOL HOUSE — BALCÓN 2 (el largo de la derecha)", PH_B2)],
+      corridas=[("Balcón 1","A",383.625,["A-1","A-2"]), ("Balcón 1","B",161.0,["B-1"]),
+                ("Balcón 1","C",237.625,["C-1","C-2"]), ("Balcón 2","D",387.25,["D-1","D-2","D-3"]),
+                ("Balcón 2","E",151.625,["E-1"]), ("Balcón 2","F",239.75,["F-1","F-2"])],
+      aviso="<b>OJO — esta hoja es SOLO del Pool House, y falta la escalera.</b> "
+            "Los dibujitos de aquí son los de los dos balcones planos del Pool House. "
+            "La caballeriza va en hoja aparte, con las letras G a la M (no se repite ninguna letra entre edificios). "
+            "Los rombos de la escalera van aparte (otro ángulo, otras medidas) y no están contados aquí. "
+            "El balcón largo de la derecha ya trae descontadas las <b>2\"</b> de la esquina: corrida D = 387-1/4\"."),
+ dict(slug="caballeriza", titulo="CABALLERIZA — BARANDA · SECCIONES DE FRENTE",
+      meta="BALCÓN EN U · REV. 1 · SEPT 20, 2026",
+      grupos=[("CABALLERIZA — SECCIONES G a M", CB)],
+      corridas=[("Caballeriza","G",193.0,["G-1"]), ("Caballeriza","H",442.0,["H-1","H-2","H-3"]),
+                ("Caballeriza","J",104.0,["J-1"]), ("Caballeriza","K",98.75,["K-1"]),
+                ("Caballeriza","L",47.0,["L-1"]), ("Caballeriza","M",29.0,["M-1"])],
+      aviso="<b>OJO — esta hoja es SOLO de la caballeriza.</b> "
+            "Las letras G a la M no se repiten en el Pool House, así que en el taller no hay forma de confundir "
+            "dos secciones. La corrida G ya trae descontadas las <b>2\"</b> (195 − 2 = 193). "
+            "<b>Falta confirmar el orden en que se encadenan las corridas</b> alrededor del edificio: "
+            "los largos y el despiece no cambian, pero sí cambia cuál sección lleva cada poste de esquina."),
+]
+
+# ---------------------------------------------------------------- bloque HTML
+def bloque(sec, edificio):
     body, _ = svg_seccion(sec)
-    nd = sum(1 for e in sec['elems'] if e[0] == 'D')
-    nl = sum(1 for e in sec['elems'] if e[0] == 'L')
+    nd  = sum(1 for e in sec['elems'] if e[0] == 'D')
+    nl  = sum(1 for e in sec['elems'] if e[0] == 'L')
     npz = sum(1 for e in sec['elems'] if e[0] == 'P')
-    npq = 0
-    for e in sec['elems']:
-        if e[0] == 'L':
-            npq += piques_de(e[1])[0]
-    # largo del cap: +/- 1 en cada extremo de empate recto
+    npq = sum(piques_de(e[1])[0] for e in sec['elems'] if e[0] == 'L')
+    # cap corrido: solo el empate recto (junta al centro del poste) mueve el largo
     cap = sec['largo']
+    if 'EMPATE' in sec['izq']: cap += 1
     if 'EMPATE' in sec['der']: cap -= 1
-    if sec['elems'][0][0] != 'P': cap += 1
     nota = f' &nbsp;·&nbsp; <b>{sec["nota"]}</b>' if sec['nota'] else ''
     return f"""
   <div class="drawing">
     <div class="dt"><span class="sn">SECCIÓN {sec['name']}</span>
-      POOL HOUSE · BALCÓN {sec['balcon']} &nbsp;·&nbsp; {fr(sec['largo'])}" ({feet(sec['largo'])}) &nbsp;·&nbsp;
-      {npz} postes &nbsp;·&nbsp; {nd} dibujo{'s' if nd!=1 else ''} &nbsp;·&nbsp;
-      {nl} paño{'s' if nl!=1 else ''} de piques ({npq} piques){nota}
+      {edificio} &nbsp;·&nbsp; {fr(sec['largo'])}" ({feet(sec['largo'])}) &nbsp;·&nbsp;
+      {npz} poste{'s' if npz != 1 else ''} &nbsp;·&nbsp; {nd} dibujo{'s' if nd != 1 else ''} &nbsp;·&nbsp;
+      {nl} paño{'s' if nl != 1 else ''} de piques ({npq} piques){nota}
     </div>
     <svg viewBox="0 0 {VW} {VH}" xmlns="http://www.w3.org/2000/svg">{body}</svg>
     <div class="ends"><span><b>IZQUIERDA:</b> {sec['izq']}</span><span><b>DERECHA:</b> {sec['der']}</span>
       <span><b>CAP CORRIDO:</b> {fr(cap)}"</span></div>
   </div>"""
 
-# --- tabla de piques
-filas = []
-for w in sorted(anchos, reverse=True):
-    veces, n, g = anchos[w]
-    panel = w - 0.5
-    marcas = [g + i * (1 + g) + 0.5 for i in range(n)]
-    # control: el ultimo pique debe quedar a `g` de la punta derecha del panel
-    assert abs((marcas[-1] + 0.5 + g) - panel) < 1e-9, ("no cierra", w)
-    ms = " &nbsp;<span style='color:#c8571b'>|</span>&nbsp; ".join(fr(m, 16) for m in marcas)
-    filas.append(f"<tr><td><b>{fr(w)}\"</b></td><td>{fr(panel)}\"</td><td>{veces}</td>"
-                 f"<td><b>{n}</b></td><td>~{fr(g,32)}\"</td><td class='mk'>{ms}</td></tr>")
-tabla_piques = "\n".join(filas)
+PZ = [("V",  2, 38.0,    "vertical del cuadro · corte recto"),
+      ("B",  2, 38.0,    "pique de flanco · corte recto"),
+      ("H",  2, 28.25,   "horizontal del cuadro · corte recto"),
+      ("D1", 1, 39.9375, "diagonal entera · 45°/45° punta a punta"),
+      ("D2", 2, 19.4375, "media diagonal · 45° un lado, recta el otro"),
+      ("C2", 4, 19.0625, "rombo Q2 · 45°/45° · cara corta 17-1/16"),
+      ("C3", 4, 9.3125,  "rombo Q3 · 45°/45° · cara corta 7-5/16")]
 
-# --- corte de los 16 dibujitos
-PZ = [("V",  2, 38.0,      "1×1×1/16", "vertical del cuadro · corte recto"),
-      ("B",  2, 38.0,      "1×1×1/16", "pique de flanco · corte recto"),
-      ("H",  2, 28.25,     "1×1×1/16", "horizontal del cuadro · corte recto"),
-      ("D1", 1, 39.9375,   "1×1×1/16", "diagonal entera · 45°/45° punta a punta"),
-      ("D2", 2, 19.4375,   "1×1×1/16", "media diagonal · 45° un lado, recta el otro"),
-      ("C2", 4, 19.0625,   "1×1×1/16", "rombo Q2 · 45°/45° · cara corta 17-1/16"),
-      ("C3", 4, 9.3125,    "1×1×1/16", "rombo Q3 · 45°/45° · cara corta 7-5/16")]
-N_DIB = tot_dib
-fil2, pies = [], 0.0
-for cod, q, L, sec_, desc in PZ:
-    tq = q * N_DIB
-    pies += tq * L / 12.0
-    fil2.append(f"<tr><td><b>{cod}</b></td><td>{sec_}</td><td class='n'>{fr(L)}\"</td>"
-                f"<td class='n'>{q}</td><td class='n'><b>{tq}</b></td><td>{desc}</td></tr>")
-tabla_corte = "\n".join(fil2)
-tiras = int(-(-pies // 20)) + 1   # tiras de 20'
-print(f"1x1 para {N_DIB} dibujitos: {pies:.1f} pies  ->  ~{tiras} tiras de 20'")
+def build(cfg):
+    secs = [s for _, g in cfg['grupos'] for s in g]
+    by = {}
+    for s in secs:
+        s['largo'] = largo(s)
+        assert s['name'] not in by, ("letra repetida", s['name'])
+        by[s['name']] = s
 
-res_rows = []
-for bal in (1, 2):
-    for run, total, secs in CORRIDAS[bal]:
-        ss = " + ".join(secs)
-        res_rows.append(f"<tr><td>Balcón {bal}</td><td><b>Corrida {run}</b></td>"
-                        f"<td class='n'>{fr(total)}\" ({feet(total)})</td><td>{ss}</td></tr>")
-res = "\n".join(res_rows)
+    # --- verificacion: cada corrida tiene que cerrar contra la medida de obra
+    print(f"\n== {cfg['slug'].upper()} ==")
+    for _, run, total, names in cfg['corridas']:
+        suma = sum(by[n]['largo'] for n in names)
+        got = suma + (2.0 if by[names[0]]['elems'][0][0] != 'P' else 0.0)
+        assert abs(got - total) < 1e-9, (run, got, total)
+        print(f"  corrida {run}: secciones {suma:8.4f} + esquina = {got:8.4f}  vs medido {total:8.4f}  OK")
 
-bloques_b1 = "\n".join(bloque(s) for s in SECCIONES if s['balcon'] == 1)
-bloques_b2 = "\n".join(bloque(s) for s in SECCIONES if s['balcon'] == 2)
+    tot_dib = sum(1 for s in secs for e in s['elems'] if e[0] == 'D')
+    tot_lis = sum(1 for s in secs for e in s['elems'] if e[0] == 'L')
+    tot_pos = sum(1 for s in secs for e in s['elems'] if e[0] == 'P')
+    tot_piq, anchos = 0, {}
+    for s in secs:
+        for e in s['elems']:
+            if e[0] == 'L':
+                n, g = piques_de(e[1]); tot_piq += n
+                anchos.setdefault(e[1], [0, n, g]); anchos[e[1]][0] += 1
+    print(f"  {tot_dib} dibujitos · {tot_lis} paños ({tot_piq} piques) · {tot_pos} postes · {len(secs)} secciones")
 
-HTML = f"""<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<title>Pool House — Secciones de Baranda</title>
-<style>
-  * {{ margin:0; padding:0; box-sizing:border-box; }}
-  body {{ font-family:'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; color:#222; background:#fff; font-size:12px; }}
-  .page {{ max-width:10.2in; margin:0 auto; padding:0.3in 0.35in; }}
-  @media print {{ @page {{ size:letter landscape; margin:0.3in 0.35in; }} .page {{ padding:0; max-width:none; }}
-                 .pb {{ page-break-before:always; }} .drawing {{ page-break-inside:avoid; }} }}
-  .doc-header {{ display:flex; justify-content:space-between; align-items:center;
-                border-bottom:3px solid #1b2a41; padding-bottom:6px; margin-bottom:8px; }}
-  .doc-meta {{ text-align:right; font-size:11.5px; font-weight:700; color:#1b2a41; }}
-  h1 {{ font-size:15px; color:#1b2a41; letter-spacing:.5px; }}
-  .drawing {{ border:1.4px solid #1b2a41; border-radius:4px; margin:0 0 9px; }}
-  .drawing .dt {{ background:#1b2a41; color:#fff; font-size:10px; padding:3px 9px; }}
-  .drawing .dt .sn {{ font-size:13px; font-weight:800; letter-spacing:1px; margin-right:10px; }}
-  .drawing svg {{ display:block; width:100%; height:auto; background:#fdfdfb; }}
-  .ends {{ display:flex; gap:14px; font-size:9px; color:#333; padding:3px 9px;
-           border-top:1px solid #dfe4ea; background:#f7f9fb; }}
-  .ends span {{ flex:1; }} .ends span:last-child {{ flex:0 0 auto; color:#b91c1c; }}
-  table {{ width:100%; border-collapse:collapse; margin:5px 0 10px; font-size:11px; }}
-  th {{ background:#1b2a41; color:#fff; padding:4px 7px; text-align:left; }}
-  td {{ border:1px solid #cfd6dd; padding:3.5px 7px; vertical-align:top; }}
-  td.n {{ text-align:right; white-space:nowrap; }}
-  td.mk {{ font-family:'Consolas','Courier New',monospace; font-size:10px; letter-spacing:-.2px; }}
-  h2 {{ font-size:12px; color:#fff; background:#1b2a41; padding:3px 9px; margin:10px 0 5px;
-        text-transform:uppercase; letter-spacing:.6px; border-radius:2px; }}
-  .big {{ display:flex; gap:10px; margin:8px 0 4px; }}
-  .big div {{ flex:1; border:2px solid #1b2a41; border-radius:5px; padding:7px 10px; text-align:center; }}
-  .big b {{ display:block; font-size:26px; color:#b91c1c; line-height:1.1; }}
-  .big span {{ font-size:10px; text-transform:uppercase; letter-spacing:.7px; color:#1b2a41; font-weight:700; }}
-  .warn {{ border-left:4px solid #b91c1c; background:#fff5f5; padding:7px 11px; font-size:11px; margin:7px 0; }}
-  ul {{ margin:4px 0 4px 18px; font-size:11px; }} li {{ margin:2px 0; }}
-</style>
-</head>
-<body>
-<div class="page">
+    # --- tabla de piques (marcas corridas, no encadenadas)
+    filas = []
+    for w in sorted(anchos, reverse=True):
+        veces, n, g = anchos[w]
+        panel = w - 0.5
+        marcas = [g + i * (1 + g) + 0.5 for i in range(n)]
+        assert abs((marcas[-1] + 0.5 + g) - panel) < 1e-9, ("no cierra", w)
+        ms = " &nbsp;<span style='color:#c8571b'>|</span>&nbsp; ".join(fr(m, 16) for m in marcas)
+        filas.append(f"<tr><td><b>{fr(w)}\"</b></td><td>{fr(panel)}\"</td><td>{veces}</td>"
+                     f"<td><b>{n}</b></td><td>~{fr(g,32)}\"</td><td class='mk'>{ms}</td></tr>")
+    tabla_piques = "\n".join(filas)
 
-  <div class="doc-header">
-    <h1>POOL HOUSE — BARANDA · SECCIONES DE FRENTE</h1>
-    <div class="doc-meta">BALCÓN 1 + BALCÓN 2 · REV. 2 · SEPT 20, 2026<br>
-    TODAS LAS SECCIONES A LA MISMA ESCALA</div>
-  </div>
+    # --- corte de los dibujitos
+    fil2, pies = [], 0.0
+    for cod, q, Lg, desc in PZ:
+        tq = q * tot_dib
+        pies += tq * Lg / 12.0
+        fil2.append(f"<tr><td><b>{cod}</b></td><td>1×1×1/16</td><td class='n'>{fr(Lg)}\"</td>"
+                    f"<td class='n'>{q}</td><td class='n'><b>{tq}</b></td><td>{desc}</td></tr>")
+    tabla_corte = "\n".join(fil2)
+    tiras = int(-(-pies // 20)) + 1
 
-  <div class="big">
-    <div><b>{tot_dib}</b><span>dibujitos a cortar</span></div>
-    <div><b>{tot_lis}</b><span>paños de piques</span></div>
-    <div><b>{tot_piq}</b><span>piques de 38"</span></div>
-    <div><b>{tot_pos}</b><span>postes de 48"</span></div>
-    <div><b>{len(SECCIONES)}</b><span>secciones soldadas</span></div>
-  </div>
+    res = "\n".join(f"<tr><td>{et}</td><td><b>Corrida {run}</b></td>"
+                    f"<td class='n'>{fr(total)}\" ({feet(total)})</td><td>{' + '.join(nm)}</td></tr>"
+                    for et, run, total, nm in cfg['corridas'])
 
-  <div class="warn"><b>OJO — esta hoja es SOLO del Pool House, y falta la escalera.</b> Estos {tot_dib} dibujitos son los de los dos balcones planos del Pool House. La caballeriza va en hoja aparte, con las letras G, H, J y K (no se repite ninguna letra entre edificios).
-  Los rombos de la escalera van aparte (otro ángulo, otras medidas) y no están contados aquí.
-  El balcón largo de la derecha ya trae descontadas las <b>2"</b> de la esquina: corrida D = {fr(387.25)}".</div>
-
-  <h2>Reparto de las corridas</h2>
-  <table>
-    <tr><th style="width:12%">Balcón</th><th style="width:14%">Corrida</th>
-        <th style="width:22%">Largo total</th><th>Secciones soldadas</th></tr>
-    {res}
-  </table>
-
-  <h2>Corte de los {tot_dib} dibujitos — lista completa (cortar ahora)</h2>
-  <table>
-    <tr><th style="width:7%">Pieza</th><th style="width:13%">Sección</th><th style="width:13%">Largo de corte</th>
-        <th style="width:10%">Por dibujo</th><th style="width:11%">Total {tot_dib}</th><th>Nota</th></tr>
-    {tabla_corte}
-  </table>
-  <p style="font-size:11px"><b>Material 1×1×1/16 para los dibujitos: {pies:.0f} pies lineales ≈ {tiras} tiras de 20'</b>
-  (sin contar desperdicio de corte ni los piques de los paños lisos).</p>
-
-  <div class="warn"><b>Los largos C2 y C3 ya llevan descontado el material de la X.</b>
-  C2 = 19-1/16 punta larga / 17-1/16 cara corta. C3 = 9-5/16 punta larga / 7-5/16 cara corta.
-  <b>No le quites despunte</b>: asientan a ras contra la diagonal.</div>
-
+    cuerpo = ""
+    for i, (h1, grupo) in enumerate(cfg['grupos']):
+        cuerpo += f"""
   <div class="pb"></div>
   <div class="doc-header">
-    <h1>POOL HOUSE — BALCÓN 1 (el de la escalera)</h1>
+    <h1>{h1}</h1>
     <div class="doc-meta">VISTA DE FRENTE · COTAS EN PULGADAS</div>
   </div>
-{bloques_b1}
+""" + "\n".join(bloque(s, h1.split("—")[0].strip()) for s in grupo)
 
-  <div class="pb"></div>
-  <div class="doc-header">
-    <h1>POOL HOUSE — BALCÓN 2 (el largo de la derecha)</h1>
-    <div class="doc-meta">VISTA DE FRENTE · COTAS EN PULGADAS · CORRIDA D CON LAS 2" DESCONTADAS</div>
-  </div>
-{bloques_b2}
+    html = PLANTILLA(titulo=cfg['titulo'], meta=cfg['meta'], aviso=cfg['aviso'],
+                     tot_dib=tot_dib, tot_lis=tot_lis, tot_piq=tot_piq, tot_pos=tot_pos,
+                     nsec=len(secs), res=res, tabla_corte=tabla_corte,
+                     tabla_piques=tabla_piques, pies=f"{pies:.0f}", tiras=tiras,
+                     cuerpo=cuerpo)
+    out = f"/home/user/yourparknow-website/proposals/jrg-welding-corp/railing-secciones-{cfg['slug']}.html"
+    open(out, "w", encoding="utf-8").write(html)
+    print(f"  escrito: {out}  ({pies:.0f} pies de 1×1 ≈ {tiras} tiras de 20')")
+    return tot_dib
 
-  <div class="pb"></div>
-  <div class="doc-header">
-    <h1>TABLA DE PIQUES — MARCAS SOBRE EL RIEL</h1>
-    <div class="doc-meta">MEDIR SIEMPRE DESDE LA PUNTA IZQUIERDA DEL RIEL · NO ENCADENAR</div>
-  </div>
-  <table>
-    <tr><th style="width:9%">Luz</th><th style="width:9%">Panel</th><th style="width:7%">Veces</th>
-        <th style="width:7%">Piques</th><th style="width:9%">Luz entre piques</th>
-        <th>Marcas al CENTRO de cada pique, desde la punta izquierda del riel</th></tr>
-    {tabla_piques}
-  </table>
-  <p style="font-size:11px; margin-bottom:6px">Las marcas están redondeadas al <b>1/16</b> más cercano y cada una se
-  mide <b>desde la punta izquierda del riel</b>, no de pique en pique — así el error no se acumula.
-  La "luz entre piques" es solo de referencia: <b>manda la marca</b>.</p>
-
-  <h2>Reglas que no se rompen</h2>
-  <ul>
-    <li><b>Todo paño decorado es idéntico: luz 46", panel 45-1/2".</b> Los {tot_dib} dibujitos son intercambiables.</li>
-    <li><b>Ninguna esquina ni remate lleva dibujo.</b> Siempre paño de piques, para poder ajustar en obra.</li>
-    <li><b>Marcar los piques con el flexómetro corrido</b> desde la punta izquierda del riel usando la tabla de arriba.
-        No medir de pique en pique: se acumula el error.</li>
-    <li><b>La sección se suelda completa con sus postes</b> y los rieles se cortan a la luz exacta.</li>
-    <li><b>Los empates se hacen en el poste, nunca a media bahía</b> — ver hoja de detalles D-1 a D-4.</li>
-    <li><b>Tapar el interior de los tubos antes del horno de power coating</b> o los insets no entran después.</li>
-    <li><b>En obra no se suelda nada.</b> Todo empate es mecánico (tornillos SS316).</li>
-  </ul>
-
-</div>
-</body>
-</html>"""
-
-open(OUT, "w", encoding="utf-8").write(HTML)
-print("escrito:", OUT, len(HTML), "bytes")
+if __name__ == "__main__":
+    total = sum(build(c) for c in EDIFICIOS)
+    print(f"\nTOTAL DIBUJITOS (sin la escalera): {total}")
