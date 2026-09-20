@@ -358,17 +358,17 @@ PH_B2 = [
 ]
 
 # ================================ CABALLERIZA ===============================
-c1, c2, c3 = 29.625, 29.75, 31.3125
-c4 = 31.4375
+c1, c2, c3 = 29.625, 29.75, 47.5625
+c4 = 47.75
 CB = [
  S("G-1", [('P',),('L',c1),('P',),('D',D),('P',),('L',c2),('P',),('D',D),('P',),('L',c1),('P',)],
    "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)", "ESQUINA con H-1  (lleva el poste de esquina)",
    "195\" menos las 2\" = 193\". Mide 16'-1\": confirma que entra en el horno."),
- S("H-1", [('L',c3),('P',),('D',D),('P',),('L',c3),('P',),('D',D),('P',)],
+ S("H-1", [('L',c3),('P',),('D',D),('P',),('L',c3),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de G-1)", "EMPATE RECTO  (junta al centro del poste)"),
- S("H-2", [('L',c3),('P',),('D',D),('P',),('L',c4),('P',)],
+ S("H-2", [('D',D),('P',),('L',c4),('P',),('D',D),('P',)],
    "EMPATE RECTO  (arranca en paño)", "EMPATE RECTO  (junta al centro del poste)"),
- S("H-3", [('D',D),('P',),('L',c3),('P',),('D',D),('P',),('L',c3),('P',)],
+ S("H-3", [('L',c3),('P',),('D',D),('P',),('L',c3),('P',)],
    "EMPATE RECTO  (arranca en paño)", "ESQUINA con J-1  (lleva el poste de esquina)"),
  S("J-1", [('L',25.0),('P',),('D',D),('P',),('L',25.0),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de H-3)", "ESQUINA con K-1  (lleva el poste de esquina)"),
@@ -383,14 +383,14 @@ CB = [
 
 # ============================== CABALLERIZA 2 ==============================
 # letras N, P, Q, R -- me salto la O y la I: en plano impreso se leen como 0 y 1
-n1, n2, n3 = 31.1875, 31.4375, 29.125   # del croquis 1: corridas 441-3/8 y 191-3/8
+n1, n2, n3 = 47.4375, 47.625, 29.125   # del croquis 1: corridas 441-3/8 y 191-3/8
 CB2 = [
- S("N-1", [('P',),('L',n1),('P',),('D',D),('P',),('L',n1),('P',),('D',D),('P',)],
+ S("N-1", [('P',),('L',n1),('P',),('D',D),('P',),('L',n1),('P',)],
    "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)",
    "EMPATE RECTO  (junta al centro del poste)"),
- S("N-2", [('L',n1),('P',),('D',D),('P',),('L',n2),('P',)],
+ S("N-2", [('D',D),('P',),('L',n2),('P',),('D',D),('P',)],
    "EMPATE RECTO  (arranca en paño)", "EMPATE RECTO  (junta al centro del poste)"),
- S("N-3", [('D',D),('P',),('L',n1),('P',),('D',D),('P',),('L',n1),('P',)],
+ S("N-3", [('L',n1),('P',),('D',D),('P',),('L',n1),('P',)],
    "EMPATE RECTO  (arranca en paño)", "ESQUINA con P-1  (lleva el poste de esquina)"),
  S("P-1", [('L',n3),('P',),('D',D),('P',),('L',n3),('P',),('D',D),('P',),('L',n3),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de N-3)", "ESQUINA con Q-1  (lleva el poste de esquina)",
