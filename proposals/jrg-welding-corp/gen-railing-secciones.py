@@ -147,7 +147,7 @@ def PLANTILLA(titulo, meta, aviso, tot_dib, tot_lis, tot_piq, tot_pos,
   <ul>
     <li><b>Todo pa&#241;o decorado es id&#233;ntico: luz 46", panel 45-1/2".</b> Todos los dibujitos son intercambiables
         entre s&#237; y entre los dos edificios.</li>
-    <li><b>Ninguna esquina ni remate lleva dibujo.</b> Siempre pa&#241;o de piques, para poder ajustar en obra.</li>
+    <li><b>Ninguna esquina lleva dibujo</b> &#8212; siempre pa&#241;o de piques, para poder ajustar en obra. <b>&#218;nica excepci&#243;n:</b> el lateral B del balc&#243;n 1 arranca con dibujo pegado a la pared de la casa.</li>
     <li><b>Marcar los piques con el flex&#243;metro corrido</b> desde la punta izquierda del riel usando la tabla de arriba.
         No medir de pique en pique: se acumula el error.</li>
     <li><b>La secci&#243;n se suelda completa con sus postes</b> y los rieles se cortan a la luz exacta.</li>
@@ -337,7 +337,7 @@ PH_B1 = [
    "EMPATE RECTO ③  (arranca en paño, apoya en el poste de A-1)", "EMPATE RECTO ⑦  (junta al centro del poste)"),
  S("A-3", [('L',39.5),('P',),('D',D),('P',),('L',30.5625),('P',)],
    "EMPATE RECTO ⑦  (arranca en paño)", "ESQUINA ②  (lleva el poste de esquina con B-1)"),
- S("B-1", [('L',15.5),('P',),('D',D),('P',),('L',24.0),('P',),('D',D),('P',),('L',15.5),('P',)],
+ S("B-1", [('L',28.5),('P',),('D',D),('P',),('L',28.5),('P',),('D',D),('P',)],
    "ESQUINA ②  (arranca en paño, apoya en el poste de A-2)", "REMATE CONTRA LA CASA ⑥  (placa 4×4×1/4)"),
  S("C-1", [('L',44.5),('P',),('D',D),('P',),('L',44.625),('P',)],
    "ESQUINA ①  (arranca en paño, apoya en el poste de A-1)", "EMPATE RECTO ④  (junta al centro del poste)"),
