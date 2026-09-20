@@ -22,13 +22,13 @@ BAL = [
       pasos=[("E","N"), ("D","O"), ("F","S")]),
  dict(t="BALCÓN 3  ·  CABALLERIZA LADO 1", esc=None, girar=True,
       ini="PARED DE LA CABALLERIZA", fin="PARED DE LA CABALLERIZA",
-      pasos=[("G","E"), ("H","N"), ("J","O"), ("K","S"), ("ESC","O"), ("M","O"), ("L","S")]),
+      pasos=[("G","E"), ("H","N"), ("J","O"), ("K","S"), ("ESC","O"), ("M","N"), ("L","O")]),
  dict(t="BALCÓN 4  ·  CABALLERIZA LADO 2", esc=None, girar=True,
       ini="PARED DE LA CABALLERIZA", fin="PARED DE LA CABALLERIZA",
-      pasos=[("P","O"), ("N","S"), ("?","E"), ("Q","N"), ("ESC","E"), ("R","E")]),
+      pasos=[("P","O"), ("N","S"), ("?","E"), ("Q","N"), ("ESC","E"), ("R","S")]),
 ]
 INCOGNITA = 108.0
-HUECO_ESC = 48.0      # ancho del hueco de escalera en las caballerizas: POR CONFIRMAR.
+HUECO_ESC = 27.0      # hueco de la escalera: 27" medido en el lado 1.  En el lado 2 lo asumo igual.
                       # Esas escaleras SIGUEN DE MADERA: no llevan baranda de aluminio.
 # Lo que MIDIO en obra.  El taller fabrica 2" menos en los panos que mueren contra
 # la casa: ahi el ultimo poste queda suelto, separado de la pared, sin anclaje.
@@ -127,8 +127,8 @@ def svg(b):
                 o.append(f'<line x1="{X(a2[0]):.1f}" y1="{Y(a2[1]):.1f}" x2="{X(c2[0]):.1f}" '
                          f'y2="{Y(c2[1]):.1f}" stroke="#8a6a42" stroke-width="2"/>')
             mE=(p0[0]+ux*L/2, p0[1]+uy*L/2)
-            o.append(f'<text x="{X(mE[0]):.1f}" y="{Y(mE[1])-34:.1f}" font-size="13" font-weight="800" '
-                     f'fill="#8a6a42" text-anchor="middle">ESCALERA BAJA \u00b7 SIGUE DE MADERA</text>')
+            o.append(f'<text x="{X(mE[0]):.1f}" y="{Y(mE[1])+46:.1f}" font-size="13" font-weight="800" '
+                     f'fill="#8a6a42" text-anchor="middle">ESCALERA (madera)</text>')
             continue
         if letra == "?":
             barra(0, L, "#fdf0e4", NAR, 2, 13)
