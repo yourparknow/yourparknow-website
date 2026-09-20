@@ -22,7 +22,7 @@ BAL = [
       pasos=[("E","N"), ("D","O"), ("F","S")]),
  dict(t="BALCÓN 3  ·  CABALLERIZA LADO 1", esc=None, girar=True,
       ini="PARED DE LA CABALLERIZA", fin="PARED DE LA CABALLERIZA",
-      pasos=[("G","E"), ("H","N"), ("J","O"), ("K","S"), ("ESC","O"), ("M","N"), ("L","O")]),
+      pasos=[("G","E"), ("H","N"), ("J","O"), ("K","S"), ("ESC","O"), ("M","S"), ("L","O")]),
  dict(t="BALCÓN 4  ·  CABALLERIZA LADO 2", esc=None, girar=True,
       ini="PARED DE LA CABALLERIZA", fin="PARED DE LA CABALLERIZA",
       pasos=[("P","O"), ("N","S"), ("?","E"), ("Q","N"), ("ESC","E"), ("R","S")]),
@@ -63,7 +63,7 @@ def recorrido(b):
     for letra, rumbo in b['pasos']:
         L = (HUECO_ESC if letra == "ESC" else
              INCOGNITA if letra == "?" else MEDIDO.get(letra, CORRIDA[letra][0]))
-        dx, dy = DX[GIRO[rumbo] if b.get('girar') else rumbo]
+        dx, dy = DX[rumbo]
         p0 = (x, y); x += dx*L; y += dy*L
         out.append((letra, p0, (x, y), L))
     return out
@@ -85,8 +85,10 @@ def cuenta(b):
 # ---------------------------------------------------------------- dibujo
 NEG, NAR, ROJO = "#1b2a41", "#e07b39", "#b91c1c"
 VW, VH, M = 940, 600, 112
+VW_A, VH_A = 470, 660        # caballerizas: derechas como el croquis, angostas
 
 def svg(b):
+    VW, VH = (VW_A, VH_A) if b.get('girar') else (940, 600)
     tr = recorrido(b)
     xs = [p for _,a,c,_ in tr for p in (a[0], c[0])]
     ys = [p for _,a,c,_ in tr for p in (a[1], c[1])]
@@ -146,14 +148,14 @@ def svg(b):
                     t += e[1]
 
         # cota total del lateral, por fuera
-        ox2, oy2 = perp(p0, p1, 40/sc)
+        ox2, oy2 = perp(p0, p1, (24 if L < 60 else 40)/sc)   # corridas cortas, cota mas pegada
         a = (p0[0]+ox2, p0[1]+oy2); c = (p1[0]+ox2, p1[1]+oy2)
         o.append(f'<line x1="{X(a[0]):.1f}" y1="{Y(a[1]):.1f}" x2="{X(c[0]):.1f}" y2="{Y(c[1]):.1f}" '
                  f'stroke="{ROJO}" stroke-width="1.3" marker-start="url(#pa)" marker-end="url(#pa)"/>')
         mx, my = (a[0]+c[0])/2, (a[1]+c[1])/2
         rot = f' transform="rotate(-90 {X(mx):.1f} {Y(my):.1f})"' if vert else ''
         txt = "SIN MEDIR" if letra == "?" else f'{fr(L)}"   ({feet(L)})'
-        o.append(f'<text x="{X(mx):.1f}" y="{Y(my)-8:.1f}" font-size="17" font-weight="800" '
+        o.append(f'<text x="{X(mx):.1f}" y="{Y(my)-8:.1f}" font-size="{13 if L < 60 else 17}" font-weight="800" '
                  f'fill="{ROJO}" text-anchor="middle"{rot}>{txt}</text>')
         if letra in MEDIDO:
             o.append(f'<text x="{X(mx):.1f}" y="{Y(my)+11:.1f}" font-size="11.5" font-weight="700" '
@@ -170,9 +172,6 @@ def svg(b):
         o.append(f'<text x="{X(p[0]) + (-17 if X(p[0])>VW/2 else 17):.1f}" y="{Y(p[1])+19:.1f}" '
                  f'font-size="12" font-weight="800" fill="{ROJO}" '
                  f'text-anchor="{"end" if X(p[0])>VW/2 else "start"}">{b["esc"]}</text>')
-    if b.get('girar'):
-        o.append(f'<text x="14" y="22" font-size="11.5" font-weight="800" fill="{NAR}">'
-                 'PLANO GIRADO 90° PARA QUE QUEPA EN LA HOJA</text>')
     return f'<svg viewBox="0 0 {VW} {VH}" xmlns="http://www.w3.org/2000/svg">' + "".join(o) + '</svg>'
 
 def tabla(b):
@@ -233,7 +232,7 @@ for i, b in enumerate(BAL):
   {'<div class="pb"></div>' if i else ''}
   <div class="hd"><h1>{b['t']}</h1>
     <div class="m">{fr(tot)}" en total &#183; {tot/12:.1f} pies<br>{d} pa&#241;os con dibujo &#183; {q} de piques</div></div>
-  <div class="dw">{svg(b)}</div>
+  <div class="dw"{' style="max-width:56%"' if b.get("girar") else ""}>{svg(b)}</div>
   {LEY}
   <table><tr><th style="width:20%">Lateral</th><th style="width:28%">Medida total</th>
     <th style="width:20%">Pa&#241;os con dibujo</th><th>Pa&#241;os de piques</th></tr>{tabla(b)}
