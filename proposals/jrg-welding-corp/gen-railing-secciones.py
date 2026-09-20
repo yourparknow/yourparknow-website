@@ -145,8 +145,10 @@ def PLANTILLA(titulo, meta, aviso, tot_dib, tot_lis, tot_piq, tot_pos,
 
   <h2>Reglas que no se rompen</h2>
   <ul>
-    <li><b>Todo pa&#241;o decorado es id&#233;ntico: luz 46", panel 45-1/2".</b> Todos los dibujitos son intercambiables
-        entre s&#237; y entre los dos edificios.</li>
+    <li><b>El cuadro del dibujito es siempre el mismo</b> (30-1/4 × 30-1/4, luz 28-1/4) y sus <b>17 piezas
+        son id&#233;nticas en todos</b>. Casi todos van en pa&#241;o de luz 46" (panel 45-1/2").
+        <b>Uno solo es distinto:</b> el de la corrida L de la caballeriza 1 va en luz 43" (panel 42-1/2"),
+        con las luces de flanco apretadas a 2-9/16 en vez de 3-5/16. Mismas piezas, riel m&#225;s corto.</li>
     <li><b>Ninguna esquina lleva dibujo</b> &#8212; siempre pa&#241;o de piques, para poder ajustar en obra. <b>&#218;nica excepci&#243;n:</b> el lateral B del balc&#243;n 1 arranca con dibujo pegado a la pared de la casa.</li>
     <li><b>Marcar los piques con el flex&#243;metro corrido</b> desde la punta izquierda del riel usando la tabla de arriba.
         No medir de pique en pique: se acumula el error.</li>
@@ -173,21 +175,25 @@ def rect(x, y, w, h, fill, stroke="#374151", sw=0.5):
     return (f'<rect x="{X(x):.2f}" y="{Y(y):.2f}" width="{w*SC:.2f}" height="{h*SC:.2f}" '
             f'fill="{fill}" stroke="{stroke}" stroke-width="{sw}"/>')
 
-def dibujito(x0):
-    """motif decorativo en una bahia de 46 de luz. x0 = cara del poste izquierdo."""
+def dibujito(x0, luz=46.0):
+    """motif decorativo. x0 = cara del poste izquierdo, luz = ancho de la bahia.
+       El CUADRO no cambia nunca (30-1/4, luz 28-1/4): solo se aprietan las luces
+       de flanco, asi que las 17 piezas son iguales en todos los dibujitos."""
     o = []
+    panel = luz - 2 * GAP_PANEL
     L = x0 + GAP_PANEL                 # borde del panel
-    cx = x0 + 23.0                     # centro de la bahia
+    cx = x0 + luz / 2                  # centro de la bahia
     cy = 20.0                          # centro vertical del campo
     # riel inferior
-    o.append(rect(L, Y_RAIL_T, 45.5, RAIL_T, ST_LT))
-    # cadena del panel: 3-5/16 + 1(B) + 3-5/16 + 1(V) + 28-1/4 + 1(V) + 3-5/16 + 1(B) + 3-5/16 = 45-1/2
-    g_, t_ = 3.3125, 1.0
+    o.append(rect(L, Y_RAIL_T, panel, RAIL_T, ST_LT))
+    # cadena: g + 1(B) + g + 1(V) + 28-1/4 + 1(V) + g + 1(B) + g = panel
+    t_ = 1.0
+    g_ = (panel - 4 * t_ - 28.25) / 4
     b1 = L + g_
     v1 = b1 + t_ + g_
     v2 = v1 + t_ + 28.25
     b2 = v2 + t_ + g_
-    assert abs((b2 + t_ + g_) - (L + 45.5)) < 1e-9, "cadena del dibujito no cierra"
+    assert abs((b2 + t_ + g_) - (L + panel)) < 1e-9, "cadena del dibujito no cierra"
     for xx in (b1, b2):                       # piques de flanco B (1x1)
         o.append(rect(xx, Y_CAP_B, 1, CAMPO, "#e5e7eb"))
     o.append(rect(v1, Y_CAP_B, 1, CAMPO, ST_MID))
@@ -242,7 +248,7 @@ def svg_seccion(sec):
     labels = []
     for x0, kind, luz in bays:
         if kind == 'D':
-            o.append(dibujito(x0))
+            o.append(dibujito(x0, luz))
             labels.append((x0 + luz/2, "DIBUJO", luz))
         else:
             s, n, g = pano_liso(x0, luz)
@@ -376,9 +382,9 @@ CB = [
    "ESQUINA  (arranca en paño, apoya en el poste de H-3)", "ESQUINA con K-1  (lleva el poste de esquina)"),
  S("K-1", [('L',22.375),('P',),('D',D),('P',),('L',22.375),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de J-1)", "ESQUINA con L-1  (lleva el poste de esquina)"),
- S("L-1", [('L',43.0),('P',)],
+ S("L-1", [('D',43.0),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de K-1)", "ESQUINA con M-1  (lleva el poste de esquina)",
-   "Sección corta: si prefieres, L-1 y M-1 se pueden soldar en una sola pieza en L con su esquina."),
+   "Dibujo especial de 43\" de luz: el cuadro es el mismo, solo se aprietan las luces de flanco a 2-9/16."),
  S("M-1", [('L',25.0),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de L-1)", "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)"),
 ]
