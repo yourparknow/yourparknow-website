@@ -22,13 +22,14 @@ BAL = [
       pasos=[("E","N"), ("D","O"), ("F","S")]),
  dict(t="BALCÓN 3  ·  CABALLERIZA LADO 1", esc=None, girar=True,
       ini="PARED DE LA CABALLERIZA", fin="PARED DE LA CABALLERIZA",
-      pasos=[("G","E"), ("H","N"), ("J","O"), ("K","S"), ("L","O"), ("M","N")]),
+      pasos=[("G","E"), ("H","N"), ("J","O"), ("K","S"), ("ESC","O"), ("L","O"), ("M","N")]),
  dict(t="BALCÓN 4  ·  CABALLERIZA LADO 2", esc=None, girar=True,
       ini="PARED DE LA CABALLERIZA", fin="PARED DE LA CABALLERIZA",
       pasos=[("P","O"), ("N","S"), ("?","E"), ("Q","N"), ("ESC","E"), ("R","E")]),
 ]
 INCOGNITA = 108.0
-HUECO_ESC = 48.0      # ancho del hueco de la escalera de la caballeriza: POR CONFIRMAR
+HUECO_ESC = 48.0      # ancho del hueco de escalera en las caballerizas: POR CONFIRMAR.
+                      # Esas escaleras SIGUEN DE MADERA: no llevan baranda de aluminio.
 # Lo que MIDIO en obra.  El taller fabrica 2" menos en los panos que mueren contra
 # la casa: ahi el ultimo poste queda suelto, separado de la pared, sin anclaje.
 MEDIDO = {"B": 161.0, "E": 151.625}
@@ -65,6 +66,10 @@ def recorrido(b):
         p0 = (x, y); x += dx*L; y += dy*L
         out.append((letra, p0, (x, y), L))
     return out
+
+def pies(b):
+    """pies lineales de BARANDA: el hueco de la escalera no cuenta"""
+    return sum(L for letra,_,_,L in recorrido(b) if letra != 'ESC')
 
 def cuenta(b):
     d = q = 0
@@ -122,7 +127,7 @@ def svg(b):
                          f'y2="{Y(c2[1]):.1f}" stroke="#8a6a42" stroke-width="2"/>')
             mE=(p0[0]+ux*L/2, p0[1]+uy*L/2)
             o.append(f'<text x="{X(mE[0]):.1f}" y="{Y(mE[1])-34:.1f}" font-size="13" font-weight="800" '
-                     f'fill="#8a6a42" text-anchor="middle">ESCALERA BAJA</text>')
+                     f'fill="#8a6a42" text-anchor="middle">ESCALERA BAJA \u00b7 SIGUE DE MADERA</text>')
             continue
         if letra == "?":
             barra(0, L, "#fdf0e4", NAR, 2, 13)
@@ -222,7 +227,7 @@ pag = ""
 TD = TQ = 0
 for i, b in enumerate(BAL):
     d, q = cuenta(b); TD += d; TQ += q
-    tot = sum(L for _,_,_,L in recorrido(b))
+    tot = pies(b)
     pag += f"""
   {'<div class="pb"></div>' if i else ''}
   <div class="hd"><h1>{b['t']}</h1>
@@ -241,16 +246,17 @@ html = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
   {LEY}
   <table>
     <tr><th>Balc&#243;n</th><th style="width:22%">Total</th><th style="width:18%">Con dibujo</th><th style="width:18%">De piques</th></tr>
-    {"".join(f'<tr><td><b>{b["t"]}</b></td><td class="n">{sum(L for _,_,_,L in recorrido(b))/12:.1f} pies</td>'
+    {"".join(f'<tr><td><b>{b["t"]}</b></td><td class="n">{pies(b)/12:.1f} pies</td>'
              f'<td class="n">{cuenta(b)[0]}</td><td class="n">{cuenta(b)[1]}</td></tr>' for b in BAL)}
     <tr class="tot"><td><b>LOS CUATRO</b></td>
-      <td class="n">{sum(sum(L for _,_,_,L in recorrido(b)) for b in BAL)/12:.1f} pies</td>
+      <td class="n">{sum(pies(b) for b in BAL)/12:.1f} pies</td>
       <td class="n">{TD}</td><td class="n">{TQ}</td></tr>
   </table>
   <div class="nota"><b>Los dos del Pool House viran para el mismo lado</b> y los dos llevan la escalera
   al final del retorno largo, como en tus fotos. En las caballerizas el contorno de tu croquis no cierra,
   as&#237; que <b>revisa hacia d&#243;nde dobla cada lateral</b>. Si alguno est&#225; volteado, m&#225;rcalo:
   no cambia ni una medida ni una pieza.<br>
+  <b>Las escaleras de las dos caballerizas se quedan de madera por ahora</b>, as&#237; que la baranda se para a cada lado del hueco y no baja. Las <b>&#250;nicas escaleras de aluminio son las 4 del Pool House</b>: 185-1/2 a 34&#176; dos veces y 198 a 33&#176; dos veces.<br>
   <b>Las 2" que pediste</b> salen de los dos pa&#241;os que mueren contra la casa (lateral B del balc&#243;n 1
   y lateral E del balc&#243;n 2): ah&#237; el &#250;ltimo poste queda suelto, separado de la pared, sin anclaje.
   El plano lleva <b>la medida que t&#250; tomaste</b> y debajo, en naranja, <b>lo que se fabrica</b>.</div>
@@ -261,7 +267,7 @@ out = HERE / "railing-planta-balcones.html"
 out.write_text(html, encoding="utf-8")
 print("escrito:", out.name)
 for b in BAL:
-    d, q = cuenta(b); tot = sum(L for _,_,_,L in recorrido(b))
+    d, q = cuenta(b); tot = pies(b)
     print(f"  {b['t']:34s} {tot/12:5.1f} pies · {d} dibujos · {q} de piques")
-print(f"  {'LOS CUATRO':34s} {sum(sum(L for _,_,_,L in recorrido(b)) for b in BAL)/12:5.1f} pies "
+print(f"  {'LOS CUATRO':34s} {sum(pies(b) for b in BAL)/12:5.1f} pies "
       f"· {TD} dibujos · {TQ} de piques")
