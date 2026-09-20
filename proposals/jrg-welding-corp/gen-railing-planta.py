@@ -22,7 +22,7 @@ BAL = [
       pasos=[("E","N"), ("D","O"), ("F","S")]),
  dict(t="BALCÓN 3  ·  CABALLERIZA LADO 1", esc=None, girar=True,
       ini="PARED DE LA CABALLERIZA", fin="PARED DE LA CABALLERIZA",
-      pasos=[("G","E"), ("H","N"), ("J","O"), ("K","S"), ("ESC","O"), ("L","O"), ("M","N")]),
+      pasos=[("G","E"), ("H","N"), ("J","O"), ("K","S"), ("ESC","O"), ("M","O"), ("L","S")]),
  dict(t="BALCÓN 4  ·  CABALLERIZA LADO 2", esc=None, girar=True,
       ini="PARED DE LA CABALLERIZA", fin="PARED DE LA CABALLERIZA",
       pasos=[("P","O"), ("N","S"), ("?","E"), ("Q","N"), ("ESC","E"), ("R","E")]),
@@ -52,8 +52,9 @@ def elems(run):
             el.append(('P',))          # el poste de esquina lo lleva la corrida vecina
         el.extend(e)
     assert abs(sum(2.0 if x[0]=='P' else x[1] for x in el) - total) < 1e-9, run
-    return el
+    return el[::-1] if run in REVERSO else el
 
+REVERSO = {"A","B","D","E"}   # definidas de la esquina hacia la pared; el plano va al reves
 DX = {"N":(0,1), "S":(0,-1), "E":(1,0), "O":(-1,0)}
 GIRO = {"N":"E", "E":"S", "S":"O", "O":"N"}
 
