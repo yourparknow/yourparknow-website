@@ -366,12 +366,12 @@ PH_B2 = [
 ]
 
 # ================================ CABALLERIZA ===============================
-c1, c2, c3 = 29.625, 29.75, 47.5625
+c1, c2, c3 = 45.5, 44.6875, 47.5625   # c1 = panos del 193 ; c2 = panos del 191-3/8
 c4 = 47.75
 CB = [
- S("G-1", [('P',),('L',c1),('P',),('D',D),('P',),('L',c2),('P',),('D',D),('P',),('L',c1),('P',)],
+ S("G-1", [('P',),('D',D),('P',),('L',c1),('P',),('D',D),('P',),('L',c1),('P',)],
    "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)", "ESQUINA con H-1  (lleva el poste de esquina)",
-   "195\" menos las 2\" = 193\". Mide 16'-1\": confirma que entra en el horno."),
+   "Sale de la pared con dibujo. 195\" menos las 2\" = 193\". Mide 16'-1\"."),
  S("H-1", [('L',c3),('P',),('D',D),('P',),('L',c3),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de G-1)", "EMPATE RECTO  (junta al centro del poste)"),
  S("H-2", [('D',D),('P',),('L',c4),('P',),('D',D),('P',)],
@@ -393,18 +393,18 @@ CB = [
 # letras N, P, Q, R -- me salto la O y la I: en plano impreso se leen como 0 y 1
 n1, n2, n3 = 47.4375, 47.625, 29.125   # del croquis 1: corridas 441-3/8 y 191-3/8
 CB2 = [
- S("N-1", [('P',),('L',n1),('P',),('D',D),('P',),('L',n1),('P',)],
-   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)",
+ S("N-1", [('L',n1),('P',),('D',D),('P',),('L',n1),('P',)],
+   "ESQUINA  (arranca en paño, apoya en el poste de P-1)",
    "EMPATE RECTO  (junta al centro del poste)"),
  S("N-2", [('D',D),('P',),('L',n2),('P',),('D',D),('P',)],
    "EMPATE RECTO  (arranca en paño)", "EMPATE RECTO  (junta al centro del poste)"),
  S("N-3", [('L',n1),('P',),('D',D),('P',),('L',n1),('P',)],
    "EMPATE RECTO  (arranca en paño)", "ESQUINA con P-1  (lleva el poste de esquina)"),
- S("P-1", [('L',n3),('P',),('D',D),('P',),('L',n3),('P',),('D',D),('P',),('L',n3),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de N-3)", "ESQUINA con Q-1  (lleva el poste de esquina)",
-   "193-3/8 menos las 2\" que pediste = 191-3/8."),
+ S("P-1", [('P',),('D',D),('P',),('L',c2),('P',),('D',D),('P',),('L',c2),('P',)],
+   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)", "ESQUINA con N-1  (lleva el poste de esquina)",
+   "Sale de la pared con dibujo. 193-3/8 menos las 2\" = 191-3/8."),
  S("Q-1", [('L',22.5),('P',),('D',D),('P',),('L',22.5),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de P-1)", "ESQUINA con R-1  (lleva el poste de esquina)"),
+   "ESQUINA  (arranca en paño, apoya en el poste de N-3)", "HUECO DE LA ESCALERA  (27\", sigue de madera)"),
  S("R-1", [('L',44.0),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de Q-1)",
    "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)"),
@@ -440,8 +440,8 @@ EDIFICIOS = [
  dict(slug="caballeriza-2", titulo="CABALLERIZA — LADO 2 · BARANDA · SECCIONES DE FRENTE",
       meta="LADO CON EL PAÑO SIN MEDIR · REV. 2 · SEPT 20, 2026",
       grupos=[("CABALLERIZA LADO 2 — SECCIONES N a R", CB2)],
-      corridas=[("Caballeriza 2","N",441.375,["N-1","N-2","N-3"]),
-                ("Caballeriza 2","P",191.375,["P-1"]),
+      corridas=[("Caballeriza 2","P",191.375,["P-1"]),
+                ("Caballeriza 2","N",441.375,["N-1","N-2","N-3"]),
                 ("Caballeriza 2","Q", 99.0,["Q-1"]),
                 ("Caballeriza 2","R", 48.0,["R-1"])],
       aviso="<b>OJO — esta hoja es SOLO de la caballeriza 2, el cuarto balcón.</b> "
