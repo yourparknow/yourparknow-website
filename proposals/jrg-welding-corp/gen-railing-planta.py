@@ -28,6 +28,9 @@ BAL = [
       pasos=[("P","O"), ("N","S"), ("?","E"), ("Q","N"), ("R","E")]),
 ]
 INCOGNITA = 108.0
+# Lo que MIDIO en obra.  El taller fabrica 2" menos en los panos que mueren contra
+# la casa: ahi el ultimo poste queda suelto, separado de la pared, sin anclaje.
+MEDIDO = {"B": 161.0, "E": 151.625}
 
 SEC, CORRIDA = {}, {}
 for cfg in G.EDIFICIOS:
@@ -55,7 +58,7 @@ GIRO = {"N":"E", "E":"S", "S":"O", "O":"N"}
 def recorrido(b):
     x = y = 0.0; out = []
     for letra, rumbo in b['pasos']:
-        L = INCOGNITA if letra == "?" else CORRIDA[letra][0]
+        L = INCOGNITA if letra == "?" else MEDIDO.get(letra, CORRIDA[letra][0])
         dx, dy = DX[GIRO[rumbo] if b.get('girar') else rumbo]
         p0 = (x, y); x += dx*L; y += dy*L
         out.append((letra, p0, (x, y), L))
@@ -109,7 +112,7 @@ def svg(b):
         if letra == "?":
             barra(0, L, "#fdf0e4", NAR, 2, 13)
         else:
-            t = 0.0
+            t = L - CORRIDA[letra][0]      # el hueco de las 2" va contra la pared
             for e in elems(letra):
                 if e[0] == 'P':
                     cx, cy = p0[0]+ux*(t+1), p0[1]+uy*(t+1)
@@ -131,6 +134,9 @@ def svg(b):
         txt = "SIN MEDIR" if letra == "?" else f'{fr(L)}"   ({feet(L)})'
         o.append(f'<text x="{X(mx):.1f}" y="{Y(my)-8:.1f}" font-size="17" font-weight="800" '
                  f'fill="{ROJO}" text-anchor="middle"{rot}>{txt}</text>')
+        if letra in MEDIDO:
+            o.append(f'<text x="{X(mx):.1f}" y="{Y(my)+11:.1f}" font-size="11.5" font-weight="700" '
+                     f'fill="{NAR}" text-anchor="middle"{rot}>se fabrica {fr(CORRIDA[letra][0])}"</text>')
 
     # remates y escalera
     for p, t in ((tr[0][1], b['ini']), (tr[-1][2], b['fin'])):
@@ -158,7 +164,9 @@ def tabla(b):
         el = elems(letra)
         d = sum(1 for e in el if e[0] == 'D')
         q = sum(1 for e in el if e[0] == 'L')
-        f.append(f'<tr><td><b>Lateral {letra}</b></td><td class="n">{fr(L)}" ({feet(L)})</td>'
+        extra = (f' <span style="color:{NAR};font-weight:700">\u2192 se fabrica '
+                 f'{fr(CORRIDA[letra][0])}"</span>') if letra in MEDIDO else ''
+        f.append(f'<tr><td><b>Lateral {letra}</b></td><td class="n">{fr(L)}" ({feet(L)}){extra}</td>'
                  f'<td class="n">{d}</td><td class="n">{q}</td></tr>')
     return "".join(f)
 
@@ -223,7 +231,10 @@ html = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
   <div class="nota"><b>Los dos del Pool House viran para el mismo lado</b> y los dos llevan la escalera
   al final del retorno largo, como en tus fotos. En las caballerizas el contorno de tu croquis no cierra,
   as&#237; que <b>revisa hacia d&#243;nde dobla cada lateral</b>. Si alguno est&#225; volteado, m&#225;rcalo:
-  no cambia ni una medida ni una pieza.</div>
+  no cambia ni una medida ni una pieza.<br>
+  <b>Las 2" que pediste</b> salen de los dos pa&#241;os que mueren contra la casa (lateral B del balc&#243;n 1
+  y lateral E del balc&#243;n 2): ah&#237; el &#250;ltimo poste queda suelto, separado de la pared, sin anclaje.
+  El plano lleva <b>la medida que t&#250; tomaste</b> y debajo, en naranja, <b>lo que se fabrica</b>.</div>
 {pag}
 </div></body></html>"""
 

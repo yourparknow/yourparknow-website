@@ -335,7 +335,7 @@ PH_B1 = [
    "ESQUINA ①  (arranca en el poste de esquina con C-1)", "EMPATE RECTO ③  (junta al centro del poste)"),
  S("A-2", [('D',D),('P',),('L',45.4375),('P',),('D',D),('P',),('L',45.375),('P',)],
    "EMPATE RECTO ③  (arranca en paño, apoya en el poste de A-1)", "ESQUINA ②  (lleva el poste de esquina con B-1)"),
- S("B-1", [('L',29.5),('P',),('D',D),('P',),('D',D),('P',),('L',29.5),('P',)],
+ S("B-1", [('L',28.5),('P',),('D',D),('P',),('D',D),('P',),('L',28.5),('P',)],
    "ESQUINA ②  (arranca en paño, apoya en el poste de A-2)", "REMATE CONTRA LA CASA ⑥  (placa 4×4×1/4)"),
  S("C-1", [('L',44.5),('P',),('D',D),('P',),('L',44.625),('P',)],
    "ESQUINA ①  (arranca en paño, apoya en el poste de A-1)", "EMPATE RECTO ④  (junta al centro del poste)"),
@@ -343,14 +343,13 @@ PH_B1 = [
    "EMPATE RECTO ④  (arranca en paño)", "ARRANQUE DE ESCALERA ⑤"),
 ]
 PH_B2 = [
- S("D-1", [('P',),('L',36.625),('P',),('D',D),('P',),('L',36.625),('P',)],
-   "ESQUINA con F-1  (lleva el poste de esquina)", "EMPATE RECTO  (junta al centro del poste)",
-   "Esta corrida ya trae descontadas las 2\" en la esquina."),
- S("D-2", [('D',D),('P',),('L',36.75),('P',),('D',D),('P',)],
+ S("D-1", [('P',),('L',37.0),('P',),('D',D),('P',),('L',37.0),('P',)],
+   "ESQUINA con F-1  (lleva el poste de esquina)", "EMPATE RECTO  (junta al centro del poste)"),
+ S("D-2", [('D',D),('P',),('L',37.25),('P',),('D',D),('P',)],
    "EMPATE RECTO  (arranca en paño)", "EMPATE RECTO  (junta al centro del poste)"),
- S("D-3", [('L',36.625),('P',),('D',D),('P',),('L',36.625),('P',)],
+ S("D-3", [('L',37.0),('P',),('D',D),('P',),('L',37.0),('P',)],
    "EMPATE RECTO  (arranca en paño)", "ESQUINA con E-1  (lleva el poste de esquina)"),
- S("E-1", [('L',24.8125),('P',),('D',D),('P',),('D',D),('P',),('L',24.8125),('P',)],
+ S("E-1", [('L',23.8125),('P',),('D',D),('P',),('D',D),('P',),('L',23.8125),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de D-3)", "REMATE CONTRA LA CASA  (placa 4×4×1/4)"),
  S("F-1", [('L',45.25),('P',),('D',D),('P',),('L',45.25),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de D-1)", "EMPATE RECTO  (junta al centro del poste)"),
@@ -411,14 +410,14 @@ EDIFICIOS = [
       meta="BALCÓN 1 + BALCÓN 2 · REV. 3 · SEPT 20, 2026",
       grupos=[("POOL HOUSE — BALCÓN 1 (el de la escalera)", PH_B1),
               ("POOL HOUSE — BALCÓN 2 (el largo de la derecha)", PH_B2)],
-      corridas=[("Balcón 1","A",383.625,["A-1","A-2"]), ("Balcón 1","B",161.0,["B-1"]),
-                ("Balcón 1","C",237.625,["C-1","C-2"]), ("Balcón 2","D",387.25,["D-1","D-2","D-3"]),
-                ("Balcón 2","E",151.625,["E-1"]), ("Balcón 2","F",239.75,["F-1","F-2"])],
+      corridas=[("Balcón 1","A",383.625,["A-1","A-2"]), ("Balcón 1","B",159.0,["B-1"]),
+                ("Balcón 1","C",237.625,["C-1","C-2"]), ("Balcón 2","D",389.25,["D-1","D-2","D-3"]),
+                ("Balcón 2","E",149.625,["E-1"]), ("Balcón 2","F",239.75,["F-1","F-2"])],
       aviso="<b>OJO — esta hoja es SOLO del Pool House, y falta la escalera.</b> "
             "Los dibujitos de aquí son los de los dos balcones planos del Pool House. "
             "La caballeriza va en hoja aparte, con las letras G a la M (no se repite ninguna letra entre edificios). "
             "Los rombos de la escalera van aparte (otro ángulo, otras medidas) y no están contados aquí. "
-            "El balcón largo de la derecha ya trae descontadas las <b>2\"</b> de la esquina: corrida D = 387-1/4\"."),
+            "Las <b>2\"</b> se descuentan en los paños que mueren contra la casa: corrida B = 159\" (161 medidas) y corrida E = 149-5/8\" (151-5/8 medidas). El largo D queda en 389-1/4\", como lo mediste."),
  dict(slug="caballeriza", titulo="CABALLERIZA — BARANDA · SECCIONES DE FRENTE",
       meta="BALCÓN EN U · REV. 1 · SEPT 20, 2026",
       grupos=[("CABALLERIZA — SECCIONES G a M", CB)],
