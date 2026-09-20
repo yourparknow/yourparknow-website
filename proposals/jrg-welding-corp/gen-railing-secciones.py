@@ -382,6 +382,27 @@ CB = [
    "ESQUINA  (arranca en paño, apoya en el poste de L-1)", "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)"),
 ]
 
+# ============================== CABALLERIZA 2 ==============================
+# letras N, P, Q, R -- me salto la O y la I: en plano impreso se leen como 0 y 1
+n1, n2, n3 = 31.125, 31.375, 30.0
+CB2 = [
+ S("N-1", [('P',),('L',n1),('P',),('D',D),('P',),('L',n1),('P',),('D',D),('P',)],
+   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)",
+   "EMPATE RECTO  (junta al centro del poste)"),
+ S("N-2", [('L',n1),('P',),('D',D),('P',),('L',n2),('P',)],
+   "EMPATE RECTO  (arranca en paño)", "EMPATE RECTO  (junta al centro del poste)"),
+ S("N-3", [('D',D),('P',),('L',n1),('P',),('D',D),('P',),('L',n1),('P',)],
+   "EMPATE RECTO  (arranca en paño)", "ESQUINA con P-1  (lleva el poste de esquina)"),
+ S("P-1", [('L',n3),('P',),('D',D),('P',),('L',n3),('P',),('D',D),('P',),('L',n3),('P',)],
+   "ESQUINA  (arranca en paño, apoya en el poste de N-3)", "ESQUINA con Q-1  (lleva el poste de esquina)",
+   "Mide 16'-0\" justos: confirma que entra en el horno."),
+ S("Q-1", [('L',22.5),('P',),('D',D),('P',),('L',22.5),('P',)],
+   "ESQUINA  (arranca en paño, apoya en el poste de P-1)", "ESQUINA con R-1  (lleva el poste de esquina)"),
+ S("R-1", [('L',44.0),('P',)],
+   "ESQUINA  (arranca en paño, apoya en el poste de Q-1)",
+   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)"),
+]
+
 def largo(sec):
     return sum(POST if e[0] == 'P' else e[1] for e in sec['elems'])
 
@@ -409,6 +430,18 @@ EDIFICIOS = [
             "dos secciones. La corrida G ya trae descontadas las <b>2\"</b> (195 − 2 = 193). "
             "<b>Falta confirmar el orden en que se encadenan las corridas</b> alrededor del edificio: "
             "los largos y el despiece no cambian, pero sí cambia cuál sección lleva cada poste de esquina."),
+ dict(slug="caballeriza-2", titulo="CABALLERIZA 2 — BARANDA · SECCIONES DE FRENTE",
+      meta="EL CUARTO BALCÓN · REV. 1 · SEPT 20, 2026",
+      grupos=[("CABALLERIZA 2 — SECCIONES N a R", CB2)],
+      corridas=[("Caballeriza 2","N",441.0,["N-1","N-2","N-3"]),
+                ("Caballeriza 2","P",194.0,["P-1"]),
+                ("Caballeriza 2","Q", 99.0,["Q-1"]),
+                ("Caballeriza 2","R", 48.0,["R-1"])],
+      aviso="<b>OJO — esta hoja es SOLO de la caballeriza 2, el cuarto balcón.</b> "
+            "Las letras N, P, Q y R no se repiten en ninguna otra hoja. "
+            "<b>Falta confirmar el orden en que se encadenan las corridas</b> alrededor del edificio: "
+            "los largos y el despiece no cambian, solo cuál sección lleva cada poste de esquina. "
+            "El pañito del signo de interrogación no está en esta hoja: falta medirlo."),
 ]
 
 # ---------------------------------------------------------------- bloque HTML

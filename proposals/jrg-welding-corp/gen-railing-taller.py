@@ -115,7 +115,11 @@ def svg_simple(sec):
             o.append(f'<text x="{xp:.2f}" y="{yy+13}" font-size="8.5" fill="{NEG}" '
                      f'text-anchor="{anchor}">poste completo, no se toca</text>')
     flag(X(0), ti, sec['izq'], "start")
-    flag(X(T), td, sec['der'], "end")
+    # en secciones cortas las dos etiquetas se pisan: la derecha se va al costado
+    if T * SC < 260:
+        flag(X(T) + 16, td, sec['der'], "start")
+    else:
+        flag(X(T), td, sec['der'], "end")
 
     o.append(f'<text x="{X(T/2):.2f}" y="{yb+30}" font-size="11" font-weight="700" fill="#555" '
              f'text-anchor="middle">LARGO TOTAL DE LA SECCIÓN &#160;{fr(T)}"&#160; ({feet(T)})</text>')
