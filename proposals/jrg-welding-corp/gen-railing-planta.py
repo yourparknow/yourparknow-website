@@ -14,7 +14,7 @@ fr, feet, piques_de = G.fr, G.feet, G.piques_de
 # Los dos del Pool House viran para el MISMO lado y los dos llevan escalera
 # al final del retorno largo.  Las dos caballerizas van giradas 90 en la hoja.
 BAL = [
- dict(t="BALCÓN 1  ·  POOL HOUSE", esc='ESCALERA  185" a 34°',
+ dict(t="BALCÓN 1  ·  POOL HOUSE", esc='ESCALERA  185-1/2" a 34°',
       ini="PARED DE LA CASA", fin="ARRANQUE DE LA ESCALERA",
       pasos=[("B","N"), ("A","O"), ("C","S")]),
  dict(t="BALCÓN 2  ·  POOL HOUSE", esc='ESCALERA  198" a 33°',
