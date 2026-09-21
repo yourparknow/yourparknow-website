@@ -96,7 +96,15 @@ E = importlib.util.module_from_spec(spec_e); spec_e.loader.exec_module(E)
 ESC_N   = sum(x['cant'] for x in E.ESCALERAS)
 ESC_POS = 3 * ESC_N
 ESC_DIB = ESC_N
-ESC_PIQ = sum((2*E.geo(x)['n_piq'] + 4) * x['cant'] for x in E.ESCALERAS)        # los 4 piques rectos de 38 de cada dibujo
+ESC_PIQ = sum(((E.geo(x)['n_bay']-1)*E.geo(x)['n_piq']
+                + 2 + 2*E.geo(x)['n_fl']) * x['cant'] for x in E.ESCALERAS)
+ESC_SEC = ESC_N                                   # cada escalera sale como una pieza
+spec_p = importlib.util.spec_from_file_location("gpl", HERE / "gen-railing-planta.py")
+PL = importlib.util.module_from_spec(spec_p); spec_p.loader.exec_module(PL)
+PIES_BAL = sum(PL.pies(b) for b in PL.BAL) / 12.0           # sin el panito sin medir
+PIES_ESC = sum(x['rake'] * x['cant'] for x in E.ESCALERAS) / 12.0
+PIES_TOT = PIES_BAL + PIES_ESC
+SIN_MEDIR = PL.INCOGNITA / 12.0        # los 4 piques rectos de 38 de cada dibujo
 
 
 def portada(offset):
@@ -137,12 +145,12 @@ def portada(offset):
  </div>
 
  <div class="big">
-   <div><b>4</b><span>balcones</span></div>
-   <div><b>281</b><span>pies de baranda</span></div>
-   <div><b>{tot['dib']+1+ESC_DIB}</b><span>dibujos</span></div>
+   <div><b>4+4</b><span>balcones y escaleras</span></div>
+   <div><b>{PIES_TOT:.0f}</b><span>pies de baranda</span></div>
+   <div><b>{tot['dib']+ESC_DIB}</b><span>dibujos</span></div>
    <div><b>{PIQ_TOTAL+ESC_PIQ}</b><span>piques</span></div>
    <div><b>{tot['pos'] + ESC_POS}</b><span>postes</span></div>
-   <div><b>{tot['sec']}</b><span>secciones soldadas</span></div>
+   <div><b>{tot['sec']+ESC_SEC}</b><span>secciones soldadas</span></div>
  </div>
 
  <h2>Qu&#233; hay en este set</h2>
@@ -158,6 +166,11 @@ def portada(offset):
  balc&#243;n 2 sube 8'-11-27/32". <b>Mide del piso de abajo al deck antes de cortar.</b> Y ojo:
  los {ESC_DIB} dibujos de las escaleras <b>NO son los del balc&#243;n</b>, son piezas nuevas, 2 de
  34&#176; y 2 de 33&#176;.</div>
+
+ <div class="warn"><b>LO QUE FALTA MEDIR:</b> el pa&#241;ito del signo de interrogaci&#243;n en
+ la caballeriza lado 2, como <b>{SIN_MEDIR:.0f} pies</b>. <b>No est&#225; dibujado y NO est&#225;
+ contado arriba</b> &#8212; los {PIES_TOT:.0f} pies son solo lo que est&#225; dibujado y se puede
+ cortar. Cuando me des esa medida te digo si lleva un dibujo o dos y actualizo los totales.</div>
 
  <div class="warn"><b>Dos cosas para el carpintero, antes de montar:</b>
  <b>bloqueo s&#243;lido 2&#215; en las 9 esquinas</b>, en las dos direcciones, y el

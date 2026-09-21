@@ -71,14 +71,15 @@ def recorrido(b):
     return out
 
 def pies(b):
-    """pies lineales de BARANDA: el hueco de la escalera no cuenta"""
-    return sum(L for letra,_,_,L in recorrido(b) if letra != 'ESC')
+    """pies lineales de BARANDA de verdad: ni el hueco de la escalera ni el
+       panito sin medir cuentan. Lo que no esta medido no esta dibujado."""
+    return sum(L for letra,_,_,L in recorrido(b) if letra not in ('ESC', '?'))
 
 def cuenta(b):
     d = q = 0
     for letra, *_ in recorrido(b):
         if letra == "ESC": continue                  # el hueco no lleva baranda
-        if letra == "?": d += 1; q += 2; continue    # 1 dibujo entre 2 panos de piques
+        if letra == "?": continue    # SIN MEDIR: no se cuenta como baranda hecha
         for e in elems(letra):
             if e[0] == 'D': d += 1
             elif e[0] == 'L': q += 1

@@ -120,7 +120,7 @@ def PLANTILLA(titulo, meta, aviso, tot_dib, tot_lis, tot_piq, tot_pos,
         <th style="width:10%">Por dibujo</th><th style="width:11%">Total {tot_dib}</th><th>Nota</th></tr>
     {tabla_corte}
   </table>
-  <p style="font-size:11px"><b>Material 1&#215;1&#215;1/16 para los dibujitos: {pies} pies lineales &#8776; {tiras} tiras de 20'</b>
+  <p style="font-size:11px"><b>Material 1&#215;1&#215;1/16 para los dibujitos: {pies} pies lineales &#8776; {tiras} tiras de 24'</b>
   (sin contar desperdicio de corte ni los piques de los pa&#241;os lisos).</p>
 
   <div class="warn"><b>Los largos C2 y C3 ya llevan descontado el material de la X.</b>
@@ -149,7 +149,7 @@ def PLANTILLA(titulo, meta, aviso, tot_dib, tot_lis, tot_piq, tot_pos,
         son id&#233;nticas en todos</b>. Casi todos van en pa&#241;o de luz 46" (panel 45-1/2").
         <b>Uno solo es distinto:</b> el de la corrida L de la caballeriza 1 va en luz 43" (panel 42-1/2"),
         con las luces de flanco apretadas a 2-9/16 en vez de 3-5/16. Mismas piezas, riel m&#225;s corto.</li>
-    <li><b>Ninguna esquina lleva dibujo</b> &#8212; siempre pa&#241;o de piques, para poder ajustar en obra. <b>&#218;nica excepci&#243;n:</b> el lateral B del balc&#243;n 1 arranca con dibujo pegado a la pared de la casa.</li>
+    <li><b>Ninguna esquina lleva dibujo</b> &#8212; siempre pa&#241;o de piques, para poder ajustar en obra. <b>Cuatro excepciones, y las cuatro las pediste t&#250;:</b> el lateral <b>B</b> del balc&#243;n 1 arranca con dibujo pegado a la pared de la casa; <b>G</b> y <b>P</b> salen de la pared de la caballeriza con dibujo; y la pata <b>L</b> de 47" lleva dibujo para que la ele no quede pelada.</li>
     <li><b>Marcar los piques con el flex&#243;metro corrido</b> desde la punta izquierda del riel usando la tabla de arriba.
         No medir de pique en pique: se acumula el error.</li>
     <li><b>La secci&#243;n se suelda completa con sus postes</b> y los rieles se cortan a la luz exacta.</li>
@@ -344,7 +344,7 @@ PH_B1 = [
  S("A-3", [('L',39.5),('P',),('D',D),('P',),('L',30.5625),('P',)],
    "EMPATE RECTO ⑦  (arranca en paño)", "ESQUINA ②  (lleva el poste de esquina con B-1)"),
  S("B-1", [('L',28.5),('P',),('D',D),('P',),('L',28.5),('P',),('D',D),('P',)],
-   "ESQUINA ②  (arranca en paño, apoya en el poste de A-2)", "REMATE CONTRA LA CASA ⑥  (placa 4×4×1/4)"),
+   "ESQUINA ②  (arranca en paño, apoya en el poste de A-3)", "REMATE CONTRA LA CASA ⑥  (poste suelto, NO se ancla a la pared)"),
  S("C-1", [('L',44.5),('P',),('D',D),('P',),('L',44.625),('P',)],
    "ESQUINA ①  (arranca en paño, apoya en el poste de A-1)", "EMPATE RECTO ④  (junta al centro del poste)"),
  S("C-2", [('D',D),('P',),('L',44.5),('P',)],
@@ -358,7 +358,7 @@ PH_B2 = [
  S("D-3", [('L',37.0),('P',),('D',D),('P',),('L',37.0),('P',)],
    "EMPATE RECTO  (arranca en paño)", "ESQUINA con E-1  (lleva el poste de esquina)"),
  S("E-1", [('L',47.8125),('P',),('D',D),('P',),('L',47.8125),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de D-3)", "REMATE CONTRA LA CASA  (placa 4×4×1/4)"),
+   "ESQUINA  (arranca en paño, apoya en el poste de D-3)", "REMATE CONTRA LA CASA  (poste suelto, NO se ancla a la pared)"),
  S("F-1", [('L',45.25),('P',),('D',D),('P',),('L',45.25),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de D-1)", "EMPATE RECTO  (junta al centro del poste)"),
  S("F-2", [('D',D),('P',),('L',45.25),('P',)],
@@ -370,7 +370,7 @@ c1, c2, c3 = 45.5, 44.6875, 47.5625   # c1 = panos del 193 ; c2 = panos del 191-
 c4 = 47.75
 CB = [
  S("G-1", [('P',),('D',D),('P',),('L',c1),('P',),('D',D),('P',),('L',c1),('P',)],
-   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)", "ESQUINA con H-1  (lleva el poste de esquina)",
+   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (poste suelto, NO se ancla a la pared)", "ESQUINA con H-1  (lleva el poste de esquina)",
    "Sale de la pared con dibujo. 195\" menos las 2\" = 193\". Mide 16'-1\"."),
  S("H-1", [('L',c3),('P',),('D',D),('P',),('L',c3),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de G-1)", "EMPATE RECTO  (junta al centro del poste)"),
@@ -406,12 +406,12 @@ CB2 = [
  S("N-2", [('D',D),('P',),('L',n2),('P',),('D',D),('P',)],
    "EMPATE RECTO  (arranca en paño)", "EMPATE RECTO  (junta al centro del poste)"),
  S("N-3", [('L',n1),('P',),('D',D),('P',),('L',n1),('P',)],
-   "EMPATE RECTO  (arranca en paño)", "ESQUINA con P-1  (lleva el poste de esquina)"),
+   "EMPATE RECTO  (arranca en paño)", "ESQUINA  (lleva el poste de esquina; del otro lado va el pañito sin medir)"),
  S("P-1", [('P',),('D',D),('P',),('L',c2),('P',),('D',D),('P',),('L',c2),('P',)],
-   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)", "ESQUINA con N-1  (lleva el poste de esquina)",
+   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (poste suelto, NO se ancla a la pared)", "ESQUINA con N-1  (lleva el poste de esquina)",
    "Sale de la pared con dibujo. 193-3/8 menos las 2\" = 191-3/8."),
- S("Q-1", [('L',22.5),('P',),('D',D),('P',),('L',22.5),('P',)],
-   "ESQUINA  (arranca en paño, sobre el poste de esquina del pañito sin medir)",
+ S("Q-1", [('P',),('L',22.5),('P',),('D',D),('P',),('L',22.5),('P',)],
+   "ARRANQUE  —  LLEVA SU PROPIO POSTE (del otro lado va el pañito sin medir, que no está dibujado)",
    "HUECO DE LA ESCALERA  (27\", sigue de madera)"),
  # --- MISMO CASO QUE LA "L" DEL LADO 1: la R-1 queda suelta entre el hueco de la
  #     escalera y la pared. Ninguno de sus dos extremos toca nada, así que carga sus 2 postes.
@@ -460,7 +460,7 @@ EDIFICIOS = [
                 ("Caballeriza 2","N",441.375,["N-1","N-2","N-3"]),
                 ("Caballeriza 2","Q", 99.0,["Q-1"]),
                 ("Caballeriza 2","R", 48.0,["R-1"])],
-      cadena=[None,"P","N","?","Q",None,"R",None],
+      cadena=[None,"P","N",None,"Q",None,"R",None],   # el "?" no esta medido: no da poste
       aviso="<b>OJO — esta hoja es SOLO de la caballeriza 2, el cuarto balcón.</b> "
             "Las letras N, P, Q y R no se repiten en ninguna otra hoja. "
             "<b>Falta confirmar el orden en que se encadenan las corridas</b> alrededor del edificio: "
@@ -571,7 +571,7 @@ def build(cfg):
         fil2.append(f"<tr><td><b>{cod}</b></td><td>1×1×1/16</td><td class='n'>{fr(Lg)}\"</td>"
                     f"<td class='n'>{q}</td><td class='n'><b>{tq}</b></td><td>{desc}</td></tr>")
     tabla_corte = "\n".join(fil2)
-    tiras = int(-(-pies // 20)) + 1
+    tiras = int(-(-pies // 24)) + 1   # todo viene en 24 pies
 
     res = "\n".join(f"<tr><td>{et}</td><td><b>Corrida {run}</b></td>"
                     f"<td class='n'>{fr(total)}\" ({feet(total)})</td><td>{' + '.join(nm)}</td></tr>"
@@ -594,7 +594,7 @@ def build(cfg):
                      cuerpo=cuerpo)
     out = f"/home/user/yourparknow-website/proposals/jrg-welding-corp/railing-secciones-{cfg['slug']}.html"
     open(out, "w", encoding="utf-8").write(html)
-    print(f"  escrito: {out}  ({pies:.0f} pies de 1×1 ≈ {tiras} tiras de 20')")
+    print(f"  escrito: {out}  ({pies:.0f} pies de 1×1 ≈ {tiras} tiras de 24')")
     return tot_dib
 
 if __name__ == "__main__":

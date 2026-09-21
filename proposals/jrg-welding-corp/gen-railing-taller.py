@@ -31,7 +31,7 @@ def tipo_punta(txt):
 def vecino(txt):
     """seccion vecina (A-1) o numero de empate (③), si el texto lo menciona"""
     import re
-    m = re.search(r"\b([A-M]-\d)\b", txt)
+    m = re.search(r"\b([A-R]-\d)\b", txt)
     if m: return m.group(1)
     m = re.search(r"[①-⑨]", txt)
     return m.group(0) if m else ""
@@ -52,7 +52,7 @@ def svg_simple(sec):
         else:           bays.append((x, e[0], e[1])); x += e[1]
 
     for x0, kind, luz in bays:
-        o.append(G.dibujito(x0) if kind == 'D' else G.pano_liso(x0, luz)[0])
+        o.append(G.dibujito(x0, luz) if kind == 'D' else G.pano_liso(x0, luz)[0])
 
     # ---- cap
     ext_i = 0.0 if elems[0][0] == 'P' else 2.0
@@ -185,7 +185,7 @@ LEYENDA = """
          Debajo dice si es DIBUJO o cu&#225;ntos piques lleva.</div>
   </div>
   <p style="font-size:13px; margin:8px 0"><b>La &#250;nica medida del plano es de CENTRO DE POSTE A CENTRO DE POSTE.</b>
-  Todo pa&#241;o de dibujo es <b>48"</b> centro a centro, siempre, en los dos edificios.</p>
+  Casi todo pa&#241;o de dibujo es <b>48"</b> centro a centro. <b>Uno solo es distinto:</b> el de la corrida L de la caballeriza 1 va a <b>45"</b> centro a centro (bah&#237;a de 43"), con el riel de <b>42-1/2"</b> en vez de 45-1/2. <b>Manda la cota del dibujo, no esta nota.</b></p>
 """
 
 def doc(cfg):

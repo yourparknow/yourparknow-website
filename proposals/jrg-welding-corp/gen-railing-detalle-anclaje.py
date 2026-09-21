@@ -252,7 +252,10 @@ for cfg in G.EDIFICIOS:
     for _, gr in cfg['grupos']:
         for s in gr:
             for txt in (s['izq'], s['der']):
-                if "ESQUINA" in txt and "lleva el poste" in txt:
+                # OJO: A-1 dice "arranca en el poste de esquina con C-1", que tambien
+                # es llevar el poste. Antes se colaba por no decir "lleva el poste"
+                # y ese poste de esquina se quedaba sin orejas.
+                if "ESQUINA" in txt and ("lleva el poste" in txt or "arranca en el poste" in txt):
                     esquinas.append((s['name'], cfg['slug']))
 NE = len(esquinas)
 NOMB = {"pool-house": "Pool House", "caballeriza": "Caballeriza 1", "caballeriza-2": "Caballeriza 2"}

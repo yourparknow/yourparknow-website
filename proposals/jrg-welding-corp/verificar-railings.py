@@ -124,8 +124,13 @@ def t7_escaleras():
             mal(f"{e['n']}: la cadena horizontal no cierra")
         if g['sep'] + E.GAP >= 4.0:
             mal(f"{e['n']}: pasa la esfera de 4\"")
-        if sum(q for _, q, _, _ in g['piezas']) != 17:
-            mal(f"{e['n']}: el dibujo no lleva 17 piezas")
+        # el dibujo de escalera lleva 15 piezas, o 17 si la bahia necesita
+        # pique de flanco. Se comprueba contra la composicion, no contra un numero.
+        esperadas = 15 + 2 * g['n_fl']
+        if g['n_piezas'] != esperadas:
+            mal(f"{e['n']}: el dibujo lleva {g['n_piezas']} piezas y tenian que ser {esperadas}")
+        if g['cc'] > E.CC_MAX + 1e-9:
+            mal(f"{e['n']}: postes a {fr(g['cc'])}\" centro a centro, pasa de {E.CC_MAX:g}\"")
         seq = [c[0] for c in g['cad'] if c[0] != 'P']
         if seq[0] == 'D' or seq[-1] == 'D':
             mal(f"{e['n']}: arranca o termina en dibujo")
@@ -157,6 +162,19 @@ def t10_huerfanos():
             mal(f"la hoja {n} apunta a {S.GENERADOR[n]}, que no existe")
     return f"las {len(S.HOJAS)} hojas del set salen de un generador vivo"
 
+def t11_mismo_ancho():
+    """El taller dibujaba el dibujo de L-1 a 46 cuando su bahia es de 43: la misma
+       pieza salia con dos anchos en dos hojas del mismo set. Que no vuelva."""
+    import re
+    for arch in ("gen-railing-taller.py", "gen-railing-fab-caballerizas.py"):
+        txt = (HERE / arch).read_text()
+        for m in re.finditer(r"G\.dibujito\(([^)]*)\)", txt):
+            if "," not in m.group(1):
+                mal(f"{arch}: llama a dibujito() sin pasarle la luz de la bahia — "
+                    f"el dibujo de 43\" saldria de 46\"")
+    anchos = {e[1] for s in SEC.values() for e in s['elems'] if e[0] == 'D'}
+    return f"las bahias de dibujo son {', '.join(fr(a) for a in sorted(anchos))}\", y cada hoja usa la suya"
+
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
  ("Dos dibujos nunca van pegados",          t2_dibujos_pegados),
@@ -168,6 +186,7 @@ PRUEBAS = [
  ("Letras de seccion sin repetir",          t8_letras),
  ("Caballerizas: escaleras de madera",      t9_caballeriza_madera),
  ("Ninguna hoja huerfana en el set",        t10_huerfanos),
+ ("El mismo dibujo, igual en toda hoja",    t11_mismo_ancho),
 ]
 
 print("\n" + "=" * 68)

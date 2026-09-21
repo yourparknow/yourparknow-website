@@ -9,6 +9,12 @@ from fractions import Fraction
 HERE = pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
 spec = importlib.util.spec_from_file_location("gsec", HERE / "gen-railing-secciones.py")
 G = importlib.util.module_from_spec(spec); spec.loader.exec_module(G)
+# la medida de la oreja se saca de su propia hoja: antes estaba tecleada aqui
+# a mano y las dos hojas del mismo set daban medidas distintas.
+_sa = importlib.util.spec_from_file_location("ganc", HERE / "gen-railing-detalle-anclaje.py")
+import io, contextlib
+ANC = importlib.util.module_from_spec(_sa)
+with contextlib.redirect_stdout(io.StringIO()): _sa.loader.exec_module(ANC)
 fr, feet, piques_de = G.fr, G.feet, G.piques_de
 POST, POST_LEN, Y_CAP_B, Y_RAIL_T, Y_DECK = G.POST, G.POST_LEN, G.Y_CAP_B, G.Y_RAIL_T, G.Y_DECK
 
@@ -191,7 +197,7 @@ LEY = f"""
   <div><b class="rj" style="text-decoration:underline">CONEXI&#211;N</b>Se une a otra secci&#243;n.
        El poste lo lleva la otra (rayita roja).</div>
   <div><b>MUERE / ESQUINA</b>Ah&#237; termina. El poste va completo en esta secci&#243;n.</div>
-  <div><b class="rj">POSTE DE ESQUINA</b>Lleva <b>2 orejas de 1/4"&#215;3"&#215;5"</b> soldadas.
+  <div><b class="rj">POSTE DE ESQUINA</b>Lleva <b>2 orejas de 1/4"&#215;{G.fr(ANC.OREJA_L)}"&#215;{G.fr(ANC.OREJA_H)}"</b> soldadas.
        Ver la hoja <i>Detalle de anclaje</i>.</div>
  </div>
  <p style="font-size:12.5px;margin:6px 0"><b>El dibujito ya est&#225; armado</b> y flota

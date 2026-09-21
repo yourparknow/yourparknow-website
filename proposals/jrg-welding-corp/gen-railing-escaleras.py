@@ -36,6 +36,41 @@ ESCALERAS = [
 ]
 
 
+CC_MAX = 48.0        # centro a centro de poste, POR LA PENDIENTE. Regla de Rene.
+CUADRO_E = 26.0      # el cuadro del dibujo de escalera. Mas chico que el del
+                     # balcon porque con los postes a 4 pies las bahias son mas
+                     # cortas y el de 30-1/4 no cabe.
+
+def reparto(horiz, ca):
+    """cuantos panos caben con el centro a centro por debajo de CC_MAX."""
+    n = 1
+    while True:
+        bay = (horiz - POST_W * (n + 1)) / n
+        if (bay + POST_W) / ca <= CC_MAX:
+            return n, bay
+        n += 1
+
+def piques_en(panel, lim=ESFERA):
+    """cuantos piques hacen falta en un panel de ese ancho (medido EN HORIZONTAL)"""
+    n = 0
+    while (panel - n * TUBO) / (n + 1) + GAP > lim:
+        n += 1
+    return n, (panel - n * TUBO) / (n + 1)
+
+def flancos(panel):
+    """el cuadro va centrado; cada flanco se rellena con los piques que hagan
+       falta para que la luz libre no pase de ESFERA."""
+    hueco = (panel - CUADRO_E) / 2
+    assert hueco > 0, "el cuadro no cabe en la bahia"
+    n, g = piques_en(hueco + TUBO, ESFERA)   # el hueco mas un tubo virtual
+    n = max(n - 1, 0)
+    while (hueco - n * TUBO) / (n + 1) + GAP > ESFERA:
+        n += 1
+    g = (hueco - n * TUBO) / (n + 1)
+    assert abs((n * TUBO + (n + 1) * g) - hueco) < 1e-9, "el flanco no cierra"
+    return n, g
+
+
 def geo(e):
     """toda la geometria de una escalera, con las cadenas verificadas."""
     a  = math.radians(e['ang'])
@@ -44,70 +79,91 @@ def geo(e):
     g['a'], g['ca'], g['ta'] = a, ca, ta
     g['horiz'] = e['rake'] * ca
     g['rise']  = e['rake'] * math.sin(a)
-    # alturas A PLOMO sobre la linea de narices
     g['y_riel_b'] = PISO
-    g['y_riel_t'] = PISO + RIEL / ca            # el 2x1 acostado sube 1/cos a plomo
+    g['y_riel_t'] = PISO + RIEL / ca
     g['y_cap_t']  = GUARD
     g['y_cap_b']  = GUARD - CAP / ca
     g['campo']    = g['y_cap_b'] - g['y_riel_t']
-    g['flot']     = (g['campo'] - CUADRO) / 2
+    g['flot']     = (g['campo'] - CUADRO_E) / 2
     assert g['flot'] > 2.0, "el cuadro no cabe en el campo"
 
-    # reparto: pano liso + DIBUJO 46 + pano liso, todo en HORIZONTAL
-    w = (g['horiz'] - 4 * POST_W - LUZ_DIB) / 2
-    g['w'] = w
-    cad = [('P',), ('L', w), ('P',), ('D', LUZ_DIB), ('P',), ('L', w), ('P',)]
+    # ---- reparto de postes: manda el centro a centro de 48 POR LA PENDIENTE
+    n, bay = reparto(g['horiz'], ca)
+    g['n_bay'], g['bay'] = n, bay
+    g['cc'] = (bay + POST_W) / ca
+    assert g['cc'] <= CC_MAX + 1e-9, f"centro a centro {g['cc']:.2f} pasa de {CC_MAX}"
+    i_dib = n // 2                                   # el dibujo va en la bahia del medio
+    g['i_dib'] = i_dib
+    cad = [('P',)]
+    for i in range(n):
+        cad += [('D' if i == i_dib else 'L', bay), ('P',)]
     g['cad'] = cad
     assert abs(sum(POST_W if c[0] == 'P' else c[1] for c in cad) - g['horiz']) < 1e-9, \
         "la cadena horizontal de la escalera no cierra"
+    seq = [c[0] for c in cad if c[0] != 'P']
+    assert seq[0] != 'D' and seq[-1] != 'D', "la escalera arranca o termina en dibujo"
+    assert not any(x == 'D' and y == 'D' for x, y in zip(seq, seq[1:])), "dos dibujos pegados"
 
-    # piques del pano liso.  La esfera se mide EN HORIZONTAL.
-    panel = w - 2 * GAP
-    n = 1
-    while (panel - n * TUBO) / (n + 1) + GAP > ESFERA:
-        n += 1
-    sep = (panel - n * TUBO) / (n + 1)
-    g['n_piq'], g['sep'] = n, sep
-    assert abs((n * TUBO + (n + 1) * sep) - panel) < 1e-9, "el pano liso no cierra"
-    g['marca'] = (TUBO + sep) / ca              # de marca a marca SOBRE el riel inclinado
+    panel = bay - 2 * GAP
+    g['panel'] = panel
+    g['n_piq'], g['sep'] = piques_en(panel)
+    assert abs((g['n_piq'] * TUBO + (g['n_piq'] + 1) * g['sep']) - panel) < 1e-9, "pano liso"
+    g['marca'] = (TUBO + g['sep']) / ca
+
+    # ---- la bahia del dibujo: cuadro centrado, flancos rellenos
+    g['n_fl'], g['g_fl'] = flancos(panel)
+    assert abs((2 * (g['n_fl'] * TUBO + (g['n_fl'] + 1) * g['g_fl']) + CUADRO_E) - panel) < 1e-9, \
+        "la bahia del dibujo no cierra"
 
     # ---- piezas del dibujo acostado
-    V = g['campo']                               # a plomo, 2 cortes paralelos a la pendiente
-    H = LUZ_CUADRO / ca                          # acostada, 2 cortes a plomo
-    c = LUZ_CUADRO
-    P = [(0, 0), (c, 0), (c, c), (0, c)]         # luz del cuadro, en coordenadas a plomo
-    Pc = [(x, y + x * ta) for x, y in P]         # cizallada
+    LUZ = CUADRO_E - 2 * TUBO                    # luz de adentro del cuadro
+    g['luz_cuadro'] = LUZ
+    V = g['campo']
+    H = LUZ / ca
+    P4 = [(0, 0), (LUZ, 0), (LUZ, LUZ), (0, LUZ)]
+    Pc = [(x, y + x * ta) for x, y in P4]
     def dd(p, q): return math.hypot(q[0] - p[0], q[1] - p[1])
     D1, D2 = dd(Pc[0], Pc[2]), dd(Pc[1], Pc[3])
-    v1 = (Pc[2][0] - Pc[0][0], Pc[2][1] - Pc[0][1])
-    v2 = (Pc[3][0] - Pc[1][0], Pc[3][1] - Pc[1][1])
-    th = math.degrees(math.acos(abs(v1[0]*v2[0] + v1[1]*v2[1]) / (D1 * D2)))
+    u1 = (Pc[2][0] - Pc[0][0], Pc[2][1] - Pc[0][1])
+    u2 = (Pc[3][0] - Pc[1][0], Pc[3][1] - Pc[1][1])
+    th = math.degrees(math.acos(abs(u1[0]*u2[0] + u1[1]*u2[1]) / (D1 * D2)))
     desc = (TUBO / 2) / math.sin(math.radians(th))
     g['th'] = th
-    # rombos concentricos: cizallados, el lado a plomo no cambia y el otro se acuesta
-    q2, q3 = Q2_OD - TUBO, Q3_OD - TUBO          # centro a centro, como en el balcon
-    g['piezas'] = [
-      ("V",  2, V,            f"vertical del cuadro &#183; a plomo &#183; 2 cortes a {e['ang']:g}&#176; paralelos"),
-      ("B",  2, V,            f"pique de flanco &#183; a plomo &#183; 2 cortes a {e['ang']:g}&#176; paralelos"),
-      ("H",  2, H,            "horizontal del cuadro &#183; acostada &#183; 2 cortes a plomo"),
-      ("D1", 1, D1,           f"diagonal larga entera &#183; puntas a {(180-th)/2:.0f}&#176;"),
-      ("D2", 2, D2/2 - desc,  f"media diagonal corta &#183; muere contra la D1"),
-      ("C2p",2, q2,           f"rombo Q2 &#183; los dos lados A PLOMO &#183; {(90-e['ang'])/2:.0f}&#176; y {(90+e['ang'])/2:.0f}&#176;"),
-      ("C2a",2, q2/ca,        f"rombo Q2 &#183; los dos lados ACOSTADOS &#183; {(90-e['ang'])/2:.0f}&#176; y {(90+e['ang'])/2:.0f}&#176;"),
-      ("C3p",2, q3,           f"rombo Q3 &#183; los dos lados A PLOMO &#183; {(90-e['ang'])/2:.0f}&#176; y {(90+e['ang'])/2:.0f}&#176;"),
-      ("C3a",2, q3/ca,        f"rombo Q3 &#183; los dos lados ACOSTADOS &#183; {(90-e['ang'])/2:.0f}&#176; y {(90+e['ang'])/2:.0f}&#176;"),
+    # angulos de las puntas, contra el lado a plomo y contra el acostado.
+    # Tienen que sumar el angulo de la esquina del paralelogramo o algo esta mal.
+    aD1 = math.degrees(math.atan(1 + ta))
+    d1_v, d1_h = 90 - aD1, aD1 - e['ang']
+    assert abs((d1_v + d1_h) - (90 - e['ang'])) < 1e-6, "la punta de la D1 no cuadra con la esquina"
+    dD2 = math.degrees(math.atan2(1 - ta, -1))
+    d2_h, d2_v = abs((180 + e['ang']) - dD2), abs(90 - dD2)
+    assert abs((d2_v + d2_h) - (90 + e['ang'])) < 1e-6, "la punta de la D2 no cuadra con la esquina"
+    g['d1_v'], g['d1_h'], g['d2_v'], g['d2_h'] = d1_v, d1_h, d2_v, d2_h
+    esc_q = CUADRO_E / 30.25                     # los rombos de adentro, a escala
+    q2, q3 = Q2_OD * esc_q - TUBO, Q3_OD * esc_q - TUBO
+    g['q2_od'], g['q3_od'] = Q2_OD * esc_q, Q3_OD * esc_q
+    ag, ob = (90 - e['ang']) / 2, (90 + e['ang']) / 2
+    pz = [
+      ("V",  2, V,           f"lado del cuadro &#183; A PLOMO &#183; las 2 puntas a {e['ang']:g}&#176;, paralelas"),
+      ("H",  2, H,           f"tapa del cuadro &#183; ACOSTADA &#183; las 2 puntas a plomo"),
+      ("D1", 1, D1,          f"diagonal larga, entera &#183; punta en los 2 lados: "
+                             f"<b>{d1_v:.0f}&#176;</b> contra la V y <b>{d1_h:.0f}&#176;</b> contra la H"),
+      ("D2", 2, D2/2 - desc, f"media diagonal corta &#183; por fuera <b>{d2_v:.0f}&#176;</b> contra la V "
+                             f"y <b>{d2_h:.0f}&#176;</b> contra la H &#183; por dentro muere a ras contra la D1"),
+      ("C2p",2, q2,          f"rombo grande &#183; los 2 A PLOMO &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
+      ("C2a",2, q2/ca,       f"rombo grande &#183; los 2 ACOSTADOS &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
+      ("C3p",2, q3,          f"rombo chico &#183; los 2 A PLOMO &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
+      ("C3a",2, q3/ca,       f"rombo chico &#183; los 2 ACOSTADOS &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
     ]
-    assert sum(q for _, q, _, _ in g['piezas']) == 17, "el dibujo tiene que llevar 17 piezas"
+    if g['n_fl']:
+        pz.insert(1, ("B", 2*g['n_fl'], V,
+                      f"pique de flanco &#183; A PLOMO &#183; las 2 puntas a {e['ang']:g}&#176;"))
+    g['piezas'] = pz
+    g['n_piezas'] = sum(q for _, q, _, _ in pz)
 
-    # ---- postes: a plomo, con la punta cortada a la pendiente
-    # la cara de abajo del cap, en el eje del poste, va a GUARD - CAP/ca
     g['post_cara_larga'] = g['y_cap_b'] + (POST_W / 2) * ta + 6.0
     g['post_cara_corta'] = g['y_cap_b'] - (POST_W / 2) * ta + 6.0
-    assert abs((g['post_cara_larga'] - g['post_cara_corta']) - POST_W * ta) < 1e-9
-
-    # ---- cap y riel: de punta a punta de la corrida, por la pendiente
     g['cap_largo']  = e['rake']
-    g['riel_largo'] = [ (w - 2*GAP) / ca, (LUZ_DIB - 2*GAP) / ca, (w - 2*GAP) / ca ]
+    g['riel_pano']  = (bay - 2*GAP) / ca
     return g
 
 
@@ -157,28 +213,36 @@ def alzado(g, VW=792, VH=575):
                 o.append(banda(xx, xx+TUBO, g['y_riel_t'], g['y_cap_b'], PIQ, ALU2, 0.7))
         else:
             panel = luz - 2*GAP
-            gg = (panel - 4*TUBO - LUZ_CUADRO) / 4
-            b1 = L + gg; v1 = b1 + TUBO + gg; v2 = v1 + TUBO + LUZ_CUADRO; b2 = v2 + TUBO + gg
-            assert abs((b2 + TUBO + gg) - (L + panel)) < 1e-9, "el dibujo no cierra en la bahia"
-            for xx in (b1, b2):
-                o.append(banda(xx, xx+TUBO, g['y_riel_t'], g['y_cap_b'], PIQ, ALU2, 0.7))
+            # flancos: n_fl piques a cada lado, con su luz g_fl
+            nf, gf = g['n_fl'], g['g_fl']
+            x = L
+            for _ in range(nf):
+                x += gf
+                o.append(banda(x, x+TUBO, g['y_riel_t'], g['y_cap_b'], PIQ, ALU2, 0.7)); x += TUBO
+            x += gf
+            v1 = x                                  # cara izquierda del cuadro
+            v2 = v1 + CUADRO_E - TUBO
+            assert abs((v2 + TUBO + nf*(gf+TUBO) + gf) - (L + panel)) < 1e-9, \
+                "la bahia del dibujo no cierra en el alzado"
             for xx in (v1, v2):
                 o.append(banda(xx, xx+TUBO, g['y_riel_t'], g['y_cap_b'], ALU, NEG, 0.9))
+            x = v2 + TUBO
+            for _ in range(nf):
+                x += gf
+                o.append(banda(x, x+TUBO, g['y_riel_t'], g['y_cap_b'], PIQ, ALU2, 0.7)); x += TUBO
             yb, yt = g['y_riel_t'] + g['flot'], g['y_cap_b'] - g['flot']
             for yy in (yb, yt - TUBO):
                 o.append(banda(v1+TUBO, v2, yy, yy+TUBO, ALU, NEG, 0.9))
-            # la X
             ia, ib = v1 + TUBO, v2
-            for p, q in (((ia, yb+TUBO), (ib, yt-TUBO)), ((ia, yt-TUBO), (ib, yb+TUBO))):
-                A, B = S(*p), S(*q)
+            for pq, qq in (((ia, yb+TUBO), (ib, yt-TUBO)), ((ia, yt-TUBO), (ib, yb+TUBO))):
+                A, B = S(*pq), S(*qq)
                 o.append(f'<line x1="{A[0]:.1f}" y1="{A[1]:.1f}" x2="{B[0]:.1f}" y2="{B[1]:.1f}" '
                          f'stroke="{NEG}" stroke-width="{TUBO*sc:.1f}"/>')
-            # rombos concentricos, cizallados
             cxm, cym = (ia+ib)/2, (yb+yt)/2
-            for od in (Q2_OD, Q3_OD):
+            for od in (g['q2_od'], g['q3_od']):
                 s2 = (od - TUBO)/2
                 pts = [S(cxm-s2, cym-s2), S(cxm+s2, cym-s2), S(cxm+s2, cym+s2), S(cxm-s2, cym+s2)]
-                d = " ".join(f"{p[0]:.1f},{p[1]:.1f}" for p in pts)
+                d = " ".join(f"{q[0]:.1f},{q[1]:.1f}" for q in pts)
                 o.append(f'<polygon points="{d}" fill="none" stroke="{NEG}" '
                          f'stroke-width="{TUBO*sc:.1f}"/>')
 
@@ -233,6 +297,110 @@ def alzado(g, VW=792, VH=575):
               '</marker></defs>' + "".join(o) + '</svg>')
 
 
+
+# ---------------------------------------------- PLANO DEL DIBUJO, EN GRANDE
+def detalle_dibujo(g, VW=792, VH=500):
+    """El dibujo solo, en grande, con todas las medidas y cada pieza con su letra."""
+    ta, ca = g['ta'], g['ca']
+    LUZ = g['luz_cuadro']
+    ancho = CUADRO_E
+    alto_total = CUADRO_E + CUADRO_E * ta          # lo que ocupa el rombo de alto
+    mx, my = 168, 78
+    sc = min((VW - 2*mx) / ancho, (VH - 2*my) / alto_total)
+    OX = (VW - ancho*sc) / 2
+    OY = VH - my - 8
+    def S(x, y):                                   # x horizontal, y a plomo
+        return OX + x*sc, OY - (x*ta + y)*sc
+    def tubo(p, q, w=TUBO):
+        A, B = S(*p), S(*q)
+        return (f'<line x1="{A[0]:.1f}" y1="{A[1]:.1f}" x2="{B[0]:.1f}" y2="{B[1]:.1f}" '
+                f'stroke="{ALU}" stroke-width="{w*sc:.1f}" stroke-linecap="butt"/>'
+                f'<line x1="{A[0]:.1f}" y1="{A[1]:.1f}" x2="{B[0]:.1f}" y2="{B[1]:.1f}" '
+                f'stroke="{NEG}" stroke-width="0.8"/>')
+    def rot(p, q):
+        A, B = S(*p), S(*q)
+        return math.degrees(math.atan2(B[1]-A[1], B[0]-A[0])), ((A[0]+B[0])/2, (A[1]+B[1])/2)
+    def et(p, q, txt, dy=-6, col=ROJO, fs=12.5):
+        an, m = rot(p, q)
+        if an > 90 or an < -90: an += 180
+        return (f'<text x="{m[0]:.1f}" y="{m[1]+dy:.1f}" font-size="{fs}" font-weight="800" '
+                f'fill="{col}" text-anchor="middle" '
+                f'transform="rotate({an:.1f} {m[0]:.1f} {m[1]:.1f})">{txt}</text>')
+
+    o = ['<svg viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg">' % (VW, VH),
+         '<defs><marker id="f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" '
+         f'markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="{ROJO}"/>'
+         '</marker></defs>']
+    h = TUBO/2
+    # --- las dos V, a plomo
+    for x in (h, CUADRO_E - h):
+        o.append(tubo((x, 0), (x, CUADRO_E)))
+    # --- las dos H, acostadas
+    for y in (h, CUADRO_E - h):
+        o.append(tubo((TUBO, y), (CUADRO_E - TUBO, y)))
+    # --- la X
+    a0, a1 = TUBO, CUADRO_E - TUBO
+    o.append(tubo((a0, TUBO), (a1, CUADRO_E - TUBO)))
+    o.append(tubo((a0, CUADRO_E - TUBO), (a1, TUBO)))
+    # --- los dos rombos
+    cx = cy = CUADRO_E/2
+    for od in (g['q2_od'], g['q3_od']):
+        r = (od - TUBO)/2
+        for A, B in (((cx-r, cy-r), (cx+r, cy-r)), ((cx+r, cy-r), (cx+r, cy+r)),
+                     ((cx+r, cy+r), (cx-r, cy+r)), ((cx-r, cy+r), (cx-r, cy-r))):
+            o.append(tubo(A, B))
+    # --- letras de cada pieza
+    o.append(et((h, 0), (h, CUADRO_E), "V", 4, NEG, 15))
+    o.append(et((CUADRO_E-h, 0), (CUADRO_E-h, CUADRO_E), "V", 4, NEG, 15))
+    o.append(et((TUBO, h), (CUADRO_E-TUBO, h), "H", 4, NEG, 15))
+    o.append(et((TUBO, CUADRO_E-h), (CUADRO_E-TUBO, CUADRO_E-h), "H", 4, NEG, 15))
+    o.append(et((a0, TUBO), (a1*0.42, CUADRO_E*0.42), "D1", 4, NEG, 15))
+    o.append(et((a0, CUADRO_E-TUBO), (a1*0.40, CUADRO_E*0.62), "D2", 4, NEG, 15))
+    o.append(et((a1*0.62, CUADRO_E*0.38), (a1, TUBO), "D2", 4, NEG, 15))
+    r2 = (g['q2_od'] - TUBO)/2
+    o.append(et((cx-r2, cy-r2), (cx-r2, cy+r2), "C2p", 4, NEG, 12))
+    o.append(et((cx-r2, cy+r2), (cx+r2, cy+r2), "C2a", 4, NEG, 12))
+    r3 = (g['q3_od'] - TUBO)/2
+    o.append(et((cx-r3, cy-r3), (cx-r3, cy+r3), "C3p", 4, NEG, 11))
+    o.append(et((cx-r3, cy+r3), (cx+r3, cy+r3), "C3a", 4, NEG, 11))
+
+    # --- cotas
+    # ancho horizontal, abajo
+    A, B = S(0, -2.6), S(CUADRO_E, -2.6)
+    o.append(f'<line x1="{A[0]:.1f}" y1="{A[1]:.1f}" x2="{B[0]:.1f}" y2="{B[1]:.1f}" '
+             f'stroke="{ROJO}" stroke-width="1.2" marker-start="url(#f)" marker-end="url(#f)"/>')
+    o.append(et((0,-2.6), (CUADRO_E,-2.6), f'{fr(CUADRO_E)}"  EN HORIZONTAL', -7))
+    # alto a plomo, a la izquierda
+    A, B = S(-2.2, 0), S(-2.2, CUADRO_E)
+    o.append(f'<line x1="{A[0]:.1f}" y1="{A[1]:.1f}" x2="{B[0]:.1f}" y2="{B[1]:.1f}" '
+             f'stroke="{ROJO}" stroke-width="1.2" marker-start="url(#f)" marker-end="url(#f)"/>')
+    m = ((A[0]+B[0])/2, (A[1]+B[1])/2)
+    o.append(f'<text x="{m[0]-8:.1f}" y="{m[1]:.1f}" font-size="12.5" font-weight="800" '
+             f'fill="{ROJO}" text-anchor="middle" transform="rotate(-90 {m[0]-8:.1f} {m[1]:.1f})">'
+             f'{fr(CUADRO_E)}"  A PLOMO</text>')
+    # luz de adentro
+    o.append(et((TUBO, CUADRO_E-TUBO*2.6), (CUADRO_E-TUBO, CUADRO_E-TUBO*2.6),
+                        f'luz de adentro {fr(LUZ)}"', -5, ROJO, 11.5))
+    # los rombos
+    o.append(et((cx-r2, cy-r2), (cx+r2, cy-r2), f'{fr(g["q2_od"],32)}"', 14, ROJO, 11))
+    o.append(et((cx-r3, cy-r3), (cx+r3, cy-r3), f'{fr(g["q3_od"],32)}"', 13, ROJO, 10.5))
+    # angulo
+    p = (VW - 150.0, 34.0)
+    o.append(f'<text x="{p[0]:.1f}" y="{p[1]:.1f}" font-size="15" font-weight="800" '
+             f'fill="{ROJO}">PENDIENTE {g["ang"]:g}&#176;</text>')
+    o.append(f'<text x="{p[0]:.1f}" y="{p[1]+15:.1f}" font-size="10.5" fill="{ROJO}">'
+             f'las H y los</text>')
+    o.append(f'<text x="{p[0]:.1f}" y="{p[1]+27:.1f}" font-size="10.5" fill="{ROJO}">'
+             f'rombos se</text>')
+    o.append(f'<text x="{p[0]:.1f}" y="{p[1]+39:.1f}" font-size="10.5" fill="{ROJO}">'
+             f'acuestan asi</text>')
+    o.append(f'<text x="{VW/2:.0f}" y="{VH-8}" font-size="12" font-weight="800" '
+             f'fill="{NEG}" text-anchor="middle">LAS V Y LOS PIQUES VAN A PLOMO &#183; '
+             f'LAS H Y LOS ROMBOS SIGUEN LA PENDIENTE</text>')
+    o.append('</svg>')
+    return "".join(o)
+
+
 # ------------------------------------------------------------------ HTML
 CSS = f"""
  *{{margin:0;padding:0;box-sizing:border-box}}
@@ -277,57 +445,69 @@ for i, e in enumerate(ESCALERAS):
     <div><b>{fr(e['rake'])}"</b><span>por la pendiente</span></div>
     <div><b>{e['ang']:g}&#176;</b><span>pendiente</span></div>
     <div><b>{feet(g['rise'])}</b><span>sube</span></div>
-    <div><b>{feet(g['horiz'])}</b><span>corre en planta</span></div>
-    <div><b>4</b><span>postes (3 propios)</span></div>
-    <div><b>1</b><span>dibujo acostado</span></div>
+    <div><b>{g['n_bay']+1}</b><span>postes</span></div>
+    <div><b>{fr(g['cc'])}"</b><span>centro a centro</span></div>
+    <div><b>1</b><span>dibujo</span></div>
   </div>
 
   <div class="dw">
-    <div class="dt">VISTA DE FRENTE &#8212; pa&#241;o de piques, dibujo, pa&#241;o de piques
-      <span class="r">las cotas de arriba son de centro a centro de poste, POR LA PENDIENTE</span></div>
+    <div class="dt">VISTA DE FRENTE &#8212; {g['n_bay']} pa&#241;os, el dibujo en el del medio
+      <span class="r">centro a centro {fr(g['cc'])}" POR LA PENDIENTE &#183; l&#237;mite 48"</span></div>
     {alzado(g)}
   </div>
 
-  <h2>Lo que se corta &#8212; una escalera (hay {e['cant']} iguales)</h2>
+  <div class="pb"></div>
+  <div class="hd"><h1>EL DIBUJO DE {e['ang']:g}&#176; &#8212; PLANO EN GRANDE</h1>
+    <div class="m">{e['cant']} de estos &#183; van en {e['n'].lower()}<br>
+    todas las piezas de 1&#215;1&#215;1/16</div></div>
+
+  <div class="dw"><div class="dt">EL DIBUJO SOLO, CON SUS MEDIDAS
+      <span class="r">cada pieza con su letra, igual que en la tabla</span></div>
+    {detalle_dibujo(g)}</div>
+
+  <table>
+    <tr><th style="width:9%">Pieza</th><th style="width:15%">Perfil</th><th style="width:13%">Largo de corte</th>
+        <th style="width:10%">Por dibujo</th><th style="width:9%">Los {e['cant']}</th><th>C&#243;mo se corta</th></tr>
+    {piezas}
+  </table>
+  <div class="warn"><b>{g['n_piezas']} piezas por dibujo.</b> El cuadro mide
+  <b>{fr(CUADRO_E)}" a plomo &#215; {fr(CUADRO_E)}" en horizontal</b> (luz de adentro {fr(g['luz_cuadro'])}")
+  y flota <b>{fr(g['flot'],32)}" a plomo</b> por debajo del cap y otro tanto por encima del riel.
+  Las <b>V</b> y los piques van <b>a plomo</b>; las <b>H</b> y los dos rombos <b>siguen la
+  pendiente</b>.</div>
+
+  <div class="pb"></div>
+  <div class="hd"><h1>{e['n']} &#8212; LO QUE SE CORTA</h1>
+    <div class="m">una escalera &#183; hay {e['cant']} iguales</div></div>
   <table>
     <tr><th style="width:11%">Pieza</th><th style="width:19%">Perfil</th><th style="width:13%">Largo de corte</th>
         <th style="width:8%">Cant.</th><th style="width:9%">Las {e['cant']}</th><th>C&#243;mo se corta</th></tr>
     <tr><td><b>POSTE</b></td><td>2&#215;2&#215;.090</td><td class="n">{fr(g['post_cara_larga'],32)}"</td>
-        <td class="n"><b>3</b></td><td class="n">{3*e['cant']}</td>
+        <td class="n"><b>{g['n_bay']}</b></td><td class="n">{g['n_bay']*e['cant']}</td>
         <td>a plomo. Punta de arriba cortada a <b>{e['ang']:g}&#176;</b>:
             cara larga {fr(g['post_cara_larga'],32)}", cara corta {fr(g['post_cara_corta'],32)}".
-            Abajo corte recto. El cuarto poste, el de arriba, es el del balc&#243;n.</td></tr>
+            Abajo corte recto. El poste de m&#225;s arriba es el del balc&#243;n.</td></tr>
     <tr><td><b>CAP</b></td><td>2&#215;1&#215;.090 de plano</td><td class="n">{fr(g['cap_largo'])}"</td>
         <td class="n"><b>1</b></td><td class="n">{e['cant']}</td>
         <td>corrido de punta a punta, por la pendiente</td></tr>
-    <tr><td><b>RIEL</b></td><td>2&#215;1&#215;.090 acostado</td><td class="n">{fr(g['riel_largo'][0],32)}"</td>
-        <td class="n"><b>2</b></td><td class="n">{2*e['cant']}</td>
-        <td>de los dos pa&#241;os de piques &#183; medido por la pendiente</td></tr>
-    <tr><td><b>RIEL</b></td><td>2&#215;1&#215;.090 acostado</td><td class="n">{fr(g['riel_largo'][1],32)}"</td>
-        <td class="n"><b>1</b></td><td class="n">{e['cant']}</td>
-        <td>del pa&#241;o del dibujo &#183; medido por la pendiente</td></tr>
+    <tr><td><b>RIEL</b></td><td>2&#215;1&#215;.090 acostado</td><td class="n">{fr(g['riel_pano'],32)}"</td>
+        <td class="n"><b>{g['n_bay']}</b></td><td class="n">{g['n_bay']*e['cant']}</td>
+        <td>uno por pa&#241;o &#183; medido por la pendiente</td></tr>
     <tr><td><b>PIQUE</b></td><td>1&#215;1&#215;1/16</td><td class="n">{fr(g['campo'],32)}"</td>
-        <td class="n"><b>{2*g['n_piq']}</b></td><td class="n">{2*g['n_piq']*e['cant']}</td>
-        <td><b>a plomo</b> &#183; las dos puntas cortadas a <b>{e['ang']:g}&#176;</b>, paralelas entre s&#237;
-            (las dos caras miden igual)</td></tr>
+        <td class="n"><b>{(g['n_bay']-1)*g['n_piq']}</b></td>
+        <td class="n">{(g['n_bay']-1)*g['n_piq']*e['cant']}</td>
+        <td><b>a plomo</b> &#183; las 2 puntas a <b>{e['ang']:g}&#176;</b>, paralelas entre s&#237;
+            (las dos caras miden igual) &#183; {g['n_piq']} por pa&#241;o liso</td></tr>
   </table>
-
-  <h2>El dibujo acostado de {e['ang']:g}&#176; &#8212; 17 piezas, todas de 1&#215;1</h2>
-  <table>
-    <tr><th style="width:11%">Pieza</th><th style="width:19%">Perfil</th><th style="width:13%">Largo de corte</th>
-        <th style="width:8%">Por dibujo</th><th style="width:9%">Las {e['cant']}</th><th>C&#243;mo se corta</th></tr>
-    {piezas}
-  </table>
-
-  <div class="warn"><b>El cuadro flota {fr(g['flot'],32)}" A PLOMO</b> por debajo del cap y
-  otro tanto por encima del riel, y mide <b>{fr(CUADRO)}" a plomo</b> &#215; <b>{fr(CUADRO)}" en
-  horizontal</b>, igual que el del balc&#243;n. Lo &#250;nico que cambia es que se acuesta.
-  La luz libre entre piques del pa&#241;o liso es de <b>{fr(g['sep']+GAP,32)}" medida en horizontal</b>
-  (as&#237; es como pasa la esfera), y sobre el riel inclinado eso son marcas
-  <b>cada {fr(g['marca'],32)}"</b>.</div>
+  <div class="warn"><b>Centro a centro de poste: {fr(g['cc'])}" por la pendiente</b>, por debajo de
+  las 48" que es el l&#237;mite. {g['n_bay']} pa&#241;os de <b>{fr(g['bay'])}" en horizontal</b>
+  ({fr(g['bay']/g['ca'],32)}" por la pendiente). En el pa&#241;o liso van
+  <b>{g['n_piq']} piques</b> con <b>{fr(g['sep']+GAP,32)}" de luz libre medida en horizontal</b>,
+  que sobre el riel inclinado son marcas cada <b>{fr(g['marca'],32)}"</b>.</div>
 """
 
 TOT = sum(e['cant'] for e in ESCALERAS)
+G1, G2 = geo(ESCALERAS[0]), geo(ESCALERAS[1])
 HTML = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
 <title>Escaleras del Pool House &#8212; fabricaci&#243;n</title><style>{CSS}</style></head>
 <body><div class="page">
@@ -336,25 +516,29 @@ HTML = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
     <div class="m">BARANDA DE 42" A PLOMO, IGUAL QUE EL BALC&#211;N<br>
     2 de {fr(ESCALERAS[0]['rake'])}" a 34&#176; &#183; 2 de {fr(ESCALERAS[1]['rake'])}" a 33&#176;</div></div>
 
+  <div class="warn"><b>LOS POSTES VAN A MENOS DE 4 PIES, medidos POR LA PENDIENTE.</b>
+  La de 34&#176; lleva <b>{G1['n_bay']+1} postes</b> ({fr(G1['cc'])}" de centro a centro) y la de
+  33&#176; lleva <b>{G2['n_bay']+1} postes</b> ({fr(G2['cc'])}"). El poste de m&#225;s arriba de cada
+  una es el poste del balc&#243;n: la escalera se empata ah&#237; y no lleva uno propio.</div>
+
   <div class="warn"><b>OJO CON UNA COSA, antes de cortar.</b> Estos planos est&#225;n hechos
   tomando que <b>las 185-1/2" y las 198" las mediste POR LA PENDIENTE</b>, con la cinta pegada al
-  stringer. Si es as&#237;, la escalera del balc&#243;n 1 <b>sube {feet(geo(ESCALERAS[0])['rise'])}</b>
-  y la del balc&#243;n 2 <b>sube {feet(geo(ESCALERAS[1])['rise'])}</b>. Mide del piso de abajo al deck:
-  si te da eso, seguimos. <b>Si te da como 10 pies y medio, entonces me diste la corrida en planta
-  y estas hojas hay que rehacerlas.</b></div>
+  stringer. Si es as&#237;, la de 34&#176; <b>sube {feet(G1['rise'])}</b> y la de 33&#176;
+  <b>sube {feet(G2['rise'])}</b>. Mide del piso de abajo al deck: si te da eso, seguimos.
+  <b>Si te da como 10 pies y medio, me diste la corrida en planta y estas hojas hay que rehacerlas.</b></div>
 
-  <div class="warn"><b>Por qu&#233; el dibujo va acostado y no derecho.</b> El cap sigue la
-  pendiente. Sobre las {fr(CUADRO)}" de ancho que tiene el cuadro, a 34&#176; el cap
-  <b>sube 20-3/8"</b>. El campo es de {fr(geo(ESCALERAS[0])['campo'],32)}". O sea que si dejas el
-  cuadro derecho, el cap se lo come por el lado de abajo: no cabe. Por eso el dibujo se acuesta con
-  la pendiente &#8212; los piques y los lados del cuadro siguen <b>a plomo</b>, y el de arriba y el
-  de abajo van <b>paralelos a la escalera</b>.</div>
+  <div class="warn"><b>El dibujo de la escalera es m&#225;s chico que el del balc&#243;n</b>
+  &#8212; <b>{fr(CUADRO_E)}"</b> en vez de 30-1/4. No es capricho: con los postes a 4 pies las
+  bah&#237;as quedan de {fr(G1['bay'])}" y {fr(G2['bay'])}" en horizontal, y el cuadro de 30-1/4
+  no cabe. <b>Y va ACOSTADO</b>: el cap sigue la pendiente, y sobre el ancho del cuadro el cap sube
+  m&#225;s que todo el campo, as&#237; que derecho no cabe de ninguna manera.</div>
 
-  <div class="warn"><b>Estos dibujos NO son los 32 que ya tienes armados.</b> Aquellos son de los
-  balcones. Las escaleras llevan <b>{TOT} dibujos nuevos</b>, y no son todos iguales entre s&#237;:
-  <b>2 son de 34&#176; y 2 son de 33&#176;</b>, con medidas de corte distintas. No los mezcles.</div>
+  <div class="warn"><b>Estos dibujos NO son los 32 del balc&#243;n.</b> Son
+  <b>{TOT} dibujos nuevos</b> y ni siquiera son iguales entre s&#237;: <b>2 de 34&#176;</b> y
+  <b>2 de 33&#176;</b>, con medidas de corte distintas. No los mezcles.</div>
 {cuerpo}
 </div></body></html>"""
+
 
 out = HERE / "railing-escaleras.html"
 out.write_text(HTML, encoding="utf-8")
@@ -362,7 +546,7 @@ print("escrito:", out.name)
 for e in ESCALERAS:
     g = geo(e)
     print(f"  {e['n']}:  {fr(e['rake'])}\" a {e['ang']:g}°  x{e['cant']}")
-    print(f"      sube {feet(g['rise'])}  ·  corre {feet(g['horiz'])}  ·  campo {fr(g['campo'],32)}\"")
-    print(f"      panos (horizontal): {fr(g['w'])} + DIBUJO 46 + {fr(g['w'])}"
-          f"   ·  {g['n_piq']} piques cada liso, luz {fr(g['sep']+GAP,32)}\"")
-    print(f"      postes {fr(g['post_cara_larga'],32)}\" cara larga / {fr(g['post_cara_corta'],32)}\" corta")
+    print(f"      {g['n_bay']} panos de {fr(g['bay'])}\" · {g['n_bay']+1} postes · "
+          f"centro a centro {fr(g['cc'])}\" por la pendiente (limite {CC_MAX:g})")
+    print(f"      pano liso {g['n_piq']} piques, luz {fr(g['sep']+GAP,32)}\"  ·  "
+          f"dibujo: cuadro {fr(CUADRO_E)}\", {g['n_piezas']} piezas, {g['n_fl']} pique(s) por flanco")
