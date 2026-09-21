@@ -508,6 +508,95 @@ CSS = f"""
     text-transform:uppercase;letter-spacing:.6px}}
 """
 
+# ============================================================ EMPALME
+def empalme(g, VW=792, VH=470):
+    """El encuentro del balcon con la escalera, EN EL TALLER: las dos piezas
+       dibujadas juntas con sus alturas y el corte del nudillo. Si estas dos
+       no salen del taller para encontrarse, en obra no hay nada que hacer."""
+    ta, ca, ang = g['ta'], g['ca'], g['ang']
+    izq, der = 21.0, 26.0                       # cuanto se ve de cada lado
+    mx, my = 96, 38
+    ymin = -(der - 1) * ta - 6                  # lo mas bajo: la punta del poste / la escalera
+    alto = GUARD - ymin
+    sc = min((VW - 2*mx) / (izq + der), (VH - 2*my) / alto)
+    OX = (VW - (izq + der) * sc) / 2 + izq * sc     # centrado en la hoja
+    OY = VH - my
+    def S(x, y):  return OX + x*sc, OY - (y - ymin)*sc
+    def poly(pts, f, st=NEG, w=1.2):
+        return (f'<polygon points="{" ".join(f"{a:.1f},{b:.1f}" for a,b in pts)}" '
+                f'fill="{f}" stroke="{st}" stroke-width="{w}"/>')
+    def y0(x): return 0.0 if x <= 1 else -(x - 1) * ta        # linea de narices
+
+    o = ['<svg viewBox="0 0 %d %d" xmlns="http://www.w3.org/2000/svg">' % (VW, VH),
+         '<defs><marker id="j" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" '
+         f'markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="{ROJO}"/>'
+         '</marker></defs>']
+    # deck
+    o.append(poly([S(-izq, 0), S(1, 0), S(1, -2.2), S(-izq, -2.2)], "#e4ddd0", "#b09a72", 1))
+    # escalones
+    n = max(1, round(der * ta / 7.2))
+    for i in range(n + 1):
+        xa = 1 + i * der / (n + 1); xb = 1 + (i + 1) * der / (n + 1)
+        A, B = S(xa, y0(xa)), S(xb, y0(xb))
+        o.append(f'<path d="M {A[0]:.1f} {A[1]:.1f} L {A[0]:.1f} {B[1]:.1f} '
+                 f'L {B[0]:.1f} {B[1]:.1f}" fill="none" stroke="#b09a72" stroke-width="2"/>')
+    # --- BALCON: riel y cap horizontales
+    o.append(poly([S(-izq, 2), S(-1, 2), S(-1, 3), S(-izq, 3)], ALU2))
+    o.append(poly([S(-izq, GUARD-1), S(0, GUARD-1), S(0, GUARD), S(-izq, GUARD)], ALU2))
+    # --- ESCALERA: riel y cap por la pendiente
+    e0, e1 = 1.0, der
+    def R(x, d): return y0(x) + d
+    o.append(poly([S(e0, R(e0,2)), S(e1, R(e1,2)), S(e1, R(e1,2)+1/ca), S(e0, R(e0,2)+1/ca)], ALU2))
+    o.append(poly([S(0, GUARD-1/ca), S(e1, R(e1,GUARD)-1/ca), S(e1, R(e1,GUARD)), S(0, GUARD)], ALU2))
+    # --- poste del empalme
+    tope = GUARD - 1/ca
+    o.append(poly([S(-1, -6), S(1, -6), S(1, tope), S(-1, tope)], ALU, NEG, 1.5))
+    # --- el nudillo
+    A = S(0, GUARD)
+    o.append(f'<circle cx="{A[0]:.1f}" cy="{A[1]:.1f}" r="5" fill="none" stroke="{ROJO}" stroke-width="1.6"/>')
+    o.append(f'<line x1="{A[0]+5:.1f}" y1="{A[1]:.1f}" x2="{A[0]+186:.1f}" y2="{A[1]+54:.1f}" '
+             f'stroke="{ROJO}" stroke-width="0.9"/>')
+    o.append(f'<text x="{A[0]+192:.1f}" y="{A[1]+50:.1f}" font-size="12.5" font-weight="800" '
+             f'fill="{ROJO}">NUDILLO DEL CAP</text>')
+    o.append(f'<text x="{A[0]+192:.1f}" y="{A[1]+65:.1f}" font-size="11.5" fill="{ROJO}">'
+             f'cada cap a <tspan font-weight="800">{ang/2:.2f}&#176;</tspan> del escuadre</text>')
+    o.append(f'<text x="{A[0]+192:.1f}" y="{A[1]+79:.1f}" font-size="11.5" fill="{ROJO}">'
+             f'los topes se juntan en {fr(GUARD)}" y se suelda</text>')
+    # --- cotas de altura, a la izquierda
+    xc = -izq - 1.5
+    for a, b, t in ((0, 2, "2"), (2, 3, "1"), (3, GUARD-1, fr(GUARD-4)), (GUARD-1, GUARD, "1")):
+        P, Q = S(xc, a), S(xc, b)
+        o.append(f'<line x1="{P[0]:.1f}" y1="{P[1]:.1f}" x2="{Q[0]:.1f}" y2="{Q[1]:.1f}" '
+                 f'stroke="{ROJO}" stroke-width="1.1" marker-start="url(#j)" marker-end="url(#j)"/>')
+        o.append(f'<text x="{P[0]-6:.1f}" y="{(P[1]+Q[1])/2+4:.1f}" font-size="11.5" '
+                 f'font-weight="800" fill="{ROJO}" text-anchor="end">{t}</text>')
+    P, Q = S(xc-3.4, 0), S(xc-3.4, GUARD)
+    o.append(f'<line x1="{P[0]:.1f}" y1="{P[1]:.1f}" x2="{Q[0]:.1f}" y2="{Q[1]:.1f}" '
+             f'stroke="{ROJO}" stroke-width="1.3" marker-start="url(#j)" marker-end="url(#j)"/>')
+    o.append(f'<text x="{P[0]-7:.1f}" y="{(P[1]+Q[1])/2:.1f}" font-size="13" font-weight="800" '
+             f'fill="{ROJO}" text-anchor="middle" '
+             f'transform="rotate(-90 {P[0]-7:.1f} {(P[1]+Q[1])/2:.1f})">{fr(GUARD)}" A PLOMO</text>')
+    # --- rotulos
+    o.append(f'<text x="{S(-izq*0.62,0)[0]:.1f}" y="{S(0,GUARD)[1]-14:.1f}" font-size="12.5" '
+             f'font-weight="800" fill="{NEG}" text-anchor="middle">BARANDA DEL BALC&#211;N</text>')
+    B = S(der*0.62, y0(der*0.62) + GUARD)
+    o.append(f'<text x="{B[0]:.1f}" y="{B[1]-12:.1f}" font-size="12.5" font-weight="800" '
+             f'fill="{NEG}" text-anchor="middle" '
+             f'transform="rotate({math.degrees(math.atan(ta)):.1f} {B[0]:.1f} {B[1]-12:.1f})">'
+             f'BARANDA DE LA ESCALERA &#183; {ang:g}&#176;</text>')
+    P = S(-1, -6)
+    o.append(f'<line x1="{P[0]:.1f}" y1="{P[1]:.1f}" x2="{P[0]-30:.1f}" y2="{P[1]+16:.1f}" '
+             f'stroke="{ROJO}" stroke-width="0.9"/>')
+    o.append(f'<text x="{P[0]-34:.1f}" y="{P[1]+16:.1f}" font-size="11.5" font-weight="800" '
+             f'fill="{ROJO}" text-anchor="end">POSTE DEL EMPALME {fr(tope+6,32)}"</text>')
+    o.append(f'<text x="{P[0]-34:.1f}" y="{P[1]+29:.1f}" font-size="10.5" fill="{ROJO}" '
+             f'text-anchor="end">punta a {fr(tope,32)}" sobre el deck</text>')
+    o.append(f'<text x="{P[0]-34:.1f}" y="{P[1]+41:.1f}" font-size="10.5" fill="{ROJO}" '
+             f'text-anchor="end">{fr(abs(tope-(GUARD-CAP)),64)}" m&#225;s corto que los del balc&#243;n</text>')
+    o.append('</svg>')
+    return "".join(o)
+
+
 # ---- EL DIBUJO: una sola vez, porque los {TOT_DIB} salen identicos
 TOT_DIB = sum(geo(x)["n_dib"] * x["cant"] for x in ESCALERAS)
 GD = geo(ESCALERAS[0])              # da igual cual: el dibujo es el mismo
@@ -621,6 +710,34 @@ for i, e in enumerate(ESCALERAS):
       <span class="r">centro a centro {fr(g['cc'])}" POR LA PENDIENTE &#183; l&#237;mite 48"</span></div>
     {alzado(g)}
   </div>
+
+  <div class="pb"></div>
+  <div class="hd"><h1>EMPALME CON EL BALC&#211;N &#8212; {e['n'].replace("ESCALERA DEL ","")}</h1>
+    <div class="m">LAS DOS BARANDAS JUNTAS &#183; {e['ang']:g}&#176;<br>
+    esto es lo que tiene que salir del taller para que se encuentren</div></div>
+  <div class="dw"><div class="dt">EL ENCUENTRO, A ESCALA
+      <span class="r">alturas sobre el piso del deck</span></div>{empalme(g)}</div>
+  <table>
+    <tr><th style="width:30%">Cara</th><th style="width:18%">Balc&#243;n</th>
+        <th style="width:18%">Escalera</th><th>Qu&#233; pasa</th></tr>
+    <tr><td><b>Tope del cap</b></td><td class="n">{fr(GUARD)}"</td>
+        <td class="n">{fr(GUARD)}"</td>
+        <td style="color:#0f766e"><b>COINCIDEN.</b> Es la cara que se ve de frente.</td></tr>
+    <tr><td><b>Panza del riel</b></td><td class="n">2"</td><td class="n">2"</td>
+        <td style="color:#0f766e"><b>COINCIDEN.</b> La otra cara que se ve.</td></tr>
+    <tr><td>Panza del cap</td><td class="n">{fr(GUARD-CAP)}"</td>
+        <td class="n">{fr(g['y_cap_b'],32)}"</td>
+        <td>nudillo de {fr(abs((GUARD-CAP)-g['y_cap_b']),64)}" &#183; va por dentro, se suelda</td></tr>
+    <tr><td>Tope del riel</td><td class="n">3"</td><td class="n">{fr(g['y_riel_t'],32)}"</td>
+        <td>nudillo de {fr(abs(3-g['y_riel_t']),64)}" &#183; va por dentro, se suelda</td></tr>
+  </table>
+  <div class="warn"><b>El nudillo del cap:</b> los dos caps se cortan a
+  <b>{e['ang']/2:.2f}&#176; del escuadre</b> y se juntan por el tope, en las {fr(GUARD)}".
+  Si los cortas los dos a <b>{ANG_CORTE/2:.2f}&#176;</b> (el &#225;ngulo &#250;nico) te queda un hueco de
+  1/64" a lo ancho del cap, que lo tapa la soldadura.<br>
+  <b>El poste del empalme es m&#225;s corto que los del balc&#243;n:</b>
+  <b>{fr(g['y_cap_b']+6,32)}"</b>, con la punta a {fr(g['y_cap_b'],32)}" sobre el deck &#8212; porque el
+  cap de la escalera, al ir acostado, tiene la panza m&#225;s abajo que el del balc&#243;n.</div>
 
   <div class="pb"></div>
   <div class="hd"><h1>{e['n']} &#8212; LO QUE SE CORTA</h1>
