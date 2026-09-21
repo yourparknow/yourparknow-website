@@ -35,6 +35,7 @@ HUECO_ESC = 27.0      # hueco de la escalera: 27" medido en el lado 1.  En el la
 MEDIDO = {"B": 161.0, "E": 151.625,      # pool house
           "G": 195.0, "P": 193.375}      # caballerizas
 
+REMATES = []          # (balcon, tipo, texto) de cada remate dibujado
 SEC, CORRIDA = {}, {}
 for cfg in G.EDIFICIOS:
     for _, grupo in cfg['grupos']:
@@ -182,29 +183,50 @@ def svg(b):
             o.append(f'<text x="{X(mx):.1f}" y="{Y(my)+11:.1f}" font-size="11.5" font-weight="700" '
                      f'fill="{NAR}" text-anchor="middle"{rot}>se fabrica {fr(CORRIDA[letra][0])}"</text>')
 
-    # remates y escalera
+    # --- REMATES.  OJO: antes esto pintaba el bloque de PARED en los DOS
+    # extremos sin mirar que habia.  En el Pool House eso ponia una pared
+    # donde lo que hay es la escalera bajando.  Ahora cada extremo se dibuja
+    # segun lo que dice, y al final se verifica que cuadre.
     for idx, (p, t) in enumerate(((tr[0][1], b['ini']), (tr[-1][2], b['fin']))):
-        # la pared se corre hacia afuera: el poste del remate tiene que verse,
-        # y entre poste y pared queda el hueco (ahi no hay anclaje)
         q0, q1 = (tr[0][1], tr[0][2]) if idx == 0 else (tr[-1][1], tr[-1][2])
         vx, vy = q1[0]-q0[0], q1[1]-q0[1]
         n = math.hypot(vx, vy) or 1
+        ux, uy = vx/n, vy/n
         sgn = -1 if idx == 0 else 1
-        px = p[0] + sgn*vx/n*16/sc; py = p[1] + sgn*vy/n*16/sc
-        o.append(f'<rect x="{X(px)-11:.1f}" y="{Y(py)-11:.1f}" width="22" height="22" fill="#8a6a42"/>')
-        # el rótulo se separa perpendicular al recorrido y hacia afuera, para que
-        # no caiga encima de la baranda ni de las otras etiquetas
-        lx, ly = afuera(q0, q1, 30/sc)
-        tx, ty = X(px + lx), Y(py + ly)
-        der = tx > VW/2
-        corto = t.split(" DE ")[0]                 # "PARED", no "PARED DE LA CABALLERIZA"
-        o.append(f'<text x="{tx:.1f}" y="{ty+4:.1f}" font-size="11.5" '
-                 f'font-weight="800" fill="#8a6a42" text-anchor="{"end" if der else "start"}">{corto}</text>')
-    if b.get('esc'):
-        p = tr[-1][2]
-        o.append(f'<text x="{X(p[0]) + (-17 if X(p[0])>VW/2 else 17):.1f}" y="{Y(p[1])+19:.1f}" '
-                 f'font-size="12" font-weight="800" fill="{ROJO}" '
-                 f'text-anchor="{"end" if X(p[0])>VW/2 else "start"}">{b["esc"]}</text>')
+        px = p[0] + sgn*ux*16/sc; py = p[1] + sgn*uy*16/sc
+        es_pared = "PARED" in t or "CASA" in t
+        es_esc   = "ESCALERA" in t
+        assert es_pared != es_esc, ("remate que no es ni pared ni escalera", b['t'], t)
+        REMATES.append((b['t'], "PARED" if es_pared else "ESCALERA", t))
+
+        if es_pared:
+            # muro: bloque marron.  El poste queda separado de el, sin anclaje.
+            o.append(f'<rect x="{X(px)-11:.1f}" y="{Y(py)-11:.1f}" width="22" height="22" '
+                     f'fill="#8a6a42"/>')
+            corto, col = "PARED", "#8a6a42"
+        else:
+            # escalera bajando: peldanos perpendiculares al recorrido
+            for i in range(5):
+                ex = p[0] + sgn*ux*(13 + i*12)/sc
+                ey = p[1] + sgn*uy*(13 + i*12)/sc
+                o.append(f'<line x1="{X(ex) - uy*24:.1f}" y1="{Y(ey) - ux*24:.1f}" '
+                         f'x2="{X(ex) + uy*24:.1f}" y2="{Y(ey) + ux*24:.1f}" '
+                         f'stroke="{ROJO}" stroke-width="3" stroke-linecap="round"/>')
+            # un solo rotulo, centrado debajo de los peldanos
+            lx2, ly2 = p[0] + sgn*ux*80/sc, p[1] + sgn*uy*80/sc
+            o.append(f'<text x="{X(lx2):.1f}" y="{Y(ly2)+4:.1f}" font-size="12" font-weight="800" '
+                     f'fill="{ROJO}" text-anchor="middle">AQU&#205; BAJA LA {b["esc"]}</text>')
+            corto, col = "", ROJO
+
+        if corto:
+            lx, ly = afuera(q0, q1, 30/sc)
+            tx, ty = X(px + lx), Y(py + ly)
+            anc = "start"
+            if tx > VW - 90: anc, tx = "end", min(tx, VW - 8)
+            elif tx < 90:    anc, tx = "start", max(tx, 8)
+            o.append(f'<text x="{tx:.1f}" y="{ty+4:.1f}" font-size="11.5" '
+                     f'font-weight="800" fill="{col}" text-anchor="{anc}">{corto}</text>')
+
     return f'<svg viewBox="0 0 {VW} {VH}" xmlns="http://www.w3.org/2000/svg">' + "".join(o) + '</svg>'
 
 def tabla(b):
@@ -305,3 +327,19 @@ for b in BAL:
     print(f"  {b['t']:34s} {tot/12:5.1f} pies · {d} dibujos · {q} de piques")
 print(f"  {'LOS CUATRO':34s} {sum(pies(b) for b in BAL)/12:5.1f} pies "
       f"· {TD} dibujos · {TQ} de piques")
+
+# --------- VERIFICACION DE REMATES -----------------------------------------
+# El Pool House: UNA pared (la casa) y UNA escalera. La caballeriza: dos paredes.
+ESPERADO = {"BALCÓN 1  ·  POOL HOUSE":            ["PARED", "ESCALERA"],
+            "BALCÓN 2  ·  POOL HOUSE":            ["PARED", "ESCALERA"],
+            "BALCÓN 3  ·  CABALLERIZA LADO 1":    ["PARED", "PARED"],
+            "BALCÓN 4  ·  CABALLERIZA LADO 2":    ["PARED", "PARED"]}
+_vis = {}
+for bal, tipo, _ in REMATES: _vis.setdefault(bal, []).append(tipo)
+for bal, esp in ESPERADO.items():
+    got = _vis.get(bal, [])
+    assert got == esp, (f"\n\n  *** REMATES MAL EN {bal}:\n"
+                        f"      dibujado {got}\n      tenia que ser {esp}\n")
+print("\n  remates verificados:")
+for bal, esp in ESPERADO.items():
+    print(f"     {bal:34s}  {esp[0]:8s} -> {esp[1]}")

@@ -3,7 +3,7 @@
 """Arma el SET COMPLETO de planos en un solo PDF, con portada e indice.
    La portada se genera dos veces: la primera para saber cuantas paginas ocupa,
    la segunda ya con los numeros de pagina buenos."""
-import sys, subprocess, pathlib, importlib.util
+import sys, subprocess, pathlib, importlib.util, time
 for _m in ("cryptography", "cryptography.exceptions", "cryptography.hazmat"):
     sys.modules[_m] = None                      # el paquete del sistema esta roto
 from pypdf import PdfReader, PdfWriter
@@ -18,10 +18,8 @@ NEG, ROJO, NAR = "#1b2a41", "#b91c1c", "#c8571b"
 
 # nombre de archivo, titulo en el indice, para que sirve
 HOJAS = [
- ("railing-planta-instalacion", "PLANOS DE INSTALACI&#211;N",
-  "D&#243;nde va cada corrida en el terreno, con las letras y las medidas de obra."),
- ("railing-planta-balcones", "LOS 4 BALCONES EN PLANTA",
-  "Cada balc&#243;n con sus pa&#241;os repartidos. Los dibujos en color."),
+ ("railing-planta-balcones", "PLANOS DE INSTALACI&#211;N &#183; LOS 4 BALCONES",
+  "D&#243;nde va cada corrida, con las medidas de obra y los pa&#241;os repartidos."),
  ("railing-detalle-anclaje", "DETALLE DE ANCLAJE",
   "Las orejas de los 9 postes de esquina. Bloqueo, tornillos y medidas de borde."),
  ("railing-secciones-pool-house", "SECCIONES &#183; POOL HOUSE",
@@ -37,6 +35,43 @@ HOJAS = [
  ("railing-taller-caballeriza", "TALLER &#183; CABALLERIZA 1", "Idem."),
  ("railing-taller-caballeriza-2", "TALLER &#183; CABALLERIZA 2", "Idem."),
 ]
+
+# ---------------------------------------------------------------------------
+# CANDADO.  Una hoja vieja de un generador que ya no existe se colo en el set y
+# salio impresa con errores que ya estaban corregidos.  Ahora cada hoja tiene
+# que declarar su generador, se vuelven a correr todos, y se comprueba que el
+# HTML y el PDF de cada hoja se acaban de rehacer en ESTA corrida.
+GENERADOR = {
+ "railing-planta-balcones":            "gen-railing-planta.py",
+ "railing-detalle-anclaje":            "gen-railing-detalle-anclaje.py",
+ "railing-secciones-pool-house":       "gen-railing-secciones.py",
+ "railing-secciones-caballeriza":      "gen-railing-secciones.py",
+ "railing-secciones-caballeriza-2":    "gen-railing-secciones.py",
+ "railing-fabricacion-caballerizas":   "gen-railing-fab-caballerizas.py",
+ "railing-taller-pool-house":          "gen-railing-taller.py",
+ "railing-taller-caballeriza":         "gen-railing-taller.py",
+ "railing-taller-caballeriza-2":       "gen-railing-taller.py",
+}
+faltan = [n for n, _, _ in HOJAS if n not in GENERADOR]
+assert not faltan, f"hojas sin generador declarado, no entran al set: {faltan}"
+
+T0 = time.time() - 1
+for g in dict.fromkeys(GENERADOR.values()):
+    subprocess.run([sys.executable, str(HERE / g)], check=True, capture_output=True, cwd=HERE)
+
+def render(html_path, pdf_path):
+    subprocess.run([CHROME, "--headless", "--disable-gpu", "--no-sandbox",
+                    "--no-pdf-header-footer", "--virtual-time-budget=9000",
+                    f"--print-to-pdf={pdf_path}", str(html_path)],
+                   check=True, capture_output=True)
+
+for n, _, _ in HOJAS:
+    html, pdf = HERE / f"{n}.html", HERE / f"{n}.pdf"
+    assert html.stat().st_mtime >= T0, (
+        f"\n\n  *** {n}.html NO lo rehizo {GENERADOR[n]} en esta corrida.\n"
+        f"      Es una hoja hu&#233;rfana o el generador no la escribe. NO entra al set.\n")
+    render(html, pdf)
+    assert pdf.stat().st_mtime >= T0, f"{n}.pdf no se volvio a imprimir"
 
 paginas = {n: len(PdfReader(HERE / f"{n}.pdf").pages) for n, _, _ in HOJAS}
 
@@ -123,12 +158,6 @@ def portada(offset):
 
 </div></body></html>"""
 
-
-def render(html_path, pdf_path):
-    subprocess.run([CHROME, "--headless", "--disable-gpu", "--no-sandbox",
-                    "--no-pdf-header-footer", "--virtual-time-budget=9000",
-                    f"--print-to-pdf={pdf_path}", str(html_path)],
-                   check=True, capture_output=True)
 
 # --- dos pasadas: la primera para saber cuanto ocupa la portada
 ph, pp = HERE / "railing-set-portada.html", HERE / "railing-set-portada.pdf"
