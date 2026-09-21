@@ -32,9 +32,17 @@ HUECO_ESC = 27.0      # hueco de la escalera: 27" medido en el lado 1.  En el la
                       # Esas escaleras SIGUEN DE MADERA: no llevan baranda de aluminio.
 # Lo que MIDIO en obra.  El taller fabrica 2" menos en los panos que mueren contra
 # la casa: ahi el ultimo poste queda suelto, separado de la pared, sin anclaje.
-MEDIDO = {"B": 161.0, "E": 151.625,      # pool house
-          "G": 192.75,                   # caballeriza 1, lateral derecho (Rene, 21 sept)
-          "P": 193.375}                  # caballeriza 2: PENDIENTE de rehacer
+# (medida de obra, cuanto se le descuenta).  EL DESCUENTO NO ES SIEMPRE 2":
+# depende de DONDE TERMINA LA CINTA, y esa es la trampa que ya costo material.
+#   descuento 2" -> la cinta llega HASTA LA PARED. La baranda no la toca, asi
+#                   que el ultimo poste queda 2" antes.
+#   descuento 0" -> la cinta llega HASTA EL POSTE y el poste ya esta dentro de
+#                   la medida. Descontarle 2" seria descontarlas dos veces.
+MEDIDO = {"B": (161.0,    2.0),          # pool house: hasta la casa
+          "E": (151.625,  2.0),          # pool house: hasta la casa
+          "G": (192.75,   0.0),          # caballeriza 1 lateral derecho: Rene lo midio
+                                         # "hasta la pared INCLUYENDO el ultimo poste"
+          "P": (193.375,  2.0)}          # caballeriza 2: PENDIENTE de rehacer
 
 REMATES = []          # (balcon, tipo, texto) de cada remate dibujado
 SEC, CORRIDA = {}, {}
@@ -76,7 +84,8 @@ def recorrido(b):
     x = y = 0.0; out = []
     for letra, rumbo in b['pasos']:
         L = (HUECO_ESC if letra == "ESC" else
-             INCOGNITA if letra == "?" else MEDIDO.get(letra, CORRIDA[letra][0]))
+             INCOGNITA if letra == "?" else
+             MEDIDO[letra][0] if letra in MEDIDO else CORRIDA[letra][0])
         dx, dy = DX[rumbo]
         p0 = (x, y); x += dx*L; y += dy*L
         out.append((letra, p0, (x, y), L))

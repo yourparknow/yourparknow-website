@@ -98,11 +98,15 @@ def t5_descuentos():
     for b in P.BAL:
         for letra, _, _, L in P.recorrido(b):
             if letra in ("ESC", "?"): continue
-            med = P.MEDIDO.get(letra)
-            if med is not None and abs((med - 2.0) - P.CORRIDA[letra][0]) > 1e-9:
-                mal(f"corrida {letra}: medida {fr(med)}\", se fabrica "
-                    f"{fr(P.CORRIDA[letra][0])}\" — no son las 2\"")
-    return f"las 2\" se descuentan en {', '.join(sorted(P.MEDIDO))} y en ninguna otra"
+            if letra not in P.MEDIDO: continue
+            med, desc = P.MEDIDO[letra]
+            if abs((med - desc) - P.CORRIDA[letra][0]) > 1e-9:
+                mal(f"corrida {letra}: medida {fr(med)}\", descuento {fr(desc)}\", "
+                    f"se fabrica {fr(P.CORRIDA[letra][0])}\" — no cuadra")
+    con = sorted(k for k, v in P.MEDIDO.items() if v[1])
+    sin = sorted(k for k, v in P.MEDIDO.items() if not v[1])
+    return (f"2\" de descuento en {', '.join(con)}"
+            + (f" ; {', '.join(sin)} sin descuento (la cinta llega al poste)" if sin else ""))
 
 def t6_remates():
     """Pool House: una pared y una escalera.  Caballerizas: pared en los dos lados."""

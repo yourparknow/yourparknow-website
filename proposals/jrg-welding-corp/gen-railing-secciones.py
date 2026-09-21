@@ -390,15 +390,16 @@ PH_B2 = [
 # ---------------------------------------------------------------------------
 c2 = 44.6875                       # panos del 191-3/8 (caballeriza 2, sin tocar)
 f_dib, f_lis = 46.8125, 47.75      # frente: 4 dibujos + 5 lisos  -> 442 de luz
-g_lis = 45.375                     # lateral derecho
+g_lis = 46.375                     # lateral derecho
 j_lis = 27.0                       # lateral izquierdo
 k_lis = 23.375                     # 4ta paralela
 CB = [
  S("G-1", [('P',),('D',D),('P',),('L',g_lis),('P',),('D',D),('P',),('L',g_lis)],
    "REMATE CONTRA LA PARED DE LA CABALLERIZA  (poste suelto, NO se ancla a la pared)",
    "ESQUINA  —  MUERE EN PAÑO contra el poste de esquina de H-1  (ese poste es del frente, no de esta)",
-   "Lateral derecho. 192-3/4\" hasta la pared menos las 2\" = 190-3/4\" de material. "
-   "NO lleva poste en la esquina: choca contra el del frente."),
+   "Lateral derecho: 192-3/4\" DE MATERIAL, tal cual. La medida de Rene llega HASTA EL POSTE "
+   "y ese poste ya va dentro de ella, asi que NO se le descuentan las 2\" de la pared. "
+   "NO lleva poste en la esquina: choca en pano contra el del frente."),
  S("H-1", [('P',),('L',f_lis),('P',),('D',f_dib),('P',),('L',f_lis),('P',)],
    "ESQUINA  —  LLEVA SU PROPIO POSTE DE ESQUINA  (la G-1 muere en paño contra él)",
    "EMPATE RECTO  (junta al centro del poste)"),
@@ -472,7 +473,7 @@ EDIFICIOS = [
  dict(slug="caballeriza", titulo="CABALLERIZA 1 — BARANDA · SECCIONES DE FRENTE",
       meta="MEDIDAS INTERIORES · REV. 2 · SEPT 21, 2026",
       grupos=[("CABALLERIZA 1 — SECCIONES G a M", CB)],
-      corridas=[("Caballeriza","G",190.75,["G-1"]), ("Caballeriza","H",446.0,["H-1","H-2","H-3"]),
+      corridas=[("Caballeriza","G",192.75,["G-1"]), ("Caballeriza","H",446.0,["H-1","H-2","H-3"]),
                 ("Caballeriza","J",106.0,["J-1"]), ("Caballeriza","K",98.75,["K-1"]),
                 ("Caballeriza","M",29.0,["M-1"]), ("Caballeriza","L",47.0,["L-1"])],
       # orden real alrededor del edificio. None = ahi la cadena SE ROMPE (hueco de
@@ -485,7 +486,7 @@ EDIFICIOS = [
             "Las letras G a la M no se repiten en el Pool House, así que en el taller no hay forma de confundir "
             "dos secciones. <b>Las medidas de Rene son INTERIORES:</b> el frente (corrida H) carga sus "
             "<b>dos postes de esquina</b> y la G, la J y la K mueren <b>en paño</b> contra ellos. "
-            "La corrida G ya trae descontadas las <b>2\"</b> de la pared (192-3/4 − 2 = 190-3/4)."),
+            "La corrida G son <b>192-3/4\" de material</b>, sin descuento: esa medida llega hasta el poste y el poste ya va dentro."),
  dict(slug="caballeriza-2", titulo="CABALLERIZA — LADO 2 · BARANDA · SECCIONES DE FRENTE",
       meta="LADO CON EL PAÑO SIN MEDIR · REV. 2 · SEPT 20, 2026",
       grupos=[("CABALLERIZA LADO 2 — SECCIONES N a R", CB2)],
