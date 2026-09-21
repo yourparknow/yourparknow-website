@@ -41,15 +41,26 @@ Y_CAP_B = 1.0       # cara inferior del cap
 Y_RAIL_T = 39.0     # cara superior del riel
 Y_RAIL_B = 40.0
 Y_DECK = 42.0
-GAP_PANEL = 0.25    # holgura por lado: panel = luz - 1/2
+GAP_PANEL = 0.0     # SIN HOLGURA. El riel de abajo va de CARA DE POSTE A CARA DE
+                    # POSTE, completo, igual que el cap de arriba. Antes tenia 1/4
+                    # por lado (1/2 por pano), que es la holgura para METER un panel
+                    # ya armado entre dos postes -- pero esto no se mete, se SUELDA.
+                    # Con la holgura, la linea de abajo quedaba mas corta que la de
+                    # arriba: 1/2 por cada pano. En la G eran 4 panos = 2" de menos.
+                    # Rene: "arriba esta bien, abajo me faltan dos pulgadas".
+
+LUZ_MAX = 3.75      # la regla es que no pase una bola de 4". Me quedo en 3-3/4 y
+                    # dejo 1/4 de margen: el inspector mide con la bola en la mano
+                    # y una junta que se abrio 1/16 en obra no puede tumbar la hoja.
+                    # Es el mismo limite efectivo que tenian los planos de siempre.
 
 def piques_de(luz):
     """devuelve (n, luz_entre_piques) para un pano liso de `luz` entre caras de poste."""
-    W = luz - 2 * GAP_PANEL           # ancho del panel soldado
+    W = luz - 2 * GAP_PANEL           # ancho del riel soldado (hoy = la luz entera)
     n = 1
     while True:
         g = (W - n) / (n + 1)
-        if g + GAP_PANEL < 4.0:       # luz libre real contra el poste
+        if g + GAP_PANEL <= LUZ_MAX:  # luz libre real contra el poste
             return n, g
         n += 1
 # ---------------------------------------------------------------- plantilla
@@ -220,7 +231,7 @@ def dibujito(x0, luz=46.0):
 
 def pano_liso(x0, luz):
     n, g = piques_de(luz)
-    o = [rect(x0 + GAP_PANEL, Y_RAIL_T, luz - 0.5, RAIL_T, ST_LT)]
+    o = [rect(x0 + GAP_PANEL, Y_RAIL_T, luz - 2 * GAP_PANEL, RAIL_T, ST_LT)]
     for i in range(n):
         xx = x0 + GAP_PANEL + g + i * (1 + g)
         o.append(rect(xx, Y_CAP_B, 1, CAMPO, "#e5e7eb"))
@@ -597,7 +608,7 @@ def build(cfg):
     filas = []
     for w in sorted(anchos, reverse=True):
         veces, n, g = anchos[w]
-        panel = w - 0.5
+        panel = w - 2 * GAP_PANEL
         marcas = [g + i * (1 + g) + 0.5 for i in range(n)]
         assert abs((marcas[-1] + 0.5 + g) - panel) < 1e-9, ("no cierra", w)
         ms = " &nbsp;<span style='color:#c8571b'>|</span>&nbsp; ".join(fr(m, 16) for m in marcas)

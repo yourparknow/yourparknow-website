@@ -105,7 +105,7 @@ def svg(s):
     xx = 0.0
     for e in el:
         if e[0] == 'P': xx += POST; continue
-        a, b = xx + 0.25, xx + e[1] - 0.25
+        a, b = xx + G.GAP_PANEL, xx + e[1] - G.GAP_PANEL
         o.append(f'<line x1="{X(a):.1f}" y1="{yr}" x2="{X(b):.1f}" y2="{yr}" stroke="{VERDE}" '
                  f'stroke-width="2.6"/>')
         for q in (a, b):
@@ -154,7 +154,7 @@ def despiece(s):
     rieles, piques, nd = {}, {}, 0
     for e in el:
         if e[0] == 'P': continue
-        L = e[1] - 0.5
+        L = e[1] - 2 * G.GAP_PANEL
         rieles[L] = rieles.get(L, 0) + 1
         if e[0] == 'D': nd += 1
         else:

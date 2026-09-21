@@ -83,7 +83,7 @@ def t4_esfera():
     for nm, s in SEC.items():
         for e in s['elems']:
             if e[0] != 'L': continue
-            n, g = G.piques_de(e[1]); luz = g + 0.25
+            n, g = G.piques_de(e[1]); luz = g + G.GAP_PANEL
             if luz >= 4.0:
                 mal(f"{nm}: pano de {fr(e[1])}\" deja {fr(luz,32)}\" — PASA LA ESFERA DE 4\"")
             elif luz > 3.90:
@@ -309,6 +309,24 @@ def t17_entreverado():
                         f"{'dibujo' if x=='D' else 'piques'}. No esta entreverado.")
     return "uno si, uno no, en toda corrida y en todo empate recto (las esquinas van de piques, a pedido)"
 
+def t18_arriba_igual_abajo():
+    """La linea de ARRIBA (el cap) y la linea de ABAJO (los rieles con los postes
+       metidos en el medio) tienen que medir LO MISMO. Rene lo cogio en obra:
+       "arriba esta bien, abajo me faltan dos pulgadas". Eran 1/4 de holgura por
+       lado en cada pano -- 1/2 por pano -- que se comian la linea de abajo. En
+       la G eran 4 panos = 2 pulgadas. Estaba en las 26 secciones de la obra."""
+    peor, peor_nm = 0.0, ""
+    for nm, s in SEC.items():
+        arriba = sum(G.POST if e[0] == 'P' else e[1] for e in s['elems'])
+        abajo  = sum(G.POST if e[0] == 'P' else e[1] - 2 * G.GAP_PANEL for e in s['elems'])
+        d = abs(arriba - abajo)
+        if d > 1e-9:
+            mal(f"{nm}: arriba mide {fr(arriba)}\" y abajo {fr(abajo)}\" — "
+                f"{fr(d)}\" de diferencia. El riel tiene que ir de cara de poste a cara de poste.")
+        if d > peor: peor, peor_nm = d, nm
+    return (f"las {len(SEC)} secciones miden igual arriba que abajo "
+            f"(holgura de panel = {fr(G.GAP_PANEL)}\": el riel va completo y soldado)")
+
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
  ("Dos dibujos nunca van pegados",          t2_dibujos_pegados),
@@ -327,6 +345,7 @@ PRUEBAS = [
  ("El poste de la tabla = el dibujado",     t15_poste_cuadra),
  ("Alterna en el poste del empalme",        t16_alterna_empalme),
  ("Pa\u00f1o entreverado en linea recta",      t17_entreverado),
+ ("Arriba mide igual que abajo",            t18_arriba_igual_abajo),
 ]
 
 print("\n" + "=" * 68)
