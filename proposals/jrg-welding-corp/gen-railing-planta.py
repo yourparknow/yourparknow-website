@@ -32,7 +32,8 @@ HUECO_ESC = 27.0      # hueco de la escalera: 27" medido en el lado 1.  En el la
                       # Esas escaleras SIGUEN DE MADERA: no llevan baranda de aluminio.
 # Lo que MIDIO en obra.  El taller fabrica 2" menos en los panos que mueren contra
 # la casa: ahi el ultimo poste queda suelto, separado de la pared, sin anclaje.
-MEDIDO = {"B": 161.0, "E": 151.625}
+MEDIDO = {"B": 161.0, "E": 151.625,      # pool house
+          "G": 195.0, "P": 193.375}      # caballerizas
 
 SEC, CORRIDA = {}, {}
 for cfg in G.EDIFICIOS:
@@ -264,8 +265,9 @@ html = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
   as&#237; que <b>revisa hacia d&#243;nde dobla cada lateral</b>. Si alguno est&#225; volteado, m&#225;rcalo:
   no cambia ni una medida ni una pieza.<br>
   <b>Las escaleras de las dos caballerizas se quedan de madera por ahora</b>, as&#237; que la baranda se para a cada lado del hueco y no baja. Las <b>&#250;nicas escaleras de aluminio son las 4 del Pool House</b>: 185-1/2 a 34&#176; dos veces y 198 a 33&#176; dos veces.<br>
-  <b>Las 2" que pediste</b> salen de los dos pa&#241;os que mueren contra la casa (lateral B del balc&#243;n 1
-  y lateral E del balc&#243;n 2): ah&#237; el &#250;ltimo poste queda suelto, separado de la pared, sin anclaje.
+  <b>Las 2" que pediste</b> salen de los cuatro pa&#241;os que mueren contra pared: <b>B</b> y <b>E</b> del
+  Pool House y <b>G</b> y <b>P</b> de las caballerizas. Ah&#237; el poste queda suelto, separado de la
+  pared, sin anclaje.
   El plano lleva <b>la medida que t&#250; tomaste</b> y debajo, en naranja, <b>lo que se fabrica</b>.</div>
 {pag}
 </div></body></html>"""
