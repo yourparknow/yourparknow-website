@@ -369,21 +369,45 @@ PH_B2 = [
 ]
 
 # ================================ CABALLERIZA ===============================
-c1, c2, c3 = 45.5, 44.6875, 47.5625   # c1 = panos del 193 ; c2 = panos del 191-3/8
-c4 = 47.75
+# ---------------------------------------------------------------------------
+# MEDIDAS DE RENE, 21 SEPT 2026.  TODAS SON INTERIORES.
+# Los postes de esquina van POR FUERA de la medida que el dio: el FRENTE carga
+# SUS DOS postes de esquina y los dos laterales mueren EN PAÑO contra ellos.
+# (Antes estaba al reves y por eso todo salia 4" corto.)
+#
+#   frente ............ 442      interior   36'-10"   ->  446 punta a punta
+#   lateral derecho ... 192-3/4  hasta la pared, menos 2" de la pared = 190-3/4
+#   lateral izquierdo . 104      interior + su propio poste           = 106
+#   4ta paralela ......  98-3/4  contando su propio poste
+#   L soldada .........  47 x 29 afuera a afuera, postes incluidos
+#
+# REPARTO DEL FRENTE: 9 paños, 4 dibujos + 5 lisos, alternando, paño LISO en las
+# dos esquinas.  El paño del dibujo baja a 46-13/16 a proposito: a 47-3/4 la luz
+# del flanco daba 4" CLAVADAS y la bola de 4 pasa.  A 46-13/16 queda en 3-49/64.
+# ---------------------------------------------------------------------------
+c2 = 44.6875                       # panos del 191-3/8 (caballeriza 2, sin tocar)
+f_dib, f_lis = 46.8125, 47.75      # frente: 4 dibujos + 5 lisos  -> 442 de luz
+g_lis = 45.375                     # lateral derecho
+j_lis = 27.0                       # lateral izquierdo
+k_lis = 23.375                     # 4ta paralela
 CB = [
- S("G-1", [('P',),('D',D),('P',),('L',c1),('P',),('D',D),('P',),('L',c1),('P',)],
-   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (poste suelto, NO se ancla a la pared)", "ESQUINA con H-1  (lleva el poste de esquina)",
-   "Sale de la pared con dibujo. 195\" menos las 2\" = 193\". Mide 16'-1\"."),
- S("H-1", [('L',c3),('P',),('D',D),('P',),('L',c3),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de G-1)", "EMPATE RECTO  (junta al centro del poste)"),
- S("H-2", [('D',D),('P',),('L',c4),('P',),('D',D),('P',)],
+ S("G-1", [('P',),('D',D),('P',),('L',g_lis),('P',),('D',D),('P',),('L',g_lis)],
+   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (poste suelto, NO se ancla a la pared)",
+   "ESQUINA  —  MUERE EN PAÑO contra el poste de esquina de H-1  (ese poste es del frente, no de esta)",
+   "Lateral derecho. 192-3/4\" hasta la pared menos las 2\" = 190-3/4\" de material. "
+   "NO lleva poste en la esquina: choca contra el del frente."),
+ S("H-1", [('P',),('L',f_lis),('P',),('D',f_dib),('P',),('L',f_lis),('P',)],
+   "ESQUINA  —  LLEVA SU PROPIO POSTE DE ESQUINA  (la G-1 muere en paño contra él)",
+   "EMPATE RECTO  (junta al centro del poste)"),
+ S("H-2", [('D',f_dib),('P',),('L',f_lis),('P',),('D',f_dib),('P',)],
    "EMPATE RECTO  (arranca en paño)", "EMPATE RECTO  (junta al centro del poste)"),
- S("H-3", [('L',c3),('P',),('D',D),('P',),('L',c3),('P',)],
-   "EMPATE RECTO  (arranca en paño)", "ESQUINA con J-1  (lleva el poste de esquina)"),
- S("J-1", [('L',25.0),('P',),('D',D),('P',),('L',25.0),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de H-3)", "ESQUINA con K-1  (lleva el poste de esquina)"),
- S("K-1", [('L',22.375),('P',),('D',D),('P',),('L',22.375),('P',)],
+ S("H-3", [('L',f_lis),('P',),('D',f_dib),('P',),('L',f_lis),('P',)],
+   "EMPATE RECTO  (arranca en paño)",
+   "ESQUINA  —  LLEVA SU PROPIO POSTE DE ESQUINA  (la J-1 muere en paño contra él)"),
+ S("J-1", [('L',j_lis),('P',),('D',D),('P',),('L',j_lis),('P',)],
+   "ESQUINA  (arranca en paño, contra el poste de esquina de H-3)",
+   "ESQUINA con K-1  (lleva el poste de esquina)"),
+ S("K-1", [('L',k_lis),('P',),('D',D),('P',),('L',k_lis),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de J-1)", "HUECO DE LA ESCALERA  (27\", sigue de madera)"),
  # --- LA "L" DE LA ESCALERA: M-1 (29") + L-1 (47") SALEN SOLDADAS EN UNA SOLA PIEZA.
  #     Los dos extremos libres son libres de verdad: de un lado el hueco de la escalera,
@@ -445,8 +469,8 @@ EDIFICIOS = [
  dict(slug="caballeriza", titulo="CABALLERIZA — BARANDA · SECCIONES DE FRENTE",
       meta="BALCÓN EN U · REV. 1 · SEPT 20, 2026",
       grupos=[("CABALLERIZA — SECCIONES G a M", CB)],
-      corridas=[("Caballeriza","G",193.0,["G-1"]), ("Caballeriza","H",442.0,["H-1","H-2","H-3"]),
-                ("Caballeriza","J",104.0,["J-1"]), ("Caballeriza","K",98.75,["K-1"]),
+      corridas=[("Caballeriza","G",190.75,["G-1"]), ("Caballeriza","H",446.0,["H-1","H-2","H-3"]),
+                ("Caballeriza","J",106.0,["J-1"]), ("Caballeriza","K",98.75,["K-1"]),
                 ("Caballeriza","M",29.0,["M-1"]), ("Caballeriza","L",47.0,["L-1"])],
       # orden real alrededor del edificio. None = ahi la cadena SE ROMPE (hueco de
       # escalera o pared), o sea que del otro lado NO hay poste donde apoyarse.
