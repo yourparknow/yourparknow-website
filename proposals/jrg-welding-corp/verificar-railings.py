@@ -200,6 +200,27 @@ def t12_cuadro_unico():
     nd = sum(E.geo(x)['n_dib'] * x['cant'] for x in E.ESCALERAS)
     return (f"{nd} cuadros, postes y piques identicos, todo a {E.ANG_CORTE:g}\u00b0")
 
+def t13_no_se_acumula():
+    """Lo que preocupaba a Rene: cortar a 33.5 una baranda de 190" y bajarse dos
+       pulgadas abajo. No pasa, PERO SOLO si ninguna medida que corre POR LA
+       PENDIENTE sale del angulo de corte. Las que corren por la pendiente son
+       el cap y el riel de cada pano: esas tienen que salir del angulo REAL.
+       Si alguien las cambia al de corte, se acumula y esta prueba lo caza."""
+    import math
+    for e in E.ESCALERAS:
+        g = E.geo(e)
+        ca_real = math.cos(math.radians(e['ang']))
+        ca_corte = math.cos(math.radians(E.ANG_CORTE))
+        riel_real  = (g['bay'] - 2*E.GAP) / ca_real
+        riel_corte = (g['bay'] - 2*E.GAP) / ca_corte
+        if abs(g['riel_pano'] - riel_real) > 1e-9:
+            acum = g['n_bay'] * abs(riel_real - riel_corte)
+            mal(f"{e['n']}: el riel del pano NO sale del angulo real. "
+                f"Se acumulan {fr(acum,32)}\" en los {g['n_bay']} panos.")
+        if abs(g['cap_largo'] - e['rake']) > 1e-9:
+            mal(f"{e['n']}: el cap no sale del largo medido en obra")
+    return "el cap y el riel salen del angulo real: no se acumula nada"
+
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
  ("Dos dibujos nunca van pegados",          t2_dibujos_pegados),
@@ -213,6 +234,7 @@ PRUEBAS = [
  ("Ninguna hoja huerfana en el set",        t10_huerfanos),
  ("El mismo dibujo, igual en toda hoja",    t11_mismo_ancho),
  ("Un solo corte para las 4 escaleras",     t12_cuadro_unico),
+ ("El medio grado no se acumula",           t13_no_se_acumula),
 ]
 
 print("\n" + "=" * 68)
