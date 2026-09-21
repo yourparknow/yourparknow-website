@@ -40,6 +40,22 @@ def vecino(txt):
 
 cap_largo = G.cap_largo          # una sola definicion, en gen-railing-secciones
 
+def nota_cap(s):
+    """Explica en la hoja POR QUE el cap no siempre mide lo mismo que la seccion.
+       Si no se dice, el que suma la cadena de abajo (que da el largo de la
+       seccion) ve un cap distinto y cree que hay un error. Rene: "cuando yo miro
+       el dibujo y reviso los numeros no me esta dando la cuenta"."""
+    L = G.largo(s)
+    c = cap_largo(s)
+    if abs(c - L) < 1e-9:
+        return "corrido, de punta a punta de la sección"
+    partes = []
+    if "EMPATE" in s['izq']: partes.append("arranca 1\" antes, en el CENTRO del poste del empate")
+    if "EMPATE" in s['der']: partes.append("muere 1\" antes, en el CENTRO del poste del empate")
+    if "SOLDADA" in s['izq']: partes.append(f"arranca {fr(POST)}\" antes: es el INGLETE de la L, que sale soldada")
+    return (f"la sección mide {fr(L)}\" y el cap {fr(c)}\" &#8212; " + "; ".join(partes)
+            + ". <b>No es un error: la junta va encima del poste.</b>")
+
 def svg(s):
     o, T = [], s['largo']
     el = s['elems']
@@ -147,7 +163,7 @@ def despiece(s):
     f = [f"<tr><td><b>POSTE</b></td><td>2×2×.090</td><td class='n'>{fr(POST_LEN)}\"</td>"
          f"<td class='n'><b>{np_}</b></td><td>{fr(POST_LEN-6)} a la panza del cap + 6 a la fascia &#183; el cap corre por encima</td></tr>",
          f"<tr><td><b>CAP</b></td><td>2×1×.090 de plano</td><td class='n'>{fr(cap_largo(s))}\"</td>"
-         f"<td class='n'><b>1</b></td><td>corrido, de punta a punta de la sección</td></tr>"]
+         f"<td class='n'><b>1</b></td><td>{nota_cap(s)}</td></tr>"]
     for L in sorted(rieles, reverse=True):
         f.append(f"<tr><td><b>RIEL</b></td><td>2×1×.090 acostado</td><td class='n'>{fr(L)}\"</td>"
                  f"<td class='n'><b>{rieles[L]}</b></td><td>uno por paño</td></tr>")
