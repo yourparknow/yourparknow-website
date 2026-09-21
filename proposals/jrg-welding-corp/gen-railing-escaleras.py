@@ -168,9 +168,20 @@ def geo(e):
     d2_h, d2_v = abs((180 + ANG_CORTE) - dD2), abs(90 - dD2)
     assert abs((d2_v + d2_h) - (90 + ANG_CORTE)) < 1e-6, "la punta de la D2 no cuadra con la esquina"
     g['d1_v'], g['d1_h'], g['d2_v'], g['d2_h'] = d1_v, d1_h, d2_v, d2_h
-    esc_q = CUADRO_E / 30.25                     # los rombos de adentro, a escala
-    q2, q3 = Q2_OD * esc_q - TUBO, Q3_OD * esc_q - TUBO
-    g['q2_od'], g['q3_od'] = Q2_OD * esc_q, Q3_OD * esc_q
+    # LOS ROMBOS DE ADENTRO, CON LAS 4 CARAS IGUALES. Rene: "que las cuatro
+    # caras sean iguales para no pasar trabajo a la hora de cortar".
+    # Antes eran cuadros cizallados: 2 caras a plomo y 2 acostadas, distintas.
+    # Ahora el lado es la MEDIA de las dos, y las 4 salen del mismo largo.
+    # Un rombo con 2 lados a plomo y 2 a ANG_CORTE del mismo largo CIERRA SOLO,
+    # sea cual sea el largo: los vectores se cancelan. No hay nada que ajustar.
+    esc_q = CUADRO_E / 30.25
+    for _od, _k in ((Q2_OD, 'q2'), (Q3_OD, 'q3')):
+        _c = _od * esc_q - TUBO                  # centro a centro del cuadro cizallado
+        _lado = (_c + _c / cad_) / 2             # la media de la cara a plomo y la acostada
+        g[_k + '_lado'] = _lado
+        g[_k + '_alto'] = _lado                  # a plomo
+        g[_k + '_ancho'] = _lado * cad_          # en horizontal
+    q2, q3 = g['q2_lado'], g['q3_lado']
     ag, ob = (90 - ANG_CORTE) / 2, (90 + ANG_CORTE) / 2
     pz = [
       ("V",  2, V,           f"lado del cuadro &#183; A PLOMO &#183; las 2 puntas a {ANG_CORTE:g}&#176;, paralelas"),
@@ -179,10 +190,10 @@ def geo(e):
                              f"<b>{d1_v:.0f}&#176;</b> contra la V y <b>{d1_h:.0f}&#176;</b> contra la H"),
       ("D2", 2, D2/2 - desc, f"media diagonal corta &#183; por fuera <b>{d2_v:.0f}&#176;</b> contra la V "
                              f"y <b>{d2_h:.0f}&#176;</b> contra la H &#183; por dentro muere a ras contra la D1"),
-      ("C2p",2, q2,          f"rombo grande &#183; los 2 A PLOMO &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
-      ("C2a",2, q2/cad_,     f"rombo grande &#183; los 2 ACOSTADOS &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
-      ("C3p",2, q3,          f"rombo chico &#183; los 2 A PLOMO &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
-      ("C3a",2, q3/cad_,     f"rombo chico &#183; los 2 ACOSTADOS &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
+      ("C2", 4, q2,          f"rombo grande &#183; <b>LAS 4 IGUALES</b> &#183; 2 a plomo y 2 acostadas "
+                             f"&#183; cada una {ag:.2f}&#176; de un lado y {ob:.2f}&#176; del otro"),
+      ("C3", 4, q3,          f"rombo chico &#183; <b>LAS 4 IGUALES</b> &#183; 2 a plomo y 2 acostadas "
+                             f"&#183; cada una {ag:.2f}&#176; de un lado y {ob:.2f}&#176; del otro"),
     ]
     if g['n_fl']:
         pz.insert(1, ("B", 2*g['n_fl'], V,
@@ -283,9 +294,10 @@ def alzado(g, VW=792, VH=575):
                 o.append(barra((-L2, w), (L2, w)))
             for pq, qq in (((-L2, -L2), (L2, L2)), ((-L2, L2), (L2, -L2))):
                 o.append(barra(pq, qq))                           # la X
-            for od in (g['q2_od'], g['q3_od']):                   # los 2 rombos
-                r = (od - TUBO)/2
-                for A, B in (((-r,-r),(r,-r)), ((r,-r),(r,r)), ((r,r),(-r,r)), ((-r,r),(-r,-r))):
+            for k in ('q2', 'q3'):                                # los 2 rombos
+                hw, hh = g[k+'_ancho']/2, g[k+'_alto']/2
+                for A, B in (((-hw,-hh),(hw,-hh)), ((hw,-hh),(hw,hh)),
+                             ((hw,hh),(-hw,hh)), ((-hw,hh),(-hw,-hh))):
                     o.append(barra(A, B))
 
     # postes a plomo
@@ -350,12 +362,13 @@ def armado(g):
        cuatro de los cortes pasan de 59 grados y no los hace la sierra."""
     ta, ang = g['ta_d'], ANG_CORTE   # el cuadro va al angulo unico
     C = CUADRO_E
-    q2, q3 = g['q2_od'], g['q3_od']
     def W(x, yp): return (x, x*ta + yp)          # a coordenadas de la mesa
     marcas = []
-    for nom, lado in (("Cuadro de afuera", C), ("Rombo grande Q2", q2), ("Rombo chico Q3", q3)):
-        d = (C - lado) / 2
-        esq = [(d, d), (d+lado, d), (d+lado, d+lado), (d, d+lado)]
+    for nom, an, al in (("Cuadro de afuera", C, C),
+                        ("Rombo grande Q2", g['q2_ancho'], g['q2_alto']),
+                        ("Rombo chico Q3", g['q3_ancho'], g['q3_alto'])):
+        dx, dy = (C - an) / 2, (C - al) / 2
+        esq = [(dx, dy), (dx+an, dy), (dx+an, dy+al), (dx, dy+al)]
         for et, (x, yp) in zip(("abajo izq", "abajo der", "arriba der", "arriba izq"), esq):
             X, Y = W(x, yp)
             marcas.append((nom, et, X, Y))
@@ -418,10 +431,10 @@ def detalle_dibujo(g, VW=792, VH=500):
     o.append(tubo((a0, CUADRO_E - TUBO), (a1, TUBO)))
     # --- los dos rombos
     cx = cy = CUADRO_E/2
-    for od in (g['q2_od'], g['q3_od']):
-        r = (od - TUBO)/2
-        for A, B in (((cx-r, cy-r), (cx+r, cy-r)), ((cx+r, cy-r), (cx+r, cy+r)),
-                     ((cx+r, cy+r), (cx-r, cy+r)), ((cx-r, cy+r), (cx-r, cy-r))):
+    for k in ('q2', 'q3'):
+        hw, hh = g[k+'_ancho']/2, g[k+'_alto']/2
+        for A, B in (((cx-hw, cy-hh), (cx+hw, cy-hh)), ((cx+hw, cy-hh), (cx+hw, cy+hh)),
+                     ((cx+hw, cy+hh), (cx-hw, cy+hh)), ((cx-hw, cy+hh), (cx-hw, cy-hh))):
             o.append(tubo(A, B))
     # --- letras de cada pieza
     o.append(et((h, 0), (h, CUADRO_E), "V", 4, NEG, 15))
@@ -431,12 +444,10 @@ def detalle_dibujo(g, VW=792, VH=500):
     o.append(et((a0, TUBO), (a1*0.42, CUADRO_E*0.42), "D1", 4, NEG, 15))
     o.append(et((a0, CUADRO_E-TUBO), (a1*0.40, CUADRO_E*0.62), "D2", 4, NEG, 15))
     o.append(et((a1*0.62, CUADRO_E*0.38), (a1, TUBO), "D2", 4, NEG, 15))
-    r2 = (g['q2_od'] - TUBO)/2
-    o.append(et((cx-r2, cy-r2), (cx-r2, cy+r2), "C2p", 4, NEG, 12))
-    o.append(et((cx-r2, cy+r2), (cx+r2, cy+r2), "C2a", 4, NEG, 12))
-    r3 = (g['q3_od'] - TUBO)/2
-    o.append(et((cx-r3, cy-r3), (cx-r3, cy+r3), "C3p", 4, NEG, 11))
-    o.append(et((cx-r3, cy+r3), (cx+r3, cy+r3), "C3a", 4, NEG, 11))
+    for k, lab, fs in (('q2', "C2", 12), ('q3', "C3", 11)):
+        hw, hh = g[k+'_ancho']/2, g[k+'_alto']/2
+        o.append(et((cx-hw, cy-hh), (cx-hw, cy+hh), lab, 4, NEG, fs))
+        o.append(et((cx-hw, cy+hh), (cx+hw, cy+hh), lab, 4, NEG, fs))
 
     # --- cotas
     # ancho horizontal, abajo
@@ -497,6 +508,77 @@ CSS = f"""
     text-transform:uppercase;letter-spacing:.6px}}
 """
 
+# ---- EL DIBUJO: una sola vez, porque los {TOT_DIB} salen identicos
+TOT_DIB = sum(geo(x)["n_dib"] * x["cant"] for x in ESCALERAS)
+GD = geo(ESCALERAS[0])              # da igual cual: el dibujo es el mismo
+_marcas, _cortes = armado(GD)
+marcas_html = "".join(
+    f"<tr><td>{'<b>'+nom+'</b>' if i%4==0 else ''}</td><td>{et}</td>"
+    f"<td class='n'>{fr(X,16)}\"</td><td class='n'>{fr(Y,16)}\"</td>"
+    f"<td>{'&#8212;' if i%4 else 'el cero del tizado' if nom.startswith('Cuadro') else 'centrado en el cuadro'}</td></tr>"
+    for i, (nom, et, X, Y) in enumerate(_marcas))
+cortes_html = "".join(
+    f"<tr style=\"background:{'#fff5f5' if duro else '#fff'}\"><td><b>{pz}</b></td>"
+    f"<td class='n'>{x:.1f}&#176;</td><td class='n'>{y:.1f}&#176;</td><td>{nota}</td></tr>"
+    for pz, x, y, nota, duro in _cortes)
+piezas = "".join(
+    f"<tr><td><b>{c}</b></td><td>1&#215;1&#215;1/16</td><td class='n'>{fr(L,32)}\"</td>"
+    f"<td class='n'><b>{q}</b></td><td class='n'>{q*TOT_DIB}</td><td>{d}</td></tr>"
+    for c, q, L, d in GD['piezas'])
+g = GD
+DIBUJO_HTML = f"""  <div class="pb"></div>
+  <div class="hd"><h1>EL DIBUJO DE {ANG_CORTE:g}&#176; &#8212; PLANO EN GRANDE</h1>
+    <div class="m">{TOT_DIB} en total &#183; <b>TODOS IGUALES</b>, en las 4 barandas<br>
+    todas las piezas de 1&#215;1&#215;1/16</div></div>
+
+  <div class="dw"><div class="dt">EL DIBUJO SOLO, CON SUS MEDIDAS
+      <span class="r">cada pieza con su letra, igual que en la tabla</span></div>
+    {detalle_dibujo(g)}</div>
+
+  <table>
+    <tr><th style="width:9%">Pieza</th><th style="width:15%">Perfil</th><th style="width:13%">Largo de corte</th>
+        <th style="width:10%">Por dibujo</th><th style="width:9%">Los {TOT_DIB}</th><th>C&#243;mo se corta</th></tr>
+    {piezas}
+  </table>
+  <div class="pb"></div>
+  <div class="hd"><h1>EL DIBUJO DE {ANG_CORTE:g}&#176; &#8212; C&#211;MO SE ARMA</h1>
+    <div class="m">esto es lo que hace falta en el banco<br>tizado en la mesa + &#225;ngulo de cada corte</div></div>
+
+  <div class="warn"><b>Este dibujo NO se arma cortando y juntando.</b> Va <b>tizado en la mesa</b>:
+  se marca el paralelogramo con las medidas de abajo, se acuestan las piezas encima y ah&#237; mismo
+  se marcan las puntas de las diagonales y de los rombos. <b>Cuatro de los cortes pasan de
+  59&#176; del escuadre y la sierra no llega</b> &#8212; esos van a esmeril.</div>
+
+  <h2 style="font-size:12px;background:{NEG};color:#fff;padding:4px 10px;margin:11px 0 6px;
+     text-transform:uppercase;letter-spacing:.6px">1 &#183; Tizado en la mesa</h2>
+  <p style="font-size:12.5px;margin-bottom:7px">Tira <b>dos l&#237;neas a plomo separadas
+  {fr(CUADRO_E)}"</b>. El punto de abajo de la l&#237;nea izquierda es el <b>cero</b>. Desde ah&#237;,
+  cada esquina se marca as&#237;: <b>a lo ancho</b> (horizontal, desde el cero) y
+  <b>de alto</b> (a plomo, desde el cero).</p>
+  <table>
+    <tr><th style="width:24%">Pieza</th><th style="width:19%">Esquina</th>
+        <th style="width:19%">A lo ancho</th><th style="width:19%">De alto</th><th>Nota</th></tr>
+    {marcas_html}
+  </table>
+
+  <h2 style="font-size:12px;background:{NEG};color:#fff;padding:4px 10px;margin:11px 0 6px;
+     text-transform:uppercase;letter-spacing:.6px">2 &#183; &#193;ngulo de cada corte</h2>
+  <p style="font-size:12.5px;margin-bottom:7px">En <b>grados del escuadre</b>: lo que se le mete
+  a la sierra. Cero es corte recto.</p>
+  <table>
+    <tr><th style="width:18%">Pieza</th><th style="width:16%">Punta 1</th>
+        <th style="width:16%">Punta 2</th><th>C&#243;mo</th></tr>
+    {cortes_html}
+  </table>
+
+  <div class="warn"><b>{g['n_piezas']} piezas por dibujo.</b> El cuadro mide
+  <b>{fr(CUADRO_E)}" a plomo &#215; {fr(CUADRO_E)}" en horizontal</b> (luz de adentro {fr(g['luz_cuadro'])}")
+  y flota <b>{fr(g['flot'],32)}" a plomo</b> por debajo del cap y otro tanto por encima del riel.
+  Las <b>V</b> y los piques van <b>a plomo</b>; las <b>H</b> y los dos rombos <b>siguen la
+  pendiente</b>.</div>
+
+"""
+
 cuerpo = ""
 for i, e in enumerate(ESCALERAS):
     g = geo(e)
@@ -539,57 +621,6 @@ for i, e in enumerate(ESCALERAS):
       <span class="r">centro a centro {fr(g['cc'])}" POR LA PENDIENTE &#183; l&#237;mite 48"</span></div>
     {alzado(g)}
   </div>
-
-  <div class="pb"></div>
-  <div class="hd"><h1>EL DIBUJO DE {e['ang']:g}&#176; &#8212; PLANO EN GRANDE</h1>
-    <div class="m">{e['cant']*g['n_dib']} de estos &#183; {g['n_dib']} por escalera, {e['cant']} escaleras<br>
-    todas las piezas de 1&#215;1&#215;1/16</div></div>
-
-  <div class="dw"><div class="dt">EL DIBUJO SOLO, CON SUS MEDIDAS
-      <span class="r">cada pieza con su letra, igual que en la tabla</span></div>
-    {detalle_dibujo(g)}</div>
-
-  <table>
-    <tr><th style="width:9%">Pieza</th><th style="width:15%">Perfil</th><th style="width:13%">Largo de corte</th>
-        <th style="width:10%">Por dibujo</th><th style="width:9%">Los {e['cant']*g['n_dib']}</th><th>C&#243;mo se corta</th></tr>
-    {piezas}
-  </table>
-  <div class="pb"></div>
-  <div class="hd"><h1>EL DIBUJO DE {e['ang']:g}&#176; &#8212; C&#211;MO SE ARMA</h1>
-    <div class="m">esto es lo que hace falta en el banco<br>tizado en la mesa + &#225;ngulo de cada corte</div></div>
-
-  <div class="warn"><b>Este dibujo NO se arma cortando y juntando.</b> Va <b>tizado en la mesa</b>:
-  se marca el paralelogramo con las medidas de abajo, se acuestan las piezas encima y ah&#237; mismo
-  se marcan las puntas de las diagonales y de los rombos. <b>Cuatro de los cortes pasan de
-  59&#176; del escuadre y la sierra no llega</b> &#8212; esos van a esmeril.</div>
-
-  <h2 style="font-size:12px;background:{NEG};color:#fff;padding:4px 10px;margin:11px 0 6px;
-     text-transform:uppercase;letter-spacing:.6px">1 &#183; Tizado en la mesa</h2>
-  <p style="font-size:12.5px;margin-bottom:7px">Tira <b>dos l&#237;neas a plomo separadas
-  {fr(CUADRO_E)}"</b>. El punto de abajo de la l&#237;nea izquierda es el <b>cero</b>. Desde ah&#237;,
-  cada esquina se marca as&#237;: <b>a lo ancho</b> (horizontal, desde el cero) y
-  <b>de alto</b> (a plomo, desde el cero).</p>
-  <table>
-    <tr><th style="width:24%">Pieza</th><th style="width:19%">Esquina</th>
-        <th style="width:19%">A lo ancho</th><th style="width:19%">De alto</th><th>Nota</th></tr>
-    {marcas_html}
-  </table>
-
-  <h2 style="font-size:12px;background:{NEG};color:#fff;padding:4px 10px;margin:11px 0 6px;
-     text-transform:uppercase;letter-spacing:.6px">2 &#183; &#193;ngulo de cada corte</h2>
-  <p style="font-size:12.5px;margin-bottom:7px">En <b>grados del escuadre</b>: lo que se le mete
-  a la sierra. Cero es corte recto.</p>
-  <table>
-    <tr><th style="width:18%">Pieza</th><th style="width:16%">Punta 1</th>
-        <th style="width:16%">Punta 2</th><th>C&#243;mo</th></tr>
-    {cortes_html}
-  </table>
-
-  <div class="warn"><b>{g['n_piezas']} piezas por dibujo.</b> El cuadro mide
-  <b>{fr(CUADRO_E)}" a plomo &#215; {fr(CUADRO_E)}" en horizontal</b> (luz de adentro {fr(g['luz_cuadro'])}")
-  y flota <b>{fr(g['flot'],32)}" a plomo</b> por debajo del cap y otro tanto por encima del riel.
-  Las <b>V</b> y los piques van <b>a plomo</b>; las <b>H</b> y los dos rombos <b>siguen la
-  pendiente</b>.</div>
 
   <div class="pb"></div>
   <div class="hd"><h1>{e['n']} &#8212; LO QUE SE CORTA</h1>
@@ -660,6 +691,7 @@ HTML = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
   <div class="warn"><b>Estos dibujos NO son los 32 del balc&#243;n.</b> Son
   <b>{TOT} dibujos nuevos</b> y ni siquiera son iguales entre s&#237;: <b>2 de 34&#176;</b> y
   <b>2 de 33&#176;</b>, con medidas de corte distintas. No los mezcles.</div>
+{DIBUJO_HTML}
 {cuerpo}
 </div></body></html>"""
 
