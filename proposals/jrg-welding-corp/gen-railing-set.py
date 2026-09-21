@@ -94,10 +94,11 @@ PIQ_TOTAL = tot['piq'] + tot['dib'] * 4
 spec_e = importlib.util.spec_from_file_location("gesc", HERE / "gen-railing-escaleras.py")
 E = importlib.util.module_from_spec(spec_e); spec_e.loader.exec_module(E)
 ESC_N   = sum(x['cant'] for x in E.ESCALERAS)
-ESC_POS = 3 * ESC_N
-ESC_DIB = ESC_N
-ESC_PIQ = sum(((E.geo(x)['n_bay']-1)*E.geo(x)['n_piq']
-                + 2 + 2*E.geo(x)['n_fl']) * x['cant'] for x in E.ESCALERAS)
+ESC_POS = sum((E.geo(x)['n_bay']) * x['cant'] for x in E.ESCALERAS)
+ESC_DIB = sum(E.geo(x)['n_dib'] * x['cant'] for x in E.ESCALERAS)
+ESC_PIQ = sum(((E.geo(x)['n_bay'] - E.geo(x)['n_dib']) * E.geo(x)['n_piq']
+                + E.geo(x)['n_dib'] * (2 + 2*E.geo(x)['n_fl'])) * x['cant']
+              for x in E.ESCALERAS)
 ESC_SEC = ESC_N                                   # cada escalera sale como una pieza
 spec_p = importlib.util.spec_from_file_location("gpl", HERE / "gen-railing-planta.py")
 PL = importlib.util.module_from_spec(spec_p); spec_p.loader.exec_module(PL)

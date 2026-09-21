@@ -37,18 +37,27 @@ ESCALERAS = [
 
 
 CC_MAX = 48.0        # centro a centro de poste, POR LA PENDIENTE. Regla de Rene.
-CUADRO_E = 26.0      # el cuadro del dibujo de escalera. Mas chico que el del
+CUADRO_E = 24.0      # el cuadro del dibujo de escalera. Mas chico que el del
                      # balcon porque con los postes a 4 pies las bahias son mas
                      # cortas y el de 30-1/4 no cabe.
 
 def reparto(horiz, ca):
-    """cuantos panos caben con el centro a centro por debajo de CC_MAX."""
+    """Cuantos panos van.  Manda el centro a centro de CC_MAX, pero ademas el
+       reparto tiene que ser IMPAR y de 5 para arriba, para que salga el patron
+       pique-dibujo-pique-dibujo-pique: pique en las dos puntas, dibujos
+       alternados y nunca dos pegados.  Rene los quiere alternados como en el
+       balcon, no uno solo en el medio."""
     n = 1
     while True:
         bay = (horiz - POST_W * (n + 1)) / n
         if (bay + POST_W) / ca <= CC_MAX:
-            return n, bay
+            break
         n += 1
+    n = max(n, 5)
+    if n % 2 == 0: n += 1                    # impar: pique en las dos puntas
+    bay = (horiz - POST_W * (n + 1)) / n
+    assert (bay + POST_W) / ca <= CC_MAX, "mas panos y aun asi pasa del centro a centro"
+    return n, bay
 
 def piques_en(panel, lim=ESFERA):
     """cuantos piques hacen falta en un panel de ese ancho (medido EN HORIZONTAL)"""
@@ -92,11 +101,12 @@ def geo(e):
     g['n_bay'], g['bay'] = n, bay
     g['cc'] = (bay + POST_W) / ca
     assert g['cc'] <= CC_MAX + 1e-9, f"centro a centro {g['cc']:.2f} pasa de {CC_MAX}"
-    i_dib = n // 2                                   # el dibujo va en la bahia del medio
+    i_dib = [i for i in range(n) if i % 2 == 1]      # alternados: 1, 3, 5...
     g['i_dib'] = i_dib
+    g['n_dib'] = len(i_dib)
     cad = [('P',)]
     for i in range(n):
-        cad += [('D' if i == i_dib else 'L', bay), ('P',)]
+        cad += [('D' if i in i_dib else 'L', bay), ('P',)]
     g['cad'] = cad
     assert abs(sum(POST_W if c[0] == 'P' else c[1] for c in cad) - g['horiz']) < 1e-9, \
         "la cadena horizontal de la escalera no cierra"
@@ -278,11 +288,13 @@ def alzado(g, VW=792, VH=575):
     # que es cada pano: DENTRO del pano, acostado con la pendiente
     ang_p = math.degrees(math.atan2(-g['ta']*sc, sc))
     for x0, k, luz in bays:
+        if k == 'D':
+            continue                     # el dibujo se ve solo, no hace falta rotularlo
         p = S(x0 + luz/2, g['y_riel_t'] + 4.5)
         o.append(f'<text x="{p[0]:.1f}" y="{p[1]:.1f}" font-size="11.5" font-weight="800" '
-                 f'fill="{NAR if k=="D" else NEG}" text-anchor="middle" '
+                 f'fill="{NEG}" text-anchor="middle" '
                  f'transform="rotate({ang_p:.1f} {p[0]:.1f} {p[1]:.1f})">'
-                 f'{"DIBUJO ACOSTADO" if k=="D" else str(g["n_piq"])+" PIQUES"}</text>')
+                 f'{g["n_piq"]} PIQUES</text>')
 
     p = S(g['horiz'], GUARD)
     o.append(f'<text x="{min(p[0]+10, VW-6):.1f}" y="{p[1]-6:.1f}" font-size="11.5" font-weight="800" '
@@ -474,7 +486,7 @@ for i, e in enumerate(ESCALERAS):
         for pz, x, y, nota, duro in _cortes)
     piezas = "".join(
         f"<tr><td><b>{c}</b></td><td>1&#215;1&#215;1/16</td><td class='n'>{fr(L,32)}\"</td>"
-        f"<td class='n'><b>{q}</b></td><td class='n'>{q*e['cant']}</td><td>{d}</td></tr>"
+        f"<td class='n'><b>{q}</b></td><td class='n'>{q*e['cant']*g['n_dib']}</td><td>{d}</td></tr>"
         for c, q, L, d in g['piezas'])
     cuerpo += f"""
   {salto}
@@ -487,18 +499,18 @@ for i, e in enumerate(ESCALERAS):
     <div><b>{feet(g['rise'])}</b><span>sube</span></div>
     <div><b>{g['n_bay']+1}</b><span>postes</span></div>
     <div><b>{fr(g['cc'])}"</b><span>centro a centro</span></div>
-    <div><b>1</b><span>dibujo</span></div>
+    <div><b>{g['n_dib']}</b><span>dibujos</span></div>
   </div>
 
   <div class="dw">
-    <div class="dt">VISTA DE FRENTE &#8212; {g['n_bay']} pa&#241;os, el dibujo en el del medio
+    <div class="dt">VISTA DE FRENTE &#8212; {g['n_bay']} pa&#241;os &#183; {g['n_dib']} dibujos alternados
       <span class="r">centro a centro {fr(g['cc'])}" POR LA PENDIENTE &#183; l&#237;mite 48"</span></div>
     {alzado(g)}
   </div>
 
   <div class="pb"></div>
   <div class="hd"><h1>EL DIBUJO DE {e['ang']:g}&#176; &#8212; PLANO EN GRANDE</h1>
-    <div class="m">{e['cant']} de estos &#183; van en {e['n'].lower()}<br>
+    <div class="m">{e['cant']*g['n_dib']} de estos &#183; {g['n_dib']} por escalera, {e['cant']} escaleras<br>
     todas las piezas de 1&#215;1&#215;1/16</div></div>
 
   <div class="dw"><div class="dt">EL DIBUJO SOLO, CON SUS MEDIDAS
@@ -507,7 +519,7 @@ for i, e in enumerate(ESCALERAS):
 
   <table>
     <tr><th style="width:9%">Pieza</th><th style="width:15%">Perfil</th><th style="width:13%">Largo de corte</th>
-        <th style="width:10%">Por dibujo</th><th style="width:9%">Los {e['cant']}</th><th>C&#243;mo se corta</th></tr>
+        <th style="width:10%">Por dibujo</th><th style="width:9%">Los {e['cant']*g['n_dib']}</th><th>C&#243;mo se corta</th></tr>
     {piezas}
   </table>
   <div class="pb"></div>
@@ -565,8 +577,8 @@ for i, e in enumerate(ESCALERAS):
         <td class="n"><b>{g['n_bay']}</b></td><td class="n">{g['n_bay']*e['cant']}</td>
         <td>uno por pa&#241;o &#183; medido por la pendiente</td></tr>
     <tr><td><b>PIQUE</b></td><td>1&#215;1&#215;1/16</td><td class="n">{fr(g['campo'],32)}"</td>
-        <td class="n"><b>{(g['n_bay']-1)*g['n_piq']}</b></td>
-        <td class="n">{(g['n_bay']-1)*g['n_piq']*e['cant']}</td>
+        <td class="n"><b>{(g['n_bay']-g['n_dib'])*g['n_piq']}</b></td>
+        <td class="n">{(g['n_bay']-g['n_dib'])*g['n_piq']*e['cant']}</td>
         <td><b>a plomo</b> &#183; las 2 puntas a <b>{e['ang']:g}&#176;</b>, paralelas entre s&#237;
             (las dos caras miden igual) &#183; {g['n_piq']} por pa&#241;o liso</td></tr>
   </table>

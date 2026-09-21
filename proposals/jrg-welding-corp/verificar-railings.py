@@ -134,7 +134,13 @@ def t7_escaleras():
         seq = [c[0] for c in g['cad'] if c[0] != 'P']
         if seq[0] == 'D' or seq[-1] == 'D':
             mal(f"{e['n']}: arranca o termina en dibujo")
-    return f"{sum(x['cant'] for x in E.ESCALERAS)} escaleras, todas cierran"
+        if any(x == 'D' and y == 'D' for x, y in zip(seq, seq[1:])):
+            mal(f"{e['n']}: dos dibujos pegados")
+        # Rene los quiere ALTERNADOS, como en el balcon, no uno solo en el medio
+        if seq != ['L' if i % 2 == 0 else 'D' for i in range(len(seq))]:
+            mal(f"{e['n']}: el reparto no es pique-dibujo-pique-dibujo-pique: {' '.join(seq)}")
+    nd = sum(E.geo(x)['n_dib'] * x['cant'] for x in E.ESCALERAS)
+    return f"{sum(x['cant'] for x in E.ESCALERAS)} escaleras, alternadas, {nd} dibujos"
 
 def t8_letras():
     todas = [s['name'] for s in SEC.values()]
