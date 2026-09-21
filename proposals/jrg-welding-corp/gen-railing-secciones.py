@@ -271,8 +271,9 @@ def svg_seccion(sec):
             o.append(s)
             labels.append((x0 + luz/2, f"{n} PIQUES", luz))
 
-    # cap corrido
-    o.append(rect(-0.0 if sec['elems'][0][0] == 'P' else -1.0, 0, T + (0 if sec['elems'][0][0]=='P' else 1) + 1, CAP_T, "#8a97a2"))
+    # cap corrido -- se dibuja EXACTAMENTE donde se corta
+    ca, cb = cap_tramo(sec)
+    o.append(rect(ca, 0, cb - ca, CAP_T, "#8a97a2"))
     # postes
     for px in posts:
         o.append(rect(px, Y_CAP_B, POST, POST_LEN, "#cbd5dd", "#374151", 0.8))
@@ -465,6 +466,31 @@ CB2 = [
 
 def largo(sec):
     return sum(POST if e[0] == 'P' else e[1] for e in sec['elems'])
+
+def cap_tramo(sec):
+    """(donde ARRANCA, donde MUERE) el cap, en coordenadas de la seccion.
+
+       UN SOLO SITIO PARA EL CAP: de aqui salen tanto el largo de corte como el
+       dibujo. Antes el largo se calculaba en la hoja de fabricacion y el dibujo
+       se pintaba aparte con un "+1" fijo al final, saliera como saliera la
+       seccion -- por eso en la G el cap se veia sobresaliendo 2" por la esquina
+       cuando la tabla decia 190-3/4. Rene: "el cap no puede sobresalir, muere a
+       ras con el ultimo pano".
+
+         EMPATE  : el cap arranca / muere en el CENTRO del poste  -> -1 / -1
+         ESQUINA y PARED : el cap muere donde muere la seccion    ->  0
+         SOLDADA : la L sale soldada del taller y esa esquina va a INGLETE
+                   (cortado antes de pintar), asi que la pata que arranca en
+                   pano necesita las 2" del poste para llegar a la punta."""
+    a = (-POST if "SOLDADA" in sec['izq'] else -1.0 if "EMPATE" in sec['izq'] else 0.0)
+    b = largo(sec) + (-1.0 if "EMPATE" in sec['der'] else 0.0)
+    return a, b
+
+def cap_largo(sec):
+    """LARGO FINAL DEL CAP. Va a POWDER COATING: sale del taller cortado a esta
+       medida y NO SE TOCA MAS."""
+    a, b = cap_tramo(sec)
+    return b - a
 
 EDIFICIOS = [
  dict(slug="pool-house", titulo="POOL HOUSE — BARANDA · SECCIONES DE FRENTE",

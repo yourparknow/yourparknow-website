@@ -208,7 +208,7 @@ def doc(cfg):
         marcas = [g + i * (1 + g) + 0.5 for i in range(n)]
         assert abs((marcas[-1] + 0.5 + g) - (w - 2 * G.GAP_PANEL)) < 1e-9
         ms = " &#160;<span style='color:#c8571b'>|</span>&#160; ".join(fr(m, 16) for m in marcas)
-        filas.append(f"<tr><td class='n'>{fr(w+2)}\"</td><td class='n'>{fr(w-0.5)}\"</td>"
+        filas.append(f"<tr><td class='n'>{fr(w+2)}\"</td><td class='n'>{fr(w - 2 * G.GAP_PANEL)}\"</td>"
                      f"<td class='n'>{n}</td><td class='mk'>{ms}</td></tr>")
 
     cuerpo = ""

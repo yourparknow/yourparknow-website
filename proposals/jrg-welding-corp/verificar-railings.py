@@ -327,6 +327,25 @@ def t18_arriba_igual_abajo():
     return (f"las {len(SEC)} secciones miden igual arriba que abajo "
             f"(holgura de panel = {fr(G.GAP_PANEL)}\": el riel va completo y soldado)")
 
+def t19_cap_no_sobresale():
+    """El cap NO puede sobresalir del pano. Rene lo vio circulado en la hoja:
+       la tabla decia CAP 190-3/4 y el dibujo lo pintaba saliendose 2" por la
+       esquina. El largo se calculaba en un archivo y el dibujo se pintaba en
+       otro con un "+1" fijo al final, saliera como saliera la seccion. Ahora
+       los dos salen de G.cap_tramo(). Esta prueba lo amarra."""
+    for nm, s in SEC.items():
+        L = G.largo(s)
+        a, b = G.cap_tramo(s)
+        if abs((b - a) - G.cap_largo(s)) > 1e-9:
+            mal(f"{nm}: el cap dibujado mide {fr(b-a)}\" y la tabla dice {fr(G.cap_largo(s))}\"")
+        if b > L + 1e-9:
+            mal(f"{nm}: el cap se pasa {fr(b-L)}\" del final de la seccion. No puede sobresalir.")
+        # por la izquierda solo puede salirse en un EMPATE (llega al centro del
+        # poste del vecino) o en el inglete de la L, que sale soldada del taller
+        if a < -1e-9 and not ("EMPATE" in s['izq'] or "SOLDADA" in s['izq']):
+            mal(f"{nm}: el cap arranca {fr(-a)}\" antes de la seccion sin ser empate ni la L soldada")
+    return f"en las {len(SEC)} secciones el cap se dibuja donde se corta"
+
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
  ("Dos dibujos nunca van pegados",          t2_dibujos_pegados),
@@ -346,6 +365,7 @@ PRUEBAS = [
  ("Alterna en el poste del empalme",        t16_alterna_empalme),
  ("Pa\u00f1o entreverado en linea recta",      t17_entreverado),
  ("Arriba mide igual que abajo",            t18_arriba_igual_abajo),
+ ("El cap no sobresale del pa\u00f1o",          t19_cap_no_sobresale),
 ]
 
 print("\n" + "=" * 68)

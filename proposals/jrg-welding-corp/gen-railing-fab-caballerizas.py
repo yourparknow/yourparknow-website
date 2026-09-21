@@ -38,23 +38,7 @@ def vecino(txt):
     m = re.search(r"\b([A-R]-\d)\b", txt)
     return m.group(1) if m else ""
 
-def cap_largo(s):
-    """LARGO FINAL DEL CAP. Esto va a POWDER COATING: sale del taller cortado a
-       esta medida y NO SE TOCA MAS. Nada de 'corta largo y recorta en el armado'.
-         EMPATE  : el cap muere / arranca en el CENTRO del poste -> -1 / +1
-         ESQUINA : la seccion que NO lleva el poste muere A TOPE contra el costado
-                   del cap del vecino, o sea el cap termina donde termina la
-                   seccion. Corte recto, sin inglete: un inglete de campo que no
-                   cierre no se puede recortar si ya esta pintado.
-         SOLDADA : la L sale soldada del taller, esa esquina SI va a inglete
-                   (cortado antes de pintar). La pata que arranca en pano sobre el
-                   poste de la esquina soldada necesita las 2" del poste para
-                   llegar a la punta de afuera."""
-    c = s['largo']
-    if "EMPATE" in s['izq']: c += 1
-    if "EMPATE" in s['der']: c -= 1
-    if "SOLDADA" in s['izq']: c += POST
-    return c
+cap_largo = G.cap_largo          # una sola definicion, en gen-railing-secciones
 
 def svg(s):
     o, T = [], s['largo']
@@ -69,8 +53,8 @@ def svg(s):
     for x0, k, luz in bays:
         o.append(G.dibujito(x0, luz) if k == 'D' else G.pano_liso(x0, luz)[0])
 
-    ei = 0.0 if el[0][0] == 'P' else 2.0
-    o.append(G.rect(-ei, 0, T + ei + (0 if el[-1][0] == 'P' else 2), 1, "#8a97a2"))
+    ca, cb = G.cap_tramo(s)          # el cap se dibuja donde se corta, ni mas ni menos
+    o.append(G.rect(ca, 0, cb - ca, 1, "#8a97a2"))
     for px in posts:
         o.append(G.rect(px, Y_CAP_B, POST, POST_LEN, "#b9c4ce", NEG, 1.1))
     if el[0][0] != 'P':
@@ -112,7 +96,7 @@ def svg(s):
             o.append(f'<line x1="{X(q):.1f}" y1="{yr-5}" x2="{X(q):.1f}" y2="{yr+5}" '
                      f'stroke="{VERDE}" stroke-width="1.6"/>')
         o.append(f'<text x="{X((a+b)/2):.1f}" y="{yr+16}" font-size="11" font-weight="800" '
-                 f'fill="{VERDE}" text-anchor="middle">{fr(e[1]-0.5)}</text>')
+                 f'fill="{VERDE}" text-anchor="middle">{fr(e[1] - 2 * G.GAP_PANEL)}</text>')
         xx += e[1]
     o.append(f'<text x="{X(cen[0])-10:.1f}" y="{yr+4}" font-size="8" fill="{VERDE}" '
              f'text-anchor="end">RIEL</text>')
