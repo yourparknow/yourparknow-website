@@ -298,6 +298,36 @@ def alzado(g, VW=792, VH=575):
 
 
 
+
+# ------------------------------------------ DATOS PARA ARMAR EL DIBUJO
+def armado(g):
+    """Coordenadas para TIZAR el dibujo en la mesa, y el angulo real de cada
+       corte en grados del escuadre. Sin esto el taller no puede armarlo:
+       cuatro de los cortes pasan de 59 grados y no los hace la sierra."""
+    ta, ang = g['ta'], g['ang']
+    C = CUADRO_E
+    q2, q3 = g['q2_od'], g['q3_od']
+    def W(x, yp): return (x, x*ta + yp)          # a coordenadas de la mesa
+    marcas = []
+    for nom, lado in (("Cuadro de afuera", C), ("Rombo grande Q2", q2), ("Rombo chico Q3", q3)):
+        d = (C - lado) / 2
+        esq = [(d, d), (d+lado, d), (d+lado, d+lado), (d, d+lado)]
+        for et, (x, yp) in zip(("abajo izq", "abajo der", "arriba der", "arriba izq"), esq):
+            X, Y = W(x, yp)
+            marcas.append((nom, et, X, Y))
+    a1 = math.degrees(math.atan(1 + ta))
+    cortes = [
+      ("V",  ang, ang, "las 2 puntas paralelas &#183; sierra", False),
+      ("B",  ang, ang, "las 2 puntas paralelas &#183; sierra", False),
+      ("H",  ang, ang, "las 2 puntas paralelas &#183; sierra", False),
+      ("D1", a1, 90-(a1-ang), "punta de 2 caras &#183; <b>a mano</b>", True),
+      ("D2", a1, 90-(a1-ang), "punta de afuera &#183; <b>a mano</b> &#183; la de adentro a ras contra la D1", True),
+      ("C2a / C3a", (90+ang)/2, (90+ang)/2, "esquina abierta del rombo &#183; <b>a mano</b>", True),
+      ("C2p / C3p", (90+ang)/2, (90+ang)/2, "esquina cerrada del rombo &#183; <b>a mano</b>", True),
+    ]
+    return marcas, cortes
+
+
 # ---------------------------------------------- PLANO DEL DIBUJO, EN GRANDE
 def detalle_dibujo(g, VW=792, VH=500):
     """El dibujo solo, en grande, con todas las medidas y cada pieza con su letra."""
@@ -378,12 +408,7 @@ def detalle_dibujo(g, VW=792, VH=500):
     o.append(f'<text x="{m[0]-8:.1f}" y="{m[1]:.1f}" font-size="12.5" font-weight="800" '
              f'fill="{ROJO}" text-anchor="middle" transform="rotate(-90 {m[0]-8:.1f} {m[1]:.1f})">'
              f'{fr(CUADRO_E)}"  A PLOMO</text>')
-    # luz de adentro
-    o.append(et((TUBO, CUADRO_E-TUBO*2.6), (CUADRO_E-TUBO, CUADRO_E-TUBO*2.6),
-                        f'luz de adentro {fr(LUZ)}"', -5, ROJO, 11.5))
-    # los rombos
-    o.append(et((cx-r2, cy-r2), (cx+r2, cy-r2), f'{fr(g["q2_od"],32)}"', 14, ROJO, 11))
-    o.append(et((cx-r3, cy-r3), (cx+r3, cy-r3), f'{fr(g["q3_od"],32)}"', 13, ROJO, 10.5))
+    # las medidas de los rombos van en la tabla, no encima del dibujo
     # angulo
     p = (VW - 150.0, 34.0)
     o.append(f'<text x="{p[0]:.1f}" y="{p[1]:.1f}" font-size="15" font-weight="800" '
@@ -432,6 +457,21 @@ cuerpo = ""
 for i, e in enumerate(ESCALERAS):
     g = geo(e)
     salto = '<div class="pb"></div>' if i else ''
+    _marcas, _cortes = armado(g)
+    # marcas del pano liso: SIEMPRE desde la punta de abajo del riel, no de
+    # pique en pique, para que el error no se acumule. Lo pidio asi desde el principio.
+    _mk = [(g['sep'] + i*(TUBO + g['sep']) + TUBO/2) / g['ca'] for i in range(g['n_piq'])]
+    assert abs((_mk[-1]*g['ca'] + TUBO/2 + g['sep']) - g['panel']) < 1e-9, "las marcas no cierran"
+    marcas_riel = " &nbsp;<span style='color:#c8571b'>|</span>&nbsp; ".join(fr(m,16) for m in _mk)
+    marcas_html = "".join(
+        f"<tr><td>{'<b>'+nom+'</b>' if i%4==0 else ''}</td><td>{et}</td>"
+        f"<td class='n'>{fr(X,16)}\"</td><td class='n'>{fr(Y,16)}\"</td>"
+        f"<td>{'&#8212;' if i%4 else 'el cero del tizado' if nom.startswith('Cuadro') else 'centrado en el cuadro'}</td></tr>"
+        for i, (nom, et, X, Y) in enumerate(_marcas))
+    cortes_html = "".join(
+        f"<tr style=\"background:{'#fff5f5' if duro else '#fff'}\"><td><b>{pz}</b></td>"
+        f"<td class='n'>{x:.1f}&#176;</td><td class='n'>{y:.1f}&#176;</td><td>{nota}</td></tr>"
+        for pz, x, y, nota, duro in _cortes)
     piezas = "".join(
         f"<tr><td><b>{c}</b></td><td>1&#215;1&#215;1/16</td><td class='n'>{fr(L,32)}\"</td>"
         f"<td class='n'><b>{q}</b></td><td class='n'>{q*e['cant']}</td><td>{d}</td></tr>"
@@ -470,6 +510,37 @@ for i, e in enumerate(ESCALERAS):
         <th style="width:10%">Por dibujo</th><th style="width:9%">Los {e['cant']}</th><th>C&#243;mo se corta</th></tr>
     {piezas}
   </table>
+  <div class="pb"></div>
+  <div class="hd"><h1>EL DIBUJO DE {e['ang']:g}&#176; &#8212; C&#211;MO SE ARMA</h1>
+    <div class="m">esto es lo que hace falta en el banco<br>tizado en la mesa + &#225;ngulo de cada corte</div></div>
+
+  <div class="warn"><b>Este dibujo NO se arma cortando y juntando.</b> Va <b>tizado en la mesa</b>:
+  se marca el paralelogramo con las medidas de abajo, se acuestan las piezas encima y ah&#237; mismo
+  se marcan las puntas de las diagonales y de los rombos. <b>Cuatro de los cortes pasan de
+  59&#176; del escuadre y la sierra no llega</b> &#8212; esos van a esmeril.</div>
+
+  <h2 style="font-size:12px;background:{NEG};color:#fff;padding:4px 10px;margin:11px 0 6px;
+     text-transform:uppercase;letter-spacing:.6px">1 &#183; Tizado en la mesa</h2>
+  <p style="font-size:12.5px;margin-bottom:7px">Tira <b>dos l&#237;neas a plomo separadas
+  {fr(CUADRO_E)}"</b>. El punto de abajo de la l&#237;nea izquierda es el <b>cero</b>. Desde ah&#237;,
+  cada esquina se marca as&#237;: <b>a lo ancho</b> (horizontal, desde el cero) y
+  <b>de alto</b> (a plomo, desde el cero).</p>
+  <table>
+    <tr><th style="width:24%">Pieza</th><th style="width:19%">Esquina</th>
+        <th style="width:19%">A lo ancho</th><th style="width:19%">De alto</th><th>Nota</th></tr>
+    {marcas_html}
+  </table>
+
+  <h2 style="font-size:12px;background:{NEG};color:#fff;padding:4px 10px;margin:11px 0 6px;
+     text-transform:uppercase;letter-spacing:.6px">2 &#183; &#193;ngulo de cada corte</h2>
+  <p style="font-size:12.5px;margin-bottom:7px">En <b>grados del escuadre</b>: lo que se le mete
+  a la sierra. Cero es corte recto.</p>
+  <table>
+    <tr><th style="width:18%">Pieza</th><th style="width:16%">Punta 1</th>
+        <th style="width:16%">Punta 2</th><th>C&#243;mo</th></tr>
+    {cortes_html}
+  </table>
+
   <div class="warn"><b>{g['n_piezas']} piezas por dibujo.</b> El cuadro mide
   <b>{fr(CUADRO_E)}" a plomo &#215; {fr(CUADRO_E)}" en horizontal</b> (luz de adentro {fr(g['luz_cuadro'])}")
   y flota <b>{fr(g['flot'],32)}" a plomo</b> por debajo del cap y otro tanto por encima del riel.
@@ -499,6 +570,15 @@ for i, e in enumerate(ESCALERAS):
         <td><b>a plomo</b> &#183; las 2 puntas a <b>{e['ang']:g}&#176;</b>, paralelas entre s&#237;
             (las dos caras miden igual) &#183; {g['n_piq']} por pa&#241;o liso</td></tr>
   </table>
+  <h2 style="font-size:12px;background:{NEG};color:#fff;padding:4px 10px;margin:11px 0 6px;
+     text-transform:uppercase;letter-spacing:.6px">Marcas de los piques sobre el riel inclinado</h2>
+  <p style="font-size:12.5px;margin-bottom:6px">Las <b>{g['n_piq']} marcas van al centro de cada
+  pique</b> y <b>todas se miden desde la punta de abajo del riel</b>, no de pique en pique
+  &#8212; as&#237; el error no se acumula. Medidas <b>sobre el riel</b>, que va inclinado.</p>
+  <table><tr><th style="width:15%">Riel</th><th>Marcas desde la punta de abajo</th></tr>
+    <tr><td><b>{fr(g['riel_pano'],32)}"</b></td>
+        <td style="font-family:Consolas,monospace;font-size:11.5px">{marcas_riel}</td></tr></table>
+
   <div class="warn"><b>Centro a centro de poste: {fr(g['cc'])}" por la pendiente</b>, por debajo de
   las 48" que es el l&#237;mite. {g['n_bay']} pa&#241;os de <b>{fr(g['bay'])}" en horizontal</b>
   ({fr(g['bay']/g['ca'],32)}" por la pendiente). En el pa&#241;o liso van
