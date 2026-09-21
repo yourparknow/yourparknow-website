@@ -328,23 +328,36 @@ def t18_arriba_igual_abajo():
             f"(holgura de panel = {fr(G.GAP_PANEL)}\": el riel va completo y soldado)")
 
 def t19_cap_no_sobresale():
-    """El cap NO puede sobresalir del pano. Rene lo vio circulado en la hoja:
-       la tabla decia CAP 190-3/4 y el dibujo lo pintaba saliendose 2" por la
-       esquina. El largo se calculaba en un archivo y el dibujo se pintaba en
-       otro con un "+1" fijo al final, saliera como saliera la seccion. Ahora
-       los dos salen de G.cap_tramo(). Esta prueba lo amarra."""
+    """ARRIBA Y ABAJO TIENEN QUE MORIR EN EL MISMO PLANO. Las dos lineas chocan
+       contra el mismo poste, que es recto. Rene lo vio dos veces: primero el
+       cap saliendose 2" por la esquina de la G, y despues 1" en cada empate del
+       frente, donde el cap moria en el centro del poste en vez de en su cara.
+       El cap mide lo que mide la seccion. La unica excepcion es la L, que sale
+       SOLDADA del taller con el inglete ya cortado."""
     for nm, s in SEC.items():
         L = G.largo(s)
         a, b = G.cap_tramo(s)
         if abs((b - a) - G.cap_largo(s)) > 1e-9:
             mal(f"{nm}: el cap dibujado mide {fr(b-a)}\" y la tabla dice {fr(G.cap_largo(s))}\"")
-        if b > L + 1e-9:
-            mal(f"{nm}: el cap se pasa {fr(b-L)}\" del final de la seccion. No puede sobresalir.")
-        # por la izquierda solo puede salirse en un EMPATE (llega al centro del
-        # poste del vecino) o en el inglete de la L, que sale soldada del taller
-        if a < -1e-9 and not ("EMPATE" in s['izq'] or "SOLDADA" in s['izq']):
-            mal(f"{nm}: el cap arranca {fr(-a)}\" antes de la seccion sin ser empate ni la L soldada")
-    return f"en las {len(SEC)} secciones el cap se dibuja donde se corta"
+        if abs(b - L) > 1e-9:
+            mal(f"{nm}: el cap muere en {fr(b)}\" y el pano en {fr(L)}\" — "
+                f"{fr(abs(b-L))}\" de diferencia contra un poste que es recto")
+        if abs(a) > 1e-9 and "SOLDADA" not in s['izq']:
+            mal(f"{nm}: el cap arranca {fr(-a)}\" antes del pano sin ser la L soldada")
+    # Los caps de una corrida tienen que cubrir SU PROPIO MATERIAL, ni mas ni
+    # menos. Contra el total de la corrida no se puede comparar: cuando la
+    # corrida se apoya en el poste de esquina del vecino, ese poste entra en el
+    # total pero lo tapa el cap del vecino, no el suyo.
+    # Unica excepcion: la pata de la L que sale SOLDADA -- su cap si cruza el
+    # poste que comparte con la otra pata, porque salen en una sola pieza.
+    for cfg in G.EDIFICIOS:
+        for _, run, total, nms in cfg['corridas']:
+            suma = sum(G.cap_largo(SEC[n]) for n in nms)
+            propio = sum(G.largo(SEC[n]) for n in nms)
+            propio += G.POST * sum(1 for n in nms if "SOLDADA" in SEC[n]['izq'])
+            if abs(suma - propio) > 1e-9:
+                mal(f"corrida {run}: los caps suman {fr(suma)}\" y su material es {fr(propio)}\"")
+    return f"en las {len(SEC)} secciones el cap muere a ras con el pano, arriba y abajo"
 
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
@@ -365,7 +378,7 @@ PRUEBAS = [
  ("Alterna en el poste del empalme",        t16_alterna_empalme),
  ("Pa\u00f1o entreverado en linea recta",      t17_entreverado),
  ("Arriba mide igual que abajo",            t18_arriba_igual_abajo),
- ("El cap no sobresale del pa\u00f1o",          t19_cap_no_sobresale),
+ ("Arriba y abajo mueren a ras",            t19_cap_no_sobresale),
 ]
 
 print("\n" + "=" * 68)

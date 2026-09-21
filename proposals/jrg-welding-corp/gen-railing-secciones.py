@@ -477,14 +477,24 @@ def cap_tramo(sec):
        cuando la tabla decia 190-3/4. Rene: "el cap no puede sobresalir, muere a
        ras con el ultimo pano".
 
-         EMPATE  : el cap arranca / muere en el CENTRO del poste  -> -1 / -1
-         ESQUINA y PARED : el cap muere donde muere la seccion    ->  0
-         SOLDADA : la L sale soldada del taller y esa esquina va a INGLETE
-                   (cortado antes de pintar), asi que la pata que arranca en
-                   pano necesita las 2" del poste para llegar a la punta."""
-    a = (-POST if "SOLDADA" in sec['izq'] else -1.0 if "EMPATE" in sec['izq'] else 0.0)
-    b = largo(sec) + (-1.0 if "EMPATE" in sec['der'] else 0.0)
-    return a, b
+       EL CAP MIDE LO MISMO QUE LA SECCION. Ni mas ni menos, en las dos puntas.
+       Arriba y abajo chocan contra el MISMO poste, que es recto, asi que las dos
+       lineas tienen que morir en el mismo plano. Rene: "esas dos lineas van a
+       chocar contra un poste que esta fijo, tienen que quedar las dos fijas
+       porque el poste es recto; como vas a poner el top cap mas largo arriba".
+
+       Antes el cap moria en el CENTRO del poste del empate (-1 de un lado, -1
+       del otro). Eso deja el cap de una seccion sobresaliendo 1" por delante de
+       su propio pano y el de la vecina 1" corto: en el frente eso era 1" en
+       cada una de las tres. La seccion que LLEVA el poste lo tapa entero con su
+       cap; la que muere en pano arranca en la cara de ese poste. Los tres caps
+       del frente siguen sumando las 446 de la corrida.
+
+       La UNICA excepcion es la L, que sale SOLDADA del taller: esa esquina va a
+       inglete cortado antes de pintar, y la pata que arranca en pano necesita
+       las 2" del poste de esquina para llegar a la punta de afuera."""
+    a = -POST if "SOLDADA" in sec['izq'] else 0.0
+    return a, largo(sec)
 
 def cap_largo(sec):
     """LARGO FINAL DEL CAP. Va a POWDER COATING: sale del taller cortado a esta
