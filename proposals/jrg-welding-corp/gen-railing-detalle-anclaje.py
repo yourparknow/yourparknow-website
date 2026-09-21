@@ -17,21 +17,40 @@ MAD, MAD2 = "#e4d5b7", "#c9b48d"        # fascia / rim
 ALU = "#9fb0c0"                          # aluminio
 
 # ------------------------------------------------------------------ la oreja
-OREJA_L  = 3.0      # largo de la oreja, hacia adentro del deck
-OREJA_H  = 5.0      # alto de la oreja (cabe en las 6" que baja el poste)
+# Rene no quiere tornillo pasante: no sabe que hay detras de la fascia.  Va
+# TIRAFONDO, que enrosca en la madera y no sale por el otro lado.  Eso obliga
+# a revisar el arranque, porque un tirafondo aguanta mucho menos que un pasante.
+OREJA_L  = 3.5      # largo de la oreja, hacia adentro del deck
+OREJA_H  = 5.5      # alto de la oreja (llena las 6" que baja el poste)
 OREJA_E  = 0.25     # espesor
-BORDE    = 2.25     # del filo de la esquina al eje de los tornillos
-SEP_V    = 3.0      # separacion entre los dos tornillos, uno encima del otro
-TORN     = 0.375    # 3/8"
+BORDE    = 2.25     # del filo de la esquina al eje de los tirafondos
+TORN     = 0.5      # tirafondo de 1/2"
+TORN_L   = 5.0      # largo del tirafondo
+ROSCA    = 3.25     # rosca que queda metida en madera solida
+PROF     = (3.0, 5.0)   # a que profundidad va cada tirafondo, bajo el piso del deck
+SEP_V    = PROF[1] - PROF[0]
 BAJA     = 6.0      # lo que baja el poste por debajo del deck
 RIM      = 2.5      # fascia + rim joist
+BLOQUEO  = 3.0      # bloqueo solido detras del rim: dos 2x juntos
 
-assert BORDE / TORN >= 6.0, "el tornillo queda muy cerca de la punta del rim: raja"
-assert OREJA_H + 1.0 <= BAJA + 0.5, "la oreja no cabe en lo que baja el poste"
-assert BORDE + TORN / 2 <= OREJA_L - 0.25, "el tornillo se sale de la oreja"
-_b_sup = (OREJA_H - SEP_V) / 2
-assert _b_sup >= 0.75, "el tornillo queda muy cerca del filo de la oreja"
+# ---- carga de codigo: 200 lb empujando arriba del poste, en cualquier direccion
+CARGA, ALTO = 200.0, 42.0
+MOM = CARGA * ALTO
+_s = sum(d * d for d in PROF)
+TIRO = MOM * max(PROF) / _s          # lo que tira el tirafondo de abajo
+# NDS, arranque de tirafondo: W = 1800 x G^1.5 x D^0.75, por pulgada de rosca.
+# G = 0.55 es pino del sur tratado, que es de lo que se hacen los decks aqui.
+G_SYP, G_SPF = 0.55, 0.42
+def _cap(G): return 1800 * G ** 1.5 * TORN ** 0.75 * ROSCA
+CAP_SYP, CAP_SPF = _cap(G_SYP), _cap(G_SPF)
 
+assert CAP_SYP > TIRO, "en pino tratado el tirafondo NO da: hay que bajar mas el poste"
+assert OREJA_H + 0.5 <= BAJA, "la oreja no cabe en lo que baja el poste"
+assert BORDE + TORN * 1.5 <= OREJA_L, "el agujero queda muy al filo de la oreja"
+assert max(PROF) + TORN * 2 <= 0.5 + OREJA_H, "el tirafondo de abajo se sale de la oreja"
+assert min(PROF) - TORN * 2 >= 0.5, "el tirafondo de arriba se sale de la oreja"
+assert BORDE / TORN >= 4.0, "el tirafondo queda muy cerca de la punta del rim: raja"
+assert TORN_L <= OREJA_E + 1.0 + RIM - 1.0 + BLOQUEO, "el tirafondo sale por el otro lado"
 
 # ============================================================ VISTA EN PLANTA
 def planta():
@@ -61,9 +80,9 @@ def planta():
     o.append(R(-7.6, -5.0, -RIM, -RIM, "url(#blq)", "#8a7350", 1.2))
     o.append(R(-5.0, -8.0, -RIM, -5.0, "url(#blq)", "#8a7350", 1.2))   # y en la otra direccion
     o.append(f'<text x="{sx(-5.9):.0f}" y="{sy(-5.9):.0f}" font-size="11.5" font-weight="800" '
-             f'text-anchor="middle" fill="#8a5a17">BLOQUEO S&#211;LIDO 2&#215;</text>')
+             f'text-anchor="middle" fill="#8a5a17">BLOQUEO S&#211;LIDO</text>')
     o.append(f'<text x="{sx(-5.9):.0f}" y="{sy(-6.55):.0f}" font-size="10.5" '
-             f'text-anchor="middle" fill="#8a5a17">(lo mete el carpintero)</text>')
+             f'text-anchor="middle" fill="#8a5a17">dos 2&#215; juntos &#183; lo mete el carpintero</text>')
 
     # --- por donde corre cada baranda
     o.append(f'<line x1="{sx(-8):.1f}" y1="{sy(1):.1f}" x2="{sx(-0.1):.1f}" y2="{sy(1):.1f}" '
@@ -102,7 +121,7 @@ def planta():
     o.append(cotaH(-OREJA_L, 0, 2.6, f'{fr(OREJA_L)}"'))
     o.append(cotaH(-BORDE, 0, 3.7, f'{fr(BORDE)}"'))
     o.append(f'<text x="{sx(-1.12):.0f}" y="{sy(4.25):.0f}" font-size="10.5" fill="{ROJO}" '
-             f'text-anchor="middle">al eje de los tornillos</text>')
+             f'text-anchor="middle">al eje de los tirafondos</text>')
     for x in (-OREJA_L, -BORDE, 0.0):
         o.append(f'<line x1="{sx(x):.1f}" y1="{sy(0.35):.1f}" x2="{sx(x):.1f}" y2="{sy(3.85):.1f}" '
                  f'stroke="{ROJO}" stroke-width="0.6" stroke-dasharray="3 3"/>')
@@ -115,9 +134,9 @@ def planta():
                 f'<circle cx="{sx(px):.1f}" cy="{sy(py):.1f}" r="2.4" fill="{ROJO}"/>'
                 f'<text x="{tx}" y="{ty+4}" font-size="11.5" '
                 f'font-weight="700" fill="{ROJO}" text-anchor="{anc}">{txt}</text>')
-    o.append(guia(-1.5, OREJA_E, 545, 120, 'OREJA 1/4" &#215; 3" &#215; 5" DE ALTO', "start"))
+    o.append(guia(-1.5, OREJA_E, 545, 120, 'OREJA 1/4" &#215; 3-1/2" &#215; 5-1/2" DE ALTO', "start"))
     o.append(guia(OREJA_E, -1.5, 545, 300, "LA OTRA OREJA, IGUAL", "start"))
-    o.append(guia(-BORDE, OREJA_E/2, 250, 120, "2 TORNILLOS, UNO ENCIMA DEL OTRO", "end"))
+    o.append(guia(-BORDE, OREJA_E/2, 250, 120, "2 TIRAFONDOS, UNO ENCIMA DEL OTRO", "end"))
 
     o.append(f'<text x="396" y="456" font-size="13" font-weight="800" text-anchor="middle" '
              f'fill="{NEG}">EN PLANTA &#183; POSTE DE ESQUINA</text>')
@@ -179,8 +198,7 @@ def alzado():
              f'fill="{ROJO}">SOLDADA AL POSTE, CORD&#211;N CORRIDO</text>')
 
     # --- tornillos
-    yb1 = y0 - (OREJA_H - SEP_V) / 2
-    yb2 = yb1 - SEP_V
+    yb1, yb2 = -PROF[0], -PROF[1]
     for yb in (yb1, yb2):
         o.append(f'<circle cx="{sx(-BORDE):.1f}" cy="{sy(yb):.1f}" r="{TORN*k/2:.1f}" '
                  f'fill="#fff" stroke="{ROJO}" stroke-width="2"/>')
@@ -239,7 +257,7 @@ for cfg in G.EDIFICIOS:
 NE = len(esquinas)
 NOMB = {"pool-house": "Pool House", "caballeriza": "Caballeriza 1", "caballeriza-2": "Caballeriza 2"}
 filas = "".join(
-    f"<tr><td><b>{n}</b></td><td>{NOMB[sl]}</td><td>2 orejas</td><td>4 tornillos</td></tr>"
+    f"<tr><td><b>{n}</b></td><td>{NOMB[sl]}</td><td>2 orejas</td><td>4 tirafondos 1/2&#215;5</td></tr>"
     for n, sl in esquinas)
 
 pies_barra = NE * 2 * OREJA_H / 12.0
@@ -274,7 +292,7 @@ HTML = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
   <div class="big">
     <div><b>{NE}</b><span>postes de esquina</span></div>
     <div><b>{NE*2}</b><span>orejas</span></div>
-    <div><b>{NE*2*2}</b><span>tornillos</span></div>
+    <div><b>{NE*2*2}</b><span>tirafondos 1/2&#215;5</span></div>
     <div><b>{fr(OREJA_L)}&#215;{fr(OREJA_H)}</b><span>cada oreja, 1/4"</span></div>
   </div>
 
@@ -287,15 +305,40 @@ HTML = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
 
   <div class="pb"></div>
   <div class="hd"><h1>DETALLE DE ANCLAJE &#8212; DE LADO</h1>
-    <div class="m">LOS DOS TORNILLOS VAN UNO ENCIMA DEL OTRO</div></div>
+    <div class="m">LOS DOS TIRAFONDOS VAN UNO ENCIMA DEL OTRO</div></div>
 
   <div class="dw"><div class="dt">2 &#183; DE LADO &#8212; la oreja dentro de las 6" que baja el poste</div>{alzado()}</div>
 
-  <div class="warn"><b>Los dos tornillos van uno encima del otro, no uno al lado del otro.</b>
-  As&#237; los dos quedan a <b>{fr(BORDE)}" de la punta del rim</b> ({BORDE/TORN:.0f} di&#225;metros),
-  que es lo que aguanta la madera sin rajarse. Si pones uno pegado a la punta, esa madera se abre
-  sola. Y de paso los dos separados {fr(SEP_V)}" en vertical son los que aguantan el empuj&#243;n
-  de arriba del poste.</div>
+  <div class="warn"><b>Los dos tirafondos van uno encima del otro, no uno al lado del otro.</b>
+  As&#237; los dos quedan a <b>{fr(BORDE)}" de la punta del rim</b> ({BORDE/TORN:.0f} di&#225;metros)
+  y la madera no se abre. Y de paso, separados en vertical, son los que hacen la pareja que
+  aguanta el empuj&#243;n de arriba del poste: el de abajo tira y el poste apoya contra la fascia
+  arriba.</div>
+
+  <h2 style="font-size:13px;background:{NEG};color:#fff;padding:4px 10px;margin:11px 0 6px">
+    La cuenta del tirafondo</h2>
+  <table>
+    <tr><th style="width:52%">Concepto</th><th style="width:24%">Valor</th><th>De d&#243;nde sale</th></tr>
+    <tr><td>Empuje de c&#243;digo arriba del poste</td><td><b>{CARGA:.0f} lb</b></td>
+        <td>guarda residencial, en cualquier direcci&#243;n</td></tr>
+    <tr><td>Momento en la l&#237;nea del deck</td><td><b>{MOM:.0f} lb&#183;pulg</b></td>
+        <td>{CARGA:.0f} lb &#215; {ALTO:.0f}"</td></tr>
+    <tr><td><b>Tiro del tirafondo de abajo</b> (a {fr(max(PROF))}" bajo el deck)</td>
+        <td><b style="color:{ROJO}">{TIRO:.0f} lb</b></td>
+        <td>el poste apoya arriba y el de abajo tira</td></tr>
+    <tr><td>Aguanta un {fr(TORN)}" con {fr(ROSCA)}" de rosca en <b>pino del sur tratado</b></td>
+        <td><b style="color:#0f766e">{CAP_SYP:.0f} lb</b></td><td>NDS, arranque, G=0.55</td></tr>
+    <tr style="background:#fff5f5"><td>Lo mismo pero en <b>abeto blando (SPF)</b></td>
+        <td><b style="color:{ROJO}">{CAP_SPF:.0f} lb</b></td>
+        <td><b>NO DA</b> &#8212; ver la nota de abajo</td></tr>
+  </table>
+
+  <div class="warn"><b>Esto sirve si el rim es pino del sur tratado</b>, que es de lo que se hacen
+  los decks aqu&#237;. Aguanta {CAP_SYP:.0f} lb contra las {TIRO:.0f} que le pide el c&#243;digo:
+  pasa con {100*(CAP_SYP/TIRO-1):.0f}% de holgura. <b>Si el rim resulta ser abeto blando</b>
+  (madera clara, blandita, del norte), <b>solo aguanta {CAP_SPF:.0f} lb y NO da.</b> En ese caso
+  hay que <b>bajar el poste 9" en vez de 6"</b> y correr el tirafondo de abajo a 8": ah&#237; el
+  tiro baja a 755 lb y vuelve a dar. <b>M&#237;rale la madera al rim antes de empezar a taladrar.</b></div>
 
   <h2 style="font-size:13px;background:{NEG};color:#fff;padding:4px 10px;margin:11px 0 6px">
     C&#243;mo se hace</h2>
@@ -308,20 +351,20 @@ HTML = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
         para que la oreja no choque con el piso del deck.</li>
     <li><b>Las dos orejas miran hacia adentro del deck</b>, una por cada cara del poste que da a
         una fascia. Quedan en L. En taller se sueldan las dos antes de pintar.</li>
-    <li><b>Tornillos:</b> <b>{fr(TORN)}" inoxidable 316</b>, pasantes con arandela y tuerca por
-        dentro del rim siempre que se pueda llegar. Si no hay acceso por dentro, tirafondo
-        {fr(TORN)}"&#215;3-1/2" de 316, pero <b>tiene que entrar en madera s&#243;lida</b>, no en el
-        aire entre dos tablas.</li>
-    <li><b>Bloqueo:</b> en cada esquina hay que meter <b>bloqueo s&#243;lido 2&#215;</b> detr&#225;s
-        del rim, en las dos direcciones. Sin eso los tornillos no tienen en qu&#233; morder.</li>
+    <li><b>Tirafondos:</b> <b>{fr(TORN)}" &#215; {fr(TORN_L)}" inoxidable 316</b>, que enroscan en la
+        madera. <b>NO son pasantes</b>: no salen por el otro lado, as&#237; que no importa lo que
+        haya detr&#225;s de la fascia. <b>Hay que pretaladrar</b>: agujero gu&#237;a de 5/16" en la
+        madera y de 9/16" en la oreja. Sin pretaladrar, la madera raja y el tirafondo no agarra.</li>
+    <li><b>Bloqueo:</b> en cada esquina, <b>dos 2&#215; clavados juntos</b> ({fr(BLOQUEO)}" de grueso)
+        detr&#225;s del rim, en las dos direcciones. <b>De esto depende todo el anclaje:</b> el
+        tirafondo necesita {fr(ROSCA)}" de rosca en madera s&#243;lida y el rim solo le da 1-1/2".</li>
     <li><b>El rim tiene que ser 2&#215;8 o m&#225;s</b>, para que quepan las {fr(BAJA)}" que baja el
         poste con la oreja adentro.</li>
   </ul>
 
   <div class="warn"><b>Si el trabajo lleva permiso:</b> el poste de guarda se calcula con
   <b>200 lb empujando arriba</b>, en cualquier direcci&#243;n. El anclaje a fascia es justamente
-  el punto que el inspector mira. Este detalle est&#225; hecho para eso &#8212; bloqueo s&#243;lido,
-  tornillo pasante y el par de tornillos en vertical &#8212; pero <b>si el permiso pide c&#225;lculo
+  el punto que el inspector mira. Este detalle est&#225; hecho para eso &#8212; bloqueo s&#243;lido, tirafondo de {fr(TORN)}" y el par en vertical &#8212; pero <b>si el permiso pide c&#225;lculo
   firmado, esta hoja hay que pasarla por el ingeniero</b>, no la firmo yo.</div>
 
   <div class="pb"></div>
@@ -334,8 +377,9 @@ HTML = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
   </table>
   <p style="font-size:12.5px"><b>Los otros {79-NE} postes no llevan oreja:</b> van en tramo recto o
   mueren contra la pared, y ah&#237; la fascia les corre por detr&#225;s de la cara completa, as&#237;
-  que se atornillan directo por la cara del poste, dos tornillos uno encima del otro, igual que la
-  oreja.</p>
+  que se atornillan directo por la cara del poste, <b>dos tirafondos de {fr(TORN)}"&#215;{fr(TORN_L)}"
+  uno encima del otro</b>, a las mismas {fr(PROF[0])}" y {fr(PROF[1])}" bajo el deck, y con el mismo
+  bloqueo detr&#225;s. La cuenta de arriba es la misma para ellos.</p>
 
 </div></body></html>"""
 
