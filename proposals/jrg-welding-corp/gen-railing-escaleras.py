@@ -117,7 +117,13 @@ def geo(e):
     g['n_bay'], g['bay'] = n, bay
     g['cc'] = (bay + POST_W) / ca
     assert g['cc'] <= CC_MAX + 1e-9, f"centro a centro {g['cc']:.2f} pasa de {CC_MAX}"
-    i_dib = [i for i in range(n) if i % 2 == 1]      # alternados: 1, 3, 5...
+    # El pano de MAS ARRIBA de la escalera tiene que alternar con el ultimo del
+    # balcon. Las corridas C y F terminan en PIQUES contra el poste del empalme,
+    # asi que la escalera arranca con DIBUJO. Rene: "si termina en los piques la
+    # escalera tiene que empezar con el dibujo".
+    # cad se arma de abajo hacia arriba, asi que el de arriba es el indice n-1:
+    # con n impar, los dibujos van en los indices PARES y el de arriba es dibujo.
+    i_dib = [i for i in range(n) if i % 2 == 0]
     g['i_dib'] = i_dib
     g['n_dib'] = len(i_dib)
     cad = [('P',)]
@@ -127,7 +133,8 @@ def geo(e):
     assert abs(sum(POST_W if c[0] == 'P' else c[1] for c in cad) - g['horiz']) < 1e-9, \
         "la cadena horizontal de la escalera no cierra"
     seq = [c[0] for c in cad if c[0] != 'P']
-    assert seq[0] != 'D' and seq[-1] != 'D', "la escalera arranca o termina en dibujo"
+    # el de ARRIBA (el ultimo) tiene que ser dibujo, para alternar con el balcon
+    assert seq[-1] == 'D', "el pano de arriba de la escalera tiene que ser dibujo"
     assert not any(x == 'D' and y == 'D' for x, y in zip(seq, seq[1:])), "dos dibujos pegados"
 
     panel = bay - 2 * GAP

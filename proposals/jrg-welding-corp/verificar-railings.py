@@ -132,13 +132,12 @@ def t7_escaleras():
         if g['cc'] > E.CC_MAX + 1e-9:
             mal(f"{e['n']}: postes a {fr(g['cc'])}\" centro a centro, pasa de {E.CC_MAX:g}\"")
         seq = [c[0] for c in g['cad'] if c[0] != 'P']
-        if seq[0] == 'D' or seq[-1] == 'D':
-            mal(f"{e['n']}: arranca o termina en dibujo")
         if any(x == 'D' and y == 'D' for x, y in zip(seq, seq[1:])):
             mal(f"{e['n']}: dos dibujos pegados")
-        # Rene los quiere ALTERNADOS, como en el balcon, no uno solo en el medio
-        if seq != ['L' if i % 2 == 0 else 'D' for i in range(len(seq))]:
-            mal(f"{e['n']}: el reparto no es pique-dibujo-pique-dibujo-pique: {' '.join(seq)}")
+        # alternado, y el de ARRIBA tiene que ser dibujo para alternar con el
+        # ultimo pano del balcon, que es de piques
+        if seq != ['D' if i % 2 == 0 else 'L' for i in range(len(seq))]:
+            mal(f"{e['n']}: el reparto no alterna: {' '.join(seq)}")
     nd = sum(E.geo(x)['n_dib'] * x['cant'] for x in E.ESCALERAS)
     return f"{sum(x['cant'] for x in E.ESCALERAS)} escaleras, alternadas, {nd} dibujos"
 
@@ -249,6 +248,26 @@ def t15_poste_cuadra():
             f"{fr(dibujado)}\". Se descuadra por el grueso del cap.")
     return f"poste {fr(G.POST_LEN)}\" = {fr(dibujado-6)} a la panza del cap + 6 a la fascia"
 
+def t16_alterna_empalme():
+    """En el poste del empalme, el ultimo pano del balcon y el primero de la
+       escalera tienen que ser distintos. Rene: "si termina en dibujo la
+       escalera tiene que empezar con los piques y si termina en los piques
+       la escalera tiene que empezar con el dibujo"."""
+    par = {"ESCALERA DEL BALC\u00d3N 1": ("C", ["C-1", "C-2"]),
+           "ESCALERA DEL BALC\u00d3N 2": ("F", ["F-1", "F-2"])}
+    txt = []
+    for e in E.ESCALERAS:
+        run, nms = par[e['n']]
+        bal = [x[0] for n in nms for x in SEC[n]['elems'] if x[0] != 'P'][-1]
+        esc = [c[0] for c in E.geo(e)['cad'] if c[0] != 'P'][-1]
+        if bal == esc:
+            mal(f"{e['n']}: la corrida {run} termina en "
+                f"{'dibujo' if bal=='D' else 'piques'} y la escalera arranca igual. "
+                f"Tienen que alternar en el poste del empalme.")
+        txt.append(f"{run} termina en {'dibujo' if bal=='D' else 'piques'} -> "
+                   f"escalera arranca en {'dibujo' if esc=='D' else 'piques'}")
+    return " ; ".join(txt)
+
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
  ("Dos dibujos nunca van pegados",          t2_dibujos_pegados),
@@ -265,6 +284,7 @@ PRUEBAS = [
  ("El medio grado no se acumula",           t13_no_se_acumula),
  ("El empalme escalera-balcon cuadra",      t14_empalme_escalera),
  ("El poste de la tabla = el dibujado",     t15_poste_cuadra),
+ ("Alterna en el poste del empalme",        t16_alterna_empalme),
 ]
 
 print("\n" + "=" * 68)
