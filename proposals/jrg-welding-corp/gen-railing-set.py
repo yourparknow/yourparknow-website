@@ -20,6 +20,8 @@ NEG, ROJO, NAR = "#1b2a41", "#b91c1c", "#c8571b"
 HOJAS = [
  ("railing-planta-balcones", "PLANOS DE INSTALACI&#211;N &#183; LOS 4 BALCONES",
   "D&#243;nde va cada corrida, con las medidas de obra y los pa&#241;os repartidos."),
+ ("railing-replanteo", "REPLANTEO &#183; POSTES Y EMPATES",
+  "En planta, d&#243;nde cae cada poste y cada empate, con las medidas de fabricaci&#243;n."),
  ("railing-escaleras", "FABRICACI&#211;N &#183; LAS 4 ESCALERAS",
   "Las dos de 34&#176; y las dos de 33&#176;, con el dibujo acostado y su despiece."),
  ("railing-detalle-anclaje", "DETALLE DE ANCLAJE",
@@ -45,6 +47,7 @@ HOJAS = [
 # HTML y el PDF de cada hoja se acaban de rehacer en ESTA corrida.
 GENERADOR = {
  "railing-planta-balcones":            "gen-railing-planta.py",
+ "railing-replanteo":                  "gen-railing-replanteo.py",
  "railing-escaleras":                  "gen-railing-escaleras.py",
  "railing-detalle-anclaje":            "gen-railing-detalle-anclaje.py",
  "railing-secciones-pool-house":       "gen-railing-secciones.py",
