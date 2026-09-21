@@ -328,7 +328,8 @@ def svg_seccion(sec):
              f'<tspan fill="{DIM}" font-weight="bold">ROJO</tspan> = luz entre caras de poste (poste = 2") '
              f'&#160;·&#160; <tspan fill="#0f766e" font-weight="bold">VERDE</tspan> = acumulado corrido al centro '
              f'de cada poste desde la punta izquierda &#160;·&#160; '
-             f'<tspan fill="#8a6a42" font-weight="bold">POSTE 2×2×.090 × 48"</tspan> (42 arriba + 6 abajo)</text>')
+             f'<tspan fill="#8a6a42" font-weight="bold">POSTE 2×2×.090 × {fr(POST_LEN)}"</tspan> '
+             f'({fr(POST_LEN-6)} arriba + 6 abajo)</text>')
     return "\n".join(o), MK
 # ---------------------------------------------------------------- datos
 # elemento: ('P',) poste  |  ('D',luz) dibujo  |  ('L',luz) pano de piques
@@ -466,9 +467,9 @@ EDIFICIOS = [
             "La caballeriza va en hoja aparte, con las letras G a la M (no se repite ninguna letra entre edificios). "
             "Los rombos de la escalera van aparte (otro ángulo, otras medidas) y no están contados aquí. "
             "Las <b>2\"</b> se descuentan en los paños que mueren contra la casa: corrida B = 159\" (161 medidas) y corrida E = 149-5/8\" (151-5/8 medidas). El largo D queda en 389-1/4\", como lo mediste."),
- dict(slug="caballeriza", titulo="CABALLERIZA — BARANDA · SECCIONES DE FRENTE",
-      meta="BALCÓN EN U · REV. 1 · SEPT 20, 2026",
-      grupos=[("CABALLERIZA — SECCIONES G a M", CB)],
+ dict(slug="caballeriza", titulo="CABALLERIZA 1 — BARANDA · SECCIONES DE FRENTE",
+      meta="MEDIDAS INTERIORES · REV. 2 · SEPT 21, 2026",
+      grupos=[("CABALLERIZA 1 — SECCIONES G a M", CB)],
       corridas=[("Caballeriza","G",190.75,["G-1"]), ("Caballeriza","H",446.0,["H-1","H-2","H-3"]),
                 ("Caballeriza","J",106.0,["J-1"]), ("Caballeriza","K",98.75,["K-1"]),
                 ("Caballeriza","M",29.0,["M-1"]), ("Caballeriza","L",47.0,["L-1"])],
@@ -478,11 +479,11 @@ EDIFICIOS = [
       # medidas INTERIORES de Rene: el frente (H) carga sus DOS postes de esquina
       # y la G, la J y la K mueren en pano contra ellos. Su total es su material.
       propio={"G","J","K"},
-      aviso="<b>OJO — esta hoja es SOLO de la caballeriza.</b> "
+      aviso="<b>OJO — esta hoja es SOLO de la caballeriza 1.</b> "
             "Las letras G a la M no se repiten en el Pool House, así que en el taller no hay forma de confundir "
-            "dos secciones. La corrida G ya trae descontadas las <b>2\"</b> (195 − 2 = 193). "
-            "<b>Falta confirmar el orden en que se encadenan las corridas</b> alrededor del edificio: "
-            "los largos y el despiece no cambian, pero sí cambia cuál sección lleva cada poste de esquina."),
+            "dos secciones. <b>Las medidas de Rene son INTERIORES:</b> el frente (corrida H) carga sus "
+            "<b>dos postes de esquina</b> y la G, la J y la K mueren <b>en paño</b> contra ellos. "
+            "La corrida G ya trae descontadas las <b>2\"</b> de la pared (192-3/4 − 2 = 190-3/4)."),
  dict(slug="caballeriza-2", titulo="CABALLERIZA — LADO 2 · BARANDA · SECCIONES DE FRENTE",
       meta="LADO CON EL PAÑO SIN MEDIR · REV. 2 · SEPT 20, 2026",
       grupos=[("CABALLERIZA LADO 2 — SECCIONES N a R", CB2)],

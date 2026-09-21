@@ -329,7 +329,6 @@ html = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
 <title>Caballeriza 1 &#8212; plano de fabricaci&#243;n</title><style>{CSS}</style></head><body><div class="page">
   <div class="hd"><h1>CABALLERIZA 1 &#8212; PLANO DE FABRICACI&#211;N</h1>
     <div class="m">CABALLERIZA 1 &#183; REV. 2 &#183; SEPT 21, 2026 &#183; MEDIDAS INTERIORES<br>TODAS LAS SECCIONES A LA MISMA ESCALA</div></div>
-{LEY}
   <table><tr><th>Lado</th><th style="width:14%">Secciones</th><th style="width:14%">Postes de {fr(POST_LEN)}"</th>
     <th style="width:14%">Dibujos</th><th style="width:14%">Piques de 38"</th></tr>
     {"".join(f'<tr><td><b>{k}</b></td><td class="n">{v[0]}</td><td class="n">{v[1]}</td>'
