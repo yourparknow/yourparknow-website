@@ -328,28 +328,34 @@ def t18_arriba_igual_abajo():
             f"(holgura de panel = {fr(G.GAP_PANEL)}\": el riel va completo y soldado)")
 
 def t19_cap_no_sobresale():
-    """ARRIBA Y ABAJO TIENEN QUE MORIR EN EL MISMO PLANO. Las dos lineas chocan
-       contra el mismo poste, que es recto. Rene lo vio dos veces: primero el
-       cap saliendose 2" por la esquina de la G, y despues 1" en cada empate del
-       frente, donde el cap moria en el centro del poste en vez de en su cara.
-       El cap mide lo que mide la seccion. La unica excepcion es la L, que sale
-       SOLDADA del taller con el inglete ya cortado."""
+    """DONDE MUERE EL CAP, SEGUN EL TIPO DE JUNTA:
+         EMPATE  -> al CENTRO del poste (-1 / +1), para que las dos puntas de
+                    cap se encuentren encima del poste. Rene: "corrigeme todos
+                    los empates que queden en el centro".
+         ESQUINA y PARED -> A RAS con el pano. Rene lo cogio en obra con el cap
+                    saliendose 2" por la esquina de la G.
+         SOLDADA -> inglete de la L, cortado en el taller antes de pintar.
+       Y los caps de una corrida tienen que cubrir su material propio."""
     for nm, s in SEC.items():
         L = G.largo(s)
         a, b = G.cap_tramo(s)
         if abs((b - a) - G.cap_largo(s)) > 1e-9:
             mal(f"{nm}: el cap dibujado mide {fr(b-a)}\" y la tabla dice {fr(G.cap_largo(s))}\"")
-        if abs(b - L) > 1e-9:
-            mal(f"{nm}: el cap muere en {fr(b)}\" y el pano en {fr(L)}\" — "
-                f"{fr(abs(b-L))}\" de diferencia contra un poste que es recto")
-        if abs(a) > 1e-9 and "SOLDADA" not in s['izq']:
-            mal(f"{nm}: el cap arranca {fr(-a)}\" antes del pano sin ser la L soldada")
-    # Los caps de una corrida tienen que cubrir SU PROPIO MATERIAL, ni mas ni
-    # menos. Contra el total de la corrida no se puede comparar: cuando la
-    # corrida se apoya en el poste de esquina del vecino, ese poste entra en el
-    # total pero lo tapa el cap del vecino, no el suyo.
-    # Unica excepcion: la pata de la L que sale SOLDADA -- su cap si cruza el
-    # poste que comparte con la otra pata, porque salen en una sola pieza.
+        for lado, txt, pos, esp in (("izq", s['izq'], a, 0.0), ("der", s['der'], b, L)):
+            if "EMPATE" in txt:
+                ok = abs(pos - (esp + (-1.0 if lado == "izq" else -1.0))) < 1e-9
+                if not ok:
+                    mal(f"{nm} ({lado}): es un EMPATE y el cap no cae en el centro del poste")
+            elif "SOLDADA" in txt and lado == "izq":
+                # el inglete solo lo lleva la pata que ARRANCA EN PANO sobre el
+                # poste compartido. La otra pata LLEVA ese poste, y por ese lado
+                # su cap muere a ras, como cualquier esquina.
+                if abs(pos - (esp - G.POST)) > 1e-9:
+                    mal(f"{nm} ({lado}): es la L soldada y el inglete no llega a la punta")
+            else:
+                if abs(pos - esp) > 1e-9:
+                    mal(f"{nm} ({lado}): esquina o pared, el cap tiene que morir A RAS "
+                        f"y se pasa {fr(abs(pos-esp))}\"")
     for cfg in G.EDIFICIOS:
         for _, run, total, nms in cfg['corridas']:
             suma = sum(G.cap_largo(SEC[n]) for n in nms)
@@ -357,7 +363,7 @@ def t19_cap_no_sobresale():
             propio += G.POST * sum(1 for n in nms if "SOLDADA" in SEC[n]['izq'])
             if abs(suma - propio) > 1e-9:
                 mal(f"corrida {run}: los caps suman {fr(suma)}\" y su material es {fr(propio)}\"")
-    return f"en las {len(SEC)} secciones el cap muere a ras con el pano, arriba y abajo"
+    return "empates al centro del poste, esquinas y paredes a ras, la L a inglete"
 
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
@@ -378,7 +384,7 @@ PRUEBAS = [
  ("Alterna en el poste del empalme",        t16_alterna_empalme),
  ("Pa\u00f1o entreverado en linea recta",      t17_entreverado),
  ("Arriba mide igual que abajo",            t18_arriba_igual_abajo),
- ("Arriba y abajo mueren a ras",            t19_cap_no_sobresale),
+ ("Cada junta del cap donde toca",          t19_cap_no_sobresale),
 ]
 
 print("\n" + "=" * 68)

@@ -477,24 +477,30 @@ def cap_tramo(sec):
        cuando la tabla decia 190-3/4. Rene: "el cap no puede sobresalir, muere a
        ras con el ultimo pano".
 
-       EL CAP MIDE LO MISMO QUE LA SECCION. Ni mas ni menos, en las dos puntas.
-       Arriba y abajo chocan contra el MISMO poste, que es recto, asi que las dos
-       lineas tienen que morir en el mismo plano. Rene: "esas dos lineas van a
-       chocar contra un poste que esta fijo, tienen que quedar las dos fijas
-       porque el poste es recto; como vas a poner el top cap mas largo arriba".
+       DOS REGLAS DISTINTAS, PORQUE SON DOS JUNTAS DISTINTAS:
 
-       Antes el cap moria en el CENTRO del poste del empate (-1 de un lado, -1
-       del otro). Eso deja el cap de una seccion sobresaliendo 1" por delante de
-       su propio pano y el de la vecina 1" corto: en el frente eso era 1" en
-       cada una de las tres. La seccion que LLEVA el poste lo tapa entero con su
-       cap; la que muere en pano arranca en la cara de ese poste. Los tres caps
-       del frente siguen sumando las 446 de la corrida.
+       EMPATE (dos secciones de la misma corrida, en linea recta):
+           la junta va al CENTRO DEL POSTE, -1 de un lado y +1 del otro, para
+           que las dos puntas de cap se encuentren encima del poste y el poste
+           respalde la junta por los dos lados. Rene: "corrigeme todos los
+           empates que queden en el centro".
 
-       La UNICA excepcion es la L, que sale SOLDADA del taller: esa esquina va a
-       inglete cortado antes de pintar, y la pata que arranca en pano necesita
-       las 2" del poste de esquina para llegar a la punta de afuera."""
-    a = -POST if "SOLDADA" in sec['izq'] else 0.0
-    return a, largo(sec)
+       ESQUINA y PARED:
+           A RAS con el pano. No se puede centrar: para centrar una esquina
+           habria que hacer una L y dejar un poste puesto aparte, que es lo que
+           Rene no quiere. Rene: "el unico que no va a quedar en el centro es el
+           que choca por el lado". Esta es la punta donde yo tenia el cap
+           saliendose 2" y que el cogio en obra.
+
+       SOLDADA:
+           la L sale soldada del taller con el inglete ya cortado, antes de
+           pintar, asi que la pata que arranca en pano necesita las 2" del poste
+           de esquina para llegar a la punta de afuera.
+
+       Los tres caps del frente siguen sumando las 446 de la corrida."""
+    a = (-POST if "SOLDADA" in sec['izq'] else -1.0 if "EMPATE" in sec['izq'] else 0.0)
+    b = largo(sec) + (-1.0 if "EMPATE" in sec['der'] else 0.0)
+    return a, b
 
 def cap_largo(sec):
     """LARGO FINAL DEL CAP. Va a POWDER COATING: sale del taller cortado a esta
