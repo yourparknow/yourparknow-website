@@ -239,6 +239,16 @@ def t14_empalme_escalera():
     return (f"tope del cap y panza del riel coinciden; por dentro queda el "
             f"nudillo de {fr(paso,64)}\", que se corta y se suelda")
 
+def t15_poste_cuadra():
+    """El poste de la tabla tiene que ser el que dibuja el plano. Decia 48 y el
+       plano dibujaba 47: el cap corre POR ENCIMA de los postes, asi que la
+       punta va a la panza del cap, no al tope. Un pulgada en 80 postes."""
+    dibujado = (G.Y_DECK - G.Y_CAP_B) + 6.0          # de la panza del cap a la fascia
+    if abs(G.POST_LEN - dibujado) > 1e-9:
+        mal(f"el poste de la tabla dice {fr(G.POST_LEN)}\" y el plano dibuja "
+            f"{fr(dibujado)}\". Se descuadra por el grueso del cap.")
+    return f"poste {fr(G.POST_LEN)}\" = {fr(dibujado-6)} a la panza del cap + 6 a la fascia"
+
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
  ("Dos dibujos nunca van pegados",          t2_dibujos_pegados),
@@ -254,6 +264,7 @@ PRUEBAS = [
  ("Un solo corte para las 4 escaleras",     t12_cuadro_unico),
  ("El medio grado no se acumula",           t13_no_se_acumula),
  ("El empalme escalera-balcon cuadra",      t14_empalme_escalera),
+ ("El poste de la tabla = el dibujado",     t15_poste_cuadra),
 ]
 
 print("\n" + "=" * 68)

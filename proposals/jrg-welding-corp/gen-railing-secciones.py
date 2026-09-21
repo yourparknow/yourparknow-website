@@ -32,7 +32,10 @@ CAP_T = 1.0         # cap 1" de alto
 RAIL_T = 1.0        # riel inferior 1" de alto
 FLOOR = 2.0         # luz del piso al riel
 GUARD = 42.0        # piso a tope del cap
-POST_LEN = 48.0     # poste total (42 + 6 a la fascia)
+POST_LEN = 47.0     # poste total. El cap corre POR ENCIMA de los postes (de 41
+                    # a 42 sobre el deck), asi que la punta del poste va a 41, no
+                    # a 42: 41 + 6 a la fascia = 47. Antes decia 48 en la tabla
+                    # mientras el plano dibujaba 47. Es el grueso del cap.
 CAMPO = 38.0        # luz libre entre riel y cap
 Y_CAP_B = 1.0       # cara inferior del cap
 Y_RAIL_T = 39.0     # cara superior del riel
@@ -101,7 +104,7 @@ def PLANTILLA(titulo, meta, aviso, tot_dib, tot_lis, tot_piq, tot_pos,
     <div><b>{tot_dib}</b><span>dibujitos a cortar</span></div>
     <div><b>{tot_lis}</b><span>pa&#241;os de piques</span></div>
     <div><b>{tot_piq}</b><span>piques de 38"</span></div>
-    <div><b>{tot_pos}</b><span>postes de 48"</span></div>
+    <div><b>{tot_pos}</b><span>postes de {fr(POST_LEN)}"</span></div>
     <div><b>{nsec}</b><span>secciones soldadas</span></div>
   </div>
 

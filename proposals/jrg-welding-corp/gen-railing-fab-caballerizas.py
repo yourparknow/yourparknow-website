@@ -148,8 +148,8 @@ def despiece(s):
         else:
             n = piques_de(e[1])[0]
             piques[n] = piques.get(n, 0) + 1
-    f = [f"<tr><td><b>POSTE</b></td><td>2×2×.090</td><td class='n'>48\"</td>"
-         f"<td class='n'><b>{np_}</b></td><td>42 arriba del deck + 6 a la fascia</td></tr>",
+    f = [f"<tr><td><b>POSTE</b></td><td>2×2×.090</td><td class='n'>{fr(POST_LEN)}\"</td>"
+         f"<td class='n'><b>{np_}</b></td><td>{fr(POST_LEN-6)} a la panza del cap + 6 a la fascia &#183; el cap corre por encima</td></tr>",
          f"<tr><td><b>CAP</b></td><td>2×1×.090 de plano</td><td class='n'>{fr(cap_largo(s))}\"</td>"
          f"<td class='n'><b>1</b></td><td>corrido, de punta a punta de la sección</td></tr>"]
     for L in sorted(rieles, reverse=True):
