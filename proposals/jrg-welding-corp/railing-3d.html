@@ -1,0 +1,481 @@
+<title>Los Cuatro Balcones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --ink:#0d1218; --surface:#161d26; --raise:#1e2734; --line:#2b3644;
+    --text:#e2e9f0; --dim:#8d9bab; --accent:#e07b39; --accent-soft:#f0a870;
+    --ok:#4fb08a;
+    color-scheme: dark;
+  }
+  html,body{height:100%;}
+  body{
+    margin:0; background:var(--ink); color:var(--text);
+    font-family:'Barlow',-apple-system,Segoe UI,Helvetica,Arial,sans-serif;
+    overflow:hidden; -webkit-text-size-adjust:100%;
+  }
+  #app{position:fixed; inset:0; display:flex; flex-direction:column;
+       padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);}
+
+  header{
+    flex:0 0 auto; background:var(--surface); border-bottom:1px solid var(--line);
+    padding:10px 16px; display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center;
+  }
+  .brand{display:flex; flex-direction:column; gap:1px; margin-right:auto;}
+  .brand h1{
+    font-family:'Barlow Condensed',Barlow,sans-serif; font-weight:700; font-size:21px;
+    letter-spacing:.06em; text-transform:uppercase; margin:0; line-height:1;
+  }
+  .brand p{margin:0; font-size:11.5px; color:var(--dim); letter-spacing:.02em;}
+  .brand b{color:var(--accent); font-variant-numeric:tabular-nums;}
+
+  .seg{display:flex; background:var(--ink); border:1px solid var(--line); border-radius:7px; overflow:hidden;}
+  .seg button{
+    appearance:none; background:transparent; border:0; color:var(--dim); cursor:pointer;
+    font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:13px;
+    letter-spacing:.05em; text-transform:uppercase; padding:7px 11px; white-space:nowrap;
+    border-right:1px solid var(--line);
+  }
+  .seg button:last-child{border-right:0;}
+  .seg button[aria-pressed="true"]{background:var(--accent); color:#1a1109;}
+  .seg button:focus-visible{outline:2px solid var(--accent-soft); outline-offset:-2px;}
+
+  .tog{
+    appearance:none; background:var(--ink); border:1px solid var(--line); border-radius:7px;
+    color:var(--dim); cursor:pointer; padding:7px 12px;
+    font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:13px;
+    letter-spacing:.05em; text-transform:uppercase; white-space:nowrap;
+  }
+  .tog[aria-pressed="true"]{border-color:var(--accent); color:var(--accent);}
+  .tog:focus-visible{outline:2px solid var(--accent-soft); outline-offset:2px;}
+
+  #stage{flex:1 1 auto; position:relative; min-height:0;}
+  canvas{display:block; width:100%; height:100%; touch-action:none;}
+
+  .hud{
+    position:absolute; left:16px; bottom:16px; right:16px;
+    display:flex; flex-wrap:wrap; gap:8px; align-items:flex-end; pointer-events:none;
+  }
+  .card{
+    background:rgba(22,29,38,.93); border:1px solid var(--line); border-radius:9px;
+    padding:9px 13px; backdrop-filter:blur(6px);
+  }
+  .card h2{
+    font-family:'Barlow Condensed',sans-serif; font-size:12px; font-weight:700;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--dim); margin:0 0 5px;
+  }
+  .stats{display:flex; gap:16px;}
+  .stats div{display:flex; flex-direction:column;}
+  .stats b{font-size:19px; line-height:1; color:var(--accent); font-variant-numeric:tabular-nums;}
+  .stats span{font-size:10.5px; color:var(--dim); letter-spacing:.04em; text-transform:uppercase;
+              font-family:'Barlow Condensed',sans-serif; margin-top:2px;}
+  .hint{font-size:11.5px; color:var(--dim); margin-left:auto;}
+  .hint kbd{
+    background:var(--raise); border:1px solid var(--line); border-radius:4px;
+    padding:1px 5px; font:inherit; font-size:11px; color:var(--text);
+  }
+  .note{font-size:11.5px; color:var(--dim); max-width:34ch; line-height:1.4;}
+  .note b{color:var(--accent-soft);}
+
+  @media (max-width:640px){
+    header{padding:9px 16px; gap:8px 12px;}
+    .brand{flex:1 0 100%; margin-right:0;}
+    .brand h1{font-size:18px;}
+    .hud{left:12px; right:12px; bottom:12px; gap:6px;}
+    .hint{display:none;}
+    .note{max-width:100%;}
+    .stats{gap:12px;} .stats b{font-size:16px;}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important;}}
+</style>
+
+<div id="app">
+  <header>
+    <div class="brand">
+      <h1>Los cuatro balcones</h1>
+      <p><b id="hPies">—</b> pies lineales · <b id="hDib">—</b> dibujos · baranda de aluminio 42&Prime;</p>
+    </div>
+    <div class="seg" role="group" aria-label="Qué balcón mostrar">
+      <button data-b="-1" aria-pressed="true">Todos</button>
+      <button data-b="0" aria-pressed="false">Pool 1</button>
+      <button data-b="1" aria-pressed="false">Pool 2</button>
+      <button data-b="2" aria-pressed="false">Cab 1</button>
+      <button data-b="3" aria-pressed="false">Cab 2</button>
+    </div>
+    <button class="tog" id="tDib" aria-pressed="true">Resaltar dibujos</button>
+    <button class="tog" id="tDeck" aria-pressed="true">Deck</button>
+    <button class="tog" id="tVista">Vista de frente</button>
+  </header>
+
+  <div id="stage">
+    <canvas id="c"></canvas>
+    <div class="hud">
+      <div class="card">
+        <h2 id="titulo">Los cuatro</h2>
+        <div class="stats">
+          <div><b id="sPies">—</b><span>pies</span></div>
+          <div><b id="sDib">—</b><span>dibujos</span></div>
+          <div><b id="sPan">—</b><span>paños lisos</span></div>
+          <div><b id="sPos">—</b><span>postes</span></div>
+        </div>
+      </div>
+      <div class="card note">
+        Postes <b>2&times;2</b> a 48&Prime; · cap y riel <b>2&times;1</b> · piques y dibujo <b>1&times;1</b>.
+        Las escaleras van esquemáticas: el reparto de rombos está pendiente.
+      </div>
+      <p class="hint">Arrastra para girar · <kbd>rueda</kbd> o pellizca para zoom · dos dedos o <kbd>Shift</kbd> para mover</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const BALCONES = [{"nombre":"BALC\u00d3N 1  \u00b7  POOL HOUSE","runs":[{"letra":"B","p0":[0.0,0.0],"p1":[0.0,161.0],"largo":161.0,"hueco":2.0,"elems":[["P"],["D",46.0,0],["P"],["L",28.5,6],["P"],["D",46.0,0],["P"],["L",28.5,6],["P"]]},{"letra":"A","p0":[0.0,161.0],"p1":[-383.625,161.0],"largo":383.625,"hueco":0.0,"elems":[["P"],["L",30.5625,6],["P"],["D",46.0,0],["P"],["L",39.5,8],["P"],["D",46.0,0],["P"],["L",39.5,8],["P"],["D",46.0,0],["P"],["L",39.5,8],["P"],["D",46.0,0],["P"],["L",30.5625,6],["P"]]},{"letra":"C","p0":[-383.625,161.0],"p1":[-383.625,-76.625],"largo":237.625,"hueco":0.0,"elems":[["P"],["L",44.5,9],["P"],["D",46.0,0],["P"],["L",44.625,9],["P"],["D",46.0,0],["P"],["L",44.5,9],["P"]]}],"escalera":{"largo":185.0,"grados":34.0,"p":[-383.625,-76.625],"dir":[0.0,-237.625]},"postes":19,"pies":65.2,"dibujos":8,"panos":10},{"nombre":"BALC\u00d3N 2  \u00b7  POOL HOUSE","runs":[{"letra":"E","p0":[0.0,0.0],"p1":[0.0,151.625],"largo":151.625,"hueco":2.0,"elems":[["P"],["L",47.8125,10],["P"],["D",46.0,0],["P"],["L",47.8125,10],["P"]]},{"letra":"D","p0":[0.0,151.625],"p1":[-389.25,151.625],"largo":389.25,"hueco":0.0,"elems":[["P"],["L",37.0,7],["P"],["D",46.0,0],["P"],["L",37.0,7],["P"],["D",46.0,0],["P"],["L",37.25,7],["P"],["D",46.0,0],["P"],["L",37.0,7],["P"],["D",46.0,0],["P"],["L",37.0,7],["P"]]},{"letra":"F","p0":[-389.25,151.625],"p1":[-389.25,-88.125],"largo":239.75,"hueco":0.0,"elems":[["P"],["L",45.25,9],["P"],["D",46.0,0],["P"],["L",45.25,9],["P"],["D",46.0,0],["P"],["L",45.25,9],["P"]]}],"escalera":{"largo":198.0,"grados":33.0,"p":[-389.25,-88.125],"dir":[0.0,-239.75]},"postes":18,"pies":65.1,"dibujos":7,"panos":10},{"nombre":"BALC\u00d3N 3  \u00b7  CABALLERIZA LADO 1","runs":[{"letra":"G","p0":[0.0,0.0],"p1":[193.0,0.0],"largo":193.0,"hueco":0.0,"elems":[["P"],["D",46.0,0],["P"],["L",45.5,9],["P"],["D",46.0,0],["P"],["L",45.5,9],["P"]]},{"letra":"H","p0":[193.0,0.0],"p1":[193.0,442.0],"largo":442.0,"hueco":0.0,"elems":[["P"],["L",47.5625,10],["P"],["D",46.0,0],["P"],["L",47.5625,10],["P"],["D",46.0,0],["P"],["L",47.75,10],["P"],["D",46.0,0],["P"],["L",47.5625,10],["P"],["D",46.0,0],["P"],["L",47.5625,10],["P"]]},{"letra":"J","p0":[193.0,442.0],"p1":[89.0,442.0],"largo":104.0,"hueco":0.0,"elems":[["P"],["L",25.0,5],["P"],["D",46.0,0],["P"],["L",25.0,5],["P"]]},{"letra":"K","p0":[89.0,442.0],"p1":[89.0,343.25],"largo":98.75,"hueco":0.0,"elems":[["P"],["L",22.375,4],["P"],["D",46.0,0],["P"],["L",22.375,4],["P"]]},{"letra":"ESC","p0":[89.0,343.25],"p1":[62.0,343.25],"largo":27.0,"elems":[]},{"letra":"M","p0":[62.0,343.25],"p1":[62.0,314.25],"largo":29.0,"hueco":0.0,"elems":[["P"],["L",25.0,5],["P"]]},{"letra":"L","p0":[62.0,314.25],"p1":[15.0,314.25],"largo":47.0,"hueco":0.0,"elems":[["P"],["D",43.0,0],["P"]]}],"escalera":null,"postes":22,"pies":76.1,"dibujos":9,"panos":12},{"nombre":"BALC\u00d3N 4  \u00b7  CABALLERIZA LADO 2","runs":[{"letra":"P","p0":[0.0,0.0],"p1":[-191.375,0.0],"largo":191.375,"hueco":0.0,"elems":[["P"],["D",46.0,0],["P"],["L",44.6875,9],["P"],["D",46.0,0],["P"],["L",44.6875,9],["P"]]},{"letra":"N","p0":[-191.375,0.0],"p1":[-191.375,-441.375],"largo":441.375,"hueco":0.0,"elems":[["P"],["L",47.4375,10],["P"],["D",46.0,0],["P"],["L",47.4375,10],["P"],["D",46.0,0],["P"],["L",47.625,10],["P"],["D",46.0,0],["P"],["L",47.4375,10],["P"],["D",46.0,0],["P"],["L",47.4375,10],["P"]]},{"letra":"?","p0":[-191.375,-441.375],"p1":[-83.375,-441.375],"largo":108.0,"elems":[]},{"letra":"Q","p0":[-83.375,-441.375],"p1":[-83.375,-342.375],"largo":99.0,"hueco":0.0,"elems":[["P"],["L",22.5,4],["P"],["D",46.0,0],["P"],["L",22.5,4],["P"]]},{"letra":"ESC","p0":[-83.375,-342.375],"p1":[-56.375,-342.375],"largo":27.0,"elems":[]},{"letra":"R","p0":[-56.375,-342.375],"p1":[-56.375,-390.375],"largo":48.0,"hueco":0.0,"elems":[["P"],["L",44.0,9],["P"]]}],"escalera":null,"postes":18,"pies":74.0,"dibujos":8,"panos":12}];
+
+/* ---------- constantes de la baranda, en pulgadas ---------- */
+const POSTE = 2, CAP_T = 1, RIEL_T = 1, PISO = 2, GUARD = 42;
+const Y_RIEL_B = 2, Y_RIEL_T = 3, Y_CAP_B = 41, Y_CAP_T = 42;
+const CAMPO = Y_CAP_B - Y_RIEL_T;              // 38
+const CUADRO = 30.25, LUZ_CUADRO = 28.25, TUBO = 1;
+const Y_SQ_B = 6.875, Y_SQ_T = 37.125;          // el cuadro flota 3-7/8 de cada riel
+
+/* ---------- recolección de cajas ---------- */
+const cajas = [];   // {p:[x,y,z], s:[w,h,d], rot:[eje,ang]|null, tipo, bal}
+let BAL_ACT = -1;
+
+function caja(p, s, tipo, bal, rot){ cajas.push({p, s, tipo, bal, rot: rot || null}); }
+
+/* una corrida vive en su propio marco: u = a lo largo, y = alto, t = grueso */
+function marco(p0, p1){
+  const dx = p1[0]-p0[0], dy = p1[1]-p0[1];
+  const L = Math.hypot(dx, dy) || 1;
+  const ux = dx/L, uz = -dy/L;                  // plano (x,y) -> mundo (x,z)
+  return {
+    L,
+    pt(u, t){ return [p0[0] + ux*u - uz*t, 0, -p0[1] + uz*u + ux*t]; },
+    ang: Math.atan2(-uz, ux)                    // giro alrededor de Y
+  };
+}
+function poner(f, u, y, largo, alto, grueso, tipo, bal, rotZ){
+  const c = f.pt(u + largo/2, 0);
+  cajas.push({p:[c[0], y + alto/2, c[2]], s:[largo, alto, grueso],
+              rotY: f.ang, rotZ: rotZ || 0, tipo, bal});
+}
+
+/* ---------- el dibujito ---------- */
+function dibujito(f, u0, luz, bal){
+  const panel = luz - 0.5, L0 = u0 + 0.25;
+  const g = (panel - 4*TUBO - LUZ_CUADRO) / 4;
+  const b1 = L0 + g, v1 = b1 + TUBO + g, v2 = v1 + TUBO + LUZ_CUADRO, b2 = v2 + TUBO + g;
+  const T = 'dib';
+  poner(f, L0, Y_RIEL_B, panel, RIEL_T, 2, 'riel', bal);          // riel del paño
+  for (const x of [b1, b2]) poner(f, x, Y_RIEL_T, TUBO, CAMPO, TUBO, T, bal);   // patas
+  for (const x of [v1, v2]) poner(f, x, Y_RIEL_T, TUBO, CAMPO, TUBO, T, bal);   // verticales
+  for (const y of [Y_SQ_B, Y_SQ_T - TUBO])                                       // horizontales
+    poner(f, v1 + TUBO, y, LUZ_CUADRO, TUBO, TUBO, T, bal);
+  // la X, a 45 grados
+  const cu = (v1 + TUBO + v2) / 2, cy = (Y_SQ_B + Y_SQ_T) / 2;
+  const diag = Math.hypot(LUZ_CUADRO, LUZ_CUADRO);
+  for (const s of [1, -1])
+    poner(f, cu - diag/2, cy - TUBO/2, diag, TUBO, TUBO, T, bal, s * Math.PI/4);
+  // los dos rombos concéntricos
+  for (const od of [20.5, 10.75]) {
+    for (const s of [1, -1]) {
+      poner(f, cu - od/2, cy + s*(od/2) - TUBO/2, od, TUBO, TUBO, T, bal);       // horizontales
+      poner(f, cu + s*(od/2) - TUBO/2, cy - od/2 + TUBO, TUBO, od - 2*TUBO, TUBO, T, bal);
+    }
+  }
+}
+
+/* ---------- un paño de piques ---------- */
+function panoLiso(f, u0, luz, n, bal){
+  const panel = luz - 0.5, L0 = u0 + 0.25, g = (panel - n) / (n + 1);
+  poner(f, L0, Y_RIEL_B, panel, RIEL_T, 2, 'riel', bal);
+  for (let i = 0; i < n; i++)
+    poner(f, L0 + g + i*(1 + g), Y_RIEL_T, TUBO, CAMPO, TUBO, 'pique', bal);
+}
+
+/* ---------- escalera esquemática ---------- */
+function escalera(esc, bal){
+  const a = esc.grados * Math.PI/180;
+  const n = Math.hypot(esc.dir[0], esc.dir[1]) || 1;
+  const ux = esc.dir[0]/n, uy = esc.dir[1]/n;
+  const corr = esc.largo * Math.cos(a), caida = esc.largo * Math.sin(a);
+  const p0 = esc.p, p1 = [p0[0] + ux*corr, p0[1] + uy*corr];
+  const f = marco(p0, p1);
+  // la rampa
+  const cm = f.pt(corr/2, 0);
+  cajas.push({p:[cm[0], -caida/2 + 1, cm[2]], s:[esc.largo, 7, 44],
+              rotY: f.ang, rotZ: -a, tipo:'madera', bal});
+  // los peldaños
+  const pasos = Math.max(2, Math.round(caida / 7));
+  for (let i = 1; i < pasos; i++){
+    const u = corr * i/pasos, c = f.pt(u, 0);
+    cajas.push({p:[c[0], -caida*i/pasos + 4.5, c[2]], s:[1.5, 1.5, 44],
+                rotY: f.ang, rotZ: 0, tipo:'madera', bal});
+  }
+  // baranda a los dos lados: cap y riel siguiendo la pendiente, piques a plomo
+  for (const lado of [-20, 20]){
+    const g = marco(p0, p1), off = lado;
+    // cap y riel: cajas largas giradas al ángulo, colgando desde el arranque
+    const cm2 = g.pt(corr/2, off);
+    for (const [yTop, alto, tipo] of [[GUARD, CAP_T, 'metal'], [Y_RIEL_T, RIEL_T, 'riel']]){
+      cajas.push({p:[cm2[0], yTop - caida/2 - alto/2, cm2[2]], s:[esc.largo, alto, 2],
+                  rotY: g.ang, rotZ: -a, tipo, bal});
+    }
+    // piques a plomo, cada ~4-1/2 de avance
+    const paso = 4.5, np = Math.floor(corr / paso);
+    for (let i = 1; i <= np; i++){
+      const u = i * corr / (np + 1);
+      const yc = -caida * (u / corr);
+      const c = g.pt(u, off);
+      cajas.push({p:[c[0], yc + Y_RIEL_T + CAMPO/2, c[2]], s:[TUBO, CAMPO, TUBO],
+                  rotY: g.ang, rotZ: 0, tipo:'pique', bal});
+    }
+    // postes arriba y abajo
+    for (const [u, yb] of [[0, 0], [corr, -caida]]){
+      const c = g.pt(u, off);
+      cajas.push({p:[c[0], yb + GUARD/2, c[2]], s:[POSTE, GUARD, POSTE],
+                  rotY: g.ang, rotZ: 0, tipo:'metal', bal});
+    }
+  }
+  return [p1];
+}
+
+/* ---------- construir los cuatro ---------- */
+const info = [];
+BALCONES.forEach((B, bi) => {
+  const pts = [];
+  B.runs.forEach(r => {
+    pts.push(r.p0, r.p1);
+    if (r.letra === 'ESC' || r.letra === '?') return;
+    const f = marco(r.p0, r.p1);
+    // cap corrido de toda la corrida
+    poner(f, 0, Y_CAP_B, r.largo, CAP_T, 2, 'metal', bi);
+    let u = r.hueco || 0;
+    for (const e of r.elems){
+      if (e[0] === 'P'){ poner(f, u, 0, POSTE, GUARD, POSTE, 'metal', bi); u += POSTE; }
+      else if (e[0] === 'D'){ dibujito(f, u, e[1], bi); u += e[1]; }
+      else { panoLiso(f, u, e[1], e[2], bi); u += e[1]; }
+    }
+  });
+  if (B.escalera) pts.push(...escalera(B.escalera, bi));
+  const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+  info.push({...B, bb:[Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)]});
+});
+
+/* deck de cada balcón: la caja que encierra su recorrido */
+info.forEach((B, bi) => {
+  const [x0, x1, y0, y1] = B.bb;
+  cajas.push({p:[(x0+x1)/2, -4, -(y0+y1)/2], s:[x1-x0+26, 8, y1-y0+26],
+              rotY:0, rotZ:0, tipo:'deck', bal:bi});
+});
+
+/* separar los cuatro en el espacio */
+const SEP = 130;
+let cursorX = 0;
+const offs = [];
+info.forEach((B, bi) => {
+  const w = B.bb[1] - B.bb[0];
+  offs.push([cursorX - B.bb[0], 0]);
+  cursorX += w + SEP;
+});
+cajas.forEach(c => { c.p[0] += offs[c.bal][0]; });
+info.forEach((B, bi) => { B.cx = (B.bb[0] + B.bb[1])/2 + offs[bi][0];
+                          B.cz = -(B.bb[2] + B.bb[3])/2;
+                        });
+
+/* ---------- escena ---------- */
+const COL = {
+  metal: 0x7d7264, riel: 0x7d7264, pique: 0x8d8375,
+  dib:   0xe07b39, dibOff: 0x8d8375,
+  deck:  0xa07d4e, madera: 0x8d6a3f
+};
+const cv = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({canvas:cv, antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0d1218);
+scene.fog = new THREE.Fog(0x0d1218, 900, 3200);
+
+const camera = new THREE.PerspectiveCamera(42, 1, 1, 9000);
+scene.add(new THREE.HemisphereLight(0xdfe9f5, 0x3a3025, 0.85));
+const sol = new THREE.DirectionalLight(0xfff2e0, 0.9);
+sol.position.set(-420, 780, 520); scene.add(sol);
+const relleno = new THREE.DirectionalLight(0x9fc0e0, 0.35);
+relleno.position.set(520, 300, -420); scene.add(relleno);
+
+/* Un InstancedMesh por color. Nada de color por instancia: en esta version de
+   three el color por instancia depende de vertexColors y sale negro sin atributo. */
+const GRUPO = {metal:'metal', riel:'metal', pique:'metal',
+               dib:'dib', deck:'madera', madera:'madera'};
+const geo = new THREE.BoxGeometry(1, 1, 1);
+const mats = {
+  metal:  new THREE.MeshLambertMaterial({color: COL.metal}),
+  dib:    new THREE.MeshLambertMaterial({color: COL.dib}),
+  madera: new THREE.MeshLambertMaterial({color: COL.deck})
+};
+const listas = {metal:[], dib:[], madera:[]};
+cajas.forEach(c => listas[GRUPO[c.tipo] || 'metal'].push(c));
+const mallas = {};
+for (const k of Object.keys(listas)){
+  const m = new THREE.InstancedMesh(geo, mats[k], Math.max(1, listas[k].length));
+  m.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  m.frustumCulled = false;
+  scene.add(m); mallas[k] = m;
+}
+
+const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), e = new THREE.Euler();
+const vP = new THREE.Vector3(), vS = new THREE.Vector3();
+let resaltar = true, verDeck = true;
+
+function pintar(){
+  for (const k of Object.keys(listas)){
+    const m = mallas[k];
+    listas[k].forEach((c, i) => {
+      const visible = (BAL_ACT === -1 || c.bal === BAL_ACT) &&
+                      (verDeck || k !== 'madera');
+      e.set(0, c.rotY, c.rotZ, 'YZX');
+      q.setFromEuler(e);
+      vP.set(c.p[0], c.p[1], c.p[2]);
+      if (visible) vS.set(c.s[0], c.s[1], c.s[2]);
+      else         vS.set(0.0001, 0.0001, 0.0001);
+      m4.compose(vP, q, vS);
+      m.setMatrixAt(i, m4);
+    });
+    m.count = listas[k].length;
+    m.instanceMatrix.needsUpdate = true;
+  }
+  mats.dib.color.setHex(resaltar ? COL.dib : COL.dibOff);
+}
+
+/* ---------- etiquetas ---------- */
+function etiqueta(texto){
+  const cn = document.createElement('canvas');
+  cn.width = 512; cn.height = 96;
+  const g = cn.getContext('2d');
+  g.fillStyle = 'rgba(13,18,24,.82)'; g.fillRect(0,0,512,96);
+  g.strokeStyle = '#e07b39'; g.lineWidth = 5; g.strokeRect(2.5,2.5,507,91);
+  g.fillStyle = '#e2e9f0'; g.font = '600 46px Barlow Condensed, Arial';
+  g.textAlign='center'; g.textBaseline='middle';
+  g.fillText(texto.replace(/\s+·\s+/g, '  ·  '), 256, 50);
+  const t = new THREE.CanvasTexture(cn);
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({map:t, transparent:true, depthTest:false}));
+  sp.scale.set(190, 36, 1);
+  return sp;
+}
+const sprites = info.map(B => {
+  const s = etiqueta(B.nombre);
+  s.position.set(B.cx, 96, B.cz);
+  scene.add(s); return s;
+});
+
+/* ---------- cámara orbital propia ---------- */
+const orb = {th: -0.72, ph: 1.03, r: 1500, t: new THREE.Vector3(0, 0, 0)};
+function encuadrar(bi, frente){
+  if (bi === -1){
+    const xs = info.flatMap(B => [B.bb[0] + offs[info.indexOf(B)][0], B.bb[1] + offs[info.indexOf(B)][0]]);
+    orb.t.set((Math.min(...xs) + Math.max(...xs))/2, 20,
+              -(Math.min(...info.map(B=>B.bb[2])) + Math.max(...info.map(B=>B.bb[3])))/2);
+    orb.r = (Math.max(...xs) - Math.min(...xs)) * 0.78;
+  } else {
+    const B = info[bi];
+    orb.t.set(B.cx, 20, B.cz);
+    orb.r = Math.max(B.bb[1]-B.bb[0], B.bb[3]-B.bb[2]) * 1.35;
+  }
+  if (frente){ orb.th = -Math.PI/2; orb.ph = 1.5; }
+  else { orb.th = -0.72; orb.ph = 1.03; }
+}
+function camara(){
+  const s = Math.sin(orb.ph), c = Math.cos(orb.ph);
+  camera.position.set(orb.t.x + orb.r*s*Math.cos(orb.th),
+                      orb.t.y + orb.r*c,
+                      orb.t.z + orb.r*s*Math.sin(orb.th));
+  camera.lookAt(orb.t);
+}
+let arrastre = null, pellizco = null;
+cv.addEventListener('pointerdown', ev => {
+  cv.setPointerCapture(ev.pointerId);
+  arrastre = {x:ev.clientX, y:ev.clientY, pan: ev.shiftKey || ev.button === 2};
+});
+cv.addEventListener('pointermove', ev => {
+  if (!arrastre) return;
+  const dx = ev.clientX - arrastre.x, dy = ev.clientY - arrastre.y;
+  arrastre.x = ev.clientX; arrastre.y = ev.clientY;
+  if (arrastre.pan){
+    const k = orb.r / 900;
+    const right = new THREE.Vector3().subVectors(camera.position, orb.t).cross(camera.up).normalize();
+    const up = new THREE.Vector3().crossVectors(right, new THREE.Vector3().subVectors(camera.position, orb.t)).normalize();
+    orb.t.addScaledVector(right, -dx*k).addScaledVector(up, -dy*k);
+  } else {
+    orb.th += dx * 0.006;
+    orb.ph = Math.max(0.12, Math.min(1.54, orb.ph - dy * 0.006));
+  }
+  camara();
+});
+addEventListener('pointerup', () => { arrastre = null; });
+cv.addEventListener('contextmenu', ev => ev.preventDefault());
+cv.addEventListener('wheel', ev => {
+  ev.preventDefault();
+  orb.r = Math.max(70, Math.min(5200, orb.r * (1 + Math.sign(ev.deltaY) * 0.11)));
+  camara();
+}, {passive:false});
+cv.addEventListener('touchmove', ev => {
+  if (ev.touches.length !== 2) return;
+  ev.preventDefault();
+  const d = Math.hypot(ev.touches[0].clientX - ev.touches[1].clientX,
+                       ev.touches[0].clientY - ev.touches[1].clientY);
+  if (pellizco) { orb.r = Math.max(70, Math.min(5200, orb.r * pellizco / d)); camara(); }
+  pellizco = d;
+}, {passive:false});
+addEventListener('touchend', () => { pellizco = null; });
+
+/* ---------- interfaz ---------- */
+const $ = id => document.getElementById(id);
+function cifras(){
+  const sel = BAL_ACT === -1 ? info : [info[BAL_ACT]];
+  const pies = sel.reduce((a,B) => a + B.pies, 0);
+  const dib  = sel.reduce((a,B) => a + B.dibujos, 0);
+  const pan  = sel.reduce((a,B) => a + B.panos, 0);
+  const pos  = sel.reduce((a,B) => a + B.postes, 0);
+  $('titulo').textContent = BAL_ACT === -1 ? 'Los cuatro' : info[BAL_ACT].nombre;
+  $('sPies').textContent = pies.toFixed(1);
+  $('sDib').textContent = dib; $('sPan').textContent = pan; $('sPos').textContent = pos;
+  $('hPies').textContent = info.reduce((a,B) => a + B.pies, 0).toFixed(0);
+  $('hDib').textContent = info.reduce((a,B) => a + B.dibujos, 0);
+}
+document.querySelectorAll('.seg button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    BAL_ACT = +b.dataset.b;
+    sprites.forEach((s, i) => { s.visible = BAL_ACT === -1 || i === BAL_ACT; });
+    encuadrar(BAL_ACT, $('tVista').getAttribute('aria-pressed') === 'true');
+    camara(); pintar(); cifras();
+  });
+});
+$('tDib').addEventListener('click', () => {
+  resaltar = !resaltar;
+  $('tDib').setAttribute('aria-pressed', resaltar); pintar();
+});
+$('tDeck').addEventListener('click', () => {
+  verDeck = !verDeck;
+  $('tDeck').setAttribute('aria-pressed', verDeck); pintar();
+});
+$('tVista').addEventListener('click', () => {
+  const on = $('tVista').getAttribute('aria-pressed') !== 'true';
+  $('tVista').setAttribute('aria-pressed', on);
+  encuadrar(BAL_ACT, on); camara();
+});
+
+function medir(){
+  const r = $('stage').getBoundingClientRect();
+  renderer.setSize(r.width, r.height, false);
+  camera.aspect = r.width / Math.max(1, r.height);
+  camera.updateProjectionMatrix();
+}
+addEventListener('resize', () => { medir(); });
+
+medir(); encuadrar(-1, false); camara(); pintar(); cifras();
+(function bucle(){ requestAnimationFrame(bucle); renderer.render(scene, camera); })();
+</script>
