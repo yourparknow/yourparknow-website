@@ -64,7 +64,7 @@ def svg(s):
     for x0, k, luz in bays:
         cx = X(x0 + luz/2)
         pal = "DIBUJO" if k == 'D' else f"{piques_de(luz)[0]} PIQUES"
-        o.append(f'<text x="{cx:.1f}" y="{OY-26}" font-size="10.5" font-weight="800" '
+        o.append(f'<text x="{cx:.1f}" y="{OY-(14 if T < 90 else 26)}" font-size="10.5" font-weight="800" '
                  f'fill="{NEG}" text-anchor="middle">{pal}</text>')
 
     # ---- cota de centro a centro de poste
@@ -115,11 +115,13 @@ def svg(s):
              f'transform="rotate(-90 {xg-5} {Y(21):.1f})" text-anchor="middle">42 GUARD</text>')
 
     # ---- puntas
-    for xp, txt, anc in ((X(0), s['izq'], "start"), (X(T), s['der'], "end")):
+    corta = T < 90          # no cabe una punta a cada lado: van escalonadas
+    for xp, txt, anc, dy in ((X(0), s['izq'], "start", 44),
+                             (X(T), s['der'], "end", 30 if corta else 44)):
         lab, col, con = punta(txt)
         v = vecino(txt)
         full = f"{lab} → {v}" if (con and v) else lab
-        o.append(f'<text x="{xp:.1f}" y="{OY-44}" font-size="12.5" font-weight="800" fill="{col}" '
+        o.append(f'<text x="{xp:.1f}" y="{OY-dy}" font-size="12.5" font-weight="800" fill="{col}" '
                  f'text-anchor="{anc}"' + (' text-decoration="underline"' if con else '') + f'>{full}</text>')
     o.append(f'<text x="{X(T/2):.1f}" y="{yr+34}" font-size="11.5" font-weight="800" fill="#555" '
              f'text-anchor="middle">LARGO DE LA SECCIÓN &#160;{fr(T)}"&#160; ({feet(T)})</text>')
@@ -195,6 +197,78 @@ LEY = f"""
  est&#225;n en la cota vertical de la izquierda. Del dibujo no hay nada que cortar.</p>
 """
 
+def nota_de(s):
+    n = s.get('nota') or ""
+    if not n: return ""
+    return (f'<p style="font-size:12px;padding:6px 10px;background:#fff5f5;'
+            f'border-top:2px solid {ROJO};color:#7f1d1d"><b>OJO:</b> {n}</p>')
+
+def ele_soldada():
+    """La L de la escalera: M-1 (29) + L-1 (47) SALEN SOLDADAS EN UNA SOLA PIEZA.
+       Los dos extremos son libres -- escalera de un lado, pared del otro -- asi que
+       la pieza carga sus TRES postes. Se dibuja en planta para que no haya duda."""
+    k = 6.2
+    ox, oy = 215, 250                      # poste de la pared
+    a, b = 47.0, 29.0
+    xc, yc = ox + a * k, oy                # poste de esquina
+    xf, yf = xc, oy - b * k                # poste de la escalera
+    p = 2.0 * k                            # poste 2x2 en planta
+    def poste(x, y, txt, sub):
+        return (f'<rect x="{x-p/2:.1f}" y="{y-p/2:.1f}" width="{p:.1f}" height="{p:.1f}" '
+                f'fill="{ROJO}" stroke="{NEG}" stroke-width="1.4"/>'
+                f'<text x="{x:.1f}" y="{y-p/2-19:.1f}" font-size="12.5" font-weight="800" '
+                f'text-anchor="middle" fill="{ROJO}">{txt}</text>'
+                f'<text x="{x:.1f}" y="{y-p/2-7:.1f}" font-size="10.5" text-anchor="middle" '
+                f'fill="{NEG}">{sub}</text>')
+    s = [f'<svg viewBox="0 0 792 348" xmlns="http://www.w3.org/2000/svg">',
+         # pared de la caballeriza (NO se ancla)
+         f'<line x1="{ox-34:.0f}" y1="{oy-120:.0f}" x2="{ox-34:.0f}" y2="{oy+44:.0f}" '
+         f'stroke="{NEG}" stroke-width="3.5"/>',
+         f'<text x="{ox-48:.0f}" y="{oy-2:.0f}" font-size="11" text-anchor="end" fill="{NEG}">'
+         f'PARED DE LA CABALLERIZA</text>',
+         f'<text x="{ox-48:.0f}" y="{oy+14:.0f}" font-size="11.5" font-weight="800" text-anchor="end" '
+         f'fill="{ROJO}">NO SE ANCLA</text>',
+         # las dos patas
+         f'<line x1="{ox:.1f}" y1="{oy:.1f}" x2="{xc:.1f}" y2="{yc:.1f}" stroke="{NEG}" stroke-width="7"/>',
+         f'<line x1="{xc:.1f}" y1="{yc:.1f}" x2="{xf:.1f}" y2="{yf:.1f}" stroke="{NEG}" stroke-width="7"/>',
+         # el dibujito de la pata de 47
+         f'<rect x="{ox+(a/2-9)*k:.1f}" y="{oy-11:.1f}" width="{18*k:.1f}" height="22" '
+         f'fill="#fdf0e4" stroke="{NAR}" stroke-width="1.8"/>',
+         f'<text x="{ox+a/2*k:.1f}" y="{oy+4:.1f}" font-size="11" font-weight="800" '
+         f'text-anchor="middle" fill="{NAR}">DIBUJO</text>',
+         # cotas
+         f'<line x1="{ox:.1f}" y1="{oy+30:.1f}" x2="{xc:.1f}" y2="{oy+30:.1f}" stroke="{ROJO}" stroke-width="1.4"/>',
+         f'<text x="{ox+a/2*k:.1f}" y="{oy+25:.1f}" font-size="15" font-weight="800" '
+         f'text-anchor="middle" fill="{ROJO}">47"</text>',
+         f'<line x1="{xc+30:.1f}" y1="{yc:.1f}" x2="{xc+30:.1f}" y2="{yf:.1f}" stroke="{ROJO}" stroke-width="1.4"/>',
+         f'<text x="{xc+38:.1f}" y="{(yc+yf)/2+5:.1f}" font-size="15" font-weight="800" fill="{ROJO}">29"</text>',
+         # hueco de la escalera
+         f'<text x="{xf:.1f}" y="{yf-46:.0f}" font-size="11" text-anchor="middle" fill="{NEG}">'
+         f'HUECO DE LA ESCALERA (27")</text>',
+         poste(ox, oy, "POSTE 1", "suelto"),
+         poste(xc, yc, "POSTE 2", "esquina soldada"),
+         poste(xf, yf, "POSTE 3", "suelto"),
+         f'<text x="396" y="336" font-size="14" font-weight="800" text-anchor="middle" '
+         f'fill="{ROJO}">UNA SOLA PIEZA SOLDADA · 3 POSTES · NO SE EMPATA CON NADA</text>',
+         '</svg>']
+    return "".join(s)
+
+ELE_HTML = f"""
+  <div class="dw" style="border-color:{ROJO};border-width:3px">
+    <div class="dt" style="background:{ROJO}"><span class="sn">L</span>
+      LA ELE DE LA ESCALERA &#8212; M-1 + L-1 SALEN SOLDADAS EN UNA SOLA PIEZA
+      <span class="r">47" &#215; 29" &#160;&#183;&#160; 3 postes &#160;&#183;&#160; 1 dibujo</span></div>
+    {ele_soldada()}
+    <table><tr><th style="width:24%">Extremo</th><th>Qu&#233; lleva</th></tr>
+      <tr><td><b>Contra la pared</b></td><td>Poste completo de 48", <b>suelto</b>. No se ancla a la
+          pared de la caballeriza: se para solo en el deck.</td></tr>
+      <tr><td><b>Esquina</b></td><td>Poste completo de 48". <b>La esquina se suelda en el taller</b>,
+          cap y riel corridos doblando de una pata a la otra.</td></tr>
+      <tr><td><b>En la escalera</b></td><td>Poste completo de 48", <b>suelto</b>. Ah&#237; muere:
+          empieza el hueco de 27" y sigue la baranda de madera.</td></tr>
+    </table>
+  </div>"""
+
 EDIF = [("CABALLERIZA — LADO 1", "caballeriza"),
         ("CABALLERIZA — LADO 2", "caballeriza-2")]
 pag, tot = "", {}
@@ -213,6 +287,8 @@ for i, (titulo, slug) in enumerate(EDIF):
             '</div></div>\n')
     if not i: pag += LEY
     for s in secs:
+        if s['name'] == 'M-1':
+            pag += ELE_HTML          # la ele va ANTES de sus dos patas
         ndb = sum(1 for e in s['elems'] if e[0] == 'D')
         nqb = sum(piques_de(e[1])[0] for e in s['elems'] if e[0] == 'L')
         pag += f"""
@@ -223,7 +299,7 @@ for i, (titulo, slug) in enumerate(EDIF):
     {svg(s)}
     <table><tr><th style="width:11%">Pieza</th><th style="width:20%">Perfil</th>
       <th style="width:12%">Largo de corte</th><th style="width:8%">Cant.</th><th>Nota</th></tr>
-      {despiece(s)}</table>
+      {despiece(s)}</table>{nota_de(s)}
   </div>"""
 
 html = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">

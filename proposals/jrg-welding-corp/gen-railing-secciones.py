@@ -381,12 +381,19 @@ CB = [
  S("J-1", [('L',25.0),('P',),('D',D),('P',),('L',25.0),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de H-3)", "ESQUINA con K-1  (lleva el poste de esquina)"),
  S("K-1", [('L',22.375),('P',),('D',D),('P',),('L',22.375),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de J-1)", "ESQUINA con L-1  (lleva el poste de esquina)"),
+   "ESQUINA  (arranca en paño, apoya en el poste de J-1)", "HUECO DE LA ESCALERA  (27\", sigue de madera)"),
+ # --- LA "L" DE LA ESCALERA: M-1 (29") + L-1 (47") SALEN SOLDADAS EN UNA SOLA PIEZA.
+ #     Los dos extremos libres son libres de verdad: de un lado el hueco de la escalera,
+ #     del otro la pared (que NO se ancla). Por eso la pieza carga SUS TRES POSTES.
+ S("M-1", [('P',),('L',25.0),('P',)],
+   "ARRANQUE DE LA ESCALERA  —  LLEVA SU PROPIO POSTE (no se apoya en nada)",
+   "ESQUINA SOLDADA con L-1  (lleva el poste de esquina)",
+   "Esta pata y la L-1 salen del taller SOLDADAS EN UNA SOLA PIEZA EN L, con la esquina ya hecha."),
  S("L-1", [('D',43.0),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de K-1)", "ESQUINA con M-1  (lleva el poste de esquina)",
-   "Dibujo especial de 43\" de luz: el cuadro es el mismo, solo se aprietan las luces de flanco a 2-9/16."),
- S("M-1", [('L',25.0),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de L-1)", "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)"),
+   "ESQUINA SOLDADA  (arranca en paño, sobre el poste de esquina de M-1)",
+   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (poste suelto, NO se ancla a la pared)",
+   "Dibujo especial de 43\" de luz: el cuadro es el mismo, solo se aprietan las luces de flanco a 2-9/16. "
+   "Va soldada a la M-1: una sola pieza en L de 47\" × 29\" con 3 postes."),
 ]
 
 # ============================== CABALLERIZA 2 ==============================
@@ -404,10 +411,14 @@ CB2 = [
    "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)", "ESQUINA con N-1  (lleva el poste de esquina)",
    "Sale de la pared con dibujo. 193-3/8 menos las 2\" = 191-3/8."),
  S("Q-1", [('L',22.5),('P',),('D',D),('P',),('L',22.5),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de N-3)", "HUECO DE LA ESCALERA  (27\", sigue de madera)"),
- S("R-1", [('L',44.0),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de Q-1)",
-   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (placa 4×4×1/4)"),
+   "ESQUINA  (arranca en paño, sobre el poste de esquina del pañito sin medir)",
+   "HUECO DE LA ESCALERA  (27\", sigue de madera)"),
+ # --- MISMO CASO QUE LA "L" DEL LADO 1: la R-1 queda suelta entre el hueco de la
+ #     escalera y la pared. Ninguno de sus dos extremos toca nada, así que carga sus 2 postes.
+ S("R-1", [('P',),('L',44.0),('P',)],
+   "ARRANQUE DE LA ESCALERA  —  LLEVA SU PROPIO POSTE (no se apoya en nada)",
+   "REMATE CONTRA LA PARED DE LA CABALLERIZA  (poste suelto, NO se ancla a la pared)",
+   "Tramo suelto: del hueco de la escalera a la pared. Lleva poste en los dos extremos."),
 ]
 
 def largo(sec):
@@ -421,6 +432,8 @@ EDIFICIOS = [
       corridas=[("Balcón 1","A",383.625,["A-1","A-2","A-3"]), ("Balcón 1","B",159.0,["B-1"]),
                 ("Balcón 1","C",237.625,["C-1","C-2"]), ("Balcón 2","D",389.25,["D-1","D-2","D-3"]),
                 ("Balcón 2","E",149.625,["E-1"]), ("Balcón 2","F",239.75,["F-1","F-2"])],
+      cadena=[None,"B","A","C",None,  None,"E","D","F",None],
+      reverso={"A","B","D","E"},   # escritas de la esquina hacia la pared
       aviso="<b>OJO — esta hoja es SOLO del Pool House, y falta la escalera.</b> "
             "Los dibujitos de aquí son los de los dos balcones planos del Pool House. "
             "La caballeriza va en hoja aparte, con las letras G a la M (no se repite ninguna letra entre edificios). "
@@ -431,7 +444,10 @@ EDIFICIOS = [
       grupos=[("CABALLERIZA — SECCIONES G a M", CB)],
       corridas=[("Caballeriza","G",193.0,["G-1"]), ("Caballeriza","H",442.0,["H-1","H-2","H-3"]),
                 ("Caballeriza","J",104.0,["J-1"]), ("Caballeriza","K",98.75,["K-1"]),
-                ("Caballeriza","L",47.0,["L-1"]), ("Caballeriza","M",29.0,["M-1"])],
+                ("Caballeriza","M",29.0,["M-1"]), ("Caballeriza","L",47.0,["L-1"])],
+      # orden real alrededor del edificio. None = ahi la cadena SE ROMPE (hueco de
+      # escalera o pared), o sea que del otro lado NO hay poste donde apoyarse.
+      cadena=[None,"G","H","J","K",None,"M","L",None],
       aviso="<b>OJO — esta hoja es SOLO de la caballeriza.</b> "
             "Las letras G a la M no se repiten en el Pool House, así que en el taller no hay forma de confundir "
             "dos secciones. La corrida G ya trae descontadas las <b>2\"</b> (195 − 2 = 193). "
@@ -444,6 +460,7 @@ EDIFICIOS = [
                 ("Caballeriza 2","N",441.375,["N-1","N-2","N-3"]),
                 ("Caballeriza 2","Q", 99.0,["Q-1"]),
                 ("Caballeriza 2","R", 48.0,["R-1"])],
+      cadena=[None,"P","N","?","Q",None,"R",None],
       aviso="<b>OJO — esta hoja es SOLO de la caballeriza 2, el cuarto balcón.</b> "
             "Las letras N, P, Q y R no se repiten en ninguna otra hoja. "
             "<b>Falta confirmar el orden en que se encadenan las corridas</b> alrededor del edificio: "
@@ -491,13 +508,37 @@ def build(cfg):
         assert s['name'] not in by, ("letra repetida", s['name'])
         by[s['name']] = s
 
-    # --- verificacion: cada corrida tiene que cerrar contra la medida de obra
+    # --- verificacion 1: NINGUN EXTREMO LIBRE SE PUEDE QUEDAR SIN POSTE.
+    # Si una corrida arranca en pano, esta pidiendo prestado el poste de esquina de la
+    # corrida anterior. Eso SOLO vale si la anterior existe y esta pegada de verdad:
+    # si en el medio hay un hueco de escalera o una pared, ese poste NO EXISTE y la
+    # baranda sale sin nada donde empatar. Aqui es donde se me fue la L de la escalera.
+    cadena, rev = cfg['cadena'], cfg.get('reverso', set())
+    presta = {}
+    for _, run, total, names in cfg['corridas']:
+        assert run in cadena, (cfg['slug'], run, "corrida fuera de la cadena")
+        i = cadena.index(run)
+        # extremos de la corrida en el orden en que se recorre el balcon
+        ini, fin = by[names[0]]['elems'][0], by[names[-1]]['elems'][-1]
+        if run in rev:                      # la seccion esta escrita al reves
+            ini, fin = fin, ini
+        for lado, ext, vecino in (("arranque", ini, cadena[i-1]), ("final", fin, cadena[i+1])):
+            if ext[0] == 'P':
+                continue                    # lleva su propio poste: extremo resuelto
+            assert vecino is not None, (
+                f"\n\n  *** {cfg['slug'].upper()} — CORRIDA {run}: el {lado} muere en paño "
+                f"y del otro lado la cadena esta ROTA (hueco de escalera o pared).\n"
+                f"      NO HAY POSTE DONDE APOYARSE. Esa seccion tiene que llevar su propio poste.\n")
+            presta[run] = vecino
+
+    # --- verificacion 2: cada corrida tiene que cerrar contra la medida de obra
     print(f"\n== {cfg['slug'].upper()} ==")
     for _, run, total, names in cfg['corridas']:
         suma = sum(by[n]['largo'] for n in names)
-        got = suma + (2.0 if by[names[0]]['elems'][0][0] != 'P' else 0.0)
+        got = suma + (2.0 if run in presta else 0.0)
         assert abs(got - total) < 1e-9, (run, got, total)
-        print(f"  corrida {run}: secciones {suma:8.4f} + esquina = {got:8.4f}  vs medido {total:8.4f}  OK")
+        nota = f"(apoya en el poste de {presta[run]})" if run in presta else "(postes propios en los 2 extremos)"
+        print(f"  corrida {run}: secciones {suma:8.4f} + esquina = {got:8.4f}  vs medido {total:8.4f}  OK  {nota}")
 
     tot_dib = sum(1 for s in secs for e in s['elems'] if e[0] == 'D')
     tot_lis = sum(1 for s in secs for e in s['elems'] if e[0] == 'L')
