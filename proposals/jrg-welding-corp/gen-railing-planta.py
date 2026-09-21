@@ -40,8 +40,10 @@ HUECO_ESC = 27.0      # hueco de la escalera: 27" medido en el lado 1.  En el la
 #                   la medida. Descontarle 2" seria descontarlas dos veces.
 MEDIDO = {"B": (161.0,    2.0),          # pool house: hasta la casa
           "E": (151.625,  2.0),          # pool house: hasta la casa
-          "G": (192.75,   0.0),          # caballeriza 1 lateral derecho: Rene lo midio
-                                         # "hasta la pared INCLUYENDO el ultimo poste"
+          "G": (192.75,   2.0),          # caballeriza 1 lateral derecho. OJO: estas 2" NO son
+                                         # de la pared -- son EL POSTE DE ESQUINA DEL FRENTE,
+                                         # que va pegado ahi. Rene: "abajo queda corto dos
+                                         # pulgadas, como si fueras a poner un poste ahi tambien".
           "P": (193.375,  2.0)}          # caballeriza 2: PENDIENTE de rehacer
 
 REMATES = []          # (balcon, tipo, texto) de cada remate dibujado
