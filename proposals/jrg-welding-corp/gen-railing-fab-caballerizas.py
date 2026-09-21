@@ -70,8 +70,12 @@ def svg(s):
                  f'fill="{NEG}" text-anchor="middle">{pal}</text>')
 
     # ---- cota de centro a centro de poste
-    cen = ([-1.0] if el[0][0] != 'P' else []) + [p+1 for p in posts] + \
-          ([T+1.0] if el[-1][0] != 'P' else [])
+    # La cadena de arriba tiene que CERRAR igual que la de abajo: va de la punta
+    # de la seccion (0) a la otra punta (T), pasando por el centro de cada poste.
+    # Antes iba de centro a centro y se dejaba fuera media pulgada de poste en
+    # cada punta, asi que los numeros de arriba no sumaban el largo y no se
+    # podian cuadrar con los de abajo.
+    cen = [0.0] + [p + POST/2 for p in posts] + [T]
     yb = Y(POST_LEN) + 22
     for c in cen:
         o.append(f'<line x1="{X(c):.1f}" y1="{Y(Y_DECK):.1f}" x2="{X(c):.1f}" y2="{yb+6}" '
@@ -81,25 +85,39 @@ def svg(s):
                  f'stroke-width="1.2" marker-start="url(#fm)" marker-end="url(#fm)"/>')
         o.append(f'<text x="{X((a+b)/2):.1f}" y="{yb-6}" font-size="12.5" font-weight="800" '
                  f'fill="{ROJO}" text-anchor="middle">{fr(b-a)}</text>')
+    assert abs(sum(b - a for a, b in zip(cen, cen[1:])) - T) < 1e-9, ("arriba no cierra", s['name'])
     o.append(f'<text x="{X(cen[0])-10:.1f}" y="{yb+4}" font-size="8" fill="{ROJO}" '
-             f'text-anchor="end">C–C</text>')
+             f'text-anchor="end">ARRIBA</text>')
+    o.append(f'<text x="{X(T)+8:.1f}" y="{yb-2}" font-size="9" font-weight="800" '
+             f'fill="{ROJO}" text-anchor="start">= {fr(T)}"</text>')
 
-    # ---- largo de cada riel (lo que se corta)
+    # ---- LA LINEA DE ABAJO, CERRADA: poste, riel, poste, riel... hasta el final.
+    # Antes solo se cotaban los rieles y los postes se saltaban, asi que los
+    # numeros de abajo no sumaban el largo de la seccion y no habia forma de
+    # cuadrarla con la de arriba. Rene: "las medidas de las lineas de abajo no
+    # coinciden con las de arriba; esta bien dibujado". Ahora la cadena cierra:
+    # se suma todo lo que sale escrito y tiene que dar el largo de la seccion.
     yr = yb + 30
     xx = 0.0
+    cadena = []
     for e in el:
-        if e[0] == 'P': xx += POST; continue
-        a, b = xx + G.GAP_PANEL, xx + e[1] - G.GAP_PANEL
-        o.append(f'<line x1="{X(a):.1f}" y1="{yr}" x2="{X(b):.1f}" y2="{yr}" stroke="{VERDE}" '
-                 f'stroke-width="2.6"/>')
+        w = POST if e[0] == 'P' else e[1]
+        a, b = xx, xx + w
+        col = "#8a97a2" if e[0] == 'P' else VERDE
+        o.append(f'<line x1="{X(a):.1f}" y1="{yr}" x2="{X(b):.1f}" y2="{yr}" stroke="{col}" '
+                 f'stroke-width="{1.6 if e[0] == "P" else 2.6}"/>')
         for q in (a, b):
             o.append(f'<line x1="{X(q):.1f}" y1="{yr-5}" x2="{X(q):.1f}" y2="{yr+5}" '
-                     f'stroke="{VERDE}" stroke-width="1.6"/>')
-        o.append(f'<text x="{X((a+b)/2):.1f}" y="{yr+16}" font-size="11" font-weight="800" '
-                 f'fill="{VERDE}" text-anchor="middle">{fr(e[1] - 2 * G.GAP_PANEL)}</text>')
-        xx += e[1]
+                     f'stroke="{col}" stroke-width="1.6"/>')
+        o.append(f'<text x="{X((a+b)/2):.1f}" y="{yr+16}" '
+                 f'font-size="{8 if e[0] == "P" else 11}" font-weight="800" '
+                 f'fill="{col}" text-anchor="middle">{fr(w)}</text>')
+        cadena.append(w); xx = b
+    assert abs(sum(cadena) - T) < 1e-9, ("la cadena de abajo no cierra", s['name'])
     o.append(f'<text x="{X(cen[0])-10:.1f}" y="{yr+4}" font-size="8" fill="{VERDE}" '
-             f'text-anchor="end">RIEL</text>')
+             f'text-anchor="end">ABAJO</text>')
+    o.append(f'<text x="{X(T)+8:.1f}" y="{yr+16}" font-size="9" font-weight="800" '
+             f'fill="{VERDE}" text-anchor="start">= {fr(T)}"</text>')
 
     # ---- cotas verticales
     xl = X(0) - 16
