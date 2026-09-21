@@ -182,7 +182,9 @@ CSS = """
  body{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif;color:#1b2a41;background:#fff;font-size:13px}
  .page{max-width:10.2in;margin:0 auto;padding:.3in .35in}
  @media print{@page{size:letter landscape;margin:.3in .35in}.page{padding:0;max-width:none}
-              .pb{page-break-before:always}.dw{page-break-inside:avoid}}
+              .pb{page-break-before:always}
+              .dw{page-break-before:always;page-break-inside:avoid}
+              .hd+.dw{page-break-before:avoid}}
  .hd{display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #1b2a41;
      padding-bottom:6px;margin-bottom:9px}
  h1{font-size:20px;letter-spacing:.5px}

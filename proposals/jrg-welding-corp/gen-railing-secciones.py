@@ -65,7 +65,9 @@ def PLANTILLA(titulo, meta, aviso, tot_dib, tot_lis, tot_piq, tot_pos,
   body {{ font-family:'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; color:#222; background:#fff; font-size:12px; }}
   .page {{ max-width:10.2in; margin:0 auto; padding:0.3in 0.35in; }}
   @media print {{ @page {{ size:letter landscape; margin:0.3in 0.35in; }} .page {{ padding:0; max-width:none; }}
-                 .pb {{ page-break-before:always; }} .drawing {{ page-break-inside:avoid; }} }}
+                 .pb {{ page-break-before:always; }}
+                 .drawing {{ page-break-before:always; page-break-inside:avoid; }}
+                 .doc-header + .drawing {{ page-break-before:avoid; }} }}
   .doc-header {{ display:flex; justify-content:space-between; align-items:center;
                 border-bottom:3px solid #1b2a41; padding-bottom:6px; margin-bottom:8px; }}
   .doc-meta {{ text-align:right; font-size:11.5px; font-weight:700; color:#1b2a41; }}
