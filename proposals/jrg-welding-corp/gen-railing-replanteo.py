@@ -26,15 +26,20 @@ MAD = "#8a6a42"
 
 
 def con_seccion(run):
-    """la corrida entera, cada elemento con la seccion de la que viene"""
+    """la corrida entera, cada elemento con la seccion de la que viene.
+
+       El poste prestado solo se pone si el total de la tabla LO INCLUYE. En la
+       caballeriza 1 (medidas interiores) el frente carga sus dos postes de
+       esquina y el total de los laterales es su material propio: ahi no hay
+       nada que prestar. Ver la nota larga en gen-railing-planta.elems()."""
     total, nombres = P.CORRIDA[run]
     el = []
-    for i, nm in enumerate(nombres):
-        e = P.SEC[nm]['elems']
-        if i == 0 and e[0][0] != 'P':
-            el.append(('P', None, nombres[0], True))     # poste prestado de la corrida vecina
-        for x in e:
+    for nm in nombres:
+        for x in P.SEC[nm]['elems']:
             el.append((x[0], None if x[0] == 'P' else x[1], nm, False))
+    suma = sum(G.POST if x[0] == 'P' else x[1] for x in el)
+    if el[0][0] != 'P' and abs(suma + G.POST - total) < 1e-9:
+        el.insert(0, ('P', None, nombres[0], True))      # poste prestado de la corrida vecina
     if run in P.REVERSO: el = el[::-1]
     return el
 

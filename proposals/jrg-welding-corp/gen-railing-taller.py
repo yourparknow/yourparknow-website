@@ -60,10 +60,10 @@ def svg_simple(sec):
 
     # ---- postes. El poste fantasma marca donde la OTRA seccion pone el suyo.
     for px in posts:
-        o.append(G.rect(px, Y_CAP_B, POST, POST_LEN - 1, "#b9c4ce", "#1b2a41", 1.1))
+        o.append(G.rect(px, Y_CAP_B, POST, POST_LEN, "#b9c4ce", "#1b2a41", 1.1))
     if elems[0][0] != 'P':
         o.append(f'<rect x="{X(-2):.2f}" y="{Y(Y_CAP_B):.2f}" width="{2*SC:.2f}" '
-                 f'height="{(POST_LEN-1)*SC:.2f}" fill="none" stroke="{DIM}" '
+                 f'height="{(POST_LEN)*SC:.2f}" fill="none" stroke="{DIM}" '
                  f'stroke-width="1.1" stroke-dasharray="4 3"/>')
 
     # ---- numero de pano, grande y con una sola palabra debajo

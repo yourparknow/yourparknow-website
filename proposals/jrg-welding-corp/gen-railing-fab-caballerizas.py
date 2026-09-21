@@ -39,9 +39,21 @@ def vecino(txt):
     return m.group(1) if m else ""
 
 def cap_largo(s):
+    """LARGO FINAL DEL CAP. Esto va a POWDER COATING: sale del taller cortado a
+       esta medida y NO SE TOCA MAS. Nada de 'corta largo y recorta en el armado'.
+         EMPATE  : el cap muere / arranca en el CENTRO del poste -> -1 / +1
+         ESQUINA : la seccion que NO lleva el poste muere A TOPE contra el costado
+                   del cap del vecino, o sea el cap termina donde termina la
+                   seccion. Corte recto, sin inglete: un inglete de campo que no
+                   cierre no se puede recortar si ya esta pintado.
+         SOLDADA : la L sale soldada del taller, esa esquina SI va a inglete
+                   (cortado antes de pintar). La pata que arranca en pano sobre el
+                   poste de la esquina soldada necesita las 2" del poste para
+                   llegar a la punta de afuera."""
     c = s['largo']
     if "EMPATE" in s['izq']: c += 1
     if "EMPATE" in s['der']: c -= 1
+    if "SOLDADA" in s['izq']: c += POST
     return c
 
 def svg(s):
@@ -60,10 +72,10 @@ def svg(s):
     ei = 0.0 if el[0][0] == 'P' else 2.0
     o.append(G.rect(-ei, 0, T + ei + (0 if el[-1][0] == 'P' else 2), 1, "#8a97a2"))
     for px in posts:
-        o.append(G.rect(px, Y_CAP_B, POST, POST_LEN - 1, "#b9c4ce", NEG, 1.1))
+        o.append(G.rect(px, Y_CAP_B, POST, POST_LEN, "#b9c4ce", NEG, 1.1))
     if el[0][0] != 'P':
         o.append(f'<rect x="{X(-2):.1f}" y="{Y(Y_CAP_B):.1f}" width="{2*SC:.1f}" '
-                 f'height="{(POST_LEN-1)*SC:.1f}" fill="none" stroke="{ROJO}" '
+                 f'height="{(POST_LEN)*SC:.1f}" fill="none" stroke="{ROJO}" '
                  f'stroke-width="1.1" stroke-dasharray="4 3"/>')
 
     # que es cada pano
@@ -277,8 +289,11 @@ ELE_HTML = f"""
     </table>
   </div>"""
 
-EDIF = [("CABALLERIZA — LADO 1", "caballeriza"),
-        ("CABALLERIZA — LADO 2", "caballeriza-2")]
+# SOLO LA CABALLERIZA 1. La 2 sale cuando Rene cierre sus medidas: el frente ya
+# esta (441-3/8 interior) pero el pano de la izquierda sigue sin medir y el
+# retorno y el panito suelto cambiaron de largo. Sacarla ahora seria imprimir
+# numeros viejos, que es justo lo que le costo el material la vez pasada.
+EDIF = [("CABALLERIZA 1", "caballeriza")]
 pag, tot = "", {}
 for i, (titulo, slug) in enumerate(EDIF):
     cfg = next(c for c in G.EDIFICIOS if c['slug'] == slug)
@@ -293,7 +308,7 @@ for i, (titulo, slug) in enumerate(EDIF):
             '  <div class="hd"><h1>' + titulo + '</h1><div class="m">PLANO DE FABRICACI&#211;N'
             f'<br>{len(secs)} secciones &#183; {np_} postes &#183; {nd} dibujos &#183; {nq} piques'
             '</div></div>\n')
-    if not i: pag += LEY
+    # la leyenda ya va una vez arriba del documento: no la repitas por edificio
     for s in secs:
         if s['name'] == 'M-1':
             pag += ELE_HTML          # la ele va ANTES de sus dos patas
@@ -311,11 +326,11 @@ for i, (titulo, slug) in enumerate(EDIF):
   </div>"""
 
 html = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
-<title>Caballerizas &#8212; planos de fabricaci&#243;n</title><style>{CSS}</style></head><body><div class="page">
-  <div class="hd"><h1>CABALLERIZAS &#8212; PLANOS DE FABRICACI&#211;N</h1>
-    <div class="m">LOS DOS LADOS &#183; REV. 1 &#183; SEPT 21, 2026<br>TODAS LAS SECCIONES A LA MISMA ESCALA</div></div>
+<title>Caballeriza 1 &#8212; plano de fabricaci&#243;n</title><style>{CSS}</style></head><body><div class="page">
+  <div class="hd"><h1>CABALLERIZA 1 &#8212; PLANO DE FABRICACI&#211;N</h1>
+    <div class="m">CABALLERIZA 1 &#183; REV. 2 &#183; SEPT 21, 2026 &#183; MEDIDAS INTERIORES<br>TODAS LAS SECCIONES A LA MISMA ESCALA</div></div>
 {LEY}
-  <table><tr><th>Lado</th><th style="width:14%">Secciones</th><th style="width:14%">Postes de 48"</th>
+  <table><tr><th>Lado</th><th style="width:14%">Secciones</th><th style="width:14%">Postes de {fr(POST_LEN)}"</th>
     <th style="width:14%">Dibujos</th><th style="width:14%">Piques de 38"</th></tr>
     {"".join(f'<tr><td><b>{k}</b></td><td class="n">{v[0]}</td><td class="n">{v[1]}</td>'
              f'<td class="n">{v[2]}</td><td class="n">{v[3]}</td></tr>' for k, v in tot.items())}

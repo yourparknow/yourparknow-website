@@ -262,7 +262,7 @@ def svg_seccion(sec):
     o.append(rect(-0.0 if sec['elems'][0][0] == 'P' else -1.0, 0, T + (0 if sec['elems'][0][0]=='P' else 1) + 1, CAP_T, "#8a97a2"))
     # postes
     for px in posts:
-        o.append(rect(px, Y_CAP_B, POST, POST_LEN - 1, "#cbd5dd", "#374151", 0.8))
+        o.append(rect(px, Y_CAP_B, POST, POST_LEN, "#cbd5dd", "#374151", 0.8))
 
     # etiqueta de cada bahia
     for cxx, txt, luz in labels:
@@ -475,6 +475,9 @@ EDIFICIOS = [
       # orden real alrededor del edificio. None = ahi la cadena SE ROMPE (hueco de
       # escalera o pared), o sea que del otro lado NO hay poste donde apoyarse.
       cadena=[None,"G","H","J","K",None,"M","L",None],
+      # medidas INTERIORES de Rene: el frente (H) carga sus DOS postes de esquina
+      # y la G, la J y la K mueren en pano contra ellos. Su total es su material.
+      propio={"G","J","K"},
       aviso="<b>OJO — esta hoja es SOLO de la caballeriza.</b> "
             "Las letras G a la M no se repiten en el Pool House, así que en el taller no hay forma de confundir "
             "dos secciones. La corrida G ya trae descontadas las <b>2\"</b> (195 − 2 = 193). "
@@ -560,11 +563,19 @@ def build(cfg):
 
     # --- verificacion 2: cada corrida tiene que cerrar contra la medida de obra
     print(f"\n== {cfg['slug'].upper()} ==")
+    # 'propio' = corridas cuyo total de la tabla es el MATERIAL PROPIO, sin el
+    # poste de esquina del vecino. Es la convencion de la caballeriza 1: las
+    # medidas de Rene son INTERIORES y el frente carga sus dos postes de
+    # esquina, asi que los laterales mueren en pano y no les toca ningun poste
+    # prestado. Las corridas viejas siguen con el total que SI lo incluye.
+    propio = cfg.get('propio', set())
     for _, run, total, names in cfg['corridas']:
         suma = sum(by[n]['largo'] for n in names)
-        got = suma + (2.0 if run in presta else 0.0)
+        got = suma + (2.0 if (run in presta and run not in propio) else 0.0)
         assert abs(got - total) < 1e-9, (run, got, total)
-        nota = f"(apoya en el poste de {presta[run]})" if run in presta else "(postes propios en los 2 extremos)"
+        nota = (f"(muere en pano contra el poste de {presta[run]}, que NO es suyo)" if run in propio and run in presta
+                else f"(apoya en el poste de {presta[run]})" if run in presta
+                else "(postes propios en los 2 extremos)")
         print(f"  corrida {run}: secciones {suma:8.4f} + esquina = {got:8.4f}  vs medido {total:8.4f}  OK  {nota}")
 
     tot_dib = sum(1 for s in secs for e in s['elems'] if e[0] == 'D')

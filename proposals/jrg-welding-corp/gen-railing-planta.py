@@ -33,7 +33,8 @@ HUECO_ESC = 27.0      # hueco de la escalera: 27" medido en el lado 1.  En el la
 # Lo que MIDIO en obra.  El taller fabrica 2" menos en los panos que mueren contra
 # la casa: ahi el ultimo poste queda suelto, separado de la pared, sin anclaje.
 MEDIDO = {"B": 161.0, "E": 151.625,      # pool house
-          "G": 195.0, "P": 193.375}      # caballerizas
+          "G": 192.75,                   # caballeriza 1, lateral derecho (Rene, 21 sept)
+          "P": 193.375}                  # caballeriza 2: PENDIENTE de rehacer
 
 REMATES = []          # (balcon, tipo, texto) de cada remate dibujado
 SEC, CORRIDA = {}, {}
@@ -45,15 +46,26 @@ for cfg in G.EDIFICIOS:
         CORRIDA[run] = (total, nombres)
 
 def elems(run):
-    """rearma la corrida completa a partir de sus secciones"""
+    """rearma la corrida completa a partir de sus secciones.
+
+       OJO: hay DOS convenciones vivas en la tabla de corridas y las dos son
+       legitimas, asi que no se puede prestar el poste a ciegas.
+         - Caballeriza 1 (medidas interiores de Rene): el FRENTE carga sus dos
+           postes de esquina y los laterales mueren EN PANO contra ellos. El
+           total de la tabla es el material PROPIO de la corrida: no hay poste
+           prestado que sumar.
+         - Las corridas viejas: el total de la tabla YA INCLUYE el poste de
+           esquina del vecino, y hay que ponerlo para que cuadre.
+       Se distingue solo, comparando la suma. Antes prestaba siempre y por eso
+       la J y la K reventaban el assert."""
     total, nombres = CORRIDA[run]
     el = []
-    for i, nm in enumerate(nombres):
-        e = SEC[nm]['elems']
-        if i == 0 and e[0][0] != 'P':
-            el.append(('P',))          # el poste de esquina lo lleva la corrida vecina
-        el.extend(e)
-    assert abs(sum(2.0 if x[0]=='P' else x[1] for x in el) - total) < 1e-9, run
+    for nm in nombres:
+        el.extend(SEC[nm]['elems'])
+    suma = lambda l: sum(2.0 if x[0] == 'P' else x[1] for x in l)
+    if el[0][0] != 'P' and abs(suma(el) + 2.0 - total) < 1e-9:
+        el = [('P',)] + el         # el poste de esquina lo lleva la corrida vecina
+    assert abs(suma(el) - total) < 1e-9, f"{run}: las secciones suman {suma(el)} y la tabla dice {total}"
     return el[::-1] if run in REVERSO else el
 
 REVERSO = {"A","B","D","E"}   # definidas de la esquina hacia la pared; el plano va al reves
