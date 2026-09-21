@@ -268,6 +268,43 @@ def t16_alterna_empalme():
                    f"escalera arranca en {'dibujo' if esc=='D' else 'piques'}")
     return " ; ".join(txt)
 
+def t17_entreverado():
+    """PANO ENTREVERADO: uno si, uno no, por toda la corrida y CRUZANDO los
+       empates rectos. Regla de Rene desde el principio.
+       La excepcion son las ESQUINAS de 90: ahi el pidio piques a los dos lados
+       ("que en las esquinas quedaran los piques, para ajustar en las esquinas"),
+       asi que dos panos de pique tocandose en una esquina es lo correcto --
+       ademas van en dos planos distintos y no se leen como dos seguidos.
+       Lo que NO puede pasar es que se rompa en una linea recta, que es
+       justo lo que paso en el empalme de la escalera."""
+    import math
+    for b in P.BAL:
+        tr = P.recorrido(b)
+        for (l1, p0, p1, _), (l2, q0, q1, _) in zip(tr, tr[1:]):
+            if l1 in ("ESC", "?") or l2 in ("ESC", "?"): continue
+            v1 = (p1[0]-p0[0], p1[1]-p0[1]); v2 = (q1[0]-q0[0], q1[1]-q0[1])
+            n1 = math.hypot(*v1) or 1; n2 = math.hypot(*v2) or 1
+            ang = math.degrees(math.acos(max(-1, min(1,
+                  (v1[0]*v2[0]+v1[1]*v2[1])/(n1*n2)))))
+            if ang > 45: continue                      # esquina: exenta
+            a = [e[0] for e in P.elems(l1) if e[0] != 'P']
+            c = [e[0] for e in P.elems(l2) if e[0] != 'P']
+            if l1 in P.REVERSO: a = a[::-1]
+            if l2 in P.REVERSO: c = c[::-1]
+            if a and c and a[-1] == c[0]:
+                mal(f"{b['t']}: {l1} termina en "
+                    f"{'dibujo' if a[-1]=='D' else 'piques'} y {l2} arranca igual, "
+                    f"y siguen RECTO. Se rompe el entreverado.")
+        # dentro de cada corrida
+        for letra, _, _, _ in tr:
+            if letra in ("ESC", "?"): continue
+            q = [e[0] for e in P.elems(letra) if e[0] != 'P']
+            for i, (x, y) in enumerate(zip(q, q[1:])):
+                if x == y:
+                    mal(f"{b['t']}: corrida {letra}, panos {i+1} y {i+2} los dos "
+                        f"{'dibujo' if x=='D' else 'piques'}. No esta entreverado.")
+    return "uno si, uno no, en toda corrida y en todo empate recto (las esquinas van de piques, a pedido)"
+
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
  ("Dos dibujos nunca van pegados",          t2_dibujos_pegados),
@@ -285,6 +322,7 @@ PRUEBAS = [
  ("El empalme escalera-balcon cuadra",      t14_empalme_escalera),
  ("El poste de la tabla = el dibujado",     t15_poste_cuadra),
  ("Alterna en el poste del empalme",        t16_alterna_empalme),
+ ("Pa\u00f1o entreverado en linea recta",      t17_entreverado),
 ]
 
 print("\n" + "=" * 68)
