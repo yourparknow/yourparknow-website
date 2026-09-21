@@ -191,6 +191,8 @@ LEY = f"""
   <div><b class="rj" style="text-decoration:underline">CONEXI&#211;N</b>Se une a otra secci&#243;n.
        El poste lo lleva la otra (rayita roja).</div>
   <div><b>MUERE / ESQUINA</b>Ah&#237; termina. El poste va completo en esta secci&#243;n.</div>
+  <div><b class="rj">POSTE DE ESQUINA</b>Lleva <b>2 orejas de 1/4"&#215;3"&#215;5"</b> soldadas.
+       Ver la hoja <i>Detalle de anclaje</i>.</div>
  </div>
  <p style="font-size:12.5px;margin:6px 0"><b>El dibujito ya est&#225; armado</b> y flota
  <b>3-7/8" bajo el cap y 3-7/8" sobre el riel</b>; el cuadro es de <b>30-1/4"</b>. Esos tres n&#250;meros
