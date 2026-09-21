@@ -99,6 +99,14 @@ def svg(b):
     oy = VH - M - (VH-2*M - h*sc)/2 + min(ys)*sc
     X = lambda v: ox + v*sc
     Y = lambda v: oy - v*sc
+    ccx, ccy = sum(xs)/len(xs), sum(ys)/len(ys)     # centro de la figura
+    def afuera(p0, p1, d):
+        """normal que apunta hacia AFUERA de la figura, para que las cotas
+           y los rótulos no caigan encima del recorrido"""
+        dx, dy = perp(p0, p1, d)
+        mx, my = (p0[0]+p1[0])/2, (p0[1]+p1[1])/2
+        dentro = math.hypot(mx+dx-ccx, my+dy-ccy) < math.hypot(mx-dx-ccx, my-dy-ccy)
+        return (-dx, -dy) if dentro else (dx, dy)
     o = ['<defs><marker id="pa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" '
          f'markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="{ROJO}"/>'
          '</marker></defs>']
@@ -108,6 +116,7 @@ def svg(b):
         n = math.hypot(vx, vy) or 1
         return (-vy/n*d, vx/n*d)
 
+    ncorto = 0
     for letra, p0, p1, L in tr:
         ux = (p1[0]-p0[0])/L; uy = (p1[1]-p0[1])/L       # unitario del avance
         nx, ny = perp(p0, p1, 1.0)                        # normal unitaria
@@ -129,9 +138,10 @@ def svg(b):
                 c2=(p0[0]+ux*tt-nx*26/sc, p0[1]+uy*tt-ny*26/sc)
                 o.append(f'<line x1="{X(a2[0]):.1f}" y1="{Y(a2[1]):.1f}" x2="{X(c2[0]):.1f}" '
                          f'y2="{Y(c2[1]):.1f}" stroke="#8a6a42" stroke-width="2"/>')
-            mE=(p0[0]+ux*L/2, p0[1]+uy*L/2)
-            o.append(f'<text x="{X(mE[0]):.1f}" y="{Y(mE[1])+46:.1f}" font-size="13" font-weight="800" '
-                     f'fill="#8a6a42" text-anchor="middle">ESCALERA (madera)</text>')
+            ex, ey = afuera(p0, p1, 46/sc)
+            mE=(p0[0]+ux*L/2+ex, p0[1]+uy*L/2+ey)
+            o.append(f'<text x="{X(mE[0]):.1f}" y="{Y(mE[1]):.1f}" font-size="12" font-weight="800" '
+                     f'fill="#8a6a42" text-anchor="middle">ESCALERA</text>')
             continue
         if letra == "?":
             barra(0, L, "#fdf0e4", NAR, 2, 13)
@@ -149,14 +159,24 @@ def svg(b):
                     t += e[1]
 
         # cota total del lateral, por fuera
-        ox2, oy2 = perp(p0, p1, (24 if L < 60 else 40)/sc)   # corridas cortas, cota mas pegada
+        corto = L < 100      # toda corrida chica se saca en abanico, no solo las de 60
+        ox2, oy2 = afuera(p0, p1, (20 if corto else 40)/sc)   # siempre por fuera del recorrido
         a = (p0[0]+ox2, p0[1]+oy2); c = (p1[0]+ox2, p1[1]+oy2)
         o.append(f'<line x1="{X(a[0]):.1f}" y1="{Y(a[1]):.1f}" x2="{X(c[0]):.1f}" y2="{Y(c[1]):.1f}" '
                  f'stroke="{ROJO}" stroke-width="1.3" marker-start="url(#pa)" marker-end="url(#pa)"/>')
         mx, my = (a[0]+c[0])/2, (a[1]+c[1])/2
-        rot = f' transform="rotate(-90 {X(mx):.1f} {Y(my):.1f})"' if vert else ''
+        if corto:
+            # las corridas cortas caen unas encima de otras: el rótulo se manda
+            # lejos en abanico y se ata con una línea de referencia
+            ncorto += 1
+            lx, ly = afuera(p0, p1, (52 + ncorto*26)/sc)
+            o.append(f'<line x1="{X(mx):.1f}" y1="{Y(my):.1f}" '
+                     f'x2="{X(p0[0]+ux*L/2+lx):.1f}" y2="{Y(p0[1]+uy*L/2+ly):.1f}" '
+                     f'stroke="{ROJO}" stroke-width="0.6" stroke-dasharray="2 2"/>')
+            mx, my = p0[0]+ux*L/2+lx, p0[1]+uy*L/2+ly
+        rot = '' if corto else (f' transform="rotate(-90 {X(mx):.1f} {Y(my):.1f})"' if vert else '')
         txt = "SIN MEDIR" if letra == "?" else f'{fr(L)}"   ({feet(L)})'
-        o.append(f'<text x="{X(mx):.1f}" y="{Y(my)-8:.1f}" font-size="{13 if L < 60 else 17}" font-weight="800" '
+        o.append(f'<text x="{X(mx):.1f}" y="{Y(my)-8:.1f}" font-size="{13 if corto else 17}" font-weight="800" '
                  f'fill="{ROJO}" text-anchor="middle"{rot}>{txt}</text>')
         if letra in MEDIDO:
             o.append(f'<text x="{X(mx):.1f}" y="{Y(my)+11:.1f}" font-size="11.5" font-weight="700" '
@@ -172,9 +192,14 @@ def svg(b):
         sgn = -1 if idx == 0 else 1
         px = p[0] + sgn*vx/n*16/sc; py = p[1] + sgn*vy/n*16/sc
         o.append(f'<rect x="{X(px)-11:.1f}" y="{Y(py)-11:.1f}" width="22" height="22" fill="#8a6a42"/>')
-        der = X(px) > VW/2
-        o.append(f'<text x="{X(px) + (-15 if der else 15):.1f}" y="{Y(py)+4:.1f}" font-size="12" '
-                 f'font-weight="800" fill="#8a6a42" text-anchor="{"end" if der else "start"}">{t}</text>')
+        # el rótulo se separa perpendicular al recorrido y hacia afuera, para que
+        # no caiga encima de la baranda ni de las otras etiquetas
+        lx, ly = afuera(q0, q1, 30/sc)
+        tx, ty = X(px + lx), Y(py + ly)
+        der = tx > VW/2
+        corto = t.split(" DE ")[0]                 # "PARED", no "PARED DE LA CABALLERIZA"
+        o.append(f'<text x="{tx:.1f}" y="{ty+4:.1f}" font-size="11.5" '
+                 f'font-weight="800" fill="#8a6a42" text-anchor="{"end" if der else "start"}">{corto}</text>')
     if b.get('esc'):
         p = tr[-1][2]
         o.append(f'<text x="{X(p[0]) + (-17 if X(p[0])>VW/2 else 17):.1f}" y="{Y(p[1])+19:.1f}" '
@@ -228,7 +253,7 @@ LEY = ('<div class="key">'
        f'<span><i class="sw" style="background:{NAR};border-color:#a8531f"></i> <b>PAÑO CON DIBUJO</b></span>'
        '<span><i class="sw" style="background:#fff"></i> <b>PAÑO DE PIQUES RECTOS</b></span>'
        f'<span><i style="display:inline-block;width:13px;height:13px;background:{NEG}"></i> <b>POSTE</b></span>'
-       '<span><i style="display:inline-block;width:15px;height:15px;background:#8a6a42"></i> <b>PARED</b> (la baranda NO se ancla a ella: muere en su poste)</span>'
+       '<span><i style="display:inline-block;width:15px;height:15px;background:#8a6a42"></i> <b>PARED</b> (la baranda muere ah\u00ed, en su poste, sin anclaje)</span>'
        '</div>')
 
 pag = ""
