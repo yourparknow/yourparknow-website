@@ -20,6 +20,8 @@ NEG, ROJO, NAR = "#1b2a41", "#b91c1c", "#c8571b"
 HOJAS = [
  ("railing-planta-balcones", "PLANOS DE INSTALACI&#211;N &#183; LOS 4 BALCONES",
   "D&#243;nde va cada corrida, con las medidas de obra y los pa&#241;os repartidos."),
+ ("railing-escaleras", "FABRICACI&#211;N &#183; LAS 4 ESCALERAS",
+  "Las dos de 34&#176; y las dos de 33&#176;, con el dibujo acostado y su despiece."),
  ("railing-detalle-anclaje", "DETALLE DE ANCLAJE",
   "Las orejas de los 9 postes de esquina. Bloqueo, tornillos y medidas de borde."),
  ("railing-secciones-pool-house", "SECCIONES &#183; POOL HOUSE",
@@ -43,6 +45,7 @@ HOJAS = [
 # HTML y el PDF de cada hoja se acaban de rehacer en ESTA corrida.
 GENERADOR = {
  "railing-planta-balcones":            "gen-railing-planta.py",
+ "railing-escaleras":                  "gen-railing-escaleras.py",
  "railing-detalle-anclaje":            "gen-railing-detalle-anclaje.py",
  "railing-secciones-pool-house":       "gen-railing-secciones.py",
  "railing-secciones-caballeriza":      "gen-railing-secciones.py",
@@ -87,7 +90,13 @@ for cfg in G.EDIFICIOS:
                 else:
                     tot['lis'] += 1
                     tot['piq'] += G.piques_de(e[1])[0]
-PIQ_TOTAL = tot['piq'] + tot['dib'] * 4        # los 4 piques rectos de 38 de cada dibujo
+PIQ_TOTAL = tot['piq'] + tot['dib'] * 4
+spec_e = importlib.util.spec_from_file_location("gesc", HERE / "gen-railing-escaleras.py")
+E = importlib.util.module_from_spec(spec_e); spec_e.loader.exec_module(E)
+ESC_N   = sum(x['cant'] for x in E.ESCALERAS)
+ESC_POS = 3 * ESC_N
+ESC_DIB = ESC_N
+ESC_PIQ = sum((2*E.geo(x)['n_piq'] + 4) * x['cant'] for x in E.ESCALERAS)        # los 4 piques rectos de 38 de cada dibujo
 
 
 def portada(offset):
@@ -130,9 +139,9 @@ def portada(offset):
  <div class="big">
    <div><b>4</b><span>balcones</span></div>
    <div><b>281</b><span>pies de baranda</span></div>
-   <div><b>{tot['dib']+1}</b><span>dibujos</span></div>
-   <div><b>{PIQ_TOTAL}</b><span>piques de 38"</span></div>
-   <div><b>{tot['pos']}</b><span>postes</span></div>
+   <div><b>{tot['dib']+1+ESC_DIB}</b><span>dibujos</span></div>
+   <div><b>{PIQ_TOTAL+ESC_PIQ}</b><span>piques</span></div>
+   <div><b>{tot['pos'] + ESC_POS}</b><span>postes</span></div>
    <div><b>{tot['sec']}</b><span>secciones soldadas</span></div>
  </div>
 
@@ -143,12 +152,12 @@ def portada(offset):
   {''.join(filas)}
  </table>
 
- <div class="warn"><b>LO &#218;NICO QUE FALTA: las 4 escaleras del Pool House.</b>
- 185-1/2" a 34&#176; (dos) y 198" a 33&#176; (dos), baranda de 42" igual que el balc&#243;n.
- No est&#225;n en este set y <b>no est&#225;n contadas en los totales de arriba</b>.
- Me falta un solo dato para dibujarlas: <b>si esos largos los mediste por la pendiente
- o en planta</b>. Por la pendiente la escalera del balc&#243;n 1 sube 8'-7-23/32" y la del
- balc&#243;n 2 sube 8'-11-27/32" &#8212; mide del piso de abajo al deck y me dices.</div>
+ <div class="warn"><b>LAS 4 ESCALERAS YA EST&#193;N EN EL SET</b>, con el dibujo acostado
+ y su despiece. <b>Est&#225;n hechas tomando que las 185-1/2" y las 198" las mediste POR LA
+ PENDIENTE</b>, pegada la cinta al stringer: as&#237; la del balc&#243;n 1 sube 8'-7-23/32" y la del
+ balc&#243;n 2 sube 8'-11-27/32". <b>Mide del piso de abajo al deck antes de cortar.</b> Y ojo:
+ los {ESC_DIB} dibujos de las escaleras <b>NO son los del balc&#243;n</b>, son piezas nuevas, 2 de
+ 34&#176; y 2 de 33&#176;.</div>
 
  <div class="warn"><b>Dos cosas para el carpintero, antes de montar:</b>
  <b>bloqueo s&#243;lido 2&#215; en las 9 esquinas</b>, en las dos direcciones, y el
