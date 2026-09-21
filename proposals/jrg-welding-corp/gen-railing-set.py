@@ -1,0 +1,154 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Arma el SET COMPLETO de planos en un solo PDF, con portada e indice.
+   La portada se genera dos veces: la primera para saber cuantas paginas ocupa,
+   la segunda ya con los numeros de pagina buenos."""
+import sys, subprocess, pathlib, importlib.util
+for _m in ("cryptography", "cryptography.exceptions", "cryptography.hazmat"):
+    sys.modules[_m] = None                      # el paquete del sistema esta roto
+from pypdf import PdfReader, PdfWriter
+
+HERE = pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
+CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
+spec = importlib.util.spec_from_file_location("gsec", HERE / "gen-railing-secciones.py")
+G = importlib.util.module_from_spec(spec); spec.loader.exec_module(G)
+
+FECHA = "21 DE SEPTIEMBRE, 2026"
+NEG, ROJO, NAR = "#1b2a41", "#b91c1c", "#c8571b"
+
+# nombre de archivo, titulo en el indice, para que sirve
+HOJAS = [
+ ("railing-planta-instalacion", "PLANOS DE INSTALACI&#211;N",
+  "D&#243;nde va cada corrida en el terreno, con las letras y las medidas de obra."),
+ ("railing-planta-balcones", "LOS 4 BALCONES EN PLANTA",
+  "Cada balc&#243;n con sus pa&#241;os repartidos. Los dibujos en color."),
+ ("railing-detalle-anclaje", "DETALLE DE ANCLAJE",
+  "Las orejas de los 9 postes de esquina. Bloqueo, tornillos y medidas de borde."),
+ ("railing-secciones-pool-house", "SECCIONES &#183; POOL HOUSE",
+  "Vista de frente de cada secci&#243;n soldada, corridas A a la F."),
+ ("railing-secciones-caballeriza", "SECCIONES &#183; CABALLERIZA 1",
+  "Corridas G a la M, con la ele soldada de la escalera."),
+ ("railing-secciones-caballeriza-2", "SECCIONES &#183; CABALLERIZA 2",
+  "Corridas N, P, Q y R."),
+ ("railing-fabricacion-caballerizas", "FABRICACI&#211;N &#183; LAS DOS CABALLERIZAS",
+  "Despiece hoja por hoja: poste, cap, riel y piques de cada secci&#243;n."),
+ ("railing-taller-pool-house", "TALLER &#183; POOL HOUSE",
+  "La versi&#243;n sin n&#250;meros, para cortar. Una cota por pa&#241;o."),
+ ("railing-taller-caballeriza", "TALLER &#183; CABALLERIZA 1", "Idem."),
+ ("railing-taller-caballeriza-2", "TALLER &#183; CABALLERIZA 2", "Idem."),
+]
+
+paginas = {n: len(PdfReader(HERE / f"{n}.pdf").pages) for n, _, _ in HOJAS}
+
+# --- totales, sacados del generador maestro (no se teclea ni un numero a mano)
+tot = dict(dib=0, lis=0, piq=0, pos=0, sec=0)
+for cfg in G.EDIFICIOS:
+    for _, gr in cfg['grupos']:
+        for s in gr:
+            tot['sec'] += 1
+            for e in s['elems']:
+                if e[0] == 'P': tot['pos'] += 1
+                elif e[0] == 'D': tot['dib'] += 1
+                else:
+                    tot['lis'] += 1
+                    tot['piq'] += G.piques_de(e[1])[0]
+PIQ_TOTAL = tot['piq'] + tot['dib'] * 4        # los 4 piques rectos de 38 de cada dibujo
+
+
+def portada(offset):
+    filas, p = [], 1 + offset
+    for n, t, d in HOJAS:
+        filas.append(f"<tr><td class='pg'>{p}</td><td><b>{t}</b></td><td>{d}</td>"
+                     f"<td class='pg'>{paginas[n]}</td></tr>")
+        p += paginas[n]
+    total = p - 1
+    return f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+<title>Set de planos</title><style>
+ *{{margin:0;padding:0;box-sizing:border-box}}
+ body{{font-family:'Segoe UI',-apple-system,Helvetica,Arial,sans-serif;color:{NEG};font-size:13px}}
+ .page{{max-width:10.2in;margin:0 auto;padding:.3in .35in}}
+ @media print{{@page{{size:letter landscape;margin:.3in .35in}}.page{{padding:0;max-width:none}}}}
+ .hd{{border-bottom:5px solid {NEG};padding-bottom:9px;margin-bottom:11px;
+     display:flex;justify-content:space-between;align-items:flex-end}}
+ h1{{font-size:27px;letter-spacing:.5px;line-height:1.1}}
+ .hd .s{{font-size:14px;color:#55606c;margin-top:3px}}
+ .hd .m{{text-align:right;font-size:12px;font-weight:700;line-height:1.5}}
+ .big{{display:flex;gap:9px;margin:11px 0}}
+ .big div{{flex:1;border:2px solid {NEG};border-radius:5px;padding:7px 9px;text-align:center}}
+ .big b{{display:block;font-size:27px;color:{ROJO};line-height:1.1}}
+ .big span{{font-size:9.5px;text-transform:uppercase;letter-spacing:.6px;font-weight:700}}
+ table{{width:100%;border-collapse:collapse;font-size:12.5px}}
+ th{{background:{NEG};color:#fff;padding:5px 9px;text-align:left;font-size:11px}}
+ td{{border:1px solid #d3dae1;padding:4.5px 9px}}
+ td.pg{{text-align:center;font-weight:800;width:8%}}
+ .warn{{border-left:5px solid {ROJO};background:#fff5f5;padding:9px 13px;font-size:12.5px;margin-top:11px}}
+ h2{{font-size:12px;background:{NEG};color:#fff;padding:4px 10px;margin:12px 0 6px;
+    text-transform:uppercase;letter-spacing:.6px}}
+</style></head><body><div class="page">
+
+ <div class="hd">
+   <div><h1>BARANDA DE ALUMINIO &#183; SET COMPLETO DE PLANOS</h1>
+        <div class="s">Raúl &#183; 18398 131st Trail N, Jupiter, FL 33478 &#183; los cuatro balcones</div></div>
+   <div class="m">JRG WELDING CORP<br>{FECHA}<br>{total} P&#193;GINAS</div>
+ </div>
+
+ <div class="big">
+   <div><b>4</b><span>balcones</span></div>
+   <div><b>281</b><span>pies de baranda</span></div>
+   <div><b>{tot['dib']+1}</b><span>dibujos</span></div>
+   <div><b>{PIQ_TOTAL}</b><span>piques de 38"</span></div>
+   <div><b>{tot['pos']}</b><span>postes</span></div>
+   <div><b>{tot['sec']}</b><span>secciones soldadas</span></div>
+ </div>
+
+ <h2>Qu&#233; hay en este set</h2>
+ <table>
+  <tr><th class="pg">P&#225;g.</th><th style="width:27%">Hoja</th><th>Para qu&#233; sirve</th>
+      <th class="pg">Hojas</th></tr>
+  {''.join(filas)}
+ </table>
+
+ <div class="warn"><b>LO &#218;NICO QUE FALTA: las 4 escaleras del Pool House.</b>
+ 185-1/2" a 34&#176; (dos) y 198" a 33&#176; (dos), baranda de 42" igual que el balc&#243;n.
+ No est&#225;n en este set y <b>no est&#225;n contadas en los totales de arriba</b>.
+ Me falta un solo dato para dibujarlas: <b>si esos largos los mediste por la pendiente
+ o en planta</b>. Por la pendiente la escalera del balc&#243;n 1 sube 8'-7-23/32" y la del
+ balc&#243;n 2 sube 8'-11-27/32" &#8212; mide del piso de abajo al deck y me dices.</div>
+
+ <div class="warn"><b>Dos cosas para el carpintero, antes de montar:</b>
+ <b>bloqueo s&#243;lido 2&#215; en las 9 esquinas</b>, en las dos direcciones, y el
+ <b>rim de 2&#215;8 como m&#237;nimo</b> para que quepan las 6" que baja el poste con la
+ oreja adentro. Sin eso el anclaje de esquina no sirve. Si el trabajo lleva permiso,
+ la hoja del anclaje hay que pasarla por el ingeniero.</div>
+
+</div></body></html>"""
+
+
+def render(html_path, pdf_path):
+    subprocess.run([CHROME, "--headless", "--disable-gpu", "--no-sandbox",
+                    "--no-pdf-header-footer", "--virtual-time-budget=9000",
+                    f"--print-to-pdf={pdf_path}", str(html_path)],
+                   check=True, capture_output=True)
+
+# --- dos pasadas: la primera para saber cuanto ocupa la portada
+ph, pp = HERE / "railing-set-portada.html", HERE / "railing-set-portada.pdf"
+ph.write_text(portada(1), encoding="utf-8"); render(ph, pp)
+n_port = len(PdfReader(pp).pages)
+ph.write_text(portada(n_port), encoding="utf-8"); render(ph, pp)
+assert len(PdfReader(pp).pages) == n_port, "la portada cambio de tamano en la segunda pasada"
+
+w = PdfWriter()
+for pg in PdfReader(pp).pages: w.add_page(pg)
+for n, _, _ in HOJAS:
+    for pg in PdfReader(HERE / f"{n}.pdf").pages: w.add_page(pg)
+out = HERE / "RAILING-SET-COMPLETO.pdf"
+with open(out, "wb") as f: w.write(f)
+
+total = n_port + sum(paginas.values())
+assert len(PdfReader(out).pages) == total, "el merge no cuadra"
+print(f"escrito: {out.name}  ({total} paginas, portada de {n_port})")
+p = 1 + n_port
+for n, t, _ in HOJAS:
+    print(f"   pag {p:3d}   {t.replace('&#183;','·').replace('&#211;','Ó').replace('&#241;','ñ')}")
+    p += paginas[n]
+print(f"\n   {tot['dib']+1} dibujos · {PIQ_TOTAL} piques · {tot['pos']} postes · {tot['sec']} secciones")
