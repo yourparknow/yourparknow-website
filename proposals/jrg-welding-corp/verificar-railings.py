@@ -221,6 +221,24 @@ def t13_no_se_acumula():
             mal(f"{e['n']}: el cap no sale del largo medido en obra")
     return "el cap y el riel salen del angulo real: no se acumula nada"
 
+def t14_empalme_escalera():
+    """Donde la escalera empata con el balcon, las lineas tienen que coincidir.
+       Las dos caras que se ven de frente son el TOPE DEL CAP y la PANZA DEL
+       RIEL: esas dos tienen que dar la misma altura en el balcon y en la
+       escalera, o se ve un brinco desde el patio."""
+    import math
+    for e in E.ESCALERAS:
+        g = E.geo(e)
+        if abs(g['y_cap_t'] - G.GUARD) > 1e-9:
+            mal(f"{e['n']}: el tope del cap queda a {fr(g['y_cap_t'],32)}\" y el del "
+                f"balcon a {fr(G.GUARD)}\". Brinco en el empalme.")
+        if abs(g['y_riel_b'] - (G.Y_DECK - G.Y_RAIL_B)) > 1e-9:
+            mal(f"{e['n']}: la panza del riel queda a {fr(g['y_riel_b'],32)}\" y la del "
+                f"balcon a {fr(G.Y_DECK - G.Y_RAIL_B)}\". Brinco en el empalme.")
+    paso = 1/math.cos(math.radians(E.ANG_CORTE)) - 1
+    return (f"tope del cap y panza del riel coinciden; por dentro queda el "
+            f"nudillo de {fr(paso,64)}\", que se corta y se suelda")
+
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
  ("Dos dibujos nunca van pegados",          t2_dibujos_pegados),
@@ -235,6 +253,7 @@ PRUEBAS = [
  ("El mismo dibujo, igual en toda hoja",    t11_mismo_ancho),
  ("Un solo corte para las 4 escaleras",     t12_cuadro_unico),
  ("El medio grado no se acumula",           t13_no_se_acumula),
+ ("El empalme escalera-balcon cuadra",      t14_empalme_escalera),
 ]
 
 print("\n" + "=" * 68)
