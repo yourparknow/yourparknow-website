@@ -187,15 +187,18 @@ def t12_cuadro_unico():
     ref = None
     for e in E.ESCALERAS:
         g = E.geo(e)
-        caja = {c: round(L, 6) for c, q, L, _ in g['piezas'] if c not in ("V", "B")}
+        # ahora TODAS las piezas se cortan al mismo angulo, tambien la V y el pique
+        caja = {c: round(L * 64) for c, q, L, _ in g['piezas']}   # al 1/64
+        caja['pique'] = round(g['largo_pique'] * 64)
+        caja['poste'] = round(g['post_cara_larga'] * 64)
         if ref is None:
             ref = caja
         elif caja != ref:
             dif = [c for c in caja if caja[c] != ref.get(c)]
-            mal(f"{e['n']}: las piezas del cuadro no son iguales a las de la otra "
-                f"escalera ({', '.join(dif)}). Se pierde el trabajo en serie.")
+            mal(f"{e['n']}: estas piezas no salen iguales a las de la otra escalera "
+                f"({', '.join(dif)}). Se pierde el trabajo en serie.")
     nd = sum(E.geo(x)['n_dib'] * x['cant'] for x in E.ESCALERAS)
-    return f"{nd} cuadros identicos, armados a {E.ANG_DIB:g}&#176;".replace("&#176;", "\u00b0")
+    return (f"{nd} cuadros, postes y piques identicos, todo a {E.ANG_CORTE:g}\u00b0")
 
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
@@ -209,7 +212,7 @@ PRUEBAS = [
  ("Caballerizas: escaleras de madera",      t9_caballeriza_madera),
  ("Ninguna hoja huerfana en el set",        t10_huerfanos),
  ("El mismo dibujo, igual en toda hoja",    t11_mismo_ancho),
- ("Un solo cuadro para las 4 escaleras",    t12_cuadro_unico),
+ ("Un solo corte para las 4 escaleras",     t12_cuadro_unico),
 ]
 
 print("\n" + "=" * 68)

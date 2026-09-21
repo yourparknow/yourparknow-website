@@ -37,15 +37,22 @@ ESCALERAS = [
 
 
 CC_MAX = 48.0        # centro a centro de poste, POR LA PENDIENTE. Regla de Rene.
-# EL CUADRO DEL DIBUJO SE ARMA A 33.5 EN LAS CUATRO ESCALERAS, aunque unas sean
-# de 34 y otras de 33.  Idea de Rene, para armar en serie un solo dibujo.
-# Funciona porque el cuadro FLOTA: no toca el cap ni el riel, va colgado entre
-# las dos V con aire arriba y abajo.  Lo peor que se desvia es 15/64 en la
-# diagonal larga, que va tizada y esmerilada de todos modos, y el cuadro queda
-# 0.30" fuera de paralelo con el cap a lo ancho de las 24".  No se ve.
-# Lo que SI va al angulo de verdad de cada escalera: postes, cap, riel, las V y
-# los piques -- todas piezas rectas de un solo angulo.
-ANG_DIB = 33.5
+# TODOS LOS CORTES SE HACEN A 33.5, en las cuatro escaleras, aunque dos sean de
+# 34 y dos de 33.  Idea de Rene: trabajar en serie con una sola puesta de sierra.
+#
+# Se puede porque la baranda NO se arma al angulo: se arma a plomo.  Los postes
+# van parados sobre el stringer, asi que el cap sale al angulo de verdad solo,
+# lo pongan como lo pongan.  El 33.5 es el angulo de la SIERRA, no el de la
+# baranda.  Media pulgada de grado deja estos huecos en las juntas:
+#     punta del pique (tubo de 1")  ...  1/64"
+#     punta del poste (2" de ancho) ...  1/32"
+#     largo del pique / de la V     ...  1/64"
+#     cuadro del dibujo (24" ancho) ...  0.30" fuera de paralelo, no se ve
+# Todos los tapa la soldadura.
+#
+# Lo que NO se comparte no es por el angulo sino POR EL LARGO de cada escalera:
+# el ancho del pano, el riel de cada pano y el cap corrido.
+ANG_CORTE = 33.5
 CUADRO_E = 24.0      # el cuadro del dibujo de escalera. Mas chico que el del
                      # balcon porque con los postes a 4 pies las bahias son mas
                      # cortas y el de 30-1/4 no cabe.
@@ -137,10 +144,11 @@ def geo(e):
     # ---- piezas del dibujo acostado
     LUZ = CUADRO_E - 2 * TUBO                    # luz de adentro del cuadro
     g['luz_cuadro'] = LUZ
-    ad = math.radians(ANG_DIB)                   # el CUADRO va al angulo unico
+    ad = math.radians(ANG_CORTE)                   # el CUADRO va al angulo unico
     cad_, tad = math.cos(ad), math.tan(ad)
     g['ca_d'], g['ta_d'] = cad_, tad
-    V = g['campo']                               # la V si va al angulo de verdad
+    V = 40 - 2 / cad_        # la V y los piques, al angulo de corte: salen iguales
+    g['largo_pique'] = V     # en las cuatro escaleras
     H = LUZ / cad_
     P4 = [(0, 0), (LUZ, 0), (LUZ, LUZ), (0, LUZ)]
     Pc = [(x, y + x * tad) for x, y in P4]
@@ -154,19 +162,19 @@ def geo(e):
     # angulos de las puntas, contra el lado a plomo y contra el acostado.
     # Tienen que sumar el angulo de la esquina del paralelogramo o algo esta mal.
     aD1 = math.degrees(math.atan(1 + tad))
-    d1_v, d1_h = 90 - aD1, aD1 - ANG_DIB
-    assert abs((d1_v + d1_h) - (90 - ANG_DIB)) < 1e-6, "la punta de la D1 no cuadra con la esquina"
+    d1_v, d1_h = 90 - aD1, aD1 - ANG_CORTE
+    assert abs((d1_v + d1_h) - (90 - ANG_CORTE)) < 1e-6, "la punta de la D1 no cuadra con la esquina"
     dD2 = math.degrees(math.atan2(1 - tad, -1))
-    d2_h, d2_v = abs((180 + ANG_DIB) - dD2), abs(90 - dD2)
-    assert abs((d2_v + d2_h) - (90 + ANG_DIB)) < 1e-6, "la punta de la D2 no cuadra con la esquina"
+    d2_h, d2_v = abs((180 + ANG_CORTE) - dD2), abs(90 - dD2)
+    assert abs((d2_v + d2_h) - (90 + ANG_CORTE)) < 1e-6, "la punta de la D2 no cuadra con la esquina"
     g['d1_v'], g['d1_h'], g['d2_v'], g['d2_h'] = d1_v, d1_h, d2_v, d2_h
     esc_q = CUADRO_E / 30.25                     # los rombos de adentro, a escala
     q2, q3 = Q2_OD * esc_q - TUBO, Q3_OD * esc_q - TUBO
     g['q2_od'], g['q3_od'] = Q2_OD * esc_q, Q3_OD * esc_q
-    ag, ob = (90 - ANG_DIB) / 2, (90 + ANG_DIB) / 2
+    ag, ob = (90 - ANG_CORTE) / 2, (90 + ANG_CORTE) / 2
     pz = [
-      ("V",  2, V,           f"lado del cuadro &#183; A PLOMO &#183; las 2 puntas a {e['ang']:g}&#176;, paralelas"),
-      ("H",  2, H,           f"tapa del cuadro &#183; ACOSTADA a {ANG_DIB:g}&#176; &#183; las 2 puntas a plomo"),
+      ("V",  2, V,           f"lado del cuadro &#183; A PLOMO &#183; las 2 puntas a {ANG_CORTE:g}&#176;, paralelas"),
+      ("H",  2, H,           f"tapa del cuadro &#183; ACOSTADA a {ANG_CORTE:g}&#176; &#183; las 2 puntas a plomo"),
       ("D1", 1, D1,          f"diagonal larga, entera &#183; punta en los 2 lados: "
                              f"<b>{d1_v:.0f}&#176;</b> contra la V y <b>{d1_h:.0f}&#176;</b> contra la H"),
       ("D2", 2, D2/2 - desc, f"media diagonal corta &#183; por fuera <b>{d2_v:.0f}&#176;</b> contra la V "
@@ -178,12 +186,16 @@ def geo(e):
     ]
     if g['n_fl']:
         pz.insert(1, ("B", 2*g['n_fl'], V,
-                      f"pique de flanco &#183; A PLOMO &#183; las 2 puntas a {e['ang']:g}&#176;"))
+                      f"pique de flanco &#183; A PLOMO &#183; las 2 puntas a {ANG_CORTE:g}&#176;"))
     g['piezas'] = pz
     g['n_piezas'] = sum(q for _, q, _, _ in pz)
 
-    g['post_cara_larga'] = g['y_cap_b'] + (POST_W / 2) * ta + 6.0
-    g['post_cara_corta'] = g['y_cap_b'] - (POST_W / 2) * ta + 6.0
+    # el poste sale entero del angulo de corte, para que las 4 escaleras lleven
+    # EL MISMO largo. El cap se asienta 1/64 mas alto o mas bajo segun la
+    # escalera; eso no lo mide nadie y lo absorbe la junta.
+    y_cap_b_corte = GUARD - CAP / cad_
+    g['post_cara_larga'] = y_cap_b_corte + (POST_W / 2) * tad + 6.0
+    g['post_cara_corta'] = y_cap_b_corte - (POST_W / 2) * tad + 6.0
     g['cap_largo']  = e['rake']
     g['riel_pano']  = (bay - 2*GAP) / ca
     return g
@@ -252,7 +264,7 @@ def alzado(g, VW=792, VH=575):
             for _ in range(nf):
                 x += gf
                 o.append(banda(x, x+TUBO, g['y_riel_t'], g['y_cap_b'], PIQ, ALU2, 0.7)); x += TUBO
-            # --- EL CUADRO va al angulo unico ANG_DIB, no al de la escalera.
+            # --- EL CUADRO va al angulo unico ANG_CORTE, no al de la escalera.
             # Se dibuja alrededor del centro de la bahia, con su propia cizalla.
             tad = g['ta_d']
             cxm = (v1 + v2 + TUBO) / 2
@@ -336,7 +348,7 @@ def armado(g):
     """Coordenadas para TIZAR el dibujo en la mesa, y el angulo real de cada
        corte en grados del escuadre. Sin esto el taller no puede armarlo:
        cuatro de los cortes pasan de 59 grados y no los hace la sierra."""
-    ta, ang = g['ta_d'], ANG_DIB   # el cuadro va al angulo unico
+    ta, ang = g['ta_d'], ANG_CORTE   # el cuadro va al angulo unico
     C = CUADRO_E
     q2, q3 = g['q2_od'], g['q3_od']
     def W(x, yp): return (x, x*ta + yp)          # a coordenadas de la mesa
@@ -587,7 +599,7 @@ for i, e in enumerate(ESCALERAS):
         <th style="width:8%">Cant.</th><th style="width:9%">Las {e['cant']}</th><th>C&#243;mo se corta</th></tr>
     <tr><td><b>POSTE</b></td><td>2&#215;2&#215;.090</td><td class="n">{fr(g['post_cara_larga'],32)}"</td>
         <td class="n"><b>{g['n_bay']}</b></td><td class="n">{g['n_bay']*e['cant']}</td>
-        <td>a plomo. Punta de arriba cortada a <b>{e['ang']:g}&#176;</b>:
+        <td>a plomo. Punta de arriba cortada a <b>{ANG_CORTE:g}&#176;</b>:
             cara larga {fr(g['post_cara_larga'],32)}", cara corta {fr(g['post_cara_corta'],32)}".
             Abajo corte recto. El poste de m&#225;s arriba es el del balc&#243;n.</td></tr>
     <tr><td><b>CAP</b></td><td>2&#215;1&#215;.090 de plano</td><td class="n">{fr(g['cap_largo'])}"</td>
