@@ -37,6 +37,15 @@ ESCALERAS = [
 
 
 CC_MAX = 48.0        # centro a centro de poste, POR LA PENDIENTE. Regla de Rene.
+# EL CUADRO DEL DIBUJO SE ARMA A 33.5 EN LAS CUATRO ESCALERAS, aunque unas sean
+# de 34 y otras de 33.  Idea de Rene, para armar en serie un solo dibujo.
+# Funciona porque el cuadro FLOTA: no toca el cap ni el riel, va colgado entre
+# las dos V con aire arriba y abajo.  Lo peor que se desvia es 15/64 en la
+# diagonal larga, que va tizada y esmerilada de todos modos, y el cuadro queda
+# 0.30" fuera de paralelo con el cap a lo ancho de las 24".  No se ve.
+# Lo que SI va al angulo de verdad de cada escalera: postes, cap, riel, las V y
+# los piques -- todas piezas rectas de un solo angulo.
+ANG_DIB = 33.5
 CUADRO_E = 24.0      # el cuadro del dibujo de escalera. Mas chico que el del
                      # balcon porque con los postes a 4 pies las bahias son mas
                      # cortas y el de 30-1/4 no cabe.
@@ -128,10 +137,13 @@ def geo(e):
     # ---- piezas del dibujo acostado
     LUZ = CUADRO_E - 2 * TUBO                    # luz de adentro del cuadro
     g['luz_cuadro'] = LUZ
-    V = g['campo']
-    H = LUZ / ca
+    ad = math.radians(ANG_DIB)                   # el CUADRO va al angulo unico
+    cad_, tad = math.cos(ad), math.tan(ad)
+    g['ca_d'], g['ta_d'] = cad_, tad
+    V = g['campo']                               # la V si va al angulo de verdad
+    H = LUZ / cad_
     P4 = [(0, 0), (LUZ, 0), (LUZ, LUZ), (0, LUZ)]
-    Pc = [(x, y + x * ta) for x, y in P4]
+    Pc = [(x, y + x * tad) for x, y in P4]
     def dd(p, q): return math.hypot(q[0] - p[0], q[1] - p[1])
     D1, D2 = dd(Pc[0], Pc[2]), dd(Pc[1], Pc[3])
     u1 = (Pc[2][0] - Pc[0][0], Pc[2][1] - Pc[0][1])
@@ -141,28 +153,28 @@ def geo(e):
     g['th'] = th
     # angulos de las puntas, contra el lado a plomo y contra el acostado.
     # Tienen que sumar el angulo de la esquina del paralelogramo o algo esta mal.
-    aD1 = math.degrees(math.atan(1 + ta))
-    d1_v, d1_h = 90 - aD1, aD1 - e['ang']
-    assert abs((d1_v + d1_h) - (90 - e['ang'])) < 1e-6, "la punta de la D1 no cuadra con la esquina"
-    dD2 = math.degrees(math.atan2(1 - ta, -1))
-    d2_h, d2_v = abs((180 + e['ang']) - dD2), abs(90 - dD2)
-    assert abs((d2_v + d2_h) - (90 + e['ang'])) < 1e-6, "la punta de la D2 no cuadra con la esquina"
+    aD1 = math.degrees(math.atan(1 + tad))
+    d1_v, d1_h = 90 - aD1, aD1 - ANG_DIB
+    assert abs((d1_v + d1_h) - (90 - ANG_DIB)) < 1e-6, "la punta de la D1 no cuadra con la esquina"
+    dD2 = math.degrees(math.atan2(1 - tad, -1))
+    d2_h, d2_v = abs((180 + ANG_DIB) - dD2), abs(90 - dD2)
+    assert abs((d2_v + d2_h) - (90 + ANG_DIB)) < 1e-6, "la punta de la D2 no cuadra con la esquina"
     g['d1_v'], g['d1_h'], g['d2_v'], g['d2_h'] = d1_v, d1_h, d2_v, d2_h
     esc_q = CUADRO_E / 30.25                     # los rombos de adentro, a escala
     q2, q3 = Q2_OD * esc_q - TUBO, Q3_OD * esc_q - TUBO
     g['q2_od'], g['q3_od'] = Q2_OD * esc_q, Q3_OD * esc_q
-    ag, ob = (90 - e['ang']) / 2, (90 + e['ang']) / 2
+    ag, ob = (90 - ANG_DIB) / 2, (90 + ANG_DIB) / 2
     pz = [
       ("V",  2, V,           f"lado del cuadro &#183; A PLOMO &#183; las 2 puntas a {e['ang']:g}&#176;, paralelas"),
-      ("H",  2, H,           f"tapa del cuadro &#183; ACOSTADA &#183; las 2 puntas a plomo"),
+      ("H",  2, H,           f"tapa del cuadro &#183; ACOSTADA a {ANG_DIB:g}&#176; &#183; las 2 puntas a plomo"),
       ("D1", 1, D1,          f"diagonal larga, entera &#183; punta en los 2 lados: "
                              f"<b>{d1_v:.0f}&#176;</b> contra la V y <b>{d1_h:.0f}&#176;</b> contra la H"),
       ("D2", 2, D2/2 - desc, f"media diagonal corta &#183; por fuera <b>{d2_v:.0f}&#176;</b> contra la V "
                              f"y <b>{d2_h:.0f}&#176;</b> contra la H &#183; por dentro muere a ras contra la D1"),
       ("C2p",2, q2,          f"rombo grande &#183; los 2 A PLOMO &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
-      ("C2a",2, q2/ca,       f"rombo grande &#183; los 2 ACOSTADOS &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
+      ("C2a",2, q2/cad_,     f"rombo grande &#183; los 2 ACOSTADOS &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
       ("C3p",2, q3,          f"rombo chico &#183; los 2 A PLOMO &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
-      ("C3a",2, q3/ca,       f"rombo chico &#183; los 2 ACOSTADOS &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
+      ("C3a",2, q3/cad_,     f"rombo chico &#183; los 2 ACOSTADOS &#183; {ag:.0f}&#176; y {ob:.0f}&#176;"),
     ]
     if g['n_fl']:
         pz.insert(1, ("B", 2*g['n_fl'], V,
@@ -240,21 +252,29 @@ def alzado(g, VW=792, VH=575):
             for _ in range(nf):
                 x += gf
                 o.append(banda(x, x+TUBO, g['y_riel_t'], g['y_cap_b'], PIQ, ALU2, 0.7)); x += TUBO
-            yb, yt = g['y_riel_t'] + g['flot'], g['y_cap_b'] - g['flot']
-            for yy in (yb, yt - TUBO):
-                o.append(banda(v1+TUBO, v2, yy, yy+TUBO, ALU, NEG, 0.9))
-            ia, ib = v1 + TUBO, v2
-            for pq, qq in (((ia, yb+TUBO), (ib, yt-TUBO)), ((ia, yt-TUBO), (ib, yb+TUBO))):
-                A, B = S(*pq), S(*qq)
-                o.append(f'<line x1="{A[0]:.1f}" y1="{A[1]:.1f}" x2="{B[0]:.1f}" y2="{B[1]:.1f}" '
-                         f'stroke="{NEG}" stroke-width="{TUBO*sc:.1f}"/>')
-            cxm, cym = (ia+ib)/2, (yb+yt)/2
-            for od in (g['q2_od'], g['q3_od']):
-                s2 = (od - TUBO)/2
-                pts = [S(cxm-s2, cym-s2), S(cxm+s2, cym-s2), S(cxm+s2, cym+s2), S(cxm-s2, cym+s2)]
-                d = " ".join(f"{q[0]:.1f},{q[1]:.1f}" for q in pts)
-                o.append(f'<polygon points="{d}" fill="none" stroke="{NEG}" '
-                         f'stroke-width="{TUBO*sc:.1f}"/>')
+            # --- EL CUADRO va al angulo unico ANG_DIB, no al de la escalera.
+            # Se dibuja alrededor del centro de la bahia, con su propia cizalla.
+            tad = g['ta_d']
+            cxm = (v1 + v2 + TUBO) / 2
+            C0 = S(cxm, (g['y_riel_t'] + g['y_cap_b']) / 2)
+            def Sd(u, w):                       # u horizontal, w a plomo, desde el centro
+                return C0[0] + u*sc, C0[1] - (u*tad + w)*sc
+            def barra(p, q, esp=TUBO):
+                A, B = Sd(*p), Sd(*q)
+                return (f'<line x1="{A[0]:.1f}" y1="{A[1]:.1f}" x2="{B[0]:.1f}" y2="{B[1]:.1f}" '
+                        f'stroke="{ALU}" stroke-width="{esp*sc:.1f}" stroke-linecap="butt"/>'
+                        f'<line x1="{A[0]:.1f}" y1="{A[1]:.1f}" x2="{B[0]:.1f}" y2="{B[1]:.1f}" '
+                        f'stroke="{NEG}" stroke-width="0.7"/>')
+            h2 = CUADRO_E/2 - TUBO/2
+            L2 = g['luz_cuadro']/2
+            for w in (-h2, h2):                                   # las 2 H
+                o.append(barra((-L2, w), (L2, w)))
+            for pq, qq in (((-L2, -L2), (L2, L2)), ((-L2, L2), (L2, -L2))):
+                o.append(barra(pq, qq))                           # la X
+            for od in (g['q2_od'], g['q3_od']):                   # los 2 rombos
+                r = (od - TUBO)/2
+                for A, B in (((-r,-r),(r,-r)), ((r,-r),(r,r)), ((r,r),(-r,r)), ((-r,r),(-r,-r))):
+                    o.append(barra(A, B))
 
     # postes a plomo
     for px in posts:
@@ -316,7 +336,7 @@ def armado(g):
     """Coordenadas para TIZAR el dibujo en la mesa, y el angulo real de cada
        corte en grados del escuadre. Sin esto el taller no puede armarlo:
        cuatro de los cortes pasan de 59 grados y no los hace la sierra."""
-    ta, ang = g['ta'], g['ang']
+    ta, ang = g['ta_d'], ANG_DIB   # el cuadro va al angulo unico
     C = CUADRO_E
     q2, q3 = g['q2_od'], g['q3_od']
     def W(x, yp): return (x, x*ta + yp)          # a coordenadas de la mesa
@@ -343,7 +363,7 @@ def armado(g):
 # ---------------------------------------------- PLANO DEL DIBUJO, EN GRANDE
 def detalle_dibujo(g, VW=792, VH=500):
     """El dibujo solo, en grande, con todas las medidas y cada pieza con su letra."""
-    ta, ca = g['ta'], g['ca']
+    ta, ca = g['ta_d'], g['ca_d']   # el cuadro va al angulo unico
     LUZ = g['luz_cuadro']
     ancho = CUADRO_E
     alto_total = CUADRO_E + CUADRO_E * ta          # lo que ocupa el rombo de alto

@@ -181,6 +181,22 @@ def t11_mismo_ancho():
     anchos = {e[1] for s in SEC.values() for e in s['elems'] if e[0] == 'D'}
     return f"las bahias de dibujo son {', '.join(fr(a) for a in sorted(anchos))}\", y cada hoja usa la suya"
 
+def t12_cuadro_unico():
+    """Las piezas del CUADRO (las que flotan) se arman todas al mismo angulo
+       para poder trabajar en serie. Solo la V y los piques cambian por escalera."""
+    ref = None
+    for e in E.ESCALERAS:
+        g = E.geo(e)
+        caja = {c: round(L, 6) for c, q, L, _ in g['piezas'] if c not in ("V", "B")}
+        if ref is None:
+            ref = caja
+        elif caja != ref:
+            dif = [c for c in caja if caja[c] != ref.get(c)]
+            mal(f"{e['n']}: las piezas del cuadro no son iguales a las de la otra "
+                f"escalera ({', '.join(dif)}). Se pierde el trabajo en serie.")
+    nd = sum(E.geo(x)['n_dib'] * x['cant'] for x in E.ESCALERAS)
+    return f"{nd} cuadros identicos, armados a {E.ANG_DIB:g}&#176;".replace("&#176;", "\u00b0")
+
 PRUEBAS = [
  ("Cadenas de cada seccion",                t1_cadenas),
  ("Dos dibujos nunca van pegados",          t2_dibujos_pegados),
@@ -193,6 +209,7 @@ PRUEBAS = [
  ("Caballerizas: escaleras de madera",      t9_caballeriza_madera),
  ("Ninguna hoja huerfana en el set",        t10_huerfanos),
  ("El mismo dibujo, igual en toda hoja",    t11_mismo_ancho),
+ ("Un solo cuadro para las 4 escaleras",    t12_cuadro_unico),
 ]
 
 print("\n" + "=" * 68)
@@ -209,7 +226,7 @@ if FALLOS:
     print(f"\n  {len(FALLOS)} FALLO(S) — NO IMPRIMIR NADA HASTA ARREGLARLOS:\n")
     for f in FALLOS: print("   ***", f)
 else:
-    print("\n  LAS 10 VERIFICACIONES PASAN.")
+    print(f"\n  LAS {len(PRUEBAS)} VERIFICACIONES PASAN.")
 if AVISOS:
     print(f"\n  {len(AVISOS)} AVISO(S) — no paran nada, pero mira esto:\n")
     for a in AVISOS: print("   ->", a)
