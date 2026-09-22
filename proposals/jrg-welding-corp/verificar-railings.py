@@ -148,6 +148,17 @@ def t7_escaleras():
     nd = sum(E.geo(x)['n_dib'] * x['cant'] for x in E.ESCALERAS)
     return f"{sum(x['cant'] for x in E.ESCALERAS)} escaleras, alternadas, {nd} dibujos"
 
+def t20_rotulos():
+    """Cada pieza tiene que decir QUE ES, no solo su codigo. Rene no encontraba
+       "el de 104" ni "la L" en la hoja de taller porque solo salia "J-1"."""
+    faltan = [nm for nm in SEC if not G.ROTULOS.get(nm)]
+    if faltan:
+        mal("estas piezas salen sin nombre en la hoja de taller: " + ", ".join(sorted(faltan)))
+    sobran = [k for k in G.ROTULOS if k not in SEC]
+    if sobran:
+        mal("hay rotulos de piezas que ya no existen: " + ", ".join(sorted(sobran)))
+    return f"las {len(SEC)} piezas dicen que son, no solo su codigo"
+
 def t8_letras():
     todas = [s['name'] for s in SEC.values()]
     if len(todas) != len(set(todas)):
@@ -388,6 +399,7 @@ PRUEBAS = [
  ("Pa\u00f1o entreverado en linea recta",      t17_entreverado),
  ("Arriba mide igual que abajo",            t18_arriba_igual_abajo),
  ("Cada junta del cap donde toca",          t19_cap_no_sobresale),
+ ("Cada pieza dice qu\u00e9 es",                t20_rotulos),
 ]
 
 print("\n" + "=" * 68)

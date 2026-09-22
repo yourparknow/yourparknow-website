@@ -114,7 +114,9 @@ CSS = """
  .top h1{font-size:30px;letter-spacing:1px}
  .top span{font-size:14px;font-weight:700;color:#b91c1c}
  .sec{border:2px solid #1b2a41;border-radius:6px;margin-bottom:14px;overflow:hidden}
- .sec .t{background:#1b2a41;color:#fff;padding:5px 12px;font-size:20px;font-weight:800;letter-spacing:2px}
+ .sec .t{background:#1b2a41;color:#fff;padding:6px 12px;font-size:19px;font-weight:800;
+         letter-spacing:.5px;display:flex;justify-content:space-between;align-items:baseline}
+ .sec .t em{font-style:normal;font-size:15px;color:#8fa2b8;letter-spacing:2px}
  .sec svg{display:block;width:100%;height:auto;background:#fdfdfb}
  .pz{display:flex;flex-wrap:wrap;gap:0;border-top:2px solid #1b2a41}
  .pz div{flex:1 1 0;min-width:96px;padding:7px 4px;text-align:center;border-right:1px solid #cfd6dd}
@@ -128,7 +130,8 @@ CSS = """
 def hoja(titulo, secs):
     cuerpo = ""
     for s in secs:
-        cuerpo += (f'<div class="sec"><div class="t">{s["name"]}</div>'
+        cuerpo += (f'<div class="sec"><div class="t">{G.ROTULOS[s["name"]]}'
+                   f'<em>{s["name"]}</em></div>'
                    f'{dibujo(s)}<div class="pz">{piezas(s)}</div></div>')
     tot_p = sum(1 for s in secs for e in s['elems'] if e[0] == 'P')
     tot_d = sum(1 for s in secs for e in s['elems'] if e[0] == 'D')

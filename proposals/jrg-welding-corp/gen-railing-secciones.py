@@ -353,6 +353,42 @@ def S(name, elems, izq, der, nota=""):
 
 ESQ, EMP, PARED = "ESQUINA", "EMPATE RECTO", "REMATE CONTRA LA PARED"
 
+# COMO SE LLAMA CADA PIEZA EN EL TALLER. La letra sola (J-1, M-1) no le dice a
+# nadie que pieza es: Rene no encontraba "el de 104" ni "la L" en la hoja porque
+# solo salia el codigo. Esto es lo que va en grande arriba de cada dibujo.
+ROTULOS = {
+ # ---- caballeriza 1
+ "G-1": "LATERAL DERECHO  ·  hasta la pared",
+ "H-1": "EL FRENTE  ·  pieza 1 de 3",
+ "H-2": "EL FRENTE  ·  pieza 2 de 3",
+ "H-3": "EL FRENTE  ·  pieza 3 de 3",
+ "J-1": "LATERAL IZQUIERDO  ·  el de 104",
+ "K-1": "LA 4ta, PARALELA AL FRENTE  ·  el de 98-3/4",
+ "M-1": "LA L  ·  pata de 29   (sale SOLDADA con la de 47)",
+ "L-1": "LA L  ·  pata de 47   (sale SOLDADA con la de 29)",
+ # ---- caballeriza 2
+ "N-1": "EL FRENTE  ·  pieza 1 de 3",
+ "N-2": "EL FRENTE  ·  pieza 2 de 3",
+ "N-3": "EL FRENTE  ·  pieza 3 de 3",
+ "P-1": "PAÑO DERECHO  ·  el de 191-1/4",
+ "Q-1": "EL RETORNO  ·  el de 99",
+ "R-1": "PAÑITO SUELTO  ·  el de 47",
+ # ---- pool house, balcon 1
+ "A-1": "EL FRENTE LARGO  ·  pieza 1 de 3",
+ "A-2": "EL FRENTE LARGO  ·  pieza 2 de 3",
+ "A-3": "EL FRENTE LARGO  ·  pieza 3 de 3",
+ "B-1": "LATERAL CONTRA LA CASA",
+ "C-1": "LATERAL DE LA ESCALERA  ·  pieza 1 de 2",
+ "C-2": "LATERAL DE LA ESCALERA  ·  pieza 2 de 2",
+ # ---- pool house, balcon 2
+ "D-1": "EL FRENTE LARGO  ·  pieza 1 de 3",
+ "D-2": "EL FRENTE LARGO  ·  pieza 2 de 3",
+ "D-3": "EL FRENTE LARGO  ·  pieza 3 de 3",
+ "E-1": "LATERAL CONTRA LA CASA",
+ "F-1": "LATERAL DE LA ESCALERA  ·  pieza 1 de 2",
+ "F-2": "LATERAL DE LA ESCALERA  ·  pieza 2 de 2",
+}
+
 # ================================ POOL HOUSE ================================
 PH_B1 = [
  S("A-1", [('P',),('L',30.5625),('P',),('D',D),('P',),('L',39.5),('P',)],
