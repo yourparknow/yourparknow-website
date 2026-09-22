@@ -44,7 +44,8 @@ MEDIDO = {"B": (161.0,    2.0),          # pool house: hasta la casa
                                          # de la pared -- son EL POSTE DE ESQUINA DEL FRENTE,
                                          # que va pegado ahi. Rene: "abajo queda corto dos
                                          # pulgadas, como si fueras a poner un poste ahi tambien".
-          "P": (193.375,  2.0)}          # caballeriza 2: PENDIENTE de rehacer
+          "P": (191.25,   0.0)}          # caballeriza 2 pano derecho: Rene lo dio
+                                         # "con su poste de atras y todo", o sea ya es material
 
 REMATES = []          # (balcon, tipo, texto) de cada remate dibujado
 SEC, CORRIDA = {}, {}

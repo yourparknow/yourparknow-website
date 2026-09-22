@@ -40,6 +40,9 @@ DIBUJO_EN_LA_PUNTA_OK = {
  "G": 'caballeriza 1: sale de la pared con dibujo',
  "P": 'caballeriza 2: sale de la pared con dibujo',
  "L": 'la pata de 47: "en el 47 pongo un dibujo para que no se vea esa L completa sin dibujo"',
+ "Q": 'el retorno de la caballeriza 2: Rene lo mando en DOS panos, asi que con un '
+      'dibujo y un liso el dibujo cae por fuerza en una punta. El liso va en la '
+      'esquina de los platos. PENDIENTE de que Rene diga de que lado lo quiere.',
 }
 
 def t1_cadenas():
