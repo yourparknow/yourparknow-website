@@ -44,10 +44,9 @@ HUECO = {"BALCÓN 3  ·  CABALLERIZA LADO 1": 42.0}
 #                   la medida. Descontarle 2" seria descontarlas dos veces.
 MEDIDO = {"B": (161.0,    2.0),          # pool house: hasta la casa
           "E": (151.625,  2.0),          # pool house: hasta la casa
-          "G": (192.75,   2.0),          # caballeriza 1 lateral derecho. OJO: estas 2" NO son
-                                         # de la pared -- son EL POSTE DE ESQUINA DEL FRENTE,
-                                         # que va pegado ahi. Rene: "abajo queda corto dos
-                                         # pulgadas, como si fueras a poner un poste ahi tambien".
+          "G": (193.0,     0.0),          # caballeriza 1 lateral derecho: Rene lo dio
+                                         # "a 193 con un solo poste, el que va pegado a la
+                                         # pared", o sea que ya es material.
           "P": (191.25,   0.0)}          # caballeriza 2 pano derecho: Rene lo dio
                                          # "con su poste de atras y todo", o sea ya es material
 

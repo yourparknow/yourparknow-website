@@ -28,8 +28,8 @@ MEDIDAS = {
   filas=[
    ("EL FRENTE", "36'-10\" = 442 interior",  446.0, ["H-1","H-2","H-3"],
     "«36 pies 10 pulgadas el frente, más los dos postes de los lados»"),
-   ("LATERAL DERECHO", "192-3/4 hasta la pared", 190.75, ["G-1"],
-    "«190 tres cuartos. Tiene el poste al final, el poste se roba dos pulgadas»"),
+   ("LATERAL DERECHO", "193 con su poste de la pared", 193.0, ["G-1"],
+    "«va a ir a 193 con un solo poste, el que va pegado a la pared, porque se va a amarrar al poste del paño del frente»"),
    ("LATERAL IZQUIERDO", "104 pelado, sin poste propio", 104.0, ["J-1"],
     "«el paño de 104 va a ir de 104 nada más, porque se va a amarrar al poste este y se va a amarrar al poste del frente»"),
    ("LA 4ta, PARALELA AL FRENTE", "98-3/4 de paño + 2 del poste", 100.75, ["K-1"],
@@ -45,9 +45,9 @@ MEDIDAS = {
            "derecho baja 193, el izquierdo 104 y la pata de la L son 47, así que "
            "<b>el hueco de la escalera son 42\"</b> (193 − 104 − 47). Yo lo tenía en 27. "
            "<b>Confírmame ese 42</b> — sale del croquis, no de una cinta.",
-           "El croquis dice <b>193</b> en el lateral derecho y yo trabajo con <b>192-3/4</b>, "
-           "porque tú mismo dijiste «192 tres cuartos para ser más exacto». Si el bueno es "
-           "el 193 redondo, dímelo y son 1/4 en un paño."]),
+           "El lateral derecho quedó en <b>193 de material</b>, confirmado por Rene el 22: "
+           "su poste va en la punta de la pared y por la esquina muere en paño contra el "
+           "poste del frente."]),
 
 "CABALLERIZA 2": dict(
   cuando="21 de septiembre — «esta es la otra, la caballeriza nueva, la número 2»",

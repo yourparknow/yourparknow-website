@@ -438,7 +438,7 @@ PH_B2 = [
 # ---------------------------------------------------------------------------
 c2 = 44.6875                       # panos del 191-3/8 (caballeriza 2, sin tocar)
 f_dib, f_lis = 46.8125, 47.75      # frente: 4 dibujos + 5 lisos  -> 442 de luz
-g_lis = 45.375                     # lateral derecho
+g_lis = 46.5                       # lateral derecho
 j_lis = 27.0                       # lateral izquierdo
 k_lis = 23.375                     # 4ta paralela
 CB = [
@@ -585,7 +585,7 @@ EDIFICIOS = [
  dict(slug="caballeriza", titulo="CABALLERIZA 1 — BARANDA · SECCIONES DE FRENTE",
       meta="MEDIDAS INTERIORES · REV. 2 · SEPT 21, 2026",
       grupos=[("CABALLERIZA 1 — SECCIONES G a M", CB)],
-      corridas=[("Caballeriza","G",190.75,["G-1"]), ("Caballeriza","H",446.0,["H-1","H-2","H-3"]),
+      corridas=[("Caballeriza","G",193.0,["G-1"]), ("Caballeriza","H",446.0,["H-1","H-2","H-3"]),
                 ("Caballeriza","J",104.0,["J-1"]), ("Caballeriza","K",100.75,["K-1"]),
                 ("Caballeriza","M",29.75,["M-1"]), ("Caballeriza","L",47.0,["L-1"])],
       # orden real alrededor del edificio. None = ahi la cadena SE ROMPE (hueco de
