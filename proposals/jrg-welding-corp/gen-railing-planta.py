@@ -28,8 +28,12 @@ BAL = [
       pasos=[("P","O"), ("N","S"), ("?","E"), ("Q","N"), ("ESC","E"), ("R","S")]),
 ]
 INCOGNITA = 108.0
-HUECO_ESC = 27.0      # hueco de la escalera: 27" medido en el lado 1.  En el lado 2 lo asumo igual.
-                      # Esas escaleras SIGUEN DE MADERA: no llevan baranda de aluminio.
+# Hueco de la escalera, por balcon. Esas escaleras SIGUEN DE MADERA: no llevan
+# baranda de aluminio, pero el hueco cuenta para cerrar la vuelta del balcon.
+# La caballeriza 1 sale del croquis de Rene: el lateral derecho baja 193, el
+# izquierdo 104 y la pata de la L son 47 -> 193 - 104 - 47 = 42.
+HUECO_ESC = 27.0                       # el que se asume donde no hay croquis
+HUECO = {"BALCÓN 3  ·  CABALLERIZA LADO 1": 42.0}
 # Lo que MIDIO en obra.  El taller fabrica 2" menos en los panos que mueren contra
 # la casa: ahi el ultimo poste queda suelto, separado de la pared, sin anclaje.
 # (medida de obra, cuanto se le descuenta).  EL DESCUENTO NO ES SIEMPRE 2":
@@ -86,7 +90,7 @@ GIRO = {"N":"E", "E":"S", "S":"O", "O":"N"}
 def recorrido(b):
     x = y = 0.0; out = []
     for letra, rumbo in b['pasos']:
-        L = (HUECO_ESC if letra == "ESC" else
+        L = (HUECO.get(b["t"], HUECO_ESC) if letra == "ESC" else
              INCOGNITA if letra == "?" else
              MEDIDO[letra][0] if letra in MEDIDO else CORRIDA[letra][0])
         dx, dy = DX[rumbo]

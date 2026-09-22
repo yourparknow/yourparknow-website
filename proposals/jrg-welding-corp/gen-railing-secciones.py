@@ -364,7 +364,7 @@ ROTULOS = {
  "H-3": "EL FRENTE  ·  pieza 3 de 3",
  "J-1": "LATERAL IZQUIERDO  ·  el de 104",
  "K-1": "LA 4ta, PARALELA AL FRENTE  ·  el de 98-3/4",
- "M-1": "LA L  ·  pata de 29   (sale SOLDADA con la de 47)",
+ "M-1": "LA L  ·  pata de 29-3/4   (sale SOLDADA con la de 47)",
  "L-1": "LA L  ·  pata de 47   (sale SOLDADA con la de 29)",
  # ---- caballeriza 2
  "N-1": "EL FRENTE  ·  pieza 1 de 3",
@@ -464,15 +464,16 @@ CB = [
  # --- LA "L" DE LA ESCALERA: M-1 (29") + L-1 (47") SALEN SOLDADAS EN UNA SOLA PIEZA.
  #     Los dos extremos libres son libres de verdad: de un lado el hueco de la escalera,
  #     del otro la pared (que NO se ancla). Por eso la pieza carga SUS TRES POSTES.
- S("M-1", [('P',),('L',25.0),('P',)],
+ S("M-1", [('P',),('L',25.75),('P',)],
    "ARRANQUE DE LA ESCALERA  —  LLEVA SU PROPIO POSTE (no se apoya en nada)",
    "ESQUINA SOLDADA con L-1  (lleva el poste de esquina)",
-   "Esta pata y la L-1 salen del taller SOLDADAS EN UNA SOLA PIEZA EN L, con la esquina ya hecha."),
+   "Esta pata y la L-1 salen del taller SOLDADAS EN UNA SOLA PIEZA EN L, con la esquina ya hecha. "
+   "29-3/4 afuera a afuera, del croquis de Rene (antes decia 29)."),
  S("L-1", [('D',43.0),('P',)],
    "ESQUINA SOLDADA  (arranca en paño, sobre el poste de esquina de M-1)",
    "REMATE CONTRA LA PARED DE LA CABALLERIZA  (poste suelto, NO se ancla a la pared)",
    "Dibujo especial de 43\" de luz: el cuadro es el mismo, solo se aprietan las luces de flanco a 2-9/16. "
-   "Va soldada a la M-1: una sola pieza en L de 47\" × 29\" con 3 postes."),
+   "Va soldada a la M-1: una sola pieza en L de 47\" × 29-3/4\" con 3 postes."),
 ]
 
 # ============================== CABALLERIZA 2 ==============================
@@ -579,7 +580,7 @@ EDIFICIOS = [
       grupos=[("CABALLERIZA 1 — SECCIONES G a M", CB)],
       corridas=[("Caballeriza","G",190.75,["G-1"]), ("Caballeriza","H",446.0,["H-1","H-2","H-3"]),
                 ("Caballeriza","J",106.0,["J-1"]), ("Caballeriza","K",98.75,["K-1"]),
-                ("Caballeriza","M",29.0,["M-1"]), ("Caballeriza","L",47.0,["L-1"])],
+                ("Caballeriza","M",29.75,["M-1"]), ("Caballeriza","L",47.0,["L-1"])],
       # orden real alrededor del edificio. None = ahi la cadena SE ROMPE (hueco de
       # escalera o pared), o sea que del otro lado NO hay poste donde apoyarse.
       cadena=[None,"G","H","J","K",None,"M","L",None],

@@ -37,14 +37,17 @@ MEDIDAS = {
    # 47 + 29 = 76 contaria DOS VECES el poste de la esquina, que las dos patas
    # comparten. El material que sale del taller son 74. La verificacion 21 lo
    # cogio en su primera corrida, con el 76 que habia puesto yo aqui.
-   ("LA L SOLDADA", "47 x 29 afuera a afuera (comparten el poste de la esquina)",
-    74.0, ["M-1","L-1"],
-    "«esa L de 47 pulgadas por 29. Ya eso sí es de afuera a afuera, contando los postes»"),
+   ("LA L SOLDADA", "47 x 29-3/4 afuera a afuera (comparten el poste de la esquina)",
+    74.75, ["M-1","L-1"],
+    "«esa L de 47 por 29. Va a ser 29, 3 cuartos exacto» — del croquis del 22 sept"),
   ],
-  abierto=["<b>LA VUELTA POR ATRÁS NO CIERRA.</b> El lateral derecho sube 16'-0-3/4\" y el "
-           "izquierdo solo 8'-8\": hay que subir <b>88-3/4\"</b> por detrás, y la 4ta, el hueco "
-           "de la escalera y la L no dan esa suma. <b>Falta un croquis del fondo.</b> "
-           "Las cinco piezas de arriba no dependen de eso: se pueden cortar."]),
+  abierto=["<b>LA VUELTA YA CIERRA</b>, con el croquis del 22 de septiembre: el lateral "
+           "derecho baja 193, el izquierdo 104 y la pata de la L son 47, así que "
+           "<b>el hueco de la escalera son 42\"</b> (193 − 104 − 47). Yo lo tenía en 27. "
+           "<b>Confírmame ese 42</b> — sale del croquis, no de una cinta.",
+           "El croquis dice <b>193</b> en el lateral derecho y yo trabajo con <b>192-3/4</b>, "
+           "porque tú mismo dijiste «192 tres cuartos para ser más exacto». Si el bueno es "
+           "el 193 redondo, dímelo y son 1/4 en un paño."]),
 
 "CABALLERIZA 2": dict(
   cuando="21 de septiembre — «esta es la otra, la caballeriza nueva, la número 2»",
