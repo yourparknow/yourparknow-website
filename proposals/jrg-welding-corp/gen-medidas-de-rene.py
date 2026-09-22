@@ -52,16 +52,14 @@ MEDIDAS = {
 "CABALLERIZA 2": dict(
   cuando="21 de septiembre — «esta es la otra, la caballeriza nueva, la número 2»",
   filas=[
-   ("EL FRENTE", "36'-9-3/8\" = 441-3/8 interior", 445.375, ["N-1","N-2","N-3"],
-    "«441-3/8. Esa medida es exacta, más los dos postes de los bordes»"),
-   ("PAÑO DERECHO", "191-1/4 con su poste", 191.25, ["P-1"],
-    "«191-1/4 con el poste de atrás y todo, sin poste en el frente porque va a "
-    "conectar con el poste de la caballeriza»"),
-   ("EL RETORNO", "99 afuera a afuera, DOS paños", 99.0, ["Q-1"],
-    "«99 pulgadas más el último poste, 101 de afuera de poste a afuera de poste... "
-    "no vamos a poner tres paños, tiene que irse en dos»"),
-   ("PAÑITO SUELTO", "47 afuera a afuera, liso", 47.0, ["R-1"],
-    "«otro pañito independiente de 47 pulgadas de poste a poste exterior»"),
+   ("EL FRENTE", "37'-1-3/8\" de poste a poste", 445.375, ["N-1","N-2","N-3"],
+    "del croquis del 22: «37-1 3/8 DE POSTE A POSTE» — clavado con lo que ya estaba"),
+   ("PAÑO DERECHO", "191-3/8, 1 solo poste", 191.375, ["P-1"],
+    "del croquis del 22 sept: «191-3/8, 1 SOLO POSTE», el de la pared"),
+   ("EL RETORNO", "101 afuera a afuera, 2 postes", 101.0, ["Q-1"],
+    "del croquis del 22: «101\", 2 POSTES». Y antes: «no vamos a poner tres paños, tiene que irse en dos»"),
+   ("PAÑITO SUELTO", "46-3/4 afuera a afuera, 2 postes", 46.75, ["R-1"],
+    "del croquis del 22: «46-3/4, 2 POSTES». Antes lo había dado en 47"),
   ],
   abierto=["<b>EL PAÑO DE LA IZQUIERDA NO ESTÁ MEDIDO.</b> Palabras de Rene: "
            "«el paño de la izquierda es el que me falta, que te lo tenía con un signo de "
@@ -69,7 +67,10 @@ MEDIDAS = {
            "piezas y no 7.</b>",
            "<b>Falta decir de qué lado va el dibujo del retorno.</b> Con dos paños, el "
            "dibujo cae por fuerza en una punta. Lo puse con el paño liso en la esquina de "
-           "los platos, que es la regla de las esquinas."]),
+           "los platos, que es la regla de las esquinas.",
+           "Con las <b>101\"</b> del croquis, los dos paños del retorno salen a <b>47-1/2</b>: "
+           "si el dibujo se quedara en 46, el liso se iría a 49, por encima de tus 4 pies. "
+           "El flanco de ese dibujo abre a <b>3-13/16</b> (el límite es 4)."]),
 
 "BALCÓN 1 · POOL HOUSE": dict(
   cuando="de las medidas anteriores — no se han vuelto a revisar con Rene",

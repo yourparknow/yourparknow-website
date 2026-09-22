@@ -47,8 +47,8 @@ MEDIDO = {"B": (161.0,    2.0),          # pool house: hasta la casa
           "G": (193.0,     0.0),          # caballeriza 1 lateral derecho: Rene lo dio
                                          # "a 193 con un solo poste, el que va pegado a la
                                          # pared", o sea que ya es material.
-          "P": (191.25,   0.0)}          # caballeriza 2 pano derecho: Rene lo dio
-                                         # "con su poste de atras y todo", o sea ya es material
+          "P": (191.375,  0.0)}          # caballeriza 2 pano derecho, del croquis del 22.
+                                         # Lleva su poste de la pared dentro: ya es material.
 
 REMATES = []          # (balcon, tipo, texto) de cada remate dibujado
 SEC, CORRIDA = {}, {}

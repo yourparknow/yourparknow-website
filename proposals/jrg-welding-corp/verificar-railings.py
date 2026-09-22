@@ -83,8 +83,24 @@ def t3_postes_libres():
 def t4_esfera():
     peor, peor_nm = 0.0, ""
     filo = []
+    # OJO: esto chequeaba SOLO los panos lisos. Los flancos del DIBUJO se
+    # colaban, y el retorno de la caballeriza 2 los abre a 3-13/16 al pasar sus
+    # panos a 47-1/2. Ahora se miran los dos.
+    def flanco(luz):
+        """luz libre a cada lado del cuadro del dibujito"""
+        return (luz - 2*G.GAP_PANEL - 4*1.0 - G.LUZ_CUADRO if hasattr(G, 'LUZ_CUADRO')
+                else luz - 2*G.GAP_PANEL - 4*1.0 - 28.25) / 4
     for nm, s in SEC.items():
         for e in s['elems']:
+            if e[0] == 'D':
+                lz = flanco(e[1]) + G.GAP_PANEL
+                if lz >= 4.0:
+                    mal(f"{nm}: el flanco del dibujo de {fr(e[1])}\" deja {fr(lz,32)}\" "
+                        f"— PASA LA ESFERA DE 4\"")
+                elif lz > 3.90:
+                    filo.append(f"{nm} (flanco del dibujo de {fr(e[1])}\" -> {fr(lz,32)}\")")
+                if lz > peor: peor, peor_nm = lz, nm + " (flanco)"
+                continue
             if e[0] != 'L': continue
             n, g = G.piques_de(e[1]); luz = g + G.GAP_PANEL
             if luz >= 4.0:

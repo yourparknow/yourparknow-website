@@ -370,9 +370,9 @@ ROTULOS = {
  "N-1": "EL FRENTE  ·  pieza 1 de 3",
  "N-2": "EL FRENTE  ·  pieza 2 de 3",
  "N-3": "EL FRENTE  ·  pieza 3 de 3",
- "P-1": "PAÑO DERECHO  ·  el de 191-1/4",
- "Q-1": "EL RETORNO  ·  el de 99",
- "R-1": "PAÑITO SUELTO  ·  el de 47",
+ "P-1": "PAÑO DERECHO  ·  el de 191-3/8",
+ "Q-1": "EL RETORNO  ·  el de 101",
+ "R-1": "PAÑITO SUELTO  ·  el de 46-3/4",
  # ---- pool house, balcon 1
  "A-1": "EL FRENTE LARGO  ·  pieza 1 de 3",
  "A-2": "EL FRENTE LARGO  ·  pieza 2 de 3",
@@ -493,7 +493,7 @@ CB = [
 #   retorno .......... 99 de afuera de poste a afuera de poste, DOS panos
 #   panito suelto .... 47 de afuera a afuera, liso, sin dibujo
 n_dib, n_lis = 46.8125, 47.625     # frente: 4 dibujos + 5 lisos -> 441-3/8 de luz
-p_lis = 45.625                     # pano derecho
+p_lis = 45.6875                    # pano derecho: 191-3/8 del croquis
 CB2 = [
  S("N-1", [('P',),('L',n_lis),('P',),('D',n_dib),('P',),('L',n_lis),('P',)],
    "ESQUINA  —  LLEVA SU PROPIO POSTE DE ESQUINA  (la P-1 muere en paño contra él)",
@@ -509,18 +509,18 @@ CB2 = [
  S("P-1", [('P',),('D',D),('P',),('L',p_lis),('P',),('D',D),('P',),('L',p_lis)],
    "REMATE CONTRA LA PARED DE LA CABALLERIZA  (poste suelto, NO se ancla a la pared)",
    "ESQUINA  —  MUERE EN PAÑO contra el poste de esquina de N-1  (ese poste es del frente)",
-   "Paño derecho: 191-1/4\" DE MATERIAL, con su poste de la pared dentro de la medida. "
+   "Paño derecho: <b>191-3/8\" DE MATERIAL</b> (del croquis del 22), con su poste de la pared dentro. "
    "Al frente NO lleva poste: choca en paño contra el del frente."),
- S("Q-1", [('P',),('L',47.0),('P',),('D',D),('P',)],
+ S("Q-1", [('P',),('L',47.5),('P',),('D',47.5),('P',)],
    "ESQUINA  —  LLEVA EL POSTE DE LOS PLATOS DE LA FASCIA  (del otro lado va el pañito sin medir)",
    "HUECO DE LA ESCALERA  (27\", sigue de madera)",
-   "EL RETORNO: 99\" de afuera de poste a afuera de poste, en DOS paños. "
-   "El paño liso va en la esquina de los platos, como toda esquina. Con dos paños "
-   "el dibujo cae por fuerza en la otra punta. <b>FALTA QUE RENE CONFIRME de qué lado lo quiere.</b>"),
- S("R-1", [('P',),('L',43.0),('P',)],
+   "EL RETORNO: <b>101\" de afuera de poste a afuera de poste</b> (del croquis del 22), en DOS paños. "
+   "Los dos paños salen a 47-1/2: si el dibujo se quedara en 46 el liso se iría a 49, por encima de los 4 pies. El flanco del dibujo abre a 3-13/16 (el límite es 4). "
+   "El paño liso va en la esquina de los platos, como toda esquina. <b>FALTA QUE RENE CONFIRME de qué lado quiere el dibujo.</b>"),
+ S("R-1", [('P',),('L',42.75),('P',)],
    "ARRANQUE DE LA ESCALERA  —  LLEVA SU PROPIO POSTE (no se apoya en nada)",
    "REMATE CONTRA LA PARED DE LA CABALLERIZA  (poste suelto, NO se ancla a la pared)",
-   "Pañito suelto: 47\" de afuera a afuera. LISO, sin dibujo, como estaba."),
+   "Pañito suelto: <b>46-3/4\" de afuera a afuera</b> (del croquis del 22). LISO, sin dibujo."),
 ]
 
 def largo(sec):
@@ -602,10 +602,10 @@ EDIFICIOS = [
  dict(slug="caballeriza-2", titulo="CABALLERIZA — LADO 2 · BARANDA · SECCIONES DE FRENTE",
       meta="LADO CON EL PAÑO SIN MEDIR · REV. 2 · SEPT 20, 2026",
       grupos=[("CABALLERIZA LADO 2 — SECCIONES N a R", CB2)],
-      corridas=[("Caballeriza 2","P",191.25,["P-1"]),
+      corridas=[("Caballeriza 2","P",191.375,["P-1"]),
                 ("Caballeriza 2","N",445.375,["N-1","N-2","N-3"]),
-                ("Caballeriza 2","Q", 99.0,["Q-1"]),
-                ("Caballeriza 2","R", 47.0,["R-1"])],
+                ("Caballeriza 2","Q", 101.0,["Q-1"]),
+                ("Caballeriza 2","R", 46.75,["R-1"])],
       # igual que la caballeriza 1: el frente carga sus dos postes de esquina
       # y la P muere en pano contra uno de ellos.
       propio={"P"},
