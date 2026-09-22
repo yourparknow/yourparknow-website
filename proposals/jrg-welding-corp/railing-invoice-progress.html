@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JRG Welding — Progress Invoice</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --navy:#1b2a41; --accent:#c8571b; }
+  body { font-family:'Segoe UI', -apple-system, Helvetica, Arial, sans-serif; color:#222; line-height:1.5; background:#fff; font-size:13px; }
+  .page { max-width:8.5in; margin:0 auto; padding:0.5in 0.6in; }
+  @media print { @page { size:letter; margin:0.45in 0.5in; } .page { padding:0; max-width:none; } }
+  .doc-header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:4px solid var(--navy); padding-bottom:12px; margin-bottom:18px; }
+  .brand p { font-size:11.5px; color:#555; }
+  .doc-meta { text-align:right; font-size:12px; }
+  .doc-meta .t { font-size:20px; font-weight:800; color:var(--navy); text-transform:uppercase; letter-spacing:2px; }
+  .parties { display:flex; gap:30px; margin:14px 0 18px; }
+  .party { flex:1; background:#f4f6f8; border-radius:6px; padding:10px 14px; font-size:12.5px; }
+  .party h3 { font-size:11px; text-transform:uppercase; color:var(--accent); letter-spacing:1px; margin-bottom:4px; }
+  table { width:100%; border-collapse:collapse; margin:8px 0 14px; font-size:12.5px; }
+  th { background:var(--navy); color:#fff; padding:7px 10px; text-align:left; }
+  td { border:1px solid #cfd6dd; padding:7px 10px; vertical-align:top; }
+  .num { text-align:right; white-space:nowrap; }
+  .totals td { border:none; padding:4px 10px; }
+  .due { background:var(--navy); color:#fff; font-size:16px; font-weight:800; border-radius:4px; }
+  .due td { border:none; padding:10px 12px; }
+  .note { font-size:11px; color:#555; font-style:italic; margin-top:14px; }
+  .terms { font-size:12px; margin-top:10px; }
+  .terms strong { color:var(--navy); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-header">
+    <div class="brand">
+      <img src="logo-jrg.png" alt="JRG Welding" style="height:46px; display:block; margin-bottom:4px;">
+      <p>JRG Welding Corp · Miami, FL</p>
+    </div>
+    <div class="doc-meta">
+      <div class="t">Progress Invoice</div>
+      <p>Invoice #: <strong>JRG-2026-007-P1</strong></p>
+      <p>Date: <strong>September 22, 2026</strong></p>
+    </div>
+  </div>
+
+  <div class="parties">
+    <div class="party">
+      <h3>Bill To</h3>
+      <strong>Raúl [Last Name]</strong><br>
+      18398 131st Trail N<br>
+      Jupiter, FL 33478
+    </div>
+    <div class="party">
+      <h3>Project</h3>
+      Custom aluminum railing — 42" guard<br>
+      Two porches &amp; two barn balconies
+    </div>
+  </div>
+
+  <table>
+    <tr><th style="width:6%">#</th><th>Description</th><th class="num" style="width:20%">Amount</th></tr>
+    <tr>
+      <td>1</td>
+      <td><strong>Railing fabrication</strong><br>
+        <span style="font-size:11.5px; color:#555;">Shop fabrication of the custom aluminum railing: posts, top cap,
+        bottom rail, pickets and welded pattern panels, per approved shop drawings.</span></td>
+      <td class="num">$7,000.00</td>
+    </tr>
+  </table>
+
+  <table class="due">
+    <tr>
+      <td>TOTAL — THIS INVOICE</td>
+      <td class="num">$7,000.00</td>
+    </tr>
+  </table>
+
+  <table class="totals">
+    <tr><td style="width:60%"></td><td>Total contract</td><td class="num">$40,000.00</td></tr>
+    <tr><td></td><td>Deposit received</td><td class="num">− $20,000.00</td></tr>
+    <tr><td></td><td>This invoice</td><td class="num">− $7,000.00</td></tr>
+    <tr><td></td><td style="border-top:2px solid var(--navy); padding-top:6px;"><strong>Balance remaining after this payment</strong></td>
+        <td class="num" style="border-top:2px solid var(--navy); padding-top:6px;"><strong>$13,000.00</strong></td></tr>
+  </table>
+
+  <p class="terms"><strong>Payment:</strong> check payable to <strong>JRG Welding Corp</strong>, or Zelle.
+     Remaining balance billed as the work progresses and at completion.</p>
+
+  <p class="note">Thank you for your business.</p>
+
+</div>
+</body>
+</html>
