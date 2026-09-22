@@ -32,10 +32,13 @@ CAP_T = 1.0         # cap 1" de alto
 RAIL_T = 1.0        # riel inferior 1" de alto
 FLOOR = 2.0         # luz del piso al riel
 GUARD = 42.0        # piso a tope del cap
-POST_LEN = 47.0     # poste total. El cap corre POR ENCIMA de los postes (de 41
-                    # a 42 sobre el deck), asi que la punta del poste va a 41, no
-                    # a 42: 41 + 6 a la fascia = 47. Antes decia 48 en la tabla
-                    # mientras el plano dibujaba 47. Es el grueso del cap.
+EMBED = 10.0        # lo que ENTRA A LA FASCIA. Rene la midio en obra: "la fascia
+                    # media como 12 pulgadas, y de piso arriba la fascia habia
+                    # como una pulgada". Antes esto estaba en 6 por suposicion.
+POST_LEN = 41.0 + EMBED   # = 51. El cap corre POR ENCIMA de los postes (de 41 a
+                    # 42 sobre el deck), asi que la punta del poste va a 41, no a
+                    # 42. 41 a la panza del cap + 10 a la fascia = 51.
+                    # RENE YA LOS CORTO A 51.
 CAMPO = 38.0        # luz libre entre riel y cap
 Y_CAP_B = 1.0       # cara inferior del cap
 Y_RAIL_T = 39.0     # cara superior del riel
@@ -331,7 +334,7 @@ def svg_seccion(sec):
         o.append(f'<text x="{xl-5}" y="{Y((a+b)/2):.2f}" font-size="8.5" font-weight="bold" fill="{DIM}" '
                  f'transform="rotate(-90 {xl-5} {Y((a+b)/2):.2f})" text-anchor="middle">{txt}</text>')
     xl2 = X(0) - 8
-    for (a, b, txt) in ((0,1,'1'), (1,39,'38'), (39,40,'1'), (40,42,'2'), (42,48,'6')):
+    for (a, b, txt) in ((0,1,'1'), (1,39,'38'), (39,40,'1'), (40,42,'2'), (42,42+EMBED,fr(EMBED))):
         o.append(f'<line x1="{xl2}" y1="{Y(a):.2f}" x2="{xl2}" y2="{Y(b):.2f}" stroke="{DIM}" stroke-width="0.6"/>')
         o.append(f'<line x1="{xl2-3}" y1="{Y(a):.2f}" x2="{xl2+3}" y2="{Y(a):.2f}" stroke="{DIM}" stroke-width="0.5"/>')
         o.append(f'<line x1="{xl2-3}" y1="{Y(b):.2f}" x2="{xl2+3}" y2="{Y(b):.2f}" stroke="{DIM}" stroke-width="0.5"/>')
@@ -343,7 +346,7 @@ def svg_seccion(sec):
              f'&#160;·&#160; <tspan fill="#0f766e" font-weight="bold">VERDE</tspan> = acumulado corrido al centro '
              f'de cada poste desde la punta izquierda &#160;·&#160; '
              f'<tspan fill="#8a6a42" font-weight="bold">POSTE 2×2×.090 × {fr(POST_LEN)}"</tspan> '
-             f'({fr(POST_LEN-6)} arriba + 6 abajo)</text>')
+             f'({fr(POST_LEN-EMBED)} arriba + {fr(EMBED)} abajo)</text>')
     return "\n".join(o), MK
 # ---------------------------------------------------------------- datos
 # elemento: ('P',) poste  |  ('D',luz) dibujo  |  ('L',luz) pano de piques

@@ -295,11 +295,12 @@ def t15_poste_cuadra():
     """El poste de la tabla tiene que ser el que dibuja el plano. Decia 48 y el
        plano dibujaba 47: el cap corre POR ENCIMA de los postes, asi que la
        punta va a la panza del cap, no al tope. Un pulgada en 80 postes."""
-    dibujado = (G.Y_DECK - G.Y_CAP_B) + 6.0          # de la panza del cap a la fascia
+    dibujado = (G.Y_DECK - G.Y_CAP_B) + G.EMBED      # de la panza del cap a la fascia
     if abs(G.POST_LEN - dibujado) > 1e-9:
         mal(f"el poste de la tabla dice {fr(G.POST_LEN)}\" y el plano dibuja "
             f"{fr(dibujado)}\". Se descuadra por el grueso del cap.")
-    return f"poste {fr(G.POST_LEN)}\" = {fr(dibujado-6)} a la panza del cap + 6 a la fascia"
+    return (f"poste {fr(G.POST_LEN)}\" = {fr(dibujado-G.EMBED)} a la panza del cap "
+            f"+ {fr(G.EMBED)} a la fascia")
 
 def t16_alterna_empalme():
     """En el poste del empalme, el ultimo pano del balcon y el primero de la

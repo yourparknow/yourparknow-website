@@ -21,7 +21,8 @@ ALU = "#9fb0c0"                          # aluminio
 # TIRAFONDO, que enrosca en la madera y no sale por el otro lado.  Eso obliga
 # a revisar el arranque, porque un tirafondo aguanta mucho menos que un pasante.
 OREJA_L  = 3.5      # largo de la oreja, hacia adentro del deck
-OREJA_H  = 5.5      # alto de la oreja (llena las 6" que baja el poste)
+OREJA_H  = 5.5      # alto de la oreja. No crece con la fascia: los tirafondos
+                    # siguen a 3" y 5" bajo el deck, que es donde hace el par.
 OREJA_E  = 0.25     # espesor
 BORDE    = 2.25     # del filo de la esquina al eje de los tirafondos
 TORN     = 0.5      # tirafondo de 1/2"
@@ -29,7 +30,9 @@ TORN_L   = 5.0      # largo del tirafondo
 ROSCA    = 3.25     # rosca que queda metida en madera solida
 PROF     = (3.0, 5.0)   # a que profundidad va cada tirafondo, bajo el piso del deck
 SEP_V    = PROF[1] - PROF[0]
-BAJA     = 6.0      # lo que baja el poste por debajo del deck
+BAJA     = G.EMBED  # lo que baja el poste por debajo del deck. Sale del dato,
+                    # no tecleado: Rene midio la fascia en obra y los postes
+                    # salieron de 51, o sea que bajan 10, no 6.
 RIM      = 2.5      # fascia + rim joist
 BLOQUEO  = 3.0      # bloqueo solido detras del rim: dos 2x juntos
 

@@ -120,7 +120,7 @@ def svg(s):
     # ---- cotas verticales
     xl = X(0) - 16
     for a, b, t in ((0,1,"1"), (1,1+AIRE,fr(AIRE)), (1+AIRE,1+AIRE+CUADRO,fr(CUADRO)),
-                    (1+AIRE+CUADRO,39,fr(AIRE)), (39,40,"1"), (40,42,"2"), (42,48,"6")):
+                    (1+AIRE+CUADRO,39,fr(AIRE)), (39,40,"1"), (40,42,"2"), (42,42+G.EMBED,fr(G.EMBED))):
         o.append(f'<line x1="{xl}" y1="{Y(a):.1f}" x2="{xl}" y2="{Y(b):.1f}" stroke="{ROJO}" stroke-width="0.7"/>')
         for q in (a, b):
             o.append(f'<line x1="{xl-3}" y1="{Y(q):.1f}" x2="{xl+3}" y2="{Y(q):.1f}" stroke="{ROJO}" stroke-width="0.6"/>')
@@ -161,7 +161,7 @@ def despiece(s):
             n = piques_de(e[1])[0]
             piques[n] = piques.get(n, 0) + 1
     f = [f"<tr><td><b>POSTE</b></td><td>2×2×.090</td><td class='n'>{fr(POST_LEN)}\"</td>"
-         f"<td class='n'><b>{np_}</b></td><td>{fr(POST_LEN-6)} a la panza del cap + 6 a la fascia &#183; el cap corre por encima</td></tr>",
+         f"<td class='n'><b>{np_}</b></td><td>{fr(POST_LEN-G.EMBED)} a la panza del cap + {fr(G.EMBED)} a la fascia &#183; el cap corre por encima</td></tr>",
          f"<tr><td><b>CAP</b></td><td>2×1×.090 de plano</td><td class='n'>{fr(cap_largo(s))}\"</td>"
          f"<td class='n'><b>1</b></td><td>{nota_cap(s)}</td></tr>"]
     for L in sorted(rieles, reverse=True):
