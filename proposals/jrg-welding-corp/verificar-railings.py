@@ -159,6 +159,25 @@ def t20_rotulos():
         mal("hay rotulos de piezas que ya no existen: " + ", ".join(sorted(sobran)))
     return f"las {len(SEC)} piezas dicen que son, no solo su codigo"
 
+def t21_contra_rene():
+    """Lo que Rene DIJO contra lo que el generador esta fabricando. El registro
+       vive en gen-medidas-de-rene.py, escrito a mano con sus palabras; los
+       planos salen de gen-railing-secciones. Si los dos se separan, aqui se ve.
+       Existe porque nos pasamos un dia discutiendo de memoria quien dijo que."""
+    R = load("gen-medidas-de-rene.py")
+    n = 0
+    for bal, d in R.MEDIDAS.items():
+        for que, dijo, pieza, secs, _ in d['filas']:
+            falta = [x for x in secs if x not in SEC]
+            if falta:
+                mal(f"{bal} / {que}: el registro nombra secciones que no existen: {falta}")
+                continue
+            real = sum(G.largo(SEC[x]) for x in secs)
+            n += 1
+            if abs(real - pieza) > 1e-9:
+                mal(f"{bal} / {que}: Rene dio {fr(pieza)}\" y el plano fabrica {fr(real)}\"")
+    return f"las {n} medidas de Rene cuadran con lo que se fabrica"
+
 def t8_letras():
     todas = [s['name'] for s in SEC.values()]
     if len(todas) != len(set(todas)):
@@ -400,6 +419,7 @@ PRUEBAS = [
  ("Arriba mide igual que abajo",            t18_arriba_igual_abajo),
  ("Cada junta del cap donde toca",          t19_cap_no_sobresale),
  ("Cada pieza dice qu\u00e9 es",                t20_rotulos),
+ ("Lo que dijo Rene = lo que se fabrica",   t21_contra_rene),
 ]
 
 print("\n" + "=" * 68)
