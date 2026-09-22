@@ -30,10 +30,10 @@ MEDIDAS = {
     "«36 pies 10 pulgadas el frente, más los dos postes de los lados»"),
    ("LATERAL DERECHO", "192-3/4 hasta la pared", 190.75, ["G-1"],
     "«190 tres cuartos. Tiene el poste al final, el poste se roba dos pulgadas»"),
-   ("LATERAL IZQUIERDO", "104 interior + su poste", 106.0, ["J-1"],
-    "«de ahí para atrás va a tener 104 pulgadas interior... contando el último poste 106»"),
-   ("LA 4ta, PARALELA AL FRENTE", "98-3/4 con su poste", 98.75, ["K-1"],
-    "«esa es 98 tres cuartos, la que va paralela a la larga»"),
+   ("LATERAL IZQUIERDO", "104 pelado, sin poste propio", 104.0, ["J-1"],
+    "«el paño de 104 va a ir de 104 nada más, porque se va a amarrar al poste este y se va a amarrar al poste del frente»"),
+   ("LA 4ta, PARALELA AL FRENTE", "98-3/4 de paño + 2 del poste", 100.75, ["K-1"],
+    "«98-3/4 con un solo poste, el del final, el que conecta al paño de 104... van a ser 100-3/4 con el poste»"),
    # 47 + 29 = 76 contaria DOS VECES el poste de la esquina, que las dos patas
    # comparten. El material que sale del taller son 74. La verificacion 21 lo
    # cogio en su primera corrida, con el 76 que habia puesto yo aqui.

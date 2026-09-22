@@ -363,7 +363,7 @@ ROTULOS = {
  "H-2": "EL FRENTE  ·  pieza 2 de 3",
  "H-3": "EL FRENTE  ·  pieza 3 de 3",
  "J-1": "LATERAL IZQUIERDO  ·  el de 104",
- "K-1": "LA 4ta, PARALELA AL FRENTE  ·  el de 98-3/4",
+ "K-1": "LA 4ta, PARALELA AL FRENTE  ·  98-3/4 + su poste",
  "M-1": "LA L  ·  pata de 29-3/4   (sale SOLDADA con la de 47)",
  "L-1": "LA L  ·  pata de 47   (sale SOLDADA con la de 29)",
  # ---- caballeriza 2
@@ -456,11 +456,18 @@ CB = [
  S("H-3", [('L',f_lis),('P',),('D',f_dib),('P',),('L',f_lis),('P',)],
    "EMPATE RECTO  (arranca en paño)",
    "ESQUINA  —  LLEVA SU PROPIO POSTE DE ESQUINA  (la J-1 muere en paño contra él)"),
- S("J-1", [('L',j_lis),('P',),('D',D),('P',),('L',j_lis),('P',)],
+ S("J-1", [('L',j_lis),('P',),('D',D),('P',),('L',j_lis)],
    "ESQUINA  (arranca en paño, contra el poste de esquina de H-3)",
-   "ESQUINA con K-1  (lleva el poste de esquina)"),
- S("K-1", [('L',k_lis),('P',),('D',D),('P',),('L',k_lis),('P',)],
-   "ESQUINA  (arranca en paño, apoya en el poste de J-1)", "HUECO DE LA ESCALERA  (27\", sigue de madera)"),
+   "ESQUINA  —  MUERE EN PAÑO contra el poste de K-1  (ese poste es de la 4ta)",
+   "104\" de material, sin poste propio en ninguna punta: se amarra al poste del "
+   "frente por un lado y al poste de la 4ta por el otro. Palabras de Rene: «el paño "
+   "de 104 va a ir de 104 nada más, porque se va a amarrar al poste este y al del frente»."),
+ S("K-1", [('P',),('L',k_lis),('P',),('D',D),('P',),('L',k_lis),('P',)],
+   "ESQUINA  —  LLEVA EL POSTE  (la J-1 muere en paño contra él)",
+   "HUECO DE LA ESCALERA  (sigue de madera)",
+   "La 4ta: 98-3/4\" de paño + 2\" del poste = <b>100-3/4\" de material</b>. "
+   "Palabras de Rene: «98-3/4 con un solo poste, el del final, el que conecta al "
+   "paño de 104... van a ser 100-3/4 con el poste»."),
  # --- LA "L" DE LA ESCALERA: M-1 (29") + L-1 (47") SALEN SOLDADAS EN UNA SOLA PIEZA.
  #     Los dos extremos libres son libres de verdad: de un lado el hueco de la escalera,
  #     del otro la pared (que NO se ancla). Por eso la pieza carga SUS TRES POSTES.
@@ -579,7 +586,7 @@ EDIFICIOS = [
       meta="MEDIDAS INTERIORES · REV. 2 · SEPT 21, 2026",
       grupos=[("CABALLERIZA 1 — SECCIONES G a M", CB)],
       corridas=[("Caballeriza","G",190.75,["G-1"]), ("Caballeriza","H",446.0,["H-1","H-2","H-3"]),
-                ("Caballeriza","J",106.0,["J-1"]), ("Caballeriza","K",98.75,["K-1"]),
+                ("Caballeriza","J",104.0,["J-1"]), ("Caballeriza","K",100.75,["K-1"]),
                 ("Caballeriza","M",29.75,["M-1"]), ("Caballeriza","L",47.0,["L-1"])],
       # orden real alrededor del edificio. None = ahi la cadena SE ROMPE (hueco de
       # escalera o pared), o sea que del otro lado NO hay poste donde apoyarse.
