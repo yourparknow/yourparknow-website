@@ -31,7 +31,7 @@ def tipo_punta(txt):
 def vecino(txt):
     """seccion vecina (A-1) o numero de empate (③), si el texto lo menciona"""
     import re
-    m = re.search(r"\b([A-R]-\d)\b", txt)
+    m = re.search(r"\b([A-S]-\d)\b", txt)
     if m: return m.group(1)
     m = re.search(r"[①-⑨]", txt)
     return m.group(0) if m else ""

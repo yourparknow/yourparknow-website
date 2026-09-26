@@ -35,7 +35,7 @@ def punta(txt):
 
 def vecino(txt):
     import re
-    m = re.search(r"\b([A-R]-\d)\b", txt)
+    m = re.search(r"\b([A-S]-\d)\b", txt)
     return m.group(1) if m else ""
 
 cap_largo = G.cap_largo          # una sola definicion, en gen-railing-secciones

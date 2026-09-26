@@ -25,7 +25,7 @@ BAL = [
       pasos=[("G","E"), ("H","N"), ("J","O"), ("K","S"), ("ESC","O"), ("M","S"), ("L","O")]),
  dict(t="BALCÓN 4  ·  CABALLERIZA LADO 2", esc=None, girar=True,
       ini="PARED DE LA CABALLERIZA", fin="PARED DE LA CABALLERIZA",
-      pasos=[("P","O"), ("N","S"), ("?","E"), ("Q","N"), ("ESC","E"), ("R","S")]),
+      pasos=[("P","O"), ("N","S"), ("S","E"), ("Q","N"), ("ESC","E"), ("R","S")]),
 ]
 INCOGNITA = 108.0
 # Hueco de la escalera, por balcon. Esas escaleras SIGUEN DE MADERA: no llevan

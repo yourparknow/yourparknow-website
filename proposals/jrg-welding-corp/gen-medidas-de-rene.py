@@ -58,13 +58,16 @@ MEDIDAS = {
     "del croquis del 22 sept: «191-3/8, 1 SOLO POSTE», el de la pared"),
    ("EL RETORNO", "101 afuera a afuera, 2 postes", 101.0, ["Q-1"],
     "del croquis del 22: «101\", 2 POSTES». Y antes: «no vamos a poner tres paños, tiene que irse en dos»"),
+   ("PAÑO DE LA IZQUIERDA", "105-1/4 pelado, sin poste propio", 105.25, ["S-1"],
+    "«el pañito que nos faltaba en la caballeriza número 2 es de 105 un cuarto» — 26 sept"),
    ("PAÑITO SUELTO", "46-3/4 afuera a afuera, 2 postes", 46.75, ["R-1"],
     "del croquis del 22: «46-3/4, 2 POSTES». Antes lo había dado en 47"),
   ],
-  abierto=["<b>EL PAÑO DE LA IZQUIERDA NO ESTÁ MEDIDO.</b> Palabras de Rene: "
-           "«el paño de la izquierda es el que me falta, que te lo tenía con un signo de "
-           "interrogación. Ese no te lo puedo dar». <b>Por eso la caballeriza 2 tiene 6 "
-           "piezas y no 7.</b>",
+  abierto=["<b>EL PAÑO DE LA IZQUIERDA YA ESTÁ</b>: 105-1/4, dado el 26 de septiembre. "
+           "Va <b>sin poste propio en ninguna punta</b> — se amarra al poste de esquina del "
+           "frente por un lado y al poste de los platos por el otro, igual que el de 104 en "
+           "la caballeriza 1. <b>Rene no dijo si esas 105-1/4 llevan los postes adentro: "
+           "si los llevan, la pieza baja a 101-1/4.</b>",
            "<b>Falta decir de qué lado va el dibujo del retorno.</b> Con dos paños, el "
            "dibujo cae por fuerza en una punta. Lo puse con el paño liso en la esquina de "
            "los platos, que es la regla de las esquinas.",

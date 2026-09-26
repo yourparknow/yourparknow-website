@@ -375,6 +375,7 @@ ROTULOS = {
  "N-3": "EL FRENTE  ·  pieza 3 de 3",
  "P-1": "PAÑO DERECHO  ·  el de 191-3/8",
  "Q-1": "EL RETORNO  ·  el de 101",
+ "S-1": "PAÑO DE LA IZQUIERDA  ·  el de 105-1/4",
  "R-1": "PAÑITO SUELTO  ·  el de 46-3/4",
  # ---- pool house, balcon 1
  "A-1": "EL FRENTE LARGO  ·  pieza 1 de 3",
@@ -520,6 +521,12 @@ CB2 = [
    "EL RETORNO: <b>101\" de afuera de poste a afuera de poste</b> (del croquis del 22), en DOS paños. "
    "Los dos paños salen a 47-1/2: si el dibujo se quedara en 46 el liso se iría a 49, por encima de los 4 pies. El flanco del dibujo abre a 3-13/16 (el límite es 4). "
    "El paño liso va en la esquina de los platos, como toda esquina. <b>FALTA QUE RENE CONFIRME de qué lado quiere el dibujo.</b>"),
+ S("S-1", [('L',27.625),('P',),('D',D),('P',),('L',27.625)],
+   "ESQUINA  (arranca en paño, contra el poste de esquina de N-3)",
+   "ESQUINA  —  MUERE EN PAÑO contra el poste de Q-1  (el de los platos de la fascia)",
+   "El paño que faltaba: <b>105-1/4\" de material</b>, sin poste propio en ninguna punta. "
+   "Se amarra al poste de esquina del frente por un lado y al poste de los platos por el otro, "
+   "igual que el de 104 en la caballeriza 1."),
  S("R-1", [('P',),('L',42.75),('P',)],
    "ARRANQUE DE LA ESCALERA  —  LLEVA SU PROPIO POSTE (no se apoya en nada)",
    "REMATE CONTRA LA PARED DE LA CABALLERIZA  (poste suelto, NO se ancla a la pared)",
@@ -607,12 +614,13 @@ EDIFICIOS = [
       grupos=[("CABALLERIZA LADO 2 — SECCIONES N a R", CB2)],
       corridas=[("Caballeriza 2","P",191.375,["P-1"]),
                 ("Caballeriza 2","N",445.375,["N-1","N-2","N-3"]),
+                ("Caballeriza 2","S", 105.25,["S-1"]),
                 ("Caballeriza 2","Q", 101.0,["Q-1"]),
                 ("Caballeriza 2","R", 46.75,["R-1"])],
       # igual que la caballeriza 1: el frente carga sus dos postes de esquina
       # y la P muere en pano contra uno de ellos.
-      propio={"P"},
-      cadena=[None,"P","N",None,"Q",None,"R",None],   # el "?" no esta medido: no da poste
+      propio={"P","S"},
+      cadena=[None,"P","N","S","Q",None,"R",None],
       aviso="<b>OJO — esta hoja es SOLO de la caballeriza 2, el cuarto balcón.</b> "
             "Las letras N, P, Q y R no se repiten en ninguna otra hoja. "
             "<b>Falta confirmar el orden en que se encadenan las corridas</b> alrededor del edificio: "
