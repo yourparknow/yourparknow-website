@@ -136,14 +136,36 @@ def hoja(titulo, secs):
     tot_p = sum(1 for s in secs for e in s['elems'] if e[0] == 'P')
     tot_d = sum(1 for s in secs for e in s['elems'] if e[0] == 'D')
     tot_q = sum(piques_de(e[1])[0] for s in secs for e in s['elems'] if e[0] == 'L')
+    def pl(n, uno, varios): return f"{n} {uno if n == 1 else varios}"
+    resumen = " &#183; ".join([pl(len(secs), "pieza", "piezas"), pl(tot_p, "poste", "postes"),
+                              pl(tot_d, "dibujo", "dibujos"), pl(tot_q, "pique", "piques")])
     return (f'<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">'
             f'<title>{titulo}</title><style>{CSS}</style></head><body><div class="page">'
             f'<div class="top"><h1>{titulo}</h1>'
-            f'<span>{len(secs)} piezas &#183; {tot_p} postes &#183; {tot_d} dibujos '
-            f'&#183; {tot_q} piques</span></div>{cuerpo}</div></body></html>')
+            f'<span>{resumen}</span></div>{cuerpo}</div></body></html>')
+
+
+def una_sola(nombre):
+    """UNA hoja con UN paño y nada mas.  Rene: "hazme el panito ese nada mas,
+       porque si mando el set completo la gente se va a confundir"."""
+    for c in G.EDIFICIOS:
+        for _, gr in c['grupos']:
+            for s in gr:
+                if s['name'] == nombre:
+                    titulo = dict((a, t) for a, t, _ in SETS).get(
+                        {"caballeriza": "CABALLERIZA-1", "caballeriza-2": "CABALLERIZA-2"}
+                        .get(c['slug'], ""), c['slug'].upper())
+                    out = HERE / f"PANO-{nombre}.html"
+                    out.write_text(hoja(f"{titulo} &#183; PAÑO {nombre}", [s]), encoding="utf-8")
+                    print(f"  PANO-{nombre}   {G.ROTULOS[nombre]}")
+                    return out
+    raise SystemExit(f"no existe la seccion {nombre}")
 
 
 if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1:
+        una_sola(sys.argv[1]); raise SystemExit
     porslug = {c['slug']: [s for _, gr in c['grupos'] for s in gr] for c in G.EDIFICIOS}
     for arch, titulo, slug in SETS:
         secs = porslug[slug]
