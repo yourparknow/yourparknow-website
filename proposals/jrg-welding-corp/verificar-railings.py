@@ -7,7 +7,7 @@
    Existe porque se me han ido errores que el tuvo que encontrar en obra."""
 import importlib.util, pathlib, sys, io, contextlib
 
-HERE = pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
+HERE = pathlib.Path(__file__).resolve().parent
 
 def load(n):
     s = importlib.util.spec_from_file_location(n.replace("-", "_").replace(".py", ""), HERE / n)

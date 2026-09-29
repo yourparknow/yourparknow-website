@@ -14,7 +14,7 @@
    cuadran solas y no hay que teclear ni un numero."""
 import math, pathlib, importlib.util
 
-HERE = pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
+HERE = pathlib.Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location("gsec", HERE / "gen-railing-secciones.py")
 G = importlib.util.module_from_spec(spec); spec.loader.exec_module(G)
 fr, feet = G.fr, G.feet

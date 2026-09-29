@@ -4,7 +4,7 @@
    Sale del mismo generador de secciones: ni una medida se teclea dos veces."""
 import importlib.util, pathlib, json
 
-HERE = pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
+HERE = pathlib.Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location("gsec", HERE / "gen-railing-secciones.py")
 G = importlib.util.module_from_spec(spec); spec.loader.exec_module(G)
 

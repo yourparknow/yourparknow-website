@@ -11,7 +11,7 @@
    ninguna medida."""
 import math, pathlib, importlib.util, io, contextlib
 
-HERE = pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
+HERE = pathlib.Path(__file__).resolve().parent
 def load(n):
     s = importlib.util.spec_from_file_location(n.replace("-", "_").replace(".py", ""), HERE / n)
     m = importlib.util.module_from_spec(s)

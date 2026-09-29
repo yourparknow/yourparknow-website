@@ -4,7 +4,9 @@
    una seccion por bloque, con cadena de cotas completa."""
 from fractions import Fraction
 
-OUT = "/home/user/yourparknow-website/proposals/jrg-welding-corp/railing-secciones-pool-house.html"
+import os
+_HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(_HERE, "railing-secciones-pool-house.html")
 
 # ---------------------------------------------------------------- fracciones
 def fr(x, den=32):
@@ -760,7 +762,7 @@ def build(cfg):
                      nsec=len(secs), res=res, tabla_corte=tabla_corte,
                      tabla_piques=tabla_piques, pies=f"{pies:.0f}", tiras=tiras,
                      cuerpo=cuerpo)
-    out = f"/home/user/yourparknow-website/proposals/jrg-welding-corp/railing-secciones-{cfg['slug']}.html"
+    out = os.path.join(_HERE, f"railing-secciones-{cfg['slug']}.html")
     open(out, "w", encoding="utf-8").write(html)
     print(f"  escrito: {out}  ({pies:.0f} pies de 1×1 ≈ {tiras} tiras de 24')")
     return tot_dib

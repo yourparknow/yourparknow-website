@@ -5,7 +5,7 @@
    NO es del set de planos: es para decidir. Cuando escoja, se rehace la hoja
    de escaleras con esa forma y esta se borra."""
 import math, pathlib, importlib.util
-H=pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
+H=pathlib.Path(__file__).resolve().parent
 s=importlib.util.spec_from_file_location("g",H/"gen-railing-secciones.py")
 G=importlib.util.module_from_spec(s); s.loader.exec_module(G)
 fr=G.fr

@@ -7,7 +7,7 @@
    queden lejos de la punta del rim (ahi es donde raja la madera)."""
 import importlib.util, pathlib
 
-HERE = pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
+HERE = pathlib.Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location("gsec", HERE / "gen-railing-secciones.py")
 G = importlib.util.module_from_spec(spec); spec.loader.exec_module(G)
 fr = G.fr

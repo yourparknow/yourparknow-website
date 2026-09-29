@@ -13,7 +13,7 @@
 """
 import importlib.util, pathlib, io, contextlib
 
-HERE = pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
+HERE = pathlib.Path(__file__).resolve().parent
 _s = importlib.util.spec_from_file_location("gsec", HERE / "gen-railing-secciones.py")
 G = importlib.util.module_from_spec(_s)
 with contextlib.redirect_stdout(io.StringIO()): _s.loader.exec_module(G)

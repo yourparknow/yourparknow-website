@@ -6,7 +6,7 @@
 import importlib.util, pathlib
 from fractions import Fraction
 
-HERE = pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
+HERE = pathlib.Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location("gsec", HERE / "gen-railing-secciones.py")
 G = importlib.util.module_from_spec(spec); spec.loader.exec_module(G)
 # la medida de la oreja se saca de su propia hoja: antes estaba tecleada aqui

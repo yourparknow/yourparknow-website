@@ -8,8 +8,12 @@ for _m in ("cryptography", "cryptography.exceptions", "cryptography.hazmat"):
     sys.modules[_m] = None                      # el paquete del sistema esta roto
 from pypdf import PdfReader, PdfWriter
 
-HERE = pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
-CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome"
+HERE = pathlib.Path(__file__).resolve().parent
+# el Chromium del contenedor, o el Chrome de la PC de Rene
+CHROME = next((c for c in ("/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+                           r"C:\Program Files\Google\Chrome\Application\chrome.exe",
+                           r"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe")
+               if pathlib.Path(c).exists()), "chromium")
 spec = importlib.util.spec_from_file_location("gsec", HERE / "gen-railing-secciones.py")
 G = importlib.util.module_from_spec(spec); spec.loader.exec_module(G)
 

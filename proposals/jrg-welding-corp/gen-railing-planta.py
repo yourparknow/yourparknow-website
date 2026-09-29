@@ -5,7 +5,7 @@
    Medida total de cada lateral. Los largos salen del generador de secciones."""
 import importlib.util, pathlib, math
 
-HERE = pathlib.Path("/home/user/yourparknow-website/proposals/jrg-welding-corp")
+HERE = pathlib.Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location("gsec", HERE / "gen-railing-secciones.py")
 G = importlib.util.module_from_spec(spec); spec.loader.exec_module(G)
 fr, feet, piques_de = G.fr, G.feet, G.piques_de

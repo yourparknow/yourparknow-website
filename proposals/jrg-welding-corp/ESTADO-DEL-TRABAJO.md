@@ -60,6 +60,15 @@ cd proposals/jrg-welding-corp
 python3 verificar-railings.py       # tienen que pasar las 21
 ```
 
+En la PC de Rene (Windows) se corre en modo UTF-8, si no se cae leyendo los HTML:
+
+```bash
+PYTHONUTF8=1 python verificar-railings.py
+```
+
+Ojo: la verificación 10 vuelve a imprimir los PDFs del set. Si no cambió ninguna
+medida, no los subas (`git checkout -- '*.pdf'`).
+
 Las 21 verificaciones incluyen: que cada cadena de cotas cierre, que no haya dos
 dibujos pegados, la bola de 4 pulgadas (incluidos los flancos del dibujo), que
 arriba mida igual que abajo, que cada junta del cap caiga donde toca, que cada
