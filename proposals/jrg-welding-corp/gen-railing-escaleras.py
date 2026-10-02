@@ -595,11 +595,11 @@ def empalme(g, VW=792, VH=470):
     o.append(f'<line x1="{P[0]:.1f}" y1="{P[1]:.1f}" x2="{P[0]-30:.1f}" y2="{P[1]+16:.1f}" '
              f'stroke="{ROJO}" stroke-width="0.9"/>')
     o.append(f'<text x="{P[0]-34:.1f}" y="{P[1]+16:.1f}" font-size="11.5" font-weight="800" '
-             f'fill="{ROJO}" text-anchor="end">POSTE DEL EMPALME {fr(tope+G.EMBED,32)}"</text>')
+             f'fill="{ROJO}" text-anchor="end">POSTE DEL EMPALME {fr(G.POST_LEN)}" (lo lleva el balc&#243;n)</text>')
     o.append(f'<text x="{P[0]-34:.1f}" y="{P[1]+29:.1f}" font-size="10.5" fill="{ROJO}" '
-             f'text-anchor="end">punta a {fr(tope,32)}" sobre el deck</text>')
+             f'text-anchor="end">el mismo poste de la hoja del balc&#243;n</text>')
     o.append(f'<text x="{P[0]-34:.1f}" y="{P[1]+41:.1f}" font-size="10.5" fill="{ROJO}" '
-             f'text-anchor="end">{fr(abs(tope-(GUARD-CAP)),64)}" m&#225;s corto que los del balc&#243;n</text>')
+             f'text-anchor="end">la escalera llega a ras, sin poste propio</text>')
     o.append('</svg>')
     return "".join(o)
 
@@ -743,9 +743,10 @@ for i, e in enumerate(ESCALERAS):
   <b>{e['ang']/2:.2f}&#176; del escuadre</b> y se juntan por el tope, en las {fr(GUARD)}".
   Si los cortas los dos a <b>{ANG_CORTE/2:.2f}&#176;</b> (el &#225;ngulo &#250;nico) te queda un hueco de
   1/64" a lo ancho del cap, que lo tapa la soldadura.<br>
-  <b>El poste del empalme es m&#225;s corto que los del balc&#243;n:</b>
-  <b>{fr(g['y_cap_b']+G.EMBED,32)}"</b> ({fr(G.EMBED)}" a la fascia, como todo poste del balc&#243;n), con la punta a {fr(g['y_cap_b'],32)}" sobre el deck &#8212; porque el
-  cap de la escalera, al ir acostado, tiene la panza m&#225;s abajo que el del balc&#243;n.</div>
+  <b>El poste del empalme lo lleva el balc&#243;n</b> y es el mismo de su hoja: <b>{fr(G.POST_LEN)}"</b>.
+  Las dos barandas de la escalera llegan arriba <b>a ras, sin poste propio</b>. El cap de la
+  escalera, al ir acostado, tiene la panza {fr(abs(g['y_cap_b']-(GUARD-CAP)),32)}" m&#225;s abajo que el del
+  balc&#243;n: ese nudillo va por dentro y se suelda.</div>
 
   <div class="pb"></div>
   <div class="hd"><h1>{e['n']} &#8212; LO QUE SE CORTA</h1>
