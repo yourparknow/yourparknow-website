@@ -235,7 +235,8 @@ mampostería en seco.
 1. **¿Las 105-1/4 del paño S-1 incluyen los dos postes?** Se fabricó pelado (sin
    postes propios). Si el número ya los incluía, la pieza baja a **101-1/4**.
 2. **Pool House:** los dos balcones ya están rectificados (2 oct).
-3. **De qué lado del retorno Q-1 va el dibujo.** Se puso el paño liso contra la
+3. **Escaleras del Pool House, baranda de la DERECHA:** sale igual que la izquierda; la terminación de arriba está PENDIENTE (Rene la decide en obra con el pañito). No poner poste propio arriba sin que él lo diga.
+3b. **De qué lado del retorno Q-1 va el dibujo.** Se puso el paño liso contra la
    esquina de los platos de la fascia. Nunca lo confirmó.
 4. **El hueco de escalera de 42" en caballeriza 1** salió del croquis, no de una
    cinta. Falta confirmarlo.

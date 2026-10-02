@@ -349,7 +349,7 @@ def alzado(g, VW=792, VH=575):
 
     p = S(g['horiz'], GUARD)
     o.append(f'<text x="{min(p[0]+10, VW-6):.1f}" y="{p[1]-6:.1f}" font-size="11.5" font-weight="800" '
-             f'fill="{ROJO}" text-anchor="end">ARRIBA: la IZQUIERDA empata en el poste del balc&#243;n &#183; la DERECHA lleva su propio poste</text>')
+             f'fill="{ROJO}" text-anchor="end">ARRIBA: la IZQUIERDA empata en el poste del balc&#243;n &#183; la DERECHA: terminaci&#243;n PENDIENTE</text>')
     p = S(0, 0)
     o.append(f'<text x="{p[0]-6:.1f}" y="{p[1]+17:.1f}" font-size="11.5" font-weight="800" '
              f'fill="{ROJO}">ABAJO: poste propio con placa</text>')
@@ -701,14 +701,14 @@ for i, e in enumerate(ESCALERAS):
     cuerpo += f"""
   {salto}
   <div class="hd"><h1>{e['n']}</h1><div class="m">PLANO DE FABRICACI&#211;N &#183; BARANDA DE 42" A PLOMO
-    <br>{fr(e['rake'])}" por la pendiente a {e['ang']:g}&#176; &#183; <b>{e['cant']}: izquierda y derecha</b>,
-    iguales salvo el poste de arriba</div></div>
+    <br>{fr(e['rake'])}" por la pendiente a {e['ang']:g}&#176; &#183; <b>{e['cant']} iguales: izquierda y derecha</b>
+    &#183; la punta de arriba de la derecha, PENDIENTE</div></div>
 
   <div class="big">
     <div><b>{fr(e['rake'])}"</b><span>por la pendiente</span></div>
     <div><b>{e['ang']:g}&#176;</b><span>pendiente</span></div>
     <div><b>{feet(g['rise'])}</b><span>sube</span></div>
-    <div><b>{g['n_bay']} + {g['n_bay']+1}</b><span>postes izq. + der.</span></div>
+    <div><b>{g['n_bay']} + {g['n_bay']}</b><span>postes izq. + der.</span></div>
     <div><b>{fr(g['cc'])}"</b><span>centro a centro</span></div>
     <div><b>{g['n_dib']}</b><span>dibujos</span></div>
   </div>
@@ -754,11 +754,12 @@ for i, e in enumerate(ESCALERAS):
     <tr><th style="width:11%">Pieza</th><th style="width:19%">Perfil</th><th style="width:13%">Largo de corte</th>
         <th style="width:8%">Cant.</th><th style="width:9%">Las {e['cant']}</th><th>C&#243;mo se corta</th></tr>
     <tr><td><b>POSTE</b></td><td>2&#215;2&#215;.090</td><td class="n">{fr(g['post_cara_larga'],32)}"</td>
-        <td class="n"><b>{g['n_bay']} izq.<br>{g['n_bay']+1} der.</b></td><td class="n">{2*g['n_bay']+1}</td>
+        <td class="n"><b>{g['n_bay']}</b></td><td class="n">{g['n_bay']*e['cant']}</td>
         <td>a plomo. Punta de arriba cortada a <b>{ANG_CORTE:g}&#176;</b>:
             cara larga {fr(g['post_cara_larga'],32)}", cara corta {fr(g['post_cara_corta'],32)}".
             Abajo corte recto. <b>IZQUIERDA:</b> el poste de m&#225;s arriba es el del balc&#243;n.
-            <b>DERECHA:</b> no tiene balc&#243;n donde empatar, as&#237; que lleva <b>su propio poste arriba</b>.</td></tr>
+            <b>DERECHA:</b> sale igual, con la <b>punta de arriba PENDIENTE</b>: ah&#237; no hay balc&#243;n
+            y Rene la resuelve en obra con el pa&#241;ito. <b>No se fabrica todav&#237;a esa terminaci&#243;n.</b></td></tr>
     <tr><td><b>CAP</b></td><td>2&#215;1&#215;.090 de plano</td><td class="n">{fr(g['cap_largo'])}"</td>
         <td class="n"><b>1</b></td><td class="n">{e['cant']}</td>
         <td>corrido de punta a punta, por la pendiente</td></tr>
@@ -801,7 +802,8 @@ HTML = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
   La de 34&#176; lleva <b>{G1['n_bay']+1} postes</b> ({fr(G1['cc'])}" de centro a centro) y la de
   33&#176; lleva <b>{G2['n_bay']+1} postes</b> ({fr(G2['cc'])}"). <b>En la baranda de la IZQUIERDA</b> el
   poste de m&#225;s arriba es el del balc&#243;n: se empata ah&#237; y no lleva uno propio.
-  <b>La de la DERECHA lleva su propio poste arriba</b>: ah&#237; no hay balc&#243;n donde empatar.</div>
+  <b>La de la DERECHA sale igual, pero su terminaci&#243;n de arriba est&#225; PENDIENTE</b>: ah&#237; no hay
+  balc&#243;n donde empatar y Rene la decide en obra con el pa&#241;ito.</div>
 
   <div class="warn"><b>OJO CON UNA COSA, antes de cortar.</b> Estos planos est&#225;n hechos
   tomando que <b>las 185" y las 198" las mediste POR LA PENDIENTE</b>, con la cinta pegada al
