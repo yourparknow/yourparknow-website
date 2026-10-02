@@ -14,7 +14,7 @@ fr, feet, piques_de = G.fr, G.feet, G.piques_de
 # Los dos del Pool House viran para el MISMO lado y los dos llevan escalera
 # al final del retorno largo.  Las dos caballerizas van giradas 90 en la hoja.
 BAL = [
- dict(t="BALCÓN 1  ·  POOL HOUSE", esc='ESCALERA  185-1/2" a 34°',
+ dict(t="BALCÓN 1  ·  POOL HOUSE", esc='ESCALERA  185" a 34°',
       ini="PARED DE LA CASA", fin="ARRANQUE DE LA ESCALERA",
       pasos=[("B","N"), ("A","O"), ("C","S")]),
  dict(t="BALCÓN 2  ·  POOL HOUSE", esc='ESCALERA  198" a 33°',
@@ -339,7 +339,7 @@ html = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
   al final del retorno largo, como en tus fotos. En las caballerizas el contorno de tu croquis no cierra,
   as&#237; que <b>revisa hacia d&#243;nde dobla cada lateral</b>. Si alguno est&#225; volteado, m&#225;rcalo:
   no cambia ni una medida ni una pieza.<br>
-  <b>Las escaleras de las dos caballerizas se quedan de madera por ahora</b>, as&#237; que la baranda se para a cada lado del hueco y no baja. Las <b>&#250;nicas escaleras de aluminio son las 4 del Pool House</b>: 185-1/2 a 34&#176; dos veces y 198 a 33&#176; dos veces.<br>
+  <b>Las escaleras de las dos caballerizas se quedan de madera por ahora</b>, as&#237; que la baranda se para a cada lado del hueco y no baja. Las <b>&#250;nicas escaleras de aluminio son las 4 del Pool House</b>: 185 a 34&#176; dos veces y 198 a 33&#176; dos veces.<br>
   <b>Las 2" que pediste</b> salen de los cuatro pa&#241;os que mueren contra pared: <b>B</b> y <b>E</b> del
   Pool House y <b>G</b> y <b>P</b> de las caballerizas. Ah&#237; el poste queda suelto, separado de la
   pared, sin anclaje.

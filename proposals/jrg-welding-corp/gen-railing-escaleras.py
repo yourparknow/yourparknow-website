@@ -31,7 +31,7 @@ LUZ_DIB = 46.0                          # la bahia del dibujo, EN HORIZONTAL
 ESFERA = 3.75                           # luz libre maxima que me permito (codigo: 4")
 
 ESCALERAS = [
- dict(n="ESCALERA DEL BALCÓN 1", rake=185.5, ang=34.0, cant=2, corr="C"),
+ dict(n="ESCALERA DEL BALCÓN 1", rake=185.0, ang=34.0, cant=2, corr="C"),
  dict(n="ESCALERA DEL BALCÓN 2", rake=198.0, ang=33.0, cant=2, corr="F"),
 ]
 
@@ -801,7 +801,7 @@ HTML = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
   una es el poste del balc&#243;n: la escalera se empata ah&#237; y no lleva uno propio.</div>
 
   <div class="warn"><b>OJO CON UNA COSA, antes de cortar.</b> Estos planos est&#225;n hechos
-  tomando que <b>las 185-1/2" y las 198" las mediste POR LA PENDIENTE</b>, con la cinta pegada al
+  tomando que <b>las 185" y las 198" las mediste POR LA PENDIENTE</b>, con la cinta pegada al
   stringer. Si es as&#237;, la de 34&#176; <b>sube {feet(G1['rise'])}</b> y la de 33&#176;
   <b>sube {feet(G2['rise'])}</b>. Mide del piso de abajo al deck: si te da eso, seguimos.
   <b>Si te da como 10 pies y medio, me diste la corrida en planta y estas hojas hay que rehacerlas.</b></div>
