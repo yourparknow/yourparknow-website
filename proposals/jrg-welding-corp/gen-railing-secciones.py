@@ -417,18 +417,26 @@ PH_B1 = [
  S("C-2", [('D',D),('P',),('L',45.5),('P',)],
    "EMPATE RECTO ④  (arranca en paño)", "ARRANQUE DE ESCALERA ⑤"),
 ]
+# MEDIDAS DE RENE, 2 OCT 2026 (balcon 2). Mismo criterio que el balcon 1:
+#   frente D ......... 389-1/4 INTERIOR + sus 2 postes de esquina -> 393-1/4
+#   lateral E ........ 151-5/8 a la pared, -2 de la pared = 149-5/8 de material.
+#                      Poste en la pared; por la esquina muere en pano contra D.
+#                      Con 3 panos el liso se iba a 48-13/16 (pasa de 4 pies):
+#                      va en 4 panos, igual que la B del balcon 1.
+#   lateral F ........ 240-5/8 EXACTA (la corrigio el 2 oct). Por la esquina muere
+#                      en pano contra D; en la escalera lleva el poste del empalme.
 PH_B2 = [
- S("D-1", [('P',),('L',37.0),('P',),('D',D),('P',),('L',37.0),('P',)],
+ S("D-1", [('P',),('L',39.0),('P',),('D',D),('P',),('L',37.0),('P',)],
    "ESQUINA con F-1  (lleva el poste de esquina)", "EMPATE RECTO  (junta al centro del poste)"),
  S("D-2", [('D',D),('P',),('L',37.25),('P',),('D',D),('P',)],
    "EMPATE RECTO  (arranca en paño)", "EMPATE RECTO  (junta al centro del poste)"),
- S("D-3", [('L',37.0),('P',),('D',D),('P',),('L',37.0),('P',)],
+ S("D-3", [('L',37.0),('P',),('D',D),('P',),('L',39.0),('P',)],
    "EMPATE RECTO  (arranca en paño)", "ESQUINA con E-1  (lleva el poste de esquina)"),
- S("E-1", [('L',47.8125),('P',),('D',D),('P',),('L',47.8125),('P',)],
+ S("E-1", [('L',24.8125),('P',),('D',D),('P',),('L',24.8125),('P',),('D',D),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de D-3)", "REMATE CONTRA LA CASA  (poste suelto, NO se ancla a la pared)"),
- S("F-1", [('L',45.25),('P',),('D',D),('P',),('L',45.25),('P',)],
+ S("F-1", [('L',46.25),('P',),('D',D),('P',),('L',46.125),('P',)],
    "ESQUINA  (arranca en paño, apoya en el poste de D-1)", "EMPATE RECTO  (junta al centro del poste)"),
- S("F-2", [('D',D),('P',),('L',45.25),('P',)],
+ S("F-2", [('D',D),('P',),('L',46.25),('P',)],
    "EMPATE RECTO  (arranca en paño)", "ARRANQUE DE ESCALERA  (198\" a 33°)"),
 ]
 
@@ -592,18 +600,18 @@ EDIFICIOS = [
       grupos=[("POOL HOUSE — BALCÓN 1 (el de la escalera)", PH_B1),
               ("POOL HOUSE — BALCÓN 2 (el largo de la derecha)", PH_B2)],
       corridas=[("Balcón 1","A",387.625,["A-1","A-2","A-3"]), ("Balcón 1","B",159.0,["B-1"]),
-                ("Balcón 1","C",237.625,["C-1","C-2"]), ("Balcón 2","D",389.25,["D-1","D-2","D-3"]),
-                ("Balcón 2","E",149.625,["E-1"]), ("Balcón 2","F",239.75,["F-1","F-2"])],
+                ("Balcón 1","C",237.625,["C-1","C-2"]), ("Balcón 2","D",393.25,["D-1","D-2","D-3"]),
+                ("Balcón 2","E",149.625,["E-1"]), ("Balcón 2","F",240.625,["F-1","F-2"])],
       cadena=[None,"B","A","C",None,  None,"E","D","F",None],
       reverso={"A","B","D","E"},   # escritas de la esquina hacia la pared
       # balcon 1 con las medidas del 2 oct: A carga sus 2 postes de esquina,
       # B y C mueren en pano contra ellos y su total es su material.
-      propio={"B","C"},
+      propio={"B","C","E","F"},
       aviso="<b>OJO — esta hoja es SOLO del Pool House, y falta la escalera.</b> "
             "Los dibujitos de aquí son los de los dos balcones planos del Pool House. "
             "La caballeriza va en hoja aparte, con las letras G a la M (no se repite ninguna letra entre edificios). "
             "Los rombos de la escalera van aparte (otro ángulo, otras medidas) y no están contados aquí. "
-            "Las <b>2\"</b> se descuentan en los paños que mueren contra la casa: corrida B = 159\" de material (161 medidas a la pared) y corrida E = 149-5/8\" (151-5/8 medidas). El largo D queda en 389-1/4\", como lo mediste."),
+            "Las <b>2\"</b> se descuentan en los paños que mueren contra la casa: corrida B = 159\" de material (161 medidas a la pared) y corrida E = 149-5/8\" (151-5/8 medidas). El frente D: 389-1/4\" por dentro + sus 2 postes = 393-1/4\"."),
  dict(slug="caballeriza", titulo="CABALLERIZA 1 — BARANDA · SECCIONES DE FRENTE",
       meta="MEDIDAS INTERIORES · REV. 2 · SEPT 21, 2026",
       grupos=[("CABALLERIZA 1 — SECCIONES G a M", CB)],

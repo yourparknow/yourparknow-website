@@ -37,6 +37,7 @@ for cfg in G.EDIFICIOS:
 # verificador vuelve a protestar, que es lo que se quiere.
 DIBUJO_EN_LA_PUNTA_OK = {
  "B": 'pool 1: "arranca desde la pared... arranca con un dibujo de la pared"',
+ "E": 'pool 2: igual que la B del balcon 1 (2 oct). Con 149-5/8 de material en 3 panos el liso pasa de 4 pies',
  "G": 'caballeriza 1: sale de la pared con dibujo',
  "P": 'caballeriza 2: sale de la pared con dibujo',
  "L": 'la pata de 47: "en el 47 pongo un dibujo para que no se vea esa L completa sin dibujo"',

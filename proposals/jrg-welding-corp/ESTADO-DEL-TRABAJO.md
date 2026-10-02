@@ -148,8 +148,12 @@ B = 161 − 2 de la pared = 159, sin poste en la esquina · C = 237-5/8 exacta, 
 en la esquina. Falta que confirme que el poste del empalme con la escalera lo lleva
 el balcón (C-2), como está.
 
-**⚠️ NO CORTAR MATERIAL DEL BALCÓN 2 DEL POOL HOUSE** (D/E/F). Esos números
-todavía no se han convertido a la regla de interior.
+**Pool House Balcón 2 — RECTIFICADO el 2 de octubre.** D = 389-1/4 interior + 2 postes =
+393-1/4 · E = 151-5/8 − 2 de la pared = 149-5/8, sin poste en la esquina, en 4 paños con
+dibujo en la pared como la B (en 3 el liso pasaba de 4 pies) · F = 240-5/8 exacta (Rene
+la corrigió; antes 239-3/4), sin poste en la esquina, con el poste del empalme.
+**Escalera del Balcón 1: 185" a 34°** (Rene, 2 oct; antes 185-1/2). Rene pidió: *usar
+las medidas que da AHORA, no recordarle las viejas.*
 
 ### Piso impermeable de los portalones del Pool House — EN INVESTIGACIÓN
 
@@ -230,7 +234,7 @@ mampostería en seco.
 
 1. **¿Las 105-1/4 del paño S-1 incluyen los dos postes?** Se fabricó pelado (sin
    postes propios). Si el número ya los incluía, la pieza baja a **101-1/4**.
-2. **El Balcón 2 del Pool House (D/E/F).** El 1 ya está rectificado; del 2 no se corta nada todavía.
+2. **Pool House:** los dos balcones ya están rectificados (2 oct).
 3. **De qué lado del retorno Q-1 va el dibujo.** Se puso el paño liso contra la
    esquina de los platos de la fascia. Nunca lo confirmó.
 4. **El hueco de escalera de 42" en caballeriza 1** salió del croquis, no de una

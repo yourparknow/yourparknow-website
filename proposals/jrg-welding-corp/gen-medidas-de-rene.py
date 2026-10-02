@@ -91,14 +91,19 @@ MEDIDAS = {
            "Los empates de las secciones y los dibujos compartidos quedan como los teníamos."]),
 
 "BALCÓN 2 · POOL HOUSE": dict(
-  cuando="de las medidas anteriores — no se han vuelto a revisar con Rene",
+  cuando="2 de octubre — «en el 2, el paño de la escalera... 240 pulgadas 5 octavos»",
   filas=[
-   ("EL FRENTE LARGO", "389-1/4", 389.25, ["D-1","D-2","D-3"], ""),
-   ("LATERAL CONTRA LA CASA", "151-5/8 medidas − 2 de la pared", 147.625, ["E-1"], ""),
-   ("LATERAL DE LA ESCALERA", "239-3/4", 237.75, ["F-1","F-2"], ""),
+   ("EL FRENTE LARGO", "389-1/4 interior + los 2 postes de las puntas", 393.25, ["D-1","D-2","D-3"],
+    "«el otro del frente es 389 un cuarto, ese sí está bien... hay que agregarle los dos postes en los bordes»"),
+   ("LATERAL CONTRA LA CASA", "151-5/8 − 2 de la pared, sin poste en la esquina", 149.625, ["E-1"],
+    "«151 5/8, ese está bien... va sin poste en el frente porque conecta contra el grande y hay que descontarle 2 pulgadas del lado de la pared»"),
+   ("LATERAL DE LA ESCALERA", "240-5/8 exacta, sin poste en la esquina", 240.625, ["F-1","F-2"],
+    "«240 pulgadas 5 octavos. Esa medida te la corregí ya... es el paño que choca con el del frente, que va sin poste al frente»"),
   ],
-  abierto=["Igual que el balcón 1: los largos vienen de las medidas anteriores y "
-           "<b>no se han vuelto a confirmar</b>."]),
+  abierto=["<b>El empalme con la escalera:</b> igual que en el balcón 1, el poste lo lleva "
+           "el balcón (la punta de F-2) y la escalera se empata ahí sin poste propio.",
+           "<b>El lateral contra la casa no cabe en 3 paños:</b> con 149-5/8 de material el "
+           "liso se iría a 48-13/16, más de 4 pies. Va en 4 paños."]),
 }
 
 CSS = """
