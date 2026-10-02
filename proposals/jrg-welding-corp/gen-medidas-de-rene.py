@@ -76,16 +76,19 @@ MEDIDAS = {
            "El flanco de ese dibujo abre a <b>3-13/16</b> (el límite es 4)."]),
 
 "BALCÓN 1 · POOL HOUSE": dict(
-  cuando="de las medidas anteriores — no se han vuelto a revisar con Rene",
+  cuando="2 de octubre — «en el primer dibujo del balcón, esas son las medidas exactas»",
   filas=[
-   ("EL FRENTE LARGO", "383-5/8", 383.625, ["A-1","A-2","A-3"], ""),
-   ("LATERAL CONTRA LA CASA", "161 medidas − 2 de la pared", 157.0, ["B-1"], ""),
-   ("LATERAL DE LA ESCALERA", "237-5/8", 235.625, ["C-1","C-2"], ""),
+   ("EL FRENTE LARGO", "383-5/8 interior + los 2 postes de las puntas", 387.625, ["A-1","A-2","A-3"],
+    "«el paño largo de 383 pulgadas lleva poste en los dos lados... va a crecer dos pulgadas para cada lado»"),
+   ("LATERAL CONTRA LA CASA", "161 − 2 de la pared, sin poste en la esquina", 159.0, ["B-1"],
+    "«hay que descontarle dos pulgadas y va a ir sin poste en la otra punta porque es el que conecta con ese del frente»"),
+   ("LATERAL DE LA ESCALERA", "237-5/8 exacta, sin poste en la esquina", 237.625, ["C-1","C-2"],
+    "«no lleva poste en el frente tampoco... esa medida no tiene descuento. Esa medida es exacta»"),
   ],
-  abierto=["Estas medidas son de <b>antes</b> de que Rene aclarara lo de las medidas "
-           "interiores y los postes de esquina. <b>Los largos no se han vuelto a confirmar "
-           "con él.</b> Los arreglos de fabricación (riel completo, cap a ras, poste de 47) "
-           "sí están aplicados aquí."]),
+  abierto=["<b>El empalme con la escalera:</b> «uno de los dos tiene que llevar el poste». "
+           "Lo dejé como estaba: <b>el poste lo lleva el balcón</b> (la punta de C-2) y la escalera "
+           "se empata ahí sin poste propio. <b>Confírmalo.</b>",
+           "Los empates de las secciones y los dibujos compartidos quedan como los teníamos."]),
 
 "BALCÓN 2 · POOL HOUSE": dict(
   cuando="de las medidas anteriores — no se han vuelto a revisar con Rene",

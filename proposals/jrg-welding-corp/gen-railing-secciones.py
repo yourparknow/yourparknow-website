@@ -396,18 +396,25 @@ ROTULOS = {
 }
 
 # ================================ POOL HOUSE ================================
+# MEDIDAS DE RENE, 2 OCT 2026 (balcon 1). Mismo criterio que las caballerizas:
+#   frente A ......... 383-5/8 INTERIOR + sus 2 postes de esquina -> 387-5/8
+#                      (las 2" de cada poste van en el pano liso de cada punta)
+#   lateral B ........ 161 a la pared, -2 de la pared = 159 de material.
+#                      Poste en la pared; por la esquina muere en pano contra A.
+#   lateral C ........ 237-5/8 EXACTA, sin descuento. Por la esquina muere en
+#                      pano contra A; en la escalera lleva el poste del empalme.
 PH_B1 = [
- S("A-1", [('P',),('L',30.5625),('P',),('D',D),('P',),('L',39.5),('P',)],
+ S("A-1", [('P',),('L',32.5625),('P',),('D',D),('P',),('L',39.5),('P',)],
    "ESQUINA ①  (arranca en el poste de esquina con C-1)", "EMPATE RECTO ③  (junta al centro del poste)"),
  S("A-2", [('D',D),('P',),('L',39.5),('P',),('D',D),('P',)],
    "EMPATE RECTO ③  (arranca en paño, apoya en el poste de A-1)", "EMPATE RECTO ⑦  (junta al centro del poste)"),
- S("A-3", [('L',39.5),('P',),('D',D),('P',),('L',30.5625),('P',)],
+ S("A-3", [('L',39.5),('P',),('D',D),('P',),('L',32.5625),('P',)],
    "EMPATE RECTO ⑦  (arranca en paño)", "ESQUINA ②  (lleva el poste de esquina con B-1)"),
- S("B-1", [('L',28.5),('P',),('D',D),('P',),('L',28.5),('P',),('D',D),('P',)],
+ S("B-1", [('L',29.5),('P',),('D',D),('P',),('L',29.5),('P',),('D',D),('P',)],
    "ESQUINA ②  (arranca en paño, apoya en el poste de A-3)", "REMATE CONTRA LA CASA ⑥  (poste suelto, NO se ancla a la pared)"),
- S("C-1", [('L',44.5),('P',),('D',D),('P',),('L',44.625),('P',)],
+ S("C-1", [('L',45.5),('P',),('D',D),('P',),('L',44.625),('P',)],
    "ESQUINA ①  (arranca en paño, apoya en el poste de A-1)", "EMPATE RECTO ④  (junta al centro del poste)"),
- S("C-2", [('D',D),('P',),('L',44.5),('P',)],
+ S("C-2", [('D',D),('P',),('L',45.5),('P',)],
    "EMPATE RECTO ④  (arranca en paño)", "ARRANQUE DE ESCALERA ⑤"),
 ]
 PH_B2 = [
@@ -584,16 +591,19 @@ EDIFICIOS = [
       meta="BALCÓN 1 + BALCÓN 2 · REV. 3 · SEPT 20, 2026",
       grupos=[("POOL HOUSE — BALCÓN 1 (el de la escalera)", PH_B1),
               ("POOL HOUSE — BALCÓN 2 (el largo de la derecha)", PH_B2)],
-      corridas=[("Balcón 1","A",383.625,["A-1","A-2","A-3"]), ("Balcón 1","B",159.0,["B-1"]),
+      corridas=[("Balcón 1","A",387.625,["A-1","A-2","A-3"]), ("Balcón 1","B",159.0,["B-1"]),
                 ("Balcón 1","C",237.625,["C-1","C-2"]), ("Balcón 2","D",389.25,["D-1","D-2","D-3"]),
                 ("Balcón 2","E",149.625,["E-1"]), ("Balcón 2","F",239.75,["F-1","F-2"])],
       cadena=[None,"B","A","C",None,  None,"E","D","F",None],
       reverso={"A","B","D","E"},   # escritas de la esquina hacia la pared
+      # balcon 1 con las medidas del 2 oct: A carga sus 2 postes de esquina,
+      # B y C mueren en pano contra ellos y su total es su material.
+      propio={"B","C"},
       aviso="<b>OJO — esta hoja es SOLO del Pool House, y falta la escalera.</b> "
             "Los dibujitos de aquí son los de los dos balcones planos del Pool House. "
             "La caballeriza va en hoja aparte, con las letras G a la M (no se repite ninguna letra entre edificios). "
             "Los rombos de la escalera van aparte (otro ángulo, otras medidas) y no están contados aquí. "
-            "Las <b>2\"</b> se descuentan en los paños que mueren contra la casa: corrida B = 159\" (161 medidas) y corrida E = 149-5/8\" (151-5/8 medidas). El largo D queda en 389-1/4\", como lo mediste."),
+            "Las <b>2\"</b> se descuentan en los paños que mueren contra la casa: corrida B = 159\" de material (161 medidas a la pared) y corrida E = 149-5/8\" (151-5/8 medidas). El largo D queda en 389-1/4\", como lo mediste."),
  dict(slug="caballeriza", titulo="CABALLERIZA 1 — BARANDA · SECCIONES DE FRENTE",
       meta="MEDIDAS INTERIORES · REV. 2 · SEPT 21, 2026",
       grupos=[("CABALLERIZA 1 — SECCIONES G a M", CB)],
