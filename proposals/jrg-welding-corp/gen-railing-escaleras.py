@@ -349,7 +349,7 @@ def alzado(g, VW=792, VH=575):
 
     p = S(g['horiz'], GUARD)
     o.append(f'<text x="{min(p[0]+10, VW-6):.1f}" y="{p[1]-6:.1f}" font-size="11.5" font-weight="800" '
-             f'fill="{ROJO}" text-anchor="end">ARRIBA: empata en el poste del balc&#243;n</text>')
+             f'fill="{ROJO}" text-anchor="end">ARRIBA: la IZQUIERDA empata en el poste del balc&#243;n &#183; la DERECHA lleva su propio poste</text>')
     p = S(0, 0)
     o.append(f'<text x="{p[0]-6:.1f}" y="{p[1]+17:.1f}" font-size="11.5" font-weight="800" '
              f'fill="{ROJO}">ABAJO: poste propio con placa</text>')
@@ -595,7 +595,7 @@ def empalme(g, VW=792, VH=470):
     o.append(f'<line x1="{P[0]:.1f}" y1="{P[1]:.1f}" x2="{P[0]-30:.1f}" y2="{P[1]+16:.1f}" '
              f'stroke="{ROJO}" stroke-width="0.9"/>')
     o.append(f'<text x="{P[0]-34:.1f}" y="{P[1]+16:.1f}" font-size="11.5" font-weight="800" '
-             f'fill="{ROJO}" text-anchor="end">POSTE DEL EMPALME {fr(tope+6,32)}"</text>')
+             f'fill="{ROJO}" text-anchor="end">POSTE DEL EMPALME {fr(tope+G.EMBED,32)}"</text>')
     o.append(f'<text x="{P[0]-34:.1f}" y="{P[1]+29:.1f}" font-size="10.5" fill="{ROJO}" '
              f'text-anchor="end">punta a {fr(tope,32)}" sobre el deck</text>')
     o.append(f'<text x="{P[0]-34:.1f}" y="{P[1]+41:.1f}" font-size="10.5" fill="{ROJO}" '
@@ -701,13 +701,14 @@ for i, e in enumerate(ESCALERAS):
     cuerpo += f"""
   {salto}
   <div class="hd"><h1>{e['n']}</h1><div class="m">PLANO DE FABRICACI&#211;N &#183; BARANDA DE 42" A PLOMO
-    <br>{fr(e['rake'])}" por la pendiente a {e['ang']:g}&#176; &#183; <b>{e['cant']} iguales</b></div></div>
+    <br>{fr(e['rake'])}" por la pendiente a {e['ang']:g}&#176; &#183; <b>{e['cant']}: izquierda y derecha</b>,
+    iguales salvo el poste de arriba</div></div>
 
   <div class="big">
     <div><b>{fr(e['rake'])}"</b><span>por la pendiente</span></div>
     <div><b>{e['ang']:g}&#176;</b><span>pendiente</span></div>
     <div><b>{feet(g['rise'])}</b><span>sube</span></div>
-    <div><b>{g['n_bay']+1}</b><span>postes</span></div>
+    <div><b>{g['n_bay']} + {g['n_bay']+1}</b><span>postes izq. + der.</span></div>
     <div><b>{fr(g['cc'])}"</b><span>centro a centro</span></div>
     <div><b>{g['n_dib']}</b><span>dibujos</span></div>
   </div>
@@ -743,20 +744,21 @@ for i, e in enumerate(ESCALERAS):
   Si los cortas los dos a <b>{ANG_CORTE/2:.2f}&#176;</b> (el &#225;ngulo &#250;nico) te queda un hueco de
   1/64" a lo ancho del cap, que lo tapa la soldadura.<br>
   <b>El poste del empalme es m&#225;s corto que los del balc&#243;n:</b>
-  <b>{fr(g['y_cap_b']+6,32)}"</b>, con la punta a {fr(g['y_cap_b'],32)}" sobre el deck &#8212; porque el
+  <b>{fr(g['y_cap_b']+G.EMBED,32)}"</b> ({fr(G.EMBED)}" a la fascia, como todo poste del balc&#243;n), con la punta a {fr(g['y_cap_b'],32)}" sobre el deck &#8212; porque el
   cap de la escalera, al ir acostado, tiene la panza m&#225;s abajo que el del balc&#243;n.</div>
 
   <div class="pb"></div>
   <div class="hd"><h1>{e['n']} &#8212; LO QUE SE CORTA</h1>
-    <div class="m">una escalera &#183; hay {e['cant']} iguales</div></div>
+    <div class="m">las 2 barandas de esta escalera <div class="m">una escalera &#183; hay {e['cant']} iguales</div>#183; izquierda y derecha</div></div>
   <table>
     <tr><th style="width:11%">Pieza</th><th style="width:19%">Perfil</th><th style="width:13%">Largo de corte</th>
         <th style="width:8%">Cant.</th><th style="width:9%">Las {e['cant']}</th><th>C&#243;mo se corta</th></tr>
     <tr><td><b>POSTE</b></td><td>2&#215;2&#215;.090</td><td class="n">{fr(g['post_cara_larga'],32)}"</td>
-        <td class="n"><b>{g['n_bay']}</b></td><td class="n">{g['n_bay']*e['cant']}</td>
+        <td class="n"><b>{g['n_bay']} izq.<br>{g['n_bay']+1} der.</b></td><td class="n">{2*g['n_bay']+1}</td>
         <td>a plomo. Punta de arriba cortada a <b>{ANG_CORTE:g}&#176;</b>:
             cara larga {fr(g['post_cara_larga'],32)}", cara corta {fr(g['post_cara_corta'],32)}".
-            Abajo corte recto. El poste de m&#225;s arriba es el del balc&#243;n.</td></tr>
+            Abajo corte recto. <b>IZQUIERDA:</b> el poste de m&#225;s arriba es el del balc&#243;n.
+            <b>DERECHA:</b> no tiene balc&#243;n donde empatar, as&#237; que lleva <b>su propio poste arriba</b>.</td></tr>
     <tr><td><b>CAP</b></td><td>2&#215;1&#215;.090 de plano</td><td class="n">{fr(g['cap_largo'])}"</td>
         <td class="n"><b>1</b></td><td class="n">{e['cant']}</td>
         <td>corrido de punta a punta, por la pendiente</td></tr>
@@ -797,8 +799,9 @@ HTML = f"""<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
 
   <div class="warn"><b>LOS POSTES VAN A MENOS DE 4 PIES, medidos POR LA PENDIENTE.</b>
   La de 34&#176; lleva <b>{G1['n_bay']+1} postes</b> ({fr(G1['cc'])}" de centro a centro) y la de
-  33&#176; lleva <b>{G2['n_bay']+1} postes</b> ({fr(G2['cc'])}"). El poste de m&#225;s arriba de cada
-  una es el poste del balc&#243;n: la escalera se empata ah&#237; y no lleva uno propio.</div>
+  33&#176; lleva <b>{G2['n_bay']+1} postes</b> ({fr(G2['cc'])}"). <b>En la baranda de la IZQUIERDA</b> el
+  poste de m&#225;s arriba es el del balc&#243;n: se empata ah&#237; y no lleva uno propio.
+  <b>La de la DERECHA lleva su propio poste arriba</b>: ah&#237; no hay balc&#243;n donde empatar.</div>
 
   <div class="warn"><b>OJO CON UNA COSA, antes de cortar.</b> Estos planos est&#225;n hechos
   tomando que <b>las 185" y las 198" las mediste POR LA PENDIENTE</b>, con la cinta pegada al

@@ -101,7 +101,9 @@ PIQ_TOTAL = tot['piq'] + tot['dib'] * 4
 spec_e = importlib.util.spec_from_file_location("gesc", HERE / "gen-railing-escaleras.py")
 E = importlib.util.module_from_spec(spec_e); spec_e.loader.exec_module(E)
 ESC_N   = sum(x['cant'] for x in E.ESCALERAS)
-ESC_POS = sum((E.geo(x)['n_bay']) * x['cant'] for x in E.ESCALERAS)
+# la de la izquierda empata en el poste del balcon; la de la derecha no tiene
+# balcon donde empatar y lleva su propio poste arriba: uno mas por escalera
+ESC_POS = sum(E.geo(x)['n_bay'] * x['cant'] + 1 for x in E.ESCALERAS)
 ESC_DIB = sum(E.geo(x)['n_dib'] * x['cant'] for x in E.ESCALERAS)
 ESC_PIQ = sum(((E.geo(x)['n_bay'] - E.geo(x)['n_dib']) * E.geo(x)['n_piq']
                 + E.geo(x)['n_dib'] * (2 + 2*E.geo(x)['n_fl'])) * x['cant']
