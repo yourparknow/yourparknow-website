@@ -142,8 +142,14 @@ del Pool House. 27 secciones en total.
 las cuatro. Funciona porque la baranda se arma a plomo y no se acumula nada
 (verificación 13).
 
-**⚠️ NO CORTAR MATERIAL DEL POOL HOUSE** hasta que Rene mande el croquis. Los
-números A/B/C y D/E/F nunca se convirtieron a la regla de interior.
+**Pool House Balcón 1 — RECTIFICADO el 2 de octubre.** Rene: *"en el primer dibujo
+del balcón, esas son las medidas exactas"*. A = 383-5/8 interior + 2 postes = 387-5/8 ·
+B = 161 − 2 de la pared = 159, sin poste en la esquina · C = 237-5/8 exacta, sin poste
+en la esquina. Falta que confirme que el poste del empalme con la escalera lo lleva
+el balcón (C-2), como está.
+
+**⚠️ NO CORTAR MATERIAL DEL BALCÓN 2 DEL POOL HOUSE** (D/E/F). Esos números
+todavía no se han convertido a la regla de interior.
 
 ### Piso impermeable de los portalones del Pool House — EN INVESTIGACIÓN
 
@@ -224,7 +230,7 @@ mampostería en seco.
 
 1. **¿Las 105-1/4 del paño S-1 incluyen los dos postes?** Se fabricó pelado (sin
    postes propios). Si el número ya los incluía, la pieza baja a **101-1/4**.
-2. **El croquis del Pool House.** Sin eso no se corta material de allá.
+2. **El Balcón 2 del Pool House (D/E/F).** El 1 ya está rectificado; del 2 no se corta nada todavía.
 3. **De qué lado del retorno Q-1 va el dibujo.** Se puso el paño liso contra la
    esquina de los platos de la fascia. Nunca lo confirmó.
 4. **El hueco de escalera de 42" en caballeriza 1** salió del croquis, no de una
